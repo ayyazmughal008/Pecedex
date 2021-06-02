@@ -6,7 +6,10 @@ import FastImage from 'react-native-fast-image'
 
 const Card = (props) => {
     return (
-        <View style={styles.container}>
+        <TouchableOpacity
+            style={styles.container}
+            onPress={props.clickHandler}
+        >
             <FastImage
                 style={styles.img}
                 source={props.animalImg}
@@ -19,9 +22,8 @@ const Card = (props) => {
                 <Text style={styles.shortTitle}>
                     {props.shortText}
                 </Text>
-
             </View>
-        </View>
+        </TouchableOpacity>
     )
 }
 

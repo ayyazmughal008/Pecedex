@@ -72,6 +72,8 @@ const Home = (props) => {
                                 clickHandler={() => {
                                     if (index == 0) {
                                         props.navigation.navigate('Pecios')
+                                    } else if (index == 1) {
+                                        props.navigation.navigate('Animal')
                                     }
                                 }}
                             />

@@ -1,6 +1,6 @@
 import { StyleSheet } from 'react-native'
 import { widthPercentageToDP, heightPercentageToDP } from '../Component/MakeMeResponsive'
-import { blue, lightRed, green, white } from '../config/color'
+import { blue, lightRed, green, white, black } from '../config/color'
 
 export const styles = StyleSheet.create({
     container: {
@@ -79,8 +79,8 @@ export const styles = StyleSheet.create({
     top: {
         width: widthPercentageToDP(100),
         height: heightPercentageToDP(12),
-        justifyContent:"center",
-        alignItems:"center"
+        justifyContent: "center",
+        alignItems: "center"
     },
     profileImg: {
         width: widthPercentageToDP(35),
@@ -113,12 +113,37 @@ export const styles = StyleSheet.create({
         flexDirection: "row",
         alignItems: "center",
         //backgroundColor:"red",
-        marginTop:heightPercentageToDP(1)
+        marginTop: heightPercentageToDP(1)
     },
-    proInfoTile:{
+    proInfoTile: {
         fontSize: widthPercentageToDP(5),
         color: white,
         fontFamily: "Montserrat-SemiBold",
-        marginLeft:widthPercentageToDP(5)
+        marginLeft: widthPercentageToDP(5)
+    },
+    shareView: {
+        width: widthPercentageToDP(100),
+        height: heightPercentageToDP(7),
+        alignItems: "center",
+        flexDirection: "row",
+        justifyContent: "space-between",
+        //backgroundColor:"red"
+    },
+    shareButton: {
+        width: widthPercentageToDP(11),
+        height: heightPercentageToDP(5.5),
+        backgroundColor: blue,
+        borderRadius: widthPercentageToDP(3),
+        marginLeft: widthPercentageToDP(2),
+        justifyContent: "center",
+        alignItems: "center"
+    },
+    smallText: {
+        fontSize: widthPercentageToDP(4),
+        color: black,
+        fontFamily: "Montserrat-SemiBold",
+        textAlign: "center",
+        alignSelf: "center",
+        padding:widthPercentageToDP(2)
     }
 })
