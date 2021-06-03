@@ -2,9 +2,11 @@ import React, { useEffect, useState } from 'react'
 import { SafeAreaView, View, Text, FlatList, TouchableOpacity } from 'react-native'
 import { styles } from '../../config/styles'
 import FastImage from 'react-native-fast-image'
-import { black, blue } from '../../config/color'
+import { black, blue, white } from '../../config/color'
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view'
 import { heightPercentageToDP, widthPercentageToDP } from '../../Component/MakeMeResponsive'
+import { data } from './data'
+import Card from '../../Component/RankingCard'
 
 const Profile = (props) => {
     return (
@@ -21,13 +23,13 @@ const Profile = (props) => {
                     resizeMode={FastImage.resizeMode.contain}
                 />
                 <View style={styles.profileView}>
-                    <Text style={styles.profileName}>
-                        {"Sandra Gomez"}
+                    <Text style={[styles.profileName, { color: black, fontSize: widthPercentageToDP(5), alignSelf: "center" }]}>
+                        {"PUNTUACION"}
                     </Text>
-                    <Text style={styles.btnText}>
-                        {"PADI advance Open Water Diver"}
+                    <Text style={[styles.profileName, { color: white, fontSize: widthPercentageToDP(5), alignSelf: "center" }]}>
+                        {"000001536"}
                     </Text>
-                    <View style={styles.profileInfo}>
+                    <View style={[styles.profileInfo, { width: widthPercentageToDP(50) }]}>
                         <FastImage
                             source={require('../../Images/seaCap.png')}
                             style={{ width: 35, height: 35 }}
@@ -37,10 +39,10 @@ const Profile = (props) => {
                             style={styles.proInfoTile}
                             onPress={() => props.navigation.navigate('Dive')}
                         >
-                            {"526 Inmersiones"}
+                            {"00000324"}
                         </Text>
                     </View>
-                    <View style={styles.profileInfo}>
+                    <View style={[styles.profileInfo, { width: widthPercentageToDP(50) }]}>
                         <FastImage
                             source={require('../../Images/fish.png')}
                             style={{ width: 35, height: 35 }}
@@ -49,10 +51,10 @@ const Profile = (props) => {
                         <Text
                             style={styles.proInfoTile}
                             onPress={() => props.navigation.navigate('AnimalSeen')} >
-                            {"327 / 10.728 animal vistos"}
+                            {"00000024"}
                         </Text>
                     </View>
-                    <View style={styles.profileInfo}>
+                    <View style={[styles.profileInfo, { width: widthPercentageToDP(50) }]}>
                         <FastImage
                             source={require('../../Images/ship.png')}
                             style={{ width: 35, height: 35 }}
@@ -61,52 +63,34 @@ const Profile = (props) => {
                         <Text
                             style={styles.proInfoTile}
                             onPress={() => props.navigation.navigate('Pecios')}>
-                            {"32 / 726 pecios vistos"}
+                            {"00000724"}
                         </Text>
                     </View>
                 </View>
-                <Text style={[styles.profileName, { color: black, fontSize: widthPercentageToDP(4.5), alignSelf: "center" }]}>
-                    {"PUNTUACION"}
-                </Text>
-                <Text
-                    style={[styles.profileName, { color: blue, fontSize: widthPercentageToDP(6.5), alignSelf: "center" }]}
-                    onPress={() => props.navigation.navigate('Ranking')}
-                >
-                    {"000001536"}
-                </Text>
-                <Text style={[styles.profileName, {
-                    color: blue,
-                    marginLeft: widthPercentageToDP(10)
-                }]}>
-                    {"PHOTOS"}
-                </Text>
+
+                {/* <FastImage
+                    source={require('../../Images/line.png')}
+                    resizeMode={FastImage.resizeMode.stretch}
+                    style={{
+                        width: widthPercentageToDP(70),
+                        height: heightPercentageToDP(0.2),
+                        marginTop: heightPercentageToDP(2),
+                        alignSelf: "center"
+                    }}
+                /> */}
+
                 <FlatList
-                    data={[{ id: 1 }, { id: 1 }, { id: 1 }, { id: 1 }, { id: 1 }, { id: 1 },]}
+                    data={data}
                     showsVerticalScrollIndicator={false}
                     style={{ alignSelf: "center", marginTop: 10 }}
-                    numColumns={3}
                     keyExtractor={(item, index) => "unique" + index}
                     renderItem={({ item, index }) => {
                         return (
-                            <TouchableOpacity
-                                style={{
-                                    width: widthPercentageToDP(26),
-                                    height: heightPercentageToDP(13),
-                                    margin: 5,
-                                }}
-                                onPress={() => props.navigation.navigate('Detail')}
-                            >
-                                <FastImage
-                                    source={require('../../Images/carocodile.jpg')}
-                                    style={{
-                                        width: widthPercentageToDP(26),
-                                        height: heightPercentageToDP(13),
-                                        //margin: 5,
-                                        borderRadius: widthPercentageToDP(4)
-                                    }}
-                                    resizeMode={FastImage.resizeMode.cover}
-                                />
-                            </TouchableOpacity>
+                            <Card
+                                rank={item.rank}
+                                title={item.title}
+                                score={item.score}
+                            />
                         )
                     }}
                 />

@@ -107,7 +107,7 @@ export const styles = StyleSheet.create({
     },
     profileInfo: {
         width: widthPercentageToDP(70),
-        height: heightPercentageToDP(6),
+        height: heightPercentageToDP(5),
         alignSelf: "center",
         //justifyContent: "space-between",
         flexDirection: "row",
@@ -116,7 +116,7 @@ export const styles = StyleSheet.create({
         marginTop: heightPercentageToDP(1)
     },
     proInfoTile: {
-        fontSize: widthPercentageToDP(5),
+        fontSize: widthPercentageToDP(4.5),
         color: white,
         fontFamily: "Montserrat-SemiBold",
         marginLeft: widthPercentageToDP(5)

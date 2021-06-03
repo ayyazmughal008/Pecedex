@@ -6,6 +6,9 @@ import Classes from '../../Screen/Classes'
 import Order from '../../Screen/Order'
 import Family from '../../Screen/Family'
 import Genre from '../../Screen/Genere'
+import Dive from '../../Screen/Dive'
+import Ranking from '../../Screen/Rankisng'
+import AnimalSeen from '../../Screen/AnimalSeen'
 import Detail from '../../Screen/Detail/AnimalDetail'
 import PeciosDetail from '../../Screen/Pecios/Detail'
 
@@ -37,6 +40,15 @@ export default createStackNavigator(
     },
     Genre: {
       screen: Genre
+    },
+    Dive: {
+      screen: Dive
+    },
+    AnimalSeen: {
+      screen: AnimalSeen
+    },
+    Ranking: {
+      screen: Ranking
     },
   },
   {
