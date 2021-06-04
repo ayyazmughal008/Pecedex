@@ -99,6 +99,13 @@ export const styles = StyleSheet.create({
         marginTop: heightPercentageToDP(12),
         alignItems: "center"
     },
+    logView: {
+        width: widthPercentageToDP(90),
+        backgroundColor: blue,
+        borderRadius: widthPercentageToDP(5),
+        alignSelf: "center",
+        alignItems: "center"
+    },
     profileName: {
         fontSize: widthPercentageToDP(6),
         color: white,
@@ -144,6 +151,6 @@ export const styles = StyleSheet.create({
         fontFamily: "Montserrat-SemiBold",
         textAlign: "center",
         alignSelf: "center",
-        padding:widthPercentageToDP(2)
+        padding: widthPercentageToDP(2)
     }
 })

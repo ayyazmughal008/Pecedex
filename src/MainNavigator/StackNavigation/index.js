@@ -8,6 +8,8 @@ import Family from '../../Screen/Family'
 import Genre from '../../Screen/Genere'
 import Dive from '../../Screen/Dive'
 import Ranking from '../../Screen/Rankisng'
+import LogBook from '../../Screen/LogBook'
+import RankingDetail from '../../Screen/RankingDetail'
 import AnimalSeen from '../../Screen/AnimalSeen'
 import Detail from '../../Screen/Detail/AnimalDetail'
 import PeciosDetail from '../../Screen/Pecios/Detail'
@@ -49,6 +51,12 @@ export default createStackNavigator(
     },
     Ranking: {
       screen: Ranking
+    },
+    RankingDetail: {
+      screen: RankingDetail
+    },
+    LogBook: {
+      screen: LogBook
     },
   },
   {

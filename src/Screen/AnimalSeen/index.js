@@ -26,7 +26,7 @@ const Map = (props) => {
                             title={item.title}
                             animalImg={item.img}
                             shortText={item.short}
-                            //clickHandler={() => props.navigation.navigate("PeciosDetail")}
+                            clickHandler={() => props.navigation.navigate("Detail")}
                         />
                     )
                 }}

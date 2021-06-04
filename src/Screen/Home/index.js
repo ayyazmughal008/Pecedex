@@ -74,6 +74,8 @@ const Home = (props) => {
                                         props.navigation.navigate('Pecios')
                                     } else if (index == 1) {
                                         props.navigation.navigate('Animal')
+                                    } else if (index == 2) {
+                                        props.navigation.navigate('LogBook')
                                     }
                                 }}
                             />
