@@ -20,7 +20,7 @@ export default createBottomTabNavigator(
             screen: ProfileScreen,
             navigationOptions: {
                 tabBarLabel: ({ focused, tintColor }) => (
-                    <Text style={{ color: tintColor, alignSelf: "center", fontFamily: "Montserrat-Regular", fontSize: widthPercentageToDP(3.3) }}>
+                    <Text style={{ color: tintColor, alignSelf: "center", fontFamily: "Montserrat-Regular", fontSize: widthPercentageToDP(3) }}>
                         {Strings.profile}
                     </Text>
                 ),
@@ -35,7 +35,7 @@ export default createBottomTabNavigator(
             screen: HomeScreen,
             navigationOptions: {
                 tabBarLabel: ({ focused, tintColor }) => (
-                    <Text style={{ color: tintColor, alignSelf: "center", fontFamily: "Montserrat-Regular", fontSize: widthPercentageToDP(3.3) }}>
+                    <Text style={{ color: tintColor, alignSelf: "center", fontFamily: "Montserrat-Regular", fontSize: widthPercentageToDP(3) }}>
                         {Strings.home}
                     </Text>
                 ),
@@ -50,7 +50,7 @@ export default createBottomTabNavigator(
             screen: SettingScreen,
             navigationOptions: {
                 tabBarLabel: ({ focused, tintColor }) => (
-                    <Text style={{ color: tintColor, alignSelf: "center", fontFamily: "Montserrat-Regular", fontSize: widthPercentageToDP(3.3) }}>
+                    <Text style={{ color: tintColor, alignSelf: "center", fontFamily: "Montserrat-Regular", fontSize: widthPercentageToDP(3) }}>
                         {Strings.setting}
                     </Text>
                 ),
@@ -66,7 +66,7 @@ export default createBottomTabNavigator(
             screen: MapScreen,
             navigationOptions: {
                 tabBarLabel: ({ focused, tintColor }) => (
-                    <Text style={{ color: tintColor, alignSelf: "center", fontFamily: "Montserrat-Regular", fontSize: widthPercentageToDP(3.3) }}>
+                    <Text style={{ color: tintColor, alignSelf: "center", fontFamily: "Montserrat-Regular", fontSize: widthPercentageToDP(3) }}>
                         {Strings.map}
                     </Text>
                 ),
@@ -81,7 +81,7 @@ export default createBottomTabNavigator(
             screen: NotificationScreen,
             navigationOptions: {
                 tabBarLabel: ({ focused, tintColor }) => (
-                    <Text style={{ color: tintColor, alignSelf: "center", fontFamily: "Montserrat-Regular", fontSize: widthPercentageToDP(3.3) }}>
+                    <Text style={{ color: tintColor, alignSelf: "center", fontFamily: "Montserrat-Regular", fontSize: widthPercentageToDP(3) }}>
                         {Strings.notification}
                     </Text>
                 ),

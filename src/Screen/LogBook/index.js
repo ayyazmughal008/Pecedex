@@ -6,6 +6,8 @@ import { heightPercentageToDP, widthPercentageToDP } from '../../Component/MakeM
 import { black, blue2, white, } from '../../config/color'
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view'
 import { data } from './data'
+import Tab from '../../Component/BottomTab'
+import { HomeAction, profileAction, settingAction, mapAction, notificationAction } from '../../Component/BottomTab/actions'
 
 const LogBook = (props) => {
     const imageModel = (({ item, index }) => {
@@ -298,7 +300,7 @@ const LogBook = (props) => {
                     />
                 </View>
                 <View style={[styles.logView, {
-                    height: heightPercentageToDP(43),
+                    height: heightPercentageToDP(60),
                     marginTop: heightPercentageToDP(2),
                     //backgroundColor: blue2
                 }]}>
@@ -375,7 +377,45 @@ const LogBook = (props) => {
                             </Text>
                         </View>
                     </View>
-                    <View style={[styles.innerLogView, { height: heightPercentageToDP(10) }]}>
+                    <View style={[styles.innerLogView, { height: heightPercentageToDP(13), marginTop: heightPercentageToDP(2), justifyContent: "space-between" }]}>
+                        <View style={[styles.left, { width: "48%", backgroundColor: blue2, borderRadius: widthPercentageToDP(6), flexDirection: "row", alignItems: "center" }]}>
+                            <FastImage
+                                source={require('../../Images/56.png')}
+                                resizeMode={FastImage.resizeMode.stretch}
+                                style={{ width: "42%", height: "59%", marginLeft: 8 }}
+                            />
+                            <View style={{ width: "50%", height: "70%", marginLeft: 5 }}>
+                                <Text style={[styles.tinyText, { color: black }]}>
+                                    {"Botalla: "} {"12L"}
+                                </Text>
+                                <Text style={[styles.tinyText, { color: black }]}>
+                                    {"Aluminum"}
+                                </Text>
+                                <Text style={[styles.tinyText, { color: black }]}>
+                                    {"Nitrox"}
+                                </Text>
+                                <Text style={[styles.tinyText, { color: black }]}>
+                                    {"%XXX "} {"oxygen"}
+                                </Text>
+                            </View>
+                        </View>
+                        <View style={[styles.right, { width: "48%", backgroundColor: blue2, borderRadius: widthPercentageToDP(6), flexDirection: "row", alignItems: "center" }]}>
+                            <FastImage
+                                source={require('../../Images/149.png')}
+                                resizeMode={FastImage.resizeMode.stretch}
+                                style={{ width: "42%", height: "60%", marginLeft: 8 }}
+                            />
+                            <View style={{ width: "50%", height: "70%", marginLeft: 5, alignItems: "center", justifyContent: "center" }}>
+                                <Text style={[styles.tinyText, { color: black }]}>
+                                    {"Rebreader"}
+                                </Text>
+                                <Text style={[styles.tinyText, { color: black }]}>
+                                    {"Jacket"}
+                                </Text>
+                            </View>
+                        </View>
+                    </View>
+                    {/* <View style={[styles.innerLogView, { height: heightPercentageToDP(10) }]}>
                         <View style={styles.left}>
                             <Text style={[styles.tinyText2, { color: black }]}>
                                 {"Rebreader/ "}
@@ -404,56 +444,89 @@ const LogBook = (props) => {
                                 </Text>
                             </Text>
                         </View>
-                    </View>
-                    <View style={[styles.innerLogView, { height: heightPercentageToDP(8), marginTop: 10, justifyContent: "space-between", width: widthPercentageToDP(90) }]}>
-                        <TouchableOpacity style={{ width: "11%", height: "70%" }}>
+                    </View> */}
+                    <View style={[styles.innerLogView, { height: heightPercentageToDP(8), marginTop: 10, justifyContent: "space-between", width: widthPercentageToDP(80) }]}>
+                        <TouchableOpacity style={{ width: "12%", height: "90%" }}>
                             <FastImage
                                 style={{ width: "100%", height: "100%" }}
                                 source={require('../../Images/62.png')}
                                 resizeMode={FastImage.resizeMode.stretch}
                             />
+                            <Text style={[styles.tinyText, { color: "#a9a9a9", textAlign: "center", marginTop: 5 }]}>
+                                {"Text"}
+                            </Text>
                         </TouchableOpacity>
-                        <TouchableOpacity style={{ width: "11%", height: "70%" }}>
+                        <TouchableOpacity style={{ width: "14%", height: "85%" }}>
                             <FastImage
                                 style={{ width: "100%", height: "100%" }}
                                 source={require('../../Images/59.png')}
                                 resizeMode={FastImage.resizeMode.stretch}
                             />
+                            <Text style={[styles.tinyText, { color: "#a9a9a9", textAlign: "center", marginTop: 5 }]}>
+                                {"Text"}
+                            </Text>
                         </TouchableOpacity>
-                        <TouchableOpacity style={{ width: "11%", height: "70%" }}>
+                        <TouchableOpacity style={{ width: "14%", height: "85%" }}>
                             <FastImage
                                 style={{ width: "100%", height: "100%" }}
                                 source={require('../../Images/70.png')}
                                 resizeMode={FastImage.resizeMode.stretch}
                             />
+                            <Text style={[styles.tinyText, { color: "#a9a9a9", textAlign: "center", marginTop: 5 }]}>
+                                {"Text"}
+                            </Text>
                         </TouchableOpacity>
-                        <TouchableOpacity style={{ width: "11%", height: "70%" }}>
+                        <TouchableOpacity style={{ width: "13%", height: "90%" }}>
                             <FastImage
                                 style={{ width: "100%", height: "100%" }}
                                 source={require('../../Images/69.png')}
                                 resizeMode={FastImage.resizeMode.stretch}
                             />
+                            <Text style={[styles.tinyText, { color: "#a9a9a9", textAlign: "center", marginTop: 5 }]}>
+                                {"Text"}
+                            </Text>
                         </TouchableOpacity>
-                        <TouchableOpacity style={{ width: "11%", height: "70%" }}>
+                    </View>
+                    <View style={[styles.innerLogView, { height: heightPercentageToDP(8), marginTop: 20, justifyContent: "space-between", width: widthPercentageToDP(80) }]}>
+                        <TouchableOpacity style={{ width: "13%", height: "90%" }}>
                             <FastImage
                                 style={{ width: "100%", height: "100%" }}
                                 source={require('../../Images/66.png')}
                                 resizeMode={FastImage.resizeMode.stretch}
                             />
+                            <Text style={[styles.tinyText, { color: "#a9a9a9", textAlign: "center", marginTop: 5 }]}>
+                                {"Text"}
+                            </Text>
                         </TouchableOpacity>
-                        <TouchableOpacity style={{ width: "11%", height: "70%" }}>
+                        <TouchableOpacity style={{ width: "13%", height: "90%" }}>
                             <FastImage
                                 style={{ width: "100%", height: "100%" }}
                                 source={require('../../Images/60.png')}
                                 resizeMode={FastImage.resizeMode.stretch}
                             />
+                            <Text style={[styles.tinyText, { color: "#a9a9a9", textAlign: "center", marginTop: 5 }]}>
+                                {"Text"}
+                            </Text>
                         </TouchableOpacity>
-                        <TouchableOpacity style={{ width: "13%", height: "60%" }}>
+                        <TouchableOpacity style={{ width: "17%", height: "90%" }}>
                             <FastImage
                                 style={{ width: "100%", height: "100%" }}
                                 source={require('../../Images/64.png')}
                                 resizeMode={FastImage.resizeMode.stretch}
                             />
+                            <Text style={[styles.tinyText, { color: "#a9a9a9", textAlign: "center", marginTop: 5 }]}>
+                                {"Text"}
+                            </Text>
+                        </TouchableOpacity>
+                        <TouchableOpacity style={{ width: "13%", height: "90%" }}>
+                            <FastImage
+                                style={{ width: "100%", height: "100%" }}
+                                source={require('../../Images/76.png')}
+                                resizeMode={FastImage.resizeMode.stretch}
+                            />
+                            <Text style={[styles.tinyText, { color: "#a9a9a9", textAlign: "center", marginTop: 5 }]}>
+                                {"Text"}
+                            </Text>
                         </TouchableOpacity>
                     </View>
                 </View>
@@ -567,6 +640,14 @@ const LogBook = (props) => {
                     </Text>
                 </TouchableOpacity>
             </KeyboardAwareScrollView>
+            <View style={{ height: heightPercentageToDP(7) }} />
+            <Tab
+                homeClick={() => props.navigation.dispatch(HomeAction)}
+                profileClick={() => props.navigation.dispatch(profileAction)}
+                settingClick={() => props.navigation.dispatch(settingAction)}
+                mapClick={() => props.navigation.dispatch(mapAction)}
+                notiClick={() => props.navigation.dispatch(notificationAction)}
+            />
         </SafeAreaView>
     )
 }

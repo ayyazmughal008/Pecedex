@@ -5,9 +5,9 @@ import FastImage from 'react-native-fast-image'
 import { widthPercentageToDP, heightPercentageToDP } from '../../Component/MakeMeResponsive'
 import { SliderBox } from "react-native-image-slider-box";
 import { blue, white } from '../../config/color'
-import Icon from 'react-native-vector-icons/FontAwesome'
-import Entypo from 'react-native-vector-icons/Entypo'
-import Ionicons from 'react-native-vector-icons/Ionicons'
+import { HomeAction, profileAction, settingAction, mapAction, notificationAction } from '../../Component/BottomTab/actions'
+import Tab from '../../Component/BottomTab'
+
 
 const PeciosDetail = (props) => {
     const images = [
@@ -51,43 +51,55 @@ const PeciosDetail = (props) => {
                         right: "4%",
                         zIndex: 3
                     }}>
-                    <Icon
-                        name="image"
-                        color={white}
-                        size={30}
+                    <FastImage
+                        source={require('../../Images/84.png')}
+                        resizeMode={FastImage.resizeMode.contain}
+                        style={{ width: widthPercentageToDP(8), height: widthPercentageToDP(8) }}
                     />
                 </TouchableOpacity>
             </View>
             <View style={styles.shareView}>
                 <View style={{ width: "50%", height: "100%", justifyContent: "center" }}>
                     <TouchableOpacity style={styles.shareButton}>
-                        <Entypo
-                            name="camera"
-                            color={white}
-                            size={30}
+                        <FastImage
+                            source={require('../../Images/85.png')}
+                            resizeMode={FastImage.resizeMode.contain}
+                            style={{
+                                width: widthPercentageToDP(11),
+                                height: heightPercentageToDP(6),
+                            }}
                         />
                     </TouchableOpacity>
                 </View>
                 <View style={{ width: "50%", height: "100%", alignItems: "center", justifyContent: "space-between", flexDirection: "row" }}>
                     <TouchableOpacity style={styles.shareButton}>
-                        <Entypo
-                            name="youtube"
-                            color={white}
-                            size={30}
+                        <FastImage
+                            source={require('../../Images/86.png')}
+                            resizeMode={FastImage.resizeMode.contain}
+                            style={{
+                                width: widthPercentageToDP(11),
+                                height: heightPercentageToDP(5.5),
+                            }}
                         />
                     </TouchableOpacity>
                     <TouchableOpacity style={styles.shareButton}>
-                        <Icon
-                            name="wordpress"
-                            color={white}
-                            size={30}
+                        <FastImage
+                            source={require('../../Images/87.png')}
+                            resizeMode={FastImage.resizeMode.contain}
+                            style={{
+                                width: widthPercentageToDP(11),
+                                height: heightPercentageToDP(5.5),
+                            }}
                         />
                     </TouchableOpacity>
                     <TouchableOpacity style={[styles.shareButton, { marginRight: 5 }]}>
-                        <Ionicons
-                            name="share-social"
-                            color={white}
-                            size={30}
+                        <FastImage
+                            source={require('../../Images/88.png')}
+                            resizeMode={FastImage.resizeMode.contain}
+                            style={{
+                                width: widthPercentageToDP(11),
+                                height: heightPercentageToDP(5.5),
+                            }}
                         />
                     </TouchableOpacity>
                 </View>
@@ -95,7 +107,7 @@ const PeciosDetail = (props) => {
             <Text style={[styles.proInfoTile, { alignSelf: "center", color: blue, marginTop: 10 }]}>
                 {"SS Thistlegorm"}
             </Text>
-            <Text style={styles.smallText}>
+            <Text style={styles.smallText2}>
                 {"There are many variations of passages of Lorem Ipsum available, but the majority have suffered alteration in some form, by injected humour, or randomised words which don't look even slightly believable. If you are going to use a passage of Lorem Ipsum, you need to be sure there isn't anything embarrassing hidden in the middle of text"}
             </Text>
             <FastImage
@@ -106,10 +118,13 @@ const PeciosDetail = (props) => {
             <View style={{ width: "95%", alignSelf: "center", flexDirection: "row", justifyContent: "space-between", marginTop: 10 }}>
                 <View style={{ flexDirection: "row", alignItems: "center", width: "48%" }}>
                     <TouchableOpacity style={styles.shareButton}>
-                        <Entypo
-                            name="youtube"
-                            color={white}
-                            size={30}
+                        <FastImage
+                            source={require('../../Images/95.png')}
+                            resizeMode={FastImage.resizeMode.contain}
+                            style={{
+                                width: widthPercentageToDP(8),
+                                height: heightPercentageToDP(4),
+                            }}
                         />
                     </TouchableOpacity>
                     <Text style={[styles.smallText, { flex: 1, flexWrap: 'wrap' }]}>
@@ -118,13 +133,16 @@ const PeciosDetail = (props) => {
                 </View>
                 <View style={{ flexDirection: "row", alignItems: "center", width: "48%" }}>
                     <TouchableOpacity style={styles.shareButton}>
-                        <Entypo
-                            name="youtube"
-                            color={white}
-                            size={30}
+                        <FastImage
+                            source={require('../../Images/99.png')}
+                            resizeMode={FastImage.resizeMode.contain}
+                            style={{
+                                width: widthPercentageToDP(8),
+                                height: heightPercentageToDP(4),
+                            }}
                         />
                     </TouchableOpacity>
-                    <Text style={[styles.smallText,{flex: 1, flexWrap: 'wrap'}]}>
+                    <Text style={[styles.smallText, { flex: 1, flexWrap: 'wrap' }]}>
                         {"120 metros"}
                     </Text>
                 </View>
@@ -132,10 +150,13 @@ const PeciosDetail = (props) => {
             <View style={{ width: "95%", alignSelf: "center", flexDirection: "row", justifyContent: "space-between", marginTop: 10 }}>
                 <View style={{ flexDirection: "row", alignItems: "center", width: "48%" }}>
                     <TouchableOpacity style={styles.shareButton}>
-                        <Entypo
-                            name="youtube"
-                            color={white}
-                            size={30}
+                        <FastImage
+                            source={require('../../Images/100.png')}
+                            resizeMode={FastImage.resizeMode.contain}
+                            style={{
+                                width: widthPercentageToDP(8),
+                                height: heightPercentageToDP(4),
+                            }}
                         />
                     </TouchableOpacity>
                     <Text style={[styles.smallText, { flex: 1, flexWrap: 'wrap' }]}>
@@ -144,10 +165,13 @@ const PeciosDetail = (props) => {
                 </View>
                 <View style={{ flexDirection: "row", alignItems: "center", width: "48%" }}>
                     <TouchableOpacity style={styles.shareButton}>
-                        <Ionicons
-                            name="earth"
-                            color={white}
-                            size={30}
+                        <FastImage
+                            source={require('../../Images/98.png')}
+                            resizeMode={FastImage.resizeMode.contain}
+                            style={{
+                                width: widthPercentageToDP(8),
+                                height: heightPercentageToDP(4),
+                            }}
                         />
                     </TouchableOpacity>
                     <Text style={[styles.smallText, { flex: 1, flexWrap: 'wrap' }]}>
@@ -155,6 +179,14 @@ const PeciosDetail = (props) => {
                     </Text>
                 </View>
             </View>
+            <View style={{ height: heightPercentageToDP(7) }} />
+            <Tab
+                homeClick={() => props.navigation.dispatch(HomeAction)}
+                profileClick={() => props.navigation.dispatch(profileAction)}
+                settingClick={() => props.navigation.dispatch(settingAction)}
+                mapClick={() => props.navigation.dispatch(mapAction)}
+                notiClick={() => props.navigation.dispatch(notificationAction)}
+            />
         </SafeAreaView>
     )
 }

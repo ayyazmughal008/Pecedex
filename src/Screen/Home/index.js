@@ -5,10 +5,12 @@ import FastImage from 'react-native-fast-image'
 import Strings from '../../Translation'
 import Icon from 'react-native-vector-icons/EvilIcons'
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view'
-import { widthPercentageToDP } from '../../Component/MakeMeResponsive'
+import { widthPercentageToDP, heightPercentageToDP } from '../../Component/MakeMeResponsive'
 import Card from '../../Component/AnimalCard'
 import { data } from './data'
 import { ListItem } from 'react-native-elements/dist/list/ListItem'
+import Tab from '../../Component/BottomTab'
+import { HomeAction, profileAction, settingAction, mapAction, notificationAction } from '../../Component/BottomTab/actions'
 
 const Home = (props) => {
     const [searchtxt, setSearch] = useState("")
@@ -82,7 +84,16 @@ const Home = (props) => {
                         )
                     }}
                 />
+
             </KeyboardAwareScrollView>
+            <View style={{ height: heightPercentageToDP(5) }} />
+            <Tab
+                homeClick={() => props.navigation.dispatch(HomeAction)}
+                profileClick={() => props.navigation.dispatch(profileAction)}
+                settingClick={() => props.navigation.dispatch(settingAction)}
+                mapClick={() => props.navigation.dispatch(mapAction)}
+                notiClick={() => props.navigation.dispatch(notificationAction)}
+            />
         </SafeAreaView>
     )
 }

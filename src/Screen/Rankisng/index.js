@@ -7,6 +7,8 @@ import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view
 import { heightPercentageToDP, widthPercentageToDP } from '../../Component/MakeMeResponsive'
 import { data } from './data'
 import Card from '../../Component/RankingCard'
+import { HomeAction, profileAction, settingAction, mapAction, notificationAction } from '../../Component/BottomTab/actions'
+import Tab from '../../Component/BottomTab'
 
 const Profile = (props) => {
     return (
@@ -37,7 +39,7 @@ const Profile = (props) => {
                         />
                         <Text
                             style={styles.proInfoTile}
-                            onPress={() => props.navigation.navigate('Dive')}
+                        //onPress={() => props.navigation.navigate('Dive')}
                         >
                             {"00000324"}
                         </Text>
@@ -50,7 +52,8 @@ const Profile = (props) => {
                         />
                         <Text
                             style={styles.proInfoTile}
-                            onPress={() => props.navigation.navigate('AnimalSeen')} >
+                        //onPress={() => props.navigation.navigate('AnimalSeen')} 
+                        >
                             {"00000024"}
                         </Text>
                     </View>
@@ -62,7 +65,8 @@ const Profile = (props) => {
                         />
                         <Text
                             style={styles.proInfoTile}
-                            onPress={() => props.navigation.navigate('Pecios')}>
+                        //onPress={() => props.navigation.navigate('Pecios')}
+                        >
                             {"00000724"}
                         </Text>
                     </View>
@@ -95,6 +99,14 @@ const Profile = (props) => {
                     }}
                 />
             </KeyboardAwareScrollView>
+            <View style={{ height: heightPercentageToDP(7) }} />
+            <Tab
+                homeClick={() => props.navigation.dispatch(HomeAction)}
+                profileClick={() => props.navigation.dispatch(profileAction)}
+                settingClick={() => props.navigation.dispatch(settingAction)}
+                mapClick={() => props.navigation.dispatch(mapAction)}
+                notiClick={() => props.navigation.dispatch(notificationAction)}
+            />
         </SafeAreaView>
     )
 }

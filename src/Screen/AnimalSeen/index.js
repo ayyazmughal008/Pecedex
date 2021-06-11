@@ -4,6 +4,9 @@ import { styles } from '../../config/styles'
 import FastImage from 'react-native-fast-image'
 import Card from '../../Component/PeciosCard'
 import { data } from './data'
+import { heightPercentageToDP } from '../../Component/MakeMeResponsive'
+import Tab from '../../Component/BottomTab'
+import { HomeAction, profileAction, settingAction, mapAction, notificationAction } from '../../Component/BottomTab/actions'
 
 const Map = (props) => {
     return (
@@ -30,6 +33,14 @@ const Map = (props) => {
                         />
                     )
                 }}
+            />
+            <View style={{ height: heightPercentageToDP(5) }} />
+            <Tab
+                homeClick={() => props.navigation.dispatch(HomeAction)}
+                profileClick={() => props.navigation.dispatch(profileAction)}
+                settingClick={() => props.navigation.dispatch(settingAction)}
+                mapClick={() => props.navigation.dispatch(mapAction)}
+                notiClick={() => props.navigation.dispatch(notificationAction)}
             />
         </SafeAreaView>
     )

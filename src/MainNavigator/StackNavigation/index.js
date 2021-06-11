@@ -1,5 +1,5 @@
 import { createStackNavigator } from 'react-navigation-stack';
-import Home from '../BottomNavigator'
+import Home from '../../Screen/Home'
 import Pecios from '../../Screen/Pecios'
 import Animal from '../../Screen/Animal'
 import Classes from '../../Screen/Classes'
@@ -11,8 +11,14 @@ import Ranking from '../../Screen/Rankisng'
 import LogBook from '../../Screen/LogBook'
 import RankingDetail from '../../Screen/RankingDetail'
 import AnimalSeen from '../../Screen/AnimalSeen'
+import DiveCenter from '../../Screen/DiveCenter'
+import DiveCenterDetail from '../../Screen/DiveCenter/DiveCenterDetail'
 import Detail from '../../Screen/Detail/AnimalDetail'
 import PeciosDetail from '../../Screen/Pecios/Detail'
+import SettingScreen from "../../Screen/Setting";
+import MapScreen from "../../Screen/Map";
+import ProfileScreen from "../../Screen/Profile";
+import NotificationScreen from "../../Screen/Notification";
 
 export default createStackNavigator(
   {
@@ -57,6 +63,25 @@ export default createStackNavigator(
     },
     LogBook: {
       screen: LogBook
+    },
+    DiveCenter: {
+      screen: DiveCenter
+    },
+    DiveCenterDetail: {
+      screen: DiveCenterDetail
+    },
+    // new bottom screen
+    SettingScreen: {
+      screen: SettingScreen
+    },
+    MapScreen: {
+      screen: MapScreen
+    },
+    ProfileScreen: {
+      screen: ProfileScreen
+    },
+    NotificationScreen: {
+      screen: NotificationScreen
     },
   },
   {

@@ -60,6 +60,15 @@ export const styles = StyleSheet.create({
         paddingLeft: widthPercentageToDP(5),
         color: white
     },
+    input3: {
+        width: widthPercentageToDP(60),
+        height: heightPercentageToDP(5.5),
+        fontSize: widthPercentageToDP(3.5),
+        fontFamily: "Montserrat-Regular",
+        paddingLeft: widthPercentageToDP(5),
+        color: black,
+        //backgroundColor:"red"
+    },
     viewPass: {
         width: widthPercentageToDP(14),
         height: heightPercentageToDP(5.5),
@@ -139,7 +148,7 @@ export const styles = StyleSheet.create({
     shareButton: {
         width: widthPercentageToDP(11),
         height: heightPercentageToDP(5.5),
-        backgroundColor: blue,
+        //backgroundColor: blue,
         borderRadius: widthPercentageToDP(3),
         marginLeft: widthPercentageToDP(2),
         justifyContent: "center",
@@ -152,5 +161,108 @@ export const styles = StyleSheet.create({
         textAlign: "center",
         alignSelf: "center",
         padding: widthPercentageToDP(2)
-    }
+    },
+    smallText2: {
+        fontSize: widthPercentageToDP(3),
+        color: black,
+        fontFamily: "Montserrat-SemiBold",
+        textAlign: "center",
+        alignSelf: "center",
+        padding: widthPercentageToDP(2)
+    },
+    mapBottom: {
+        width: widthPercentageToDP(90),
+        height: heightPercentageToDP(10),
+        alignSelf: "center",
+        position: "absolute",
+        bottom: "10%",
+        borderRadius: widthPercentageToDP(4),
+        backgroundColor: blue,
+        justifyContent: "center"
+    },
+    circle: {
+        width: widthPercentageToDP(5),
+        height: widthPercentageToDP(5),
+        borderRadius: widthPercentageToDP(5) / 2,
+        borderWidth: widthPercentageToDP(0.5),
+        borderColor: "#cccccc",
+        marginLeft: 10
+    },
+    infoBox: {
+        width: widthPercentageToDP(70),
+        height: heightPercentageToDP(15),
+        alignItems: "center",
+        alignSelf: "center",
+        //backgroundColor: blue
+    },
+    infoTxt: {
+        fontSize: widthPercentageToDP(3.5),
+        color: black,
+        fontFamily: "Montserrat-SemiBold",
+        marginLeft: widthPercentageToDP(5)
+    },
+    socialView: {
+        width: widthPercentageToDP(80),
+        height: heightPercentageToDP(6),
+        alignItems: "center",
+        alignSelf: "center",
+        flexDirection: "row",
+        justifyContent: "space-between",
+        marginTop: heightPercentageToDP(2)
+    },
+    line: {
+        width: widthPercentageToDP(75),
+        height: heightPercentageToDP(0.3),
+        alignSelf: "center",
+        marginTop: heightPercentageToDP(3),
+        marginBottom: heightPercentageToDP(1)
+    },
+    commentView: {
+        width: widthPercentageToDP(80),
+        height: heightPercentageToDP(13),
+        justifyContent: "center",
+        alignItems: "center",
+        alignSelf: "center",
+        //backgroundColor:"red",
+        marginTop: heightPercentageToDP(1)
+    },
+    squre: {
+        width: widthPercentageToDP(20),
+        height: widthPercentageToDP(20),
+    },
+    starView: {
+        width: "70%",
+        height: "100%",
+        //backgroundColor:"yellow",
+        marginLeft: widthPercentageToDP(4),
+        justifyContent: "center",
+        alignItems: "center"
+    },
+    star: {
+        width: "20%",
+        height: "100%"
+    },
+    commentTxt: {
+        fontSize: widthPercentageToDP(4.5),
+        color: black,
+        fontFamily: "Montserrat-SemiBold",
+        marginTop: heightPercentageToDP(1)
+    },
+    titleView: {
+        width: widthPercentageToDP(90),
+        flexDirection: "row",
+        alignItems: "center",
+        alignSelf: "center",
+        marginTop: heightPercentageToDP(2)
+    },
+    titleTxt: {
+        fontSize: widthPercentageToDP(4.5),
+        fontFamily: "Montserrat-SemiBold",
+        color: blue
+    },
+    line2: {
+        width: widthPercentageToDP(65),
+        height: heightPercentageToDP(0.3),
+        marginLeft: widthPercentageToDP(0.5)
+    },
 })
