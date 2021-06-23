@@ -7,9 +7,11 @@ import { black, blue } from '../../config/color'
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view'
 import Tab from '../../Component/BottomTab'
 import { HomeAction, profileAction, settingAction, mapAction, notificationAction } from '../../Component/BottomTab/actions'
+import { useSelector, useDispatch } from 'react-redux';
 
 const DiveCenter = (props) => {
-
+    const dispatch = useDispatch();
+    const login = useSelector((state) => state.user.login);
     const _renderItem = ({ item, index }) => {
         return (
             <View style={[styles.commentView, {
@@ -64,18 +66,27 @@ const DiveCenter = (props) => {
                 style={styles.top}
                 resizeMode={FastImage.resizeMode.stretch}
             />
-            <FastImage
-                style={styles.profileImg}
-                source={require('../../Images/profile_img5.png')}
-                resizeMode={FastImage.resizeMode.contain}
-            />
-            <View style={{ marginTop: heightPercentageToDP(14) }} />
+            <View style={styles.profileImgView}>
+                {!login.data.image ?
+                    <FastImage
+                        style={styles.profileImg}
+                        source={require('../../Images/profile_img5.png')}
+                        resizeMode={FastImage.resizeMode.contain}
+                    />
+                    : <FastImage
+                        style={styles.profileImg}
+                        source={{ uri: "http://199.247.13.90/" + login.data.image }}
+                        resizeMode={FastImage.resizeMode.contain}
+                    />
+                }
+            </View>
+            <View style={{ marginTop: heightPercentageToDP(1) }} />
             <View style={[styles.commentView, {
                 backgroundColor: blue,
                 borderRadius: widthPercentageToDP(5),
-                height: heightPercentageToDP(15),
+                height: heightPercentageToDP(20),
             }]}>
-                <View style={{ flexDirection: "row", alignItems: "center", height: "30%", width: "90%", }}>
+                <View style={{ flexDirection: "row", alignItems: "center", height: "25%", width: "90%", }}>
                     <FastImage
                         source={require('../../Images/star.png')}
                         resizeMode={FastImage.resizeMode.contain}
@@ -109,6 +120,13 @@ const DiveCenter = (props) => {
                 />
                 <Text style={styles.commentTxt}>
                     {"312 Comentarios"}
+                </Text>
+                <Text
+                    onPress={() => props.navigation.navigate('SubmitReview')}
+                    style={[styles.commentTxt, {
+                        textDecorationLine: "underline"
+                    }]}>
+                    {"Write Review"}
                 </Text>
             </View>
 

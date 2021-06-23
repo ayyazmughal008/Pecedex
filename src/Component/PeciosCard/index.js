@@ -12,7 +12,7 @@ const Card = (props) => {
         >
             <FastImage
                 style={styles.img}
-                source={props.animalImg}
+                source={{ uri: props.animalImg }}
                 resizeMode={FastImage.resizeMode.cover}
             />
             <View style={styles.right}>

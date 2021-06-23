@@ -9,8 +9,11 @@ import { data } from './data'
 import Card from '../../Component/RankingCard'
 import { HomeAction, profileAction, settingAction, mapAction, notificationAction } from '../../Component/BottomTab/actions'
 import Tab from '../../Component/BottomTab'
+import { useSelector, useDispatch } from 'react-redux';
 
 const Profile = (props) => {
+    const dispatch = useDispatch();
+    const login = useSelector((state) => state.user.login);
     return (
         <SafeAreaView style={styles.container}>
             <KeyboardAwareScrollView>
@@ -19,11 +22,20 @@ const Profile = (props) => {
                     style={styles.top}
                     resizeMode={FastImage.resizeMode.stretch}
                 />
-                <FastImage
-                    style={styles.profileImg}
-                    source={require('../../Images/profile_img5.png')}
-                    resizeMode={FastImage.resizeMode.contain}
-                />
+                <View style={styles.profileImgView}>
+                    {!login.data.image ?
+                        <FastImage
+                            style={styles.profileImg}
+                            source={require('../../Images/profile_img5.png')}
+                            resizeMode={FastImage.resizeMode.contain}
+                        />
+                        : <FastImage
+                            style={styles.profileImg}
+                            source={{ uri: "http://199.247.13.90/" + login.data.image }}
+                            resizeMode={FastImage.resizeMode.contain}
+                        />
+                    }
+                </View>
                 <View style={styles.profileView}>
                     <Text style={[styles.profileName, { color: black, fontSize: widthPercentageToDP(5), alignSelf: "center" }]}>
                         {"PUNTUACION"}
@@ -91,7 +103,7 @@ const Profile = (props) => {
                     renderItem={({ item, index }) => {
                         return (
                             <Card
-                                rank={item.rank}
+                                rank={index + 1}
                                 title={item.title}
                                 score={item.score}
                             />

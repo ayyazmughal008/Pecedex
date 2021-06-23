@@ -1,13 +1,23 @@
 import React, { useEffect, useState } from 'react'
-import { SafeAreaView, View, Text, TextInput } from 'react-native'
+import { SafeAreaView, View, Text, TextInput, TouchableOpacity } from 'react-native'
 import { styles } from '../../config/styles'
 import { HomeAction, profileAction, settingAction, mapAction, notificationAction } from '../../Component/BottomTab/actions'
 import Tab from '../../Component/BottomTab'
 import { heightPercentageToDP, widthPercentageToDP } from '../../Component/MakeMeResponsive'
 import FastImage from 'react-native-fast-image'
-import { black, lightRed } from '../../config/color'
+import { black, green, lightRed } from '../../config/color'
+import { useSelector, useDispatch } from 'react-redux';
+import Strings from '../../Translation'
+import { logOut } from '../../Redux/action'
 
 const Setting = (props) => {
+    const dispatch = useDispatch();
+    const login = useSelector((state) => state.user.login);
+    useEffect(() => {
+        Strings.setLanguage('en')
+    }, [])
+
+
     return (
         <SafeAreaView style={styles.container}>
             <FastImage
@@ -15,12 +25,21 @@ const Setting = (props) => {
                 style={styles.top}
                 resizeMode={FastImage.resizeMode.stretch}
             />
-            <FastImage
-                style={styles.profileImg}
-                source={require('../../Images/profile_img5.png')}
-                resizeMode={FastImage.resizeMode.contain}
-            />
-            <View style={{ height: heightPercentageToDP(10) }} />
+            <View style={styles.profileImgView}>
+                {!login.data.image ?
+                    <FastImage
+                        style={styles.profileImg}
+                        source={require('../../Images/profile_img5.png')}
+                        resizeMode={FastImage.resizeMode.contain}
+                    />
+                    : <FastImage
+                        style={styles.profileImg}
+                        source={{ uri: "http://199.247.13.90/" + login.data.image }}
+                        resizeMode={FastImage.resizeMode.contain}
+                    />
+                }
+            </View>
+            {/* <View style={{ height: heightPercentageToDP(10) }} /> */}
             <View style={styles.titleView}>
                 <Text style={styles.titleTxt}>
                     {"Email"}
@@ -32,10 +51,11 @@ const Setting = (props) => {
                 />
             </View>
             <TextInput
-                style={[styles.input3, { marginLeft: widthPercentageToDP(8), }]}
+                style={[styles.input3, { marginLeft: widthPercentageToDP(4), }]}
                 placeholder="ayyazmughal007@gmail.com"
                 placeholderTextColor={black}
                 editable={false}
+                value={login.data.email}
             />
             <View style={styles.titleView}>
                 <Text style={styles.titleTxt}>
@@ -79,6 +99,21 @@ const Setting = (props) => {
                     {"Change"}
                 </Text>
             </View>
+
+            <TouchableOpacity
+                style={[styles.inputView, {
+                    backgroundColor: green,
+                    justifyContent: "center",
+                    alignItems: "center",
+                    marginTop: heightPercentageToDP(4),
+                    alignSelf: "center"
+                }]}
+                onPress={() => { dispatch(logOut()) }}
+            >
+                <Text style={styles.btnText}>
+                    {Strings.logout}
+                </Text>
+            </TouchableOpacity>
             <Tab
                 homeClick={() => props.navigation.dispatch(HomeAction)}
                 profileClick={() => props.navigation.dispatch(profileAction)}

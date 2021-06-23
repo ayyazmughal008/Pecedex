@@ -1,14 +1,18 @@
 import React, { useEffect, useState } from 'react'
-import { SafeAreaView, View, Text, TextInput, TouchableOpacity } from 'react-native'
+import { SafeAreaView, View, Text, TextInput, TouchableOpacity, ActivityIndicator } from 'react-native'
 import { styles } from '../../config/styles'
 import FastImage from 'react-native-fast-image'
 import Strings from '../../Translation'
-import { green, white } from '../../config/color'
+import { userLogin } from '../../Redux/action'
+import { useDispatch, useSelector } from 'react-redux';
+import { black, green, white } from '../../config/color'
 import Icon from 'react-native-vector-icons/FontAwesome'
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view'
 import { widthPercentageToDP } from '../../Component/MakeMeResponsive'
 
 const Login = (props) => {
+    const dispatch = useDispatch();
+    const AuthLoading = useSelector((state) => state.user.AuthLoading);
     const [name, setName] = useState("")
     const [pass, setPassword] = useState("")
     const [passVisible, setPassVisible] = useState(true)
@@ -18,13 +22,20 @@ const Login = (props) => {
     useEffect(() => {
         Strings.setLanguage('en')
     }, [])
+
+    const _onSubmit = () => {
+        dispatch(userLogin(
+            name, pass
+        ))
+    }
+
+
     return (
-        <SafeAreaView style={styles.container}>
-            <FastImage
-                style={styles.topImg}
-                source={require('../../Images/topImag.png')}
-                resizeMode={FastImage.resizeMode.stretch}
-            />
+        <FastImage
+            style={styles.bgImg}
+            source={require('../../Images/bg.jpg')}
+            resizeMode={FastImage.resizeMode.stretch}
+        >
             <View style={styles.loginView}>
                 <KeyboardAwareScrollView>
                     <Text style={[styles.loginTitle, { margin: 10, alignSelf: "center" }]}>
@@ -70,13 +81,13 @@ const Login = (props) => {
                                         name="eye-slash"
                                         color="#ffff"
                                         size={25}
-                                        style={{marginLeft:5}}
+                                        style={{ marginLeft: 5 }}
                                     />
                                     : <Icon
                                         name="eye"
                                         color="#ffff"
                                         size={25}
-                                        style={{marginLeft:5}}
+                                        style={{ marginLeft: 5 }}
                                     />
                                 }
                             </TouchableOpacity>
@@ -88,6 +99,7 @@ const Login = (props) => {
                             justifyContent: "center",
                             alignItems: "center"
                         }]}
+                        onPress={() => _onSubmit()}
                     >
                         <Text style={styles.btnText}>
                             {Strings.login}
@@ -111,8 +123,16 @@ const Login = (props) => {
                     </TouchableOpacity>
                 </KeyboardAwareScrollView>
             </View>
+            {AuthLoading &&
+                <ActivityIndicator
+                    size="large"
+                    color={black}
+                    style={styles.loading}
+                />
+            }
+        </FastImage>
 
-        </SafeAreaView>
+
     )
 }
 

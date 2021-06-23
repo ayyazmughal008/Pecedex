@@ -1,19 +1,31 @@
 import React, { useEffect, useState } from 'react'
-import { SafeAreaView, View, Text, TouchableOpacity } from 'react-native'
+import { SafeAreaView, View, Text, TouchableOpacity, StyleSheet } from 'react-native'
 import { styles } from '../../config/styles'
 import FastImage from 'react-native-fast-image'
 import Tab from '../../Component/BottomTab'
+import MapView, { PROVIDER_GOOGLE, Marker } from 'react-native-maps';
 import { heightPercentageToDP } from '../../Component/MakeMeResponsive'
 import { HomeAction, profileAction, settingAction, mapAction, notificationAction } from '../../Component/BottomTab/actions'
 
 const Map = (props) => {
     return (
         <SafeAreaView style={styles.container}>
-            <FastImage
-                source={require('../../Images/map.png')}
-                style={{ width: "100%", height: "100%" }}
-                resizeMode={FastImage.resizeMode.stretch}
-            >
+            <View style={StyleSheet.absoluteFillObject}>
+                <MapView
+                    provider={PROVIDER_GOOGLE} // remove if not using Google Maps
+                    style={StyleSheet.absoluteFillObject}
+                    region={{
+                        // latitude: parseFloat(this.state.lat),
+                        // longitude: parseFloat(this.state.long),
+                        latitude: 40.416775,
+                        longitude: -3.703790,
+                        // latitudeDelta: 0.0043,
+                        // longitudeDelta: 0.0034
+                        latitudeDelta: 0.0922,
+                        longitudeDelta: 0.0421,
+                    }}
+                />
+
                 <View style={styles.mapBottom}>
                     <View style={{ flexDirection: "row", alignItems: "center", width: "100%" }}>
                         <TouchableOpacity style={{ width: "50%", alignItems: "center", flexDirection: "row" }}>
@@ -41,7 +53,7 @@ const Map = (props) => {
                     mapClick={() => props.navigation.dispatch(mapAction)}
                     notiClick={() => props.navigation.dispatch(notificationAction)}
                 />
-            </FastImage>
+            </View>
         </SafeAreaView>
     )
 }

@@ -1,11 +1,31 @@
 import NavigationService from '../RootNavigator/navigationService'
 import Toast from 'react-native-simple-toast'
+import { Alert } from 'react-native'
 export const AUTH_LOADING = "AUTH_LOADING";
 export const LOG_OUT = "LOG_OUT";
 export const TEM_LOGIN = "TEM_LOGIN";
+export const USER_LOGIN = "USER_LOGIN";
+export const COUNTRY_NAME = "COUNTRY_NAME";
 
 
-const baseUrl = "http://95.179.217.235/api/";
+const baseUrl = "http://199.247.13.90/api/",
+    login = 'login',
+    getMenu = 'get-menu',
+    getFiles = 'get-files',
+    getClasses = 'get-classes',
+    getOrders = 'get-orders',
+    getFamilies = 'get-families',
+    getGenres = 'get-genres',
+    getPecios = 'get-pecios',
+    seenGenre = 'seen-genre',
+    seenPecio = 'seen-pecio',
+    uploadProfileImg = 'uploadProfileImage',
+    seenCount = 'seen-count',
+    animalSeenList = 'seen-genre-list',
+    peciosSeenList = 'seen-pecio-list',
+    register = 'register';
+
+const country_url = "https://countriesnow.space/api/v0.1/countries/positions"
 
 export const logOut = () => {
     return dispatch => {
@@ -22,8 +42,477 @@ export const temLogin = (value) => {
         })
     }
 }
+export const userLogin = (username, password) => {
+    return dispatch => {
+        dispatch({ type: AUTH_LOADING, payload: true });
+        fetch(baseUrl + login, {
+            method: 'POST',
+            headers: {
+                'Accept': 'application/json',
+                "Content-type": "application/json",
+            },
+            body: JSON.stringify({
+                name: username,
+                password: password
+            })
+        })
+            .then(res => res.json())
+            .then(json => {
+                dispatch({ type: AUTH_LOADING, payload: false });
+                console.log(json)
+                if (json.status == 200) {
+                    dispatch({
+                        type: USER_LOGIN,
+                        payload: {
+                            login: json
+                        }
+                    })
+                } else if (json.status == 401) {
+                    Alert.alert("", json.message)
+                } else {
+                    Alert.alert("", json.message)
+                }
 
+            })
+            .catch(error => {
+                dispatch({ type: AUTH_LOADING, payload: false });
+                console.log(error)
+            })
+    };
+}
+export const userRegister = (name, email, password, certificate) => {
+    return dispatch => {
+        dispatch({ type: AUTH_LOADING, payload: true });
+        fetch(baseUrl + register, {
+            method: 'POST',
+            headers: {
+                'Accept': 'application/json',
+                "Content-type": "application/json",
+            },
+            body: JSON.stringify({
+                name: name,
+                email: email,
+                password: password,
+                certificate: certificate
+            })
+        })
+            .then(res => res.json())
+            .then(json => {
+                dispatch({ type: AUTH_LOADING, payload: false });
+                console.log(json)
+                if (json.status == 200) {
+                    NavigationService.navigate('Login')
+                } else if (json.status == 401) {
+                    Alert.alert("", json.message)
+                } else {
+                    Alert.alert("", json.message)
+                }
 
+            })
+            .catch(error => {
+                dispatch({ type: AUTH_LOADING, payload: false });
+                console.log(error)
+            })
+    };
+}
+export const getMainMenu = async () => {
+    let api
+    try {
+        api = await fetch(baseUrl + getMenu, {
+            method: 'POST',
+            headers: {
+                'Accept': 'application/json',
+                "Content-type": "application/json",
+            },
+        })
+            .then(res => res.json())
+            .then(json => {
+                console.log(json)
+                return json
+            })
+            .catch(error => {
+                console.log("response error ===>", error)
+            })
+    } catch (error) {
+        console.log('my error' + error.message);
+    }
+    return api
+}
+export const getMenuFiles = async () => {
+    let api
+    try {
+        api = await fetch(baseUrl + getFiles, {
+            method: 'POST',
+            headers: {
+                'Accept': 'application/json',
+                "Content-type": "application/json",
+            },
+        })
+            .then(res => res.json())
+            .then(json => {
+                console.log(json)
+                return json
+            })
+            .catch(error => {
+                console.log("response error ===>", error)
+            })
+    } catch (error) {
+        console.log('my error' + error.message);
+    }
+    return api
+}
+export const getMenuClasses = async (id) => {
+    let api
+    try {
+        api = await fetch(baseUrl + getClasses, {
+            method: 'POST',
+            headers: {
+                'Accept': 'application/json',
+                "Content-type": "application/json",
+            },
+            body: JSON.stringify({
+                fileId: id
+            })
+        })
+            .then(res => res.json())
+            .then(json => {
+                console.log(json)
+                return json
+            })
+            .catch(error => {
+                console.log("response error ===>", error)
+            })
+    } catch (error) {
+        console.log('my error' + error.message);
+    }
+    return api
+}
+export const getMenuOrders = async (id) => {
+    let api
+    try {
+        api = await fetch(baseUrl + getOrders, {
+            method: 'POST',
+            headers: {
+                'Accept': 'application/json',
+                "Content-type": "application/json",
+            },
+            body: JSON.stringify({
+                classId: id
+            })
+        })
+            .then(res => res.json())
+            .then(json => {
+                console.log(json)
+                return json
+            })
+            .catch(error => {
+                console.log("response error ===>", error)
+            })
+    } catch (error) {
+        console.log('my error' + error.message);
+    }
+    return api
+}
+export const getMenuFamily = async (id) => {
+    let api
+    try {
+        api = await fetch(baseUrl + getFamilies, {
+            method: 'POST',
+            headers: {
+                'Accept': 'application/json',
+                "Content-type": "application/json",
+            },
+            body: JSON.stringify({
+                orderId: id
+            })
+        })
+            .then(res => res.json())
+            .then(json => {
+                console.log(json)
+                return json
+            })
+            .catch(error => {
+                console.log("response error ===>", error)
+            })
+    } catch (error) {
+        console.log('my error' + error.message);
+    }
+    return api
+}
+export const getMenuGenro = async (id) => {
+    let api
+    try {
+        api = await fetch(baseUrl + getGenres, {
+            method: 'POST',
+            headers: {
+                'Accept': 'application/json',
+                "Content-type": "application/json",
+            },
+            body: JSON.stringify({
+                familyId: id
+            })
+        })
+            .then(res => res.json())
+            .then(json => {
+                console.log(json)
+                return json
+            })
+            .catch(error => {
+                console.log("response error ===>", error)
+            })
+    } catch (error) {
+        console.log('my error' + error.message);
+    }
+    return api
+}
+export const getPeciosData = async (id) => {
+    console.log("Peicos api")
+    let api
+    try {
+        api = await fetch(baseUrl + getPecios, {
+            method: 'POST',
+            headers: {
+                'Accept': 'application/json',
+                "Content-type": "application/json",
+            },
+        })
+            .then(res => res.json())
+            .then(json => {
+                console.log(json)
+                return json
+            })
+            .catch(error => {
+                console.log("response error ===>", error)
+            })
+    } catch (error) {
+        console.log('my error' + error.message);
+    }
+    return api
+}
+export const postGenerSeen = async (genreId, userId) => {
+    let api
+    try {
+        api = await fetch(baseUrl + seenGenre, {
+            method: 'POST',
+            headers: {
+                'Accept': 'application/json',
+                "Content-type": "application/json",
+            },
+            body: JSON.stringify({
+                genreId: genreId,
+                userId: userId
+            })
+        })
+            .then(res => res.json())
+            .then(json => {
+                console.log(json)
+                if (json.status == 200) {
+                    Alert.alert("", json.message)
+                } else {
+                    Alert.alert("", json.message)
+                }
+                return json
+            })
+            .catch(error => {
+                console.log("response error ===>", error)
+            })
+    } catch (error) {
+        console.log('my error' + error.message);
+    }
+    return api
+}
+export const postPecioSeen = async (pecioId, userId) => {
+    let api
+    try {
+        api = await fetch(baseUrl + seenPecio, {
+            method: 'POST',
+            headers: {
+                'Accept': 'application/json',
+                "Content-type": "application/json",
+            },
+            body: JSON.stringify({
+                pecioId: pecioId,
+                userId: userId
+            })
+        })
+            .then(res => res.json())
+            .then(json => {
+                console.log(json)
+                if (json.status == 200) {
+                    Alert.alert("", json.message)
+                } else {
+                    Alert.alert("", json.message)
+                }
+                return json
+            })
+            .catch(error => {
+                console.log("response error ===>", error)
+            })
+    } catch (error) {
+        console.log('my error' + error.message);
+    }
+    return api
+}
+export const postProfileImg = (userId, image) => {
+    return dispatch => {
+        const body = new FormData();
+        body.append('userId', userId);
+        body.append('image', image);
+        dispatch({ type: AUTH_LOADING, payload: true });
+        fetch(baseUrl + uploadProfileImg, {
+            method: 'POST',
+            headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'multipart/form-data',
+            },
+            body: body
+        })
+            .then(res => res.json())
+            .then(json => {
+                dispatch({ type: AUTH_LOADING, payload: false });
+                console.log(json)
+                if (json.status == 200) {
+                    dispatch({
+                        type: USER_LOGIN,
+                        payload: {
+                            login: json
+                        }
+                    })
+                } else if (json.status == 401) {
+                    Alert.alert("", json.message)
+                } else {
+                    Alert.alert("", json.message)
+                }
+
+            })
+            .catch(error => {
+                dispatch({ type: AUTH_LOADING, payload: false });
+                console.log(error)
+            })
+    };
+}
+export const getSeenCount = async (userId) => {
+    let api
+    try {
+        api = await fetch(baseUrl + seenCount, {
+            method: 'POST',
+            headers: {
+                'Accept': 'application/json',
+                "Content-type": "application/json",
+            },
+            body: JSON.stringify({
+                userId: userId
+            })
+        })
+            .then(res => res.json())
+            .then(json => {
+                if (json.status == 200) {
+                    console.log(json)
+                    return json
+                } else {
+                    Alert.alert("", json.message)
+                }
+            })
+            .catch(error => {
+                console.log("response error ===>", error)
+            })
+    } catch (error) {
+        console.log('my error' + error.message);
+    }
+    return api
+}
+export const getAnimalSeenList = async (userId) => {
+    let api
+    try {
+        api = await fetch(baseUrl + animalSeenList, {
+            method: 'POST',
+            headers: {
+                'Accept': 'application/json',
+                "Content-type": "application/json",
+            },
+            body: JSON.stringify({
+                userId: userId
+            })
+        })
+            .then(res => res.json())
+            .then(json => {
+                if (json.status == 200) {
+                    console.log(json)
+                    return json
+                } else {
+                    Alert.alert("", json.message)
+                }
+            })
+            .catch(error => {
+                console.log("response error ===>", error)
+            })
+    } catch (error) {
+        console.log('my error' + error.message);
+    }
+    return api
+}
+export const getPeciosSeenList = async (userId) => {
+    let api
+    try {
+        api = await fetch(baseUrl + peciosSeenList, {
+            method: 'POST',
+            headers: {
+                'Accept': 'application/json',
+                "Content-type": "application/json",
+            },
+            body: JSON.stringify({
+                userId: userId
+            })
+        })
+            .then(res => res.json())
+            .then(json => {
+                if (json.status == 200) {
+                    console.log(json)
+                    return json
+                } else {
+                    Alert.alert("", json.message)
+                }
+            })
+            .catch(error => {
+                console.log("response error ===>", error)
+            })
+    } catch (error) {
+        console.log('my error' + error.message);
+    }
+    return api
+}
+export const getCountryName = () => {
+    return dispatch => {
+        dispatch({ type: AUTH_LOADING, payload: true });
+        fetch(country_url, {
+            method: 'GET',
+            headers: {
+                'Accept': 'application/json',
+                "Content-type": "application/json",
+            },
+        })
+            .then(res => res.json())
+            .then(json => {
+                dispatch({ type: AUTH_LOADING, payload: false });
+                console.log(json)
+                if (json.error == false) {
+                    dispatch({
+                        type: COUNTRY_NAME,
+                        payload: {
+                            countryData: json.data
+                        }
+                    })
+                } else {
+                    Alert.alert("", json.error)
+                }
+
+            })
+            .catch(error => {
+                dispatch({ type: AUTH_LOADING, payload: false });
+                console.log(error)
+            })
+    };
+}
 
 
 

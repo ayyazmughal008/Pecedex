@@ -1,14 +1,31 @@
 import React, { useEffect, useState } from 'react'
-import { SafeAreaView, View, Text, FlatList } from 'react-native'
+import { SafeAreaView, View, Text, FlatList, ActivityIndicator } from 'react-native'
 import { styles } from '../../config/styles'
 import FastImage from 'react-native-fast-image'
 import Card from '../../Component/AnimalCard'
 import { data } from './data'
+import { getMenuFiles } from '../../Redux/action'
 import Tab from '../../Component/BottomTab'
 import { heightPercentageToDP } from '../../Component/MakeMeResponsive'
 import { HomeAction, profileAction, settingAction, mapAction, notificationAction } from '../../Component/BottomTab/actions'
+import { black } from '../../config/color'
 
 const Map = (props) => {
+    const [isLoading, setIsLoading] = useState(false)
+    const [Response, setResponse] = useState('')
+
+    useEffect(() => {
+        getApis()
+    }, [])
+
+    const getApis = async () => {
+        setIsLoading(true)
+        let menuData = await getMenuFiles()
+        await setResponse(menuData)
+        await setIsLoading(false)
+    }
+
+
     return (
         <SafeAreaView style={styles.container}>
             <FastImage
@@ -18,23 +35,27 @@ const Map = (props) => {
             >
                 <Text style={styles.proInfoTile}>{"ANIMAL"}</Text>
             </FastImage>
-            <FlatList
-                data={data}
-                showsVerticalScrollIndicator={false}
-                style={{ alignSelf: "center" }}
-                keyExtractor={(item, index) => "unique" + index}
-                renderItem={({ item, index }) => {
-                    return (
-                        <Card
-                            title={item.title}
-                            animalImg={item.animalImg}
-                            clickHandler={() => {
-                                props.navigation.navigate('Classes')
-                            }}
-                        />
-                    )
-                }}
-            />
+            {!Response || !Response.data ?
+                <View />
+                : <FlatList
+                    data={Response.data}
+                    showsVerticalScrollIndicator={false}
+                    style={{ alignSelf: "center" }}
+                    keyExtractor={(item, index) => "unique" + index}
+                    renderItem={({ item, index }) => {
+                        return (
+                            <Card
+                                title={item.title}
+                                animalImg={"http://199.247.13.90/" + item.image}
+                                clickHandler={() => {
+                                    props.navigation.navigate('Classes', {
+                                        id: item.id
+                                    })
+                                }}
+                            />
+                        )
+                    }}
+                />}
             <View style={{ height: heightPercentageToDP(5) }} />
             <Tab
                 homeClick={() => props.navigation.dispatch(HomeAction)}
@@ -43,6 +64,13 @@ const Map = (props) => {
                 mapClick={() => props.navigation.dispatch(mapAction)}
                 notiClick={() => props.navigation.dispatch(notificationAction)}
             />
+            {isLoading &&
+                <ActivityIndicator
+                    size="large"
+                    color={black}
+                    style={styles.loading}
+                />
+            }
         </SafeAreaView>
     )
 }

@@ -2,13 +2,17 @@ import { combineReducers } from "redux";
 import {
   AUTH_LOADING,
   LOG_OUT,
-  TEM_LOGIN
+  TEM_LOGIN,
+  USER_LOGIN,
+  COUNTRY_NAME
 
 } from "./action";
 
 const initialUserState = {
   AuthLoading: false,
-  isLogin: false
+  isLogin: false,
+  login: "",
+  countryData: []
 };
 
 const userReducer = (state = initialUserState, action) => {
@@ -16,6 +20,8 @@ const userReducer = (state = initialUserState, action) => {
     return {
       ...state,
       AuthLoading: false,
+      login: "",
+      countryData: []
     };
   }
   if (action.type === AUTH_LOADING) {
@@ -28,6 +34,18 @@ const userReducer = (state = initialUserState, action) => {
     return {
       ...state,
       isLogin: action.payload.isLogin
+    };
+  }
+  if (action.type === USER_LOGIN) {
+    return {
+      ...state,
+      login: action.payload.login
+    };
+  }
+  if (action.type === COUNTRY_NAME) {
+    return {
+      ...state,
+      countryData: action.payload.countryData
     };
   }
   return state;

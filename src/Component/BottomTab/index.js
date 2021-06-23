@@ -65,7 +65,7 @@ const Card = (props) => {
 const styles = StyleSheet.create({
     container: {
         width: widthPercentageToDP(100),
-        height: heightPercentageToDP(6.5),
+        height: heightPercentageToDP(8),
         position: "absolute",
         bottom: "0%",
         justifyContent: "center",

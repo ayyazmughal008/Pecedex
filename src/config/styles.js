@@ -16,12 +16,21 @@ export const styles = StyleSheet.create({
         width: widthPercentageToDP(100),
         height: heightPercentageToDP(55),
     },
+    loading: {
+        position: 'absolute',
+        left: 0,
+        right: 0,
+        top: 0,
+        bottom: 0,
+        alignItems: 'center',
+        justifyContent: 'center'
+    },
     loginView: {
         width: widthPercentageToDP(90),
         height: heightPercentageToDP(40),
         alignSelf: "center",
         position: "absolute",
-        bottom: "2%",
+        bottom: "0%",
         alignItems: "center"
         //backgroundColor:"red"
     },
@@ -87,17 +96,24 @@ export const styles = StyleSheet.create({
     },
     top: {
         width: widthPercentageToDP(100),
-        height: heightPercentageToDP(12),
+        height: heightPercentageToDP(9),
         justifyContent: "center",
         alignItems: "center"
     },
-    profileImg: {
+    profileImgView: {
         width: widthPercentageToDP(35),
         height: widthPercentageToDP(35),
         borderRadius: widthPercentageToDP(35) / 2,
         alignSelf: "center",
-        position: "absolute",
-        top: "6%"
+        justifyContent: "center",
+        alignItems: "center",
+        marginTop: heightPercentageToDP(-5),
+        //backgroundColor: "red"
+    },
+    profileImg: {
+        width: widthPercentageToDP(34),
+        height: widthPercentageToDP(34),
+        borderRadius: widthPercentageToDP(34) / 2,
     },
     profileView: {
         width: widthPercentageToDP(90),
@@ -105,7 +121,7 @@ export const styles = StyleSheet.create({
         backgroundColor: blue,
         borderRadius: widthPercentageToDP(5),
         alignSelf: "center",
-        marginTop: heightPercentageToDP(12),
+        marginTop: heightPercentageToDP(2),
         alignItems: "center"
     },
     logView: {
@@ -137,6 +153,15 @@ export const styles = StyleSheet.create({
         fontFamily: "Montserrat-SemiBold",
         marginLeft: widthPercentageToDP(5)
     },
+    proInfoTile2: {
+        fontSize: widthPercentageToDP(5),
+        color: white,
+        fontFamily: "Montserrat-SemiBold",
+        alignSelf: "center",
+        color: blue,
+        marginTop: 10
+        //marginLeft: widthPercentageToDP(5)
+    },
     shareView: {
         width: widthPercentageToDP(100),
         height: heightPercentageToDP(7),
@@ -155,7 +180,7 @@ export const styles = StyleSheet.create({
         alignItems: "center"
     },
     smallText: {
-        fontSize: widthPercentageToDP(4),
+        fontSize: widthPercentageToDP(3.5),
         color: black,
         fontFamily: "Montserrat-SemiBold",
         textAlign: "center",

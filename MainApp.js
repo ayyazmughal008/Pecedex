@@ -5,11 +5,11 @@ import MainNavigator from "./src/MainNavigator";
 import { useSelector } from 'react-redux';
 
 const MainApp = props => {
-    const isLogin = useSelector((state) => state.user.isLogin);
+    const login = useSelector((state) => state.user.login);
     return (
         <View style={{ flex: 1 }}>
             {
-                !isLogin ?
+                !login ?
                     <NAVIGATOR
                         //uriPrefix={prefix}
                         ref={navigatorRef => {

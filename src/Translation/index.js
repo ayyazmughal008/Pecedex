@@ -16,7 +16,8 @@ const Strings = new LocalizedStrings({
         setting:"Setting",
         map:"Map",
         notification:"Notification",
-        search:"Search"
+        search:"Search",
+        logout:"Logout"
     },
     es: {
         signin:"INICIAR SESIÓN",
@@ -33,7 +34,8 @@ const Strings = new LocalizedStrings({
         setting:"Configuración",
         map:"Mapa",
         notification:"Notification",
-        search:"Buscar"
+        search:"Buscar",
+        logout:"Cerrar sesión"
     },
 });
 

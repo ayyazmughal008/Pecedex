@@ -15,7 +15,7 @@ const Card = (props) => {
             >
                 <FastImage
                     style={styles.img}
-                    source={props.animalImg}
+                    source={{ uri: props.animalImg }}
                     resizeMode={FastImage.resizeMode.cover}
                 />
             </TouchableOpacity>
@@ -26,8 +26,8 @@ const Card = (props) => {
 const styles = StyleSheet.create({
     container: {
         width: widthPercentageToDP(90),
-        height: heightPercentageToDP(22),
-        marginBottom: heightPercentageToDP(3)
+        height: heightPercentageToDP(20),
+        marginBottom: heightPercentageToDP(1)
     },
     title: {
         fontSize: widthPercentageToDP(4.5),
@@ -36,9 +36,9 @@ const styles = StyleSheet.create({
     },
     img: {
         width: widthPercentageToDP(90),
-        height: heightPercentageToDP(18),
-        marginTop: heightPercentageToDP(2),
-        borderRadius:widthPercentageToDP(5)
+        height: heightPercentageToDP(16),
+        marginTop: heightPercentageToDP(1),
+        borderRadius: widthPercentageToDP(5)
     }
 })
 

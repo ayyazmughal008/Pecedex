@@ -1,21 +1,60 @@
 import React, { useEffect, useState } from 'react'
-import { SafeAreaView, View, Text, TouchableOpacity, TextInput, FlatList } from 'react-native'
+import { SafeAreaView, View, Text, TouchableOpacity, TextInput, FlatList, ActivityIndicator } from 'react-native'
 import { styles } from '../../config/styles'
 import FastImage from 'react-native-fast-image'
 import Strings from '../../Translation'
+import { getMainMenu } from '../../Redux/action'
 import Icon from 'react-native-vector-icons/EvilIcons'
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view'
 import { widthPercentageToDP, heightPercentageToDP } from '../../Component/MakeMeResponsive'
-import Card from '../../Component/AnimalCard'
+import Card from '../../Component/HomeCard/'
 import { data } from './data'
-import { ListItem } from 'react-native-elements/dist/list/ListItem'
 import Tab from '../../Component/BottomTab'
 import { HomeAction, profileAction, settingAction, mapAction, notificationAction } from '../../Component/BottomTab/actions'
+import { black } from '../../config/color'
+import { AdMobInterstitial } from 'react-native-admob'
 
 const Home = (props) => {
-    const [searchtxt, setSearch] = useState("")
+    const [isLoading, setIsLoading] = useState(false)
+    const [menuResponse, setResponse] = useState('')
     useEffect(() => {
         Strings.setLanguage('en')
+    }, [])
+    // useEffect(() => {
+    //     //getApis()
+    //     AdMobInterstitial.setTestDevices([AdMobInterstitial.simulatorId]);
+    //     AdMobInterstitial.setAdUnitID('ca-app-pub-3940256099942544/1033173712');
+
+    //     AdMobInterstitial.addEventListener('adLoaded', () =>
+    //         console.log('AdMobInterstitial adLoaded'),
+    //     );
+    //     AdMobInterstitial.addEventListener('adFailedToLoad', error =>
+    //         console.warn(error),
+    //     );
+    //     AdMobInterstitial.addEventListener('adOpened', () =>
+    //         console.log('AdMobInterstitial => adOpened'),
+    //     );
+    //     AdMobInterstitial.addEventListener('adClosed', () => {
+    //         console.log('AdMobInterstitial => adClosed');
+    //         AdMobInterstitial.requestAd().catch(error => console.warn(error));
+    //     });
+    //     AdMobInterstitial.addEventListener('adLeftApplication', () =>
+    //         console.log('AdMobInterstitial => adLeftApplication'),
+    //     );
+
+    //     AdMobInterstitial.requestAd().catch(error => console.warn(error));
+    // }, [])
+    const getApis = async () => {
+        setIsLoading(true)
+        let menuData = await getMainMenu()
+        await setResponse(menuData)
+        await setIsLoading(false)
+    }
+    // const showInterstitial = () => {
+    //     AdMobInterstitial.showAd().catch(error => console.warn(error));
+    // }
+    useEffect(() => {
+        //showInterstitial()
     }, [])
 
     return (
@@ -61,6 +100,9 @@ const Home = (props) => {
                         </TouchableOpacity>
                     </View>
                 </View>
+                {/* {!menuResponse || !menuResponse.data ?
+                    <View />
+                    :  */}
                 <FlatList
                     data={data}
                     showsVerticalScrollIndicator={false}
@@ -84,6 +126,7 @@ const Home = (props) => {
                         )
                     }}
                 />
+                {/* } */}
 
             </KeyboardAwareScrollView>
             <View style={{ height: heightPercentageToDP(5) }} />
@@ -94,6 +137,13 @@ const Home = (props) => {
                 mapClick={() => props.navigation.dispatch(mapAction)}
                 notiClick={() => props.navigation.dispatch(notificationAction)}
             />
+            {isLoading &&
+                <ActivityIndicator
+                    size="large"
+                    color={black}
+                    style={styles.loading}
+                />
+            }
         </SafeAreaView>
     )
 }
