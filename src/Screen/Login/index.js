@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react'
-import { SafeAreaView, View, Text, TextInput, TouchableOpacity, ActivityIndicator } from 'react-native'
+import { SafeAreaView, View, Text, TextInput, TouchableOpacity, ActivityIndicator, Alert } from 'react-native'
 import { styles } from '../../config/styles'
 import FastImage from 'react-native-fast-image'
 import Strings from '../../Translation'
@@ -24,12 +24,15 @@ const Login = (props) => {
     }, [])
 
     const _onSubmit = () => {
+        const validate = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+        if (!validate.test(name)) {
+            Alert.alert("", "Please enter a valid email address")
+            return
+        }
         dispatch(userLogin(
             name, pass
         ))
     }
-
-
     return (
         <FastImage
             style={styles.bgImg}
@@ -43,7 +46,7 @@ const Login = (props) => {
                     </Text>
                     <View style={styles.inputView}>
                         <TextInput
-                            placeholder={Strings.name}
+                            placeholder={Strings.email}
                             placeholderTextColor="#ffff"
                             style={styles.input}
                             onChangeText={text => setName(text)}

@@ -119,6 +119,7 @@ const Home = (props) => {
                                     } else if (index == 1) {
                                         props.navigation.navigate('Animal')
                                     } else if (index == 2) {
+                                        //props.navigation.navigate('NewScreen')
                                         props.navigation.navigate('LogBook')
                                     }
                                 }}

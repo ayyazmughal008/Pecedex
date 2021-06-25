@@ -9,6 +9,7 @@ import Genre from '../../Screen/Genere'
 import Dive from '../../Screen/Dive'
 import Ranking from '../../Screen/Rankisng'
 import LogBook from '../../Screen/LogBook'
+import NewScreen from '../../Screen/LogBook/NewScreen'
 import RankingDetail from '../../Screen/RankingDetail'
 import AnimalSeen from '../../Screen/AnimalSeen'
 import DiveCenter from '../../Screen/DiveCenter'
@@ -86,6 +87,9 @@ export default createStackNavigator(
     },
     SubmitReview: {
       screen: SubmitReview
+    },
+    NewScreen: {
+      screen: NewScreen
     },
   },
   {

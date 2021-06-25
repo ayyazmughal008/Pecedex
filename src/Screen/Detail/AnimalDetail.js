@@ -1,23 +1,27 @@
 import React, { useEffect, useState } from 'react'
-import { SafeAreaView, View, Text, FlatList, TouchableOpacity, Linking, ActivityIndicator } from 'react-native'
+import { SafeAreaView, View, Text, FlatList, TouchableOpacity, Linking, ActivityIndicator, PermissionsAndroid } from 'react-native'
 import { styles } from '../../config/styles'
 import FastImage from 'react-native-fast-image'
 import { widthPercentageToDP, heightPercentageToDP } from '../../Component/MakeMeResponsive'
 import { SliderBox } from "react-native-image-slider-box";
 import { black, blue, white } from '../../config/color'
-import { postGenerSeen } from '../../Redux/action'
+import { postGenerSeen, postGenerImg } from '../../Redux/action'
 import Tab from '../../Component/BottomTab'
 import { HomeAction, profileAction, settingAction, mapAction, notificationAction } from '../../Component/BottomTab/actions'
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view'
 import Share from 'react-native-share';
-import { useSelector } from 'react-redux';
+import ImagePicker from 'react-native-image-crop-picker';
+import { useSelector, useDispatch } from 'react-redux';
+import Picker from '../Profile/Picker'
 
 
-const PeciosDetail = (props) => {
+const GenreDetail = (props) => {
+    const dispatch = useDispatch();
     const data = props.navigation.getParam('data', "12")
     const login = useSelector((state) => state.user.login);
+    const AuthLoading = useSelector((state) => state.user.AuthLoading);
+    const [pickerOption, setOption] = useState(false)
     const [isLoading, setIsLoading] = useState(false)
-
     const getApis = async () => {
         setIsLoading(true)
         await postGenerSeen(data.id, login.data.id)
@@ -58,6 +62,65 @@ const PeciosDetail = (props) => {
             //setResult('error: '.concat(getErrorString(error)));
         }
     };
+    const toggleOption = () => {
+        setOption(!pickerOption)
+    }
+    const requestCameraPermission = async () => {
+        try {
+            const granted = await PermissionsAndroid.request(
+                PermissionsAndroid.PERMISSIONS.CAMERA,
+                {
+                    'title': 'Pecedex',
+                    'message': 'Pecedex App needs access to your camera ' +
+                        'so you can take pictures.'
+                }
+            )
+            if (granted === PermissionsAndroid.RESULTS.GRANTED) {
+                _onLunchCamera();
+            } else {
+                console.log("Camera permission denied")
+            }
+        } catch (err) {
+            console.warn(err)
+        }
+    }
+    const _onLunchCamera = () => {
+        let data2 = "";
+        ImagePicker.openCamera({
+            width: 300,
+            height: 400,
+            cropping: true,
+        }).then(response => {
+            console.log(response)
+            data2 = {
+                'uri': response.path,
+                'type': response.mime,
+                'name': Date.now() + '_Pecedex.png',
+            }
+            dispatch(postGenerImg(login.data.id, data.id, data2))
+        })
+            .catch(err => {
+                console.log(err);
+            })
+    }
+    const _onLunchGallery = () => {
+        let data2 = "";
+        ImagePicker.openPicker({
+            width: 300,
+            height: 400,
+            cropping: true
+        }).then(image => {
+            console.log(image);
+            data2 = {
+                'uri': image.path,
+                'type': image.mime,
+                'name': Date.now() + '_Pecedex.png',
+            }
+            dispatch(postGenerImg(login.data.id, data.id, data2))
+        }).catch(error => {
+            console.log(error);
+        })
+    }
     return (
         <SafeAreaView style={styles.container}>
             <KeyboardAwareScrollView contentContainerStyle={{ alignItems: "center" }}>
@@ -86,6 +149,7 @@ const PeciosDetail = (props) => {
                         }}
                     />
                     <TouchableOpacity
+                        onPress={() => toggleOption()}
                         style={{
                             position: "absolute",
                             bottom: "4%",
@@ -237,8 +301,30 @@ const PeciosDetail = (props) => {
                     style={styles.loading}
                 />
             }
+            {AuthLoading &&
+                <ActivityIndicator
+                    size="large"
+                    color={black}
+                    style={styles.loading}
+                />
+            }
+            {pickerOption &&
+                <Picker
+                    isDialogOpen={pickerOption}
+                    cancelClick={() => {
+                        toggleOption()
+                        requestCameraPermission()
+                    }}
+                    okClick={() => {
+                        toggleOption()
+                        _onLunchGallery()
+                    }}
+                    title="Seleccione la opción para la foto de perfil"
+                    closeBox={() => toggleOption()}
+                />
+            }
         </SafeAreaView>
     )
 }
 
-export default PeciosDetail;
+export default GenreDetail;

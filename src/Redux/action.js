@@ -23,6 +23,8 @@ const baseUrl = "http://199.247.13.90/api/",
     seenCount = 'seen-count',
     animalSeenList = 'seen-genre-list',
     peciosSeenList = 'seen-pecio-list',
+    peciosImg = 'upload-image-pecio',
+    generImg = 'upload-image-genre',
     register = 'register';
 
 const country_url = "https://countriesnow.space/api/v0.1/countries/positions"
@@ -52,7 +54,7 @@ export const userLogin = (username, password) => {
                 "Content-type": "application/json",
             },
             body: JSON.stringify({
-                name: username,
+                email: username,
                 password: password
             })
         })
@@ -504,6 +506,74 @@ export const getCountryName = () => {
                     })
                 } else {
                     Alert.alert("", json.error)
+                }
+
+            })
+            .catch(error => {
+                dispatch({ type: AUTH_LOADING, payload: false });
+                console.log(error)
+            })
+    };
+}
+export const postPeciosImg = (userId, pecioId, image) => {
+    return dispatch => {
+        const body = new FormData();
+        body.append('userId', userId);
+        body.append('pecioId', pecioId);
+        body.append('image', image);
+        dispatch({ type: AUTH_LOADING, payload: true });
+        fetch(baseUrl + peciosImg, {
+            method: 'POST',
+            headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'multipart/form-data',
+            },
+            body: body
+        })
+            .then(res => res.json())
+            .then(json => {
+                dispatch({ type: AUTH_LOADING, payload: false });
+                console.log(json)
+                if (json.status == 200) {
+                    Alert.alert("", json.message)
+                } else if (json.status == 401) {
+                    Alert.alert("", json.message)
+                } else {
+                    Alert.alert("", json.message)
+                }
+
+            })
+            .catch(error => {
+                dispatch({ type: AUTH_LOADING, payload: false });
+                console.log(error)
+            })
+    };
+}
+export const postGenerImg = (userId, genreId, image) => {
+    return dispatch => {
+        const body = new FormData();
+        body.append('userId', userId);
+        body.append('genreId', genreId);
+        body.append('image', image);
+        dispatch({ type: AUTH_LOADING, payload: true });
+        fetch(baseUrl + generImg, {
+            method: 'POST',
+            headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'multipart/form-data',
+            },
+            body: body
+        })
+            .then(res => res.json())
+            .then(json => {
+                dispatch({ type: AUTH_LOADING, payload: false });
+                console.log(json)
+                if (json.status == 200) {
+                    Alert.alert("", json.message)
+                } else if (json.status == 401) {
+                    Alert.alert("", json.message)
+                } else {
+                    Alert.alert("", json.message)
                 }
 
             })

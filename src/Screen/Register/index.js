@@ -3,13 +3,14 @@ import { SafeAreaView, View, Text, TextInput, TouchableOpacity, Alert, ActivityI
 import { styles } from '../../config/styles'
 import FastImage from 'react-native-fast-image'
 import Strings from '../../Translation'
-import { black, green, white } from '../../config/color'
+import { black, blue, green, white } from '../../config/color'
 import { userRegister } from '../../Redux/action'
 import { useDispatch, useSelector } from 'react-redux';
 import { temLogin } from '../../Redux/action'
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view'
 import Icon from 'react-native-vector-icons/FontAwesome'
-import { widthPercentageToDP } from '../../Component/MakeMeResponsive'
+import { widthPercentageToDP, heightPercentageToDP } from '../../Component/MakeMeResponsive'
+import RNPickerSelect from 'react-native-picker-select';
 
 const Register = (props) => {
     const dispatch = useDispatch();
@@ -75,14 +76,27 @@ const Register = (props) => {
                                 autoCapitalize="none"
                             />
                         </View>
-                        <View style={styles.inputView}>
-                            <TextInput
+                        <View style={styles.inputDropdownView}>
+                            {/* <TextInput
                                 placeholder={Strings.certificate}
                                 placeholderTextColor="#ffff"
                                 style={styles.input}
                                 onChangeText={text => setCertificate(text)}
                                 keyboardType="email-address"
                                 autoCapitalize="none"
+                            /> */}
+                            <RNPickerSelect
+                                placeholder={{
+                                    label: Strings.certificate,
+                                    value: null,
+                                    color: "#000"
+                                }}
+                                value={certificate}
+                                style={pickerStyle}
+                                onValueChange={value => {
+                                    setCertificate(value)
+                                }}
+                                items={[{ label: "value", value: "value" }]}
                             />
                         </View>
                         <View style={styles.inputView}>
@@ -162,5 +176,34 @@ const Register = (props) => {
         </SafeAreaView>
     )
 }
+const pickerStyle = {
+    inputIOS: {
+        fontSize: widthPercentageToDP(3.7),
+        color: white,
+        fontWeight: "300",
+        fontFamily: "Montserrat-SemiBold",
+        //marginTop: 6,
+        //justifyContent:"center",
+        paddingHorizontal: 10,
+        //backgroundColor: 'red',
+        borderRadius: 5,
+    },
+    placeholder: {
+        color: white,
+        fontFamily: "Montserrat-SemiBold",
+        fontSize: widthPercentageToDP(3.7),
+    },
+    inputAndroid: {
+        fontSize: widthPercentageToDP(3.7),
+        fontFamily: "Montserrat-SemiBold",
+        color: white,
+        //paddingHorizontal: -10,
+        //backgroundColor: 'red',
+        //borderRadius: 5,
+    },
+    modalViewBottom: {
+        backgroundColor: "#DCDCDC"
+    }
+};
 
 export default Register

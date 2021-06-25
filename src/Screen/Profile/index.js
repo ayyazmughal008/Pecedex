@@ -11,12 +11,14 @@ import { useSelector, useDispatch } from 'react-redux';
 import Feather from 'react-native-vector-icons/Feather'
 import ImagePicker from 'react-native-image-crop-picker';
 import { postProfileImg, getSeenCount } from '../../Redux/action'
+import Picker from './Picker'
 
 const Profile = (props) => {
     const dispatch = useDispatch();
     const login = useSelector((state) => state.user.login);
     const AuthLoading = useSelector((state) => state.user.AuthLoading);
     const [isLoading, setIsLoading] = useState(false)
+    const [pickerOption, setOption] = useState(false)
     const [Response, setResponse] = useState('')
 
     useEffect(() => {
@@ -60,11 +62,32 @@ const Profile = (props) => {
                 console.log(err);
             })
     }
+    const _onLunchGallery = () => {
+        let data = "";
+        ImagePicker.openPicker({
+            width: 300,
+            height: 400,
+            cropping: true
+        }).then(image => {
+            console.log(image);
+            data = {
+                'uri': image.path,
+                'type': image.mime,
+                'name': Date.now() + '_Pecedex.png',
+            }
+            dispatch(postProfileImg(login.data.id, data))
+        }).catch(error => {
+            console.log(error);
+        })
+    }
     const getCount = async () => {
         setIsLoading(true)
         let menuData = await getSeenCount(login.data.id)
         await setResponse(menuData)
         await setIsLoading(false)
+    }
+    const toggleOption = () => {
+        setOption(!pickerOption)
     }
     return (
         <SafeAreaView style={styles.container}>
@@ -84,12 +107,12 @@ const Profile = (props) => {
                         : <FastImage
                             style={styles.profileImg}
                             source={{ uri: "http://199.247.13.90/" + login.data.image }}
-                            resizeMode={FastImage.resizeMode.contain}
+                            resizeMode={FastImage.resizeMode.cover}
                         />
                     }
                     <TouchableOpacity
                         onPress={() => {
-                            requestCameraPermission()
+                            toggleOption()
                         }}
                         style={{
                             position: "absolute",
@@ -242,6 +265,21 @@ const Profile = (props) => {
                     size="large"
                     color={black}
                     style={styles.loading}
+                />
+            }
+            {pickerOption &&
+                <Picker
+                    isDialogOpen={pickerOption}
+                    cancelClick={() => {
+                        toggleOption()
+                        requestCameraPermission()
+                    }}
+                    okClick={() => {
+                        toggleOption()
+                        _onLunchGallery()
+                    }}
+                    title="Seleccione la opción para la foto de perfil"
+                    closeBox={() => toggleOption()}
                 />
             }
         </SafeAreaView>

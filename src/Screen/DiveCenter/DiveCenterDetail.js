@@ -76,7 +76,7 @@ const DiveCenter = (props) => {
                     : <FastImage
                         style={styles.profileImg}
                         source={{ uri: "http://199.247.13.90/" + login.data.image }}
-                        resizeMode={FastImage.resizeMode.contain}
+                        resizeMode={FastImage.resizeMode.cover}
                     />
                 }
             </View>

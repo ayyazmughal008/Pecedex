@@ -1,5 +1,5 @@
 import React, { useEffect, useState, useRef } from 'react'
-import { SafeAreaView, View, Text, TouchableOpacity, FlatList, TextInput, Modal, StyleSheet, ActivityIndicator } from 'react-native'
+import { SafeAreaView, View, Text, TouchableOpacity, FlatList, TextInput, Modal, StyleSheet, ActivityIndicator, Alert } from 'react-native'
 import { styles } from './styles'
 import FastImage from 'react-native-fast-image'
 import { heightPercentageToDP, widthPercentageToDP } from '../../Component/MakeMeResponsive'
@@ -72,8 +72,11 @@ const LogBook = (props) => {
 
     useEffect(() => {
         dispatch(getCountryName())
-        setCountryList(countryData)
     }, [])
+
+    useEffect(() => {
+        setCountryList(countryData)
+    }, [countryData])
 
     const getCityName = (country) => {
         setIsLoading(true)
@@ -131,7 +134,7 @@ const LogBook = (props) => {
     };
     // for date function
     const handleConfirmDate = (date) => {
-        setMyDate(moment(date).locale('es').format('DD-MMM-YYYY'))
+        setMyDate(moment(date).format('DD-MMM-YYYY'))
         hideDatePicker();
     };
     const showDatePicker = () => {
@@ -398,7 +401,9 @@ const LogBook = (props) => {
                                     {"Cludad:"}
                                 </Text>
                                 <TouchableOpacity
-                                    onPress={() => toggleCity()}
+                                    onPress={() => !country ? Alert.alert("", "Please select the Country name first")
+                                        : toggleCity()
+                                    }
                                 >
                                     <Text style={[styles.smallTxt, { color: blue }]}>
                                         {!city ? "Select City" : city}

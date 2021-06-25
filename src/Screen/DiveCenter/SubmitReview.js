@@ -3,19 +3,22 @@ import { SafeAreaView, View, Text, TouchableOpacity, FlatList } from 'react-nati
 import { styles } from '../../config/styles'
 import FastImage from 'react-native-fast-image'
 import { heightPercentageToDP, widthPercentageToDP } from '../../Component/MakeMeResponsive'
-import { black, blue } from '../../config/color'
+import { black, blue, green } from '../../config/color'
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view'
 import Tab from '../../Component/BottomTab'
 import { HomeAction, profileAction, settingAction, mapAction, notificationAction } from '../../Component/BottomTab/actions'
 import { useSelector, useDispatch } from 'react-redux';
 import Card from '../../Component/Review'
+import Strings from '../../Translation'
 
 const DiveCenter = (props) => {
     const dispatch = useDispatch();
     const login = useSelector((state) => state.user.login);
     const [text, setText] = useState("")
     const [rankingValue, setValue] = useState("")
-
+    useEffect(() => {
+        Strings.setLanguage('en')
+    }, [])
 
     return (
         <SafeAreaView style={styles.container}>
@@ -34,7 +37,7 @@ const DiveCenter = (props) => {
                     : <FastImage
                         style={styles.profileImg}
                         source={{ uri: "http://199.247.13.90/" + login.data.image }}
-                        resizeMode={FastImage.resizeMode.contain}
+                        resizeMode={FastImage.resizeMode.cover}
                     />
                 }
             </View>
@@ -49,6 +52,21 @@ const DiveCenter = (props) => {
                     clickHandler4={() => setValue(4)}
                     clickHandler5={() => setValue(5)}
                 />
+
+                <TouchableOpacity
+                    style={[styles.inputView, {
+                        backgroundColor: green,
+                        justifyContent: "center",
+                        alignItems: "center",
+                        //marginTop: heightPercentageToDP(4),
+                        alignSelf: "center"
+                    }]}
+                    onPress={() => { }}
+                >
+                    <Text style={styles.btnText}>
+                        {Strings.submit}
+                    </Text>
+                </TouchableOpacity>
             </KeyboardAwareScrollView>
 
             <View style={{ height: heightPercentageToDP(7) }} />

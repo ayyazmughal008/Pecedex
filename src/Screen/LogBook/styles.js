@@ -17,7 +17,7 @@ export const styles = StyleSheet.create({
     },
     top: {
         width: widthPercentageToDP(100),
-        height: heightPercentageToDP(12),
+        height: heightPercentageToDP(9),
         justifyContent: "center",
         alignItems: "center"
     },
@@ -181,6 +181,17 @@ export const styles = StyleSheet.create({
         paddingTop: 0,
         paddingBottom: 0,
     },
+    smallInput2: {
+        color: blue,
+        fontFamily: "Montserrat-SemiBold",
+        fontSize: widthPercentageToDP(3.7),
+        width: "100%",
+        height: "55%",
+        //backgroundColor: "red",
+        //marginTop: 5,
+        paddingTop: 0,
+        paddingBottom: 0,
+    },
     tinyInput: {
         width: "100%",
         height: "20%",
@@ -238,5 +249,17 @@ export const styles = StyleSheet.create({
         backgroundColor: "#000",
         justifyContent: "center",
         alignItems: "center"
+    },
+    sampleView: {
+        width: "100%",
+        //margin: heightPercentageToDP(1.5),
+        height: heightPercentageToDP(8),
+        //backgroundColor:"yellow"
+    },
+    dropDown: {
+        width: "80%",
+        height: "55%",
+        justifyContent: "center",
+        marginLeft: widthPercentageToDP(-4)
     }
 })

@@ -53,6 +53,14 @@ export const styles = StyleSheet.create({
         borderRadius: widthPercentageToDP(7),
         marginBottom: heightPercentageToDP(1)
     },
+    inputDropdownView: {
+        width: widthPercentageToDP(90),
+        height: heightPercentageToDP(5.5),
+        backgroundColor: blue,
+        borderRadius: widthPercentageToDP(7),
+        marginBottom: heightPercentageToDP(1),
+        justifyContent:"center"
+    },
     input: {
         width: widthPercentageToDP(90),
         height: heightPercentageToDP(5.5),
