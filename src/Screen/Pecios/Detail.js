@@ -12,6 +12,7 @@ import ImagePicker from 'react-native-image-crop-picker';
 import { postPecioSeen, postPeciosImg } from '../../Redux/action'
 import { useSelector, useDispatch } from 'react-redux';
 import Picker from '../Profile/Picker'
+import Strings from '../../Translation'
 
 
 const PeciosDetail = (props) => {
@@ -21,6 +22,14 @@ const PeciosDetail = (props) => {
     const AuthLoading = useSelector((state) => state.user.AuthLoading);
     const [pickerOption, setOption] = useState(false)
     const [isLoading, setIsLoading] = useState(false)
+    const language = useSelector((state) => state.user.language);
+    useEffect(() => {
+        if (!language) {
+            Strings.setLanguage('en')
+        } else {
+            Strings.setLanguage(language)
+        }
+    }, [language])
     const _renderItem = (({ item, index }) => {
         return (
             <View style={{ alignItems: "center", marginRight: widthPercentageToDP(1), marginTop: heightPercentageToDP(1) }}>

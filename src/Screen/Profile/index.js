@@ -12,6 +12,7 @@ import Feather from 'react-native-vector-icons/Feather'
 import ImagePicker from 'react-native-image-crop-picker';
 import { postProfileImg, getSeenCount } from '../../Redux/action'
 import Picker from './Picker'
+import Strings from '../../Translation'
 
 const Profile = (props) => {
     const dispatch = useDispatch();
@@ -20,7 +21,14 @@ const Profile = (props) => {
     const [isLoading, setIsLoading] = useState(false)
     const [pickerOption, setOption] = useState(false)
     const [Response, setResponse] = useState('')
-
+    const language = useSelector((state) => state.user.language);
+    useEffect(() => {
+        if (!language) {
+            Strings.setLanguage('en')
+        } else {
+            Strings.setLanguage(language)
+        }
+    }, [language])
     useEffect(() => {
         getCount();
     }, [])

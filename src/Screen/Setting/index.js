@@ -8,14 +8,20 @@ import FastImage from 'react-native-fast-image'
 import { black, green, lightRed } from '../../config/color'
 import { useSelector, useDispatch } from 'react-redux';
 import Strings from '../../Translation'
-import { logOut } from '../../Redux/action'
+import { logOut, setLanguage } from '../../Redux/action'
+import RNRestart from 'react-native-restart';
 
 const Setting = (props) => {
     const dispatch = useDispatch();
+    const language = useSelector((state) => state.user.language);
     const login = useSelector((state) => state.user.login);
     useEffect(() => {
-        Strings.setLanguage('en')
-    }, [])
+        if (!language) {
+            Strings.setLanguage('en')
+        } else {
+            Strings.setLanguage(language)
+        }
+    }, [language])
 
 
     return (
@@ -42,7 +48,7 @@ const Setting = (props) => {
             {/* <View style={{ height: heightPercentageToDP(10) }} /> */}
             <View style={styles.titleView}>
                 <Text style={styles.titleTxt}>
-                    {"Email"}
+                    {Strings.email}
                 </Text>
                 <FastImage
                     source={require('../../Images/line_right.png')}
@@ -59,7 +65,7 @@ const Setting = (props) => {
             />
             <View style={styles.titleView}>
                 <Text style={styles.titleTxt}>
-                    {"Password"}
+                    {Strings.password}
                 </Text>
                 <FastImage
                     source={require('../../Images/line_right.png')}
@@ -75,12 +81,12 @@ const Setting = (props) => {
                     editable={false}
                 />
                 <Text style={[styles.btnText, { color: lightRed }]}>
-                    {"Change"}
+                    {Strings.change}
                 </Text>
             </View>
             <View style={styles.titleView}>
                 <Text style={styles.titleTxt}>
-                    {"Language"}
+                    {Strings.language}
                 </Text>
                 <FastImage
                     source={require('../../Images/line_right.png')}
@@ -91,12 +97,26 @@ const Setting = (props) => {
             <View style={{ width: widthPercentageToDP(90), alignSelf: "center", flexDirection: "row", justifyContent: "space-between", alignItems: "center" }}>
                 <TextInput
                     style={styles.input3}
-                    placeholder="English"
+                    placeholder={!language ? "English" : language === 'es' ? "Spanish" : "English"}
                     placeholderTextColor={black}
                     editable={false}
                 />
-                <Text style={[styles.btnText, { color: lightRed }]}>
-                    {"Change"}
+                <Text
+                    onPress={() => {
+                        if (!language) {
+                            dispatch(setLanguage('en'));
+                            RNRestart.Restart();
+                        } else if (language === 'es') {
+                            dispatch(setLanguage('en'));
+                            RNRestart.Restart();
+                        } else {
+                            dispatch(setLanguage('es'));
+                            RNRestart.Restart();
+                        }
+
+                    }}
+                    style={[styles.btnText, { color: lightRed }]}>
+                    {Strings.change}
                 </Text>
             </View>
 

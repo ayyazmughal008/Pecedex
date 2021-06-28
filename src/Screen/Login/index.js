@@ -13,6 +13,7 @@ import { widthPercentageToDP } from '../../Component/MakeMeResponsive'
 const Login = (props) => {
     const dispatch = useDispatch();
     const AuthLoading = useSelector((state) => state.user.AuthLoading);
+    const language = useSelector((state) => state.user.language);
     const [name, setName] = useState("")
     const [pass, setPassword] = useState("")
     const [passVisible, setPassVisible] = useState(true)
@@ -20,8 +21,12 @@ const Login = (props) => {
         setPassVisible(!passVisible)
     }
     useEffect(() => {
-        Strings.setLanguage('en')
-    }, [])
+        if (!language) {
+            Strings.setLanguage('en')
+        } else {
+            Strings.setLanguage(language)
+        }
+    }, [language])
 
     const _onSubmit = () => {
         const validate = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;

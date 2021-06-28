@@ -13,13 +13,19 @@ import Tab from '../../Component/BottomTab'
 import { HomeAction, profileAction, settingAction, mapAction, notificationAction } from '../../Component/BottomTab/actions'
 import { black } from '../../config/color'
 import { AdMobInterstitial } from 'react-native-admob'
+import { useDispatch, useSelector } from 'react-redux';
 
 const Home = (props) => {
+    const language = useSelector((state) => state.user.language);
     const [isLoading, setIsLoading] = useState(false)
     const [menuResponse, setResponse] = useState('')
     useEffect(() => {
-        Strings.setLanguage('en')
-    }, [])
+        if (!language) {
+            Strings.setLanguage('en')
+        } else {
+            Strings.setLanguage(language)
+        }
+    }, [language])
     // useEffect(() => {
     //     //getApis()
     //     AdMobInterstitial.setTestDevices([AdMobInterstitial.simulatorId]);

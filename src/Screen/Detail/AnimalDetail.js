@@ -13,15 +13,24 @@ import Share from 'react-native-share';
 import ImagePicker from 'react-native-image-crop-picker';
 import { useSelector, useDispatch } from 'react-redux';
 import Picker from '../Profile/Picker'
+import Strings from '../../Translation'
 
 
 const GenreDetail = (props) => {
     const dispatch = useDispatch();
     const data = props.navigation.getParam('data', "12")
+    const language = useSelector((state) => state.user.language);
     const login = useSelector((state) => state.user.login);
     const AuthLoading = useSelector((state) => state.user.AuthLoading);
     const [pickerOption, setOption] = useState(false)
     const [isLoading, setIsLoading] = useState(false)
+    useEffect(() => {
+        if (!language) {
+            Strings.setLanguage('en')
+        } else {
+            Strings.setLanguage(language)
+        }
+    }, [language])
     const getApis = async () => {
         setIsLoading(true)
         await postGenerSeen(data.id, login.data.id)

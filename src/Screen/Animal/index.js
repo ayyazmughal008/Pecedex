@@ -6,17 +6,27 @@ import Card from '../../Component/AnimalCard'
 import { data } from './data'
 import { getMenuFiles } from '../../Redux/action'
 import Tab from '../../Component/BottomTab'
+import Strings from '../../Translation'
 import { heightPercentageToDP } from '../../Component/MakeMeResponsive'
 import { HomeAction, profileAction, settingAction, mapAction, notificationAction } from '../../Component/BottomTab/actions'
 import { black } from '../../config/color'
+import { useDispatch, useSelector } from 'react-redux';
 
 const Map = (props) => {
+    const language = useSelector((state) => state.user.language);
     const [isLoading, setIsLoading] = useState(false)
     const [Response, setResponse] = useState('')
 
     useEffect(() => {
         getApis()
     }, [])
+    useEffect(() => {
+        if (!language) {
+            Strings.setLanguage('en')
+        } else {
+            Strings.setLanguage(language)
+        }
+    }, [language])
 
     const getApis = async () => {
         setIsLoading(true)

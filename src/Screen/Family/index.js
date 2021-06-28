@@ -9,13 +9,22 @@ import { heightPercentageToDP } from '../../Component/MakeMeResponsive'
 import Tab from '../../Component/BottomTab'
 import { HomeAction, profileAction, settingAction, mapAction, notificationAction } from '../../Component/BottomTab/actions'
 import { black } from '../../config/color'
+import Strings from '../../Translation'
+import { useSelector, useDispatch } from 'react-redux';
 
 const Order = (props) => {
 
     const [isLoading, setIsLoading] = useState(false)
     const [Response, setResponse] = useState('')
     const id = props.navigation.getParam('id', "12")
-
+    const language = useSelector((state) => state.user.language);
+    useEffect(() => {
+        if (!language) {
+            Strings.setLanguage('en')
+        } else {
+            Strings.setLanguage(language)
+        }
+    }, [language])
     useEffect(() => {
         getApis()
     }, [])

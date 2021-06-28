@@ -16,9 +16,14 @@ const DiveCenter = (props) => {
     const login = useSelector((state) => state.user.login);
     const [text, setText] = useState("")
     const [rankingValue, setValue] = useState("")
+    const language = useSelector((state) => state.user.language);
     useEffect(() => {
-        Strings.setLanguage('en')
-    }, [])
+        if (!language) {
+            Strings.setLanguage('en')
+        } else {
+            Strings.setLanguage(language)
+        }
+    }, [language])
 
     return (
         <SafeAreaView style={styles.container}>

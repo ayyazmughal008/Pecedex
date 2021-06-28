@@ -10,10 +10,19 @@ import Card from '../../Component/RankingCard'
 import { HomeAction, profileAction, settingAction, mapAction, notificationAction } from '../../Component/BottomTab/actions'
 import Tab from '../../Component/BottomTab'
 import { useSelector, useDispatch } from 'react-redux';
+import Strings from '../../Translation'
 
 const Profile = (props) => {
     const dispatch = useDispatch();
     const login = useSelector((state) => state.user.login);
+    const language = useSelector((state) => state.user.language);
+    useEffect(() => {
+        if (!language) {
+            Strings.setLanguage('en')
+        } else {
+            Strings.setLanguage(language)
+        }
+    }, [language])
     return (
         <SafeAreaView style={styles.container}>
             <KeyboardAwareScrollView>

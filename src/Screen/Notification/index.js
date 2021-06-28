@@ -7,8 +7,18 @@ import { data } from './data'
 import Tab from '../../Component/BottomTab'
 import { heightPercentageToDP } from '../../Component/MakeMeResponsive'
 import { HomeAction, profileAction, settingAction, mapAction, notificationAction } from '../../Component/BottomTab/actions'
+import Strings from '../../Translation'
+import { useSelector, useDispatch } from 'react-redux';
 
 const Notification = (props) => {
+    const language = useSelector((state) => state.user.language);
+    useEffect(() => {
+        if (!language) {
+            Strings.setLanguage('en')
+        } else {
+            Strings.setLanguage(language)
+        }
+    }, [language])
     return (
         <SafeAreaView style={styles.container}>
             <FastImage

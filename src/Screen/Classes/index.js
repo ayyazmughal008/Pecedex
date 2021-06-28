@@ -9,9 +9,11 @@ import Tab from '../../Component/BottomTab'
 import { heightPercentageToDP } from '../../Component/MakeMeResponsive'
 import { HomeAction, profileAction, settingAction, mapAction, notificationAction } from '../../Component/BottomTab/actions'
 import { black } from '../../config/color'
+import Strings from '../../Translation'
+import { useSelector } from 'react-redux';
 
 const Classes = (props) => {
-
+    const language = useSelector((state) => state.user.language);
     const [isLoading, setIsLoading] = useState(false)
     const [Response, setResponse] = useState('')
     const id = props.navigation.getParam('id', "12")
@@ -19,6 +21,13 @@ const Classes = (props) => {
     useEffect(() => {
         getApis()
     }, [])
+    useEffect(() => {
+        if (!language) {
+            Strings.setLanguage('en')
+        } else {
+            Strings.setLanguage(language)
+        }
+    }, [language])
 
     const getApis = async () => {
         setIsLoading(true)

@@ -16,12 +16,13 @@ import MapView, { PROVIDER_GOOGLE, Marker } from 'react-native-maps';
 import { SearchBar } from 'react-native-elements'
 import { getCountryName } from '../../Redux/action'
 import { useDispatch, useSelector } from 'react-redux';
-
+import Strings from '../../Translation'
 
 const LogBook = (props) => {
     const dispatch = useDispatch();
     const AuthLoading = useSelector((state) => state.user.AuthLoading);
     const countryData = useSelector((state) => state.user.countryData);
+    const language = useSelector((state) => state.user.language);
     const [isLoading, setIsLoading] = useState(false)
     const [isScuba, setScuba] = useState(false)
     const [isRebreader, setRebreader] = useState(false)
@@ -77,7 +78,13 @@ const LogBook = (props) => {
     useEffect(() => {
         setCountryList(countryData)
     }, [countryData])
-
+    useEffect(() => {
+        if (!language) {
+            Strings.setLanguage('en')
+        } else {
+            Strings.setLanguage(language)
+        }
+    }, [language])
     const getCityName = (country) => {
         setIsLoading(true)
         fetch("https://countriesnow.space/api/v0.1/countries/cities", {
@@ -337,6 +344,41 @@ const LogBook = (props) => {
                     }]}>
                         <View style={[styles.innerLogView, { height: heightPercentageToDP(20) }]}>
                             <View style={styles.left}>
+
+                                <Text style={[styles.smallTxt, { color: black }]}>
+                                    {"Pais:"}
+                                </Text>
+                                <TouchableOpacity
+                                    onPress={() => toggleSearch()}
+                                >
+                                    <Text style={[styles.smallTxt, { color: blue }]}>
+                                        {!country ? "Select Country" : country}
+                                    </Text>
+                                </TouchableOpacity>
+                                <Text style={[styles.smallTxt, { color: black, marginTop: 10, }]}>
+                                    {"Cludad:"}
+                                </Text>
+                                <TouchableOpacity
+                                    onPress={() => !country ? Alert.alert("", "Please select the Country name first")
+                                        : toggleCity()
+                                    }
+                                >
+                                    <Text style={[styles.smallTxt, { color: blue }]}>
+                                        {!city ? "Select City" : city}
+                                    </Text>
+                                </TouchableOpacity>
+                                <View style={{ marginTop: 10, }}>
+                                    <Text style={[styles.smallTxt, { color: black }]}>
+                                        {"Lugar de inmersion :"}
+                                    </Text>
+                                    <TextInput
+                                        style={[styles.smallInput, { paddingTop: 0, paddingBottom: 0, }]}
+                                        placeholder="Lugar de inmersion"
+                                        placeholderTextColor={blue}
+                                    />
+                                </View>
+                            </View>
+                            <View style={styles.right}>
                                 <View>
                                     <Text style={[styles.smallTxt, { color: black }]}>
                                         {"Fecha:"}
@@ -375,40 +417,6 @@ const LogBook = (props) => {
                                         onCancel={hideTimePicker}
                                     />
                                 </View>
-                                <View style={{ marginTop: 10, }}>
-                                    <Text style={[styles.smallTxt, { color: black }]}>
-                                        {"Lugar de inmersion :"}
-                                    </Text>
-                                    <TextInput
-                                        style={[styles.smallInput, { paddingTop: 0, paddingBottom: 0, }]}
-                                        placeholder="Lugar de inmersion"
-                                        placeholderTextColor={blue}
-                                    />
-                                </View>
-                            </View>
-                            <View style={styles.right}>
-                                <Text style={[styles.smallTxt, { color: black }]}>
-                                    {"Pais:"}
-                                </Text>
-                                <TouchableOpacity
-                                    onPress={() => toggleSearch()}
-                                >
-                                    <Text style={[styles.smallTxt, { color: blue }]}>
-                                        {!country ? "Select Country" : country}
-                                    </Text>
-                                </TouchableOpacity>
-                                <Text style={[styles.smallTxt, { color: black, marginTop: 10, }]}>
-                                    {"Cludad:"}
-                                </Text>
-                                <TouchableOpacity
-                                    onPress={() => !country ? Alert.alert("", "Please select the Country name first")
-                                        : toggleCity()
-                                    }
-                                >
-                                    <Text style={[styles.smallTxt, { color: blue }]}>
-                                        {!city ? "Select City" : city}
-                                    </Text>
-                                </TouchableOpacity>
                             </View>
                         </View>
                         <TouchableOpacity style={[styles.sideButton, { top: "10%" }]}>

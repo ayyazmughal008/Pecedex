@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react'
-import { SafeAreaView, View, Text, TouchableOpacity } from 'react-native'
+import { SafeAreaView, View, Text, TouchableOpacity, Linking } from 'react-native'
 import { styles } from '../../config/styles'
 import FastImage from 'react-native-fast-image'
 import { heightPercentageToDP, widthPercentageToDP } from '../../Component/MakeMeResponsive'
@@ -9,19 +9,31 @@ import Icon from 'react-native-vector-icons/Zocial'
 import Icon2 from 'react-native-vector-icons/FontAwesome'
 import Tab from '../../Component/BottomTab'
 import { HomeAction, profileAction, settingAction, mapAction, notificationAction } from '../../Component/BottomTab/actions'
+import Strings from '../../Translation'
+import { useSelector, useDispatch } from 'react-redux';
+import HTML from "react-native-render-html";
 
 const DiveCenter = (props) => {
+    const language = useSelector((state) => state.user.language);
+    const info = props.navigation.getParam('data', "2uhih")
+    useEffect(() => {
+        if (!language) {
+            Strings.setLanguage('en')
+        } else {
+            Strings.setLanguage(language)
+        }
+    }, [language])
     return (
         <SafeAreaView style={styles.container}>
             <KeyboardAwareScrollView>
                 <FastImage
-                    source={require('../../Images/sink2.jpg')}
+                    source={{ uri: "http://199.247.13.90/" + info.data.image }}
                     style={[styles.top, { height: heightPercentageToDP(30) }]}
                     resizeMode={FastImage.resizeMode.cover}
                 />
 
                 <Text style={[styles.profileName, { alignSelf: "center", color: blue }]}>
-                    {"Madrid  Buceo"}
+                    {info.data.name}
                 </Text>
                 <View style={styles.infoBox}>
                     <View style={{ flexDirection: "row", alignItems: "center", width: "100%" }}>
@@ -31,7 +43,7 @@ const DiveCenter = (props) => {
                             size={30}
                         />
                         <Text style={styles.infoTxt}>
-                            {"informacionxmadribduceo.crg"}
+                            {info.data.email}
                         </Text>
                     </View>
                     <View style={{ flexDirection: "row", alignItems: "center", width: "100%", marginTop: 5 }}>
@@ -41,7 +53,7 @@ const DiveCenter = (props) => {
                             size={35}
                         />
                         <Text style={styles.infoTxt}>
-                            {"03018440137"}
+                            {info.data.telephone}
                         </Text>
                     </View>
                     <View style={{ flexDirection: "row", alignItems: "center", width: "100%", marginTop: 5 }}>
@@ -52,12 +64,16 @@ const DiveCenter = (props) => {
                             style={{ marginRight: 4 }}
                         />
                         <Text style={styles.infoTxt}>
-                            {"C/Pruodo, 12. 28003 Madrid"}
+                            {info.data.address}
                         </Text>
                     </View>
                 </View>
                 <View style={styles.socialView}>
-                    <TouchableOpacity>
+                    <TouchableOpacity
+                        onPress={() => {
+                            Linking.openURL(info.data.globeLink);
+                        }}
+                    >
                         <FastImage
                             source={require('../../Images/129.png')}
                             resizeMode={FastImage.resizeMode.contain}
@@ -67,7 +83,11 @@ const DiveCenter = (props) => {
                             }}
                         />
                     </TouchableOpacity>
-                    <TouchableOpacity>
+                    <TouchableOpacity
+                        onPress={() => {
+                            Linking.openURL(info.data.facebookLink);
+                        }}
+                    >
                         <FastImage
                             source={require('../../Images/130.png')}
                             resizeMode={FastImage.resizeMode.contain}
@@ -77,7 +97,11 @@ const DiveCenter = (props) => {
                             }}
                         />
                     </TouchableOpacity>
-                    <TouchableOpacity>
+                    <TouchableOpacity
+                        onPress={() => {
+                            Linking.openURL(info.data.instagramLink);
+                        }}
+                    >
                         <FastImage
                             source={require('../../Images/131.png')}
                             resizeMode={FastImage.resizeMode.contain}
@@ -87,7 +111,11 @@ const DiveCenter = (props) => {
                             }}
                         />
                     </TouchableOpacity>
-                    <TouchableOpacity>
+                    <TouchableOpacity
+                        onPress={() => {
+                            Linking.openURL(info.data.twitterLink);
+                        }}
+                    >
                         <FastImage
                             source={require('../../Images/132.png')}
                             resizeMode={FastImage.resizeMode.contain}
@@ -97,7 +125,11 @@ const DiveCenter = (props) => {
                             }}
                         />
                     </TouchableOpacity>
-                    <TouchableOpacity>
+                    <TouchableOpacity
+                        onPress={() => {
+                            Linking.openURL(info.data.youtubeLink);
+                        }}
+                    >
                         <FastImage
                             source={require('../../Images/133.png')}
                             resizeMode={FastImage.resizeMode.contain}
@@ -118,13 +150,11 @@ const DiveCenter = (props) => {
                     onPress={() => { props.navigation.navigate('DiveCenterDetail') }}
                 >
                     <View style={{ flexDirection: "row", alignItems: "center", width: "100%" }}>
-                        <View style={styles.squre}>
-                            <FastImage
-                                source={require('../../Images/134.png')}
-                                resizeMode={FastImage.resizeMode.contain}
-                                style={styles.squre}
-                            />
-                        </View>
+                        <FastImage
+                            source={{ uri: "http://199.247.13.90/" + info.data.certifier }}
+                            resizeMode={FastImage.resizeMode.contain}
+                            style={styles.squre}
+                        />
                         <View style={styles.starView}>
                             <View style={{ flexDirection: "row", alignItems: "center", height: "45%", width: "100%", }}>
                                 <FastImage
@@ -167,53 +197,59 @@ const DiveCenter = (props) => {
                 <Text style={[styles.profileName, { alignSelf: "flex-start", color: blue, marginLeft: widthPercentageToDP(5) }]}>
                     {"ACTIVIDADES"}
                 </Text>
-                <Text style={[styles.commentTxt, { marginLeft: widthPercentageToDP(8), marginTop: 0 }]}>
-                    {"Bautizo on Piscina"}
-                </Text>
-                <Text style={[styles.commentTxt, { marginLeft: widthPercentageToDP(8), marginTop: 0 }]}>
-                    {"Bautizo on mar"}
-                </Text>
-                <Text style={[styles.commentTxt, { marginLeft: widthPercentageToDP(8), marginTop: 0 }]}>
-                    {"Refresh"}
-                </Text>
-                <Text style={[styles.commentTxt, { marginLeft: widthPercentageToDP(8), marginTop: 0 }]}>
-                    {"Snorkel"}
-                </Text>
-                <Text style={[styles.commentTxt, { marginLeft: widthPercentageToDP(8), marginTop: 0 }]}>
-                    {"Inmersiones Guiadas"}
-                </Text>
+                <HTML
+                    source={{ html: info.data.activities }}
+                    containerStyle={{
+                        marginLeft: widthPercentageToDP(8),
+                        //backgroundColor: "red",
+                    }}
+                    tagsStyles={{
+                        p: {
+                            fontSize: widthPercentageToDP(4.5),
+                            color: black,
+                            fontFamily: "Montserrat-SemiBold",
+                            marginTop: heightPercentageToDP(1)
+                        }
+                    }}
+                />
                 {/* new liness  */}
                 <Text style={[styles.profileName, { alignSelf: "flex-start", color: blue, marginLeft: widthPercentageToDP(5) }]}>
                     {"CURSOS DE BUCEO"}
                 </Text>
-                <Text style={[styles.commentTxt, { marginLeft: widthPercentageToDP(8), marginTop: 0 }]}>
-                    {"PADI Open Water Diver"}
-                </Text>
-                <Text style={[styles.commentTxt, { marginLeft: widthPercentageToDP(8), marginTop: 0 }]}>
-                    {"PADI Advance Open Water Diver"}
-                </Text>
-                <Text style={[styles.commentTxt, { marginLeft: widthPercentageToDP(8), marginTop: 0 }]}>
-                    {"PADI Rescuo"}
-                </Text>
-                <Text style={[styles.commentTxt, { marginLeft: widthPercentageToDP(8), marginTop: 0 }]}>
-                    {"PADI Divemaster"}
-                </Text>
-                <Text style={[styles.commentTxt, { marginLeft: widthPercentageToDP(8), marginTop: 0 }]}>
-                    {"EFR (Energyency First Response)"}
-                </Text>
-                <Text style={[styles.commentTxt, { marginLeft: widthPercentageToDP(8), marginTop: 0 }]}>
-                    {"PADI Nitrox"}
-                </Text>
+                <HTML
+                    source={{ html: info.data.courses }}
+                    containerStyle={{
+                        marginLeft: widthPercentageToDP(8),
+                        //backgroundColor: "red",
+                    }}
+                    tagsStyles={{
+                        p: {
+                            fontSize: widthPercentageToDP(4.5),
+                            color: black,
+                            fontFamily: "Montserrat-SemiBold",
+                            marginTop: heightPercentageToDP(1)
+                        }
+                    }}
+                />
                 {/* new liness  */}
                 <Text style={[styles.profileName, { alignSelf: "flex-start", color: blue, marginLeft: widthPercentageToDP(5) }]}>
                     {"OTROS SERVICIOS"}
                 </Text>
-                <Text style={[styles.commentTxt, { marginLeft: widthPercentageToDP(8), marginTop: 0 }]}>
-                    {"Alquitor do Equipos"}
-                </Text>
-                <Text style={[styles.commentTxt, { marginLeft: widthPercentageToDP(8), marginTop: 0 }]}>
-                    {"Lienado de botellas"}
-                </Text>
+                <HTML
+                    source={{ html: info.data.services }}
+                    containerStyle={{
+                        marginLeft: widthPercentageToDP(8),
+                        //backgroundColor: "red",
+                    }}
+                    tagsStyles={{
+                        p: {
+                            fontSize: widthPercentageToDP(4.5),
+                            color: black,
+                            fontFamily: "Montserrat-SemiBold",
+                            marginTop: heightPercentageToDP(1)
+                        }
+                    }}
+                />
                 <View style={{ marginTop: 10 }} />
             </KeyboardAwareScrollView>
             <View style={{ height: heightPercentageToDP(7) }} />

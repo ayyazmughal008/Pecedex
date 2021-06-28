@@ -6,6 +6,7 @@ export const LOG_OUT = "LOG_OUT";
 export const TEM_LOGIN = "TEM_LOGIN";
 export const USER_LOGIN = "USER_LOGIN";
 export const COUNTRY_NAME = "COUNTRY_NAME";
+export const SET_LANGUAGE = "SET_LANGUAGE";
 
 
 const baseUrl = "http://199.247.13.90/api/",
@@ -25,10 +26,24 @@ const baseUrl = "http://199.247.13.90/api/",
     peciosSeenList = 'seen-pecio-list',
     peciosImg = 'upload-image-pecio',
     generImg = 'upload-image-genre',
+    getCenters = 'get-points',
+    getCentersDetail = 'get-center-detail',
+    getGenreDetail = 'get-genre-detail',
+    getPecioDetail = 'get-pecio-detail',
     register = 'register';
 
 const country_url = "https://countriesnow.space/api/v0.1/countries/positions"
 
+export const setLanguage = (value) => {
+    return dispatch => {
+        dispatch({
+            type: SET_LANGUAGE,
+            payload: {
+                language: value
+            }
+        })
+    }
+}
 export const logOut = () => {
     return dispatch => {
         dispatch({ type: LOG_OUT })
@@ -103,6 +118,7 @@ export const userRegister = (name, email, password, certificate) => {
                 dispatch({ type: AUTH_LOADING, payload: false });
                 console.log(json)
                 if (json.status == 200) {
+                    Alert.alert("", "Register Successfuly")
                     NavigationService.navigate('Login')
                 } else if (json.status == 401) {
                     Alert.alert("", json.message)
@@ -582,6 +598,132 @@ export const postGenerImg = (userId, genreId, image) => {
                 console.log(error)
             })
     };
+}
+export const getDiveCenters = async () => {
+    let api
+    try {
+        api = await fetch(baseUrl + getCenters, {
+            method: 'POST',
+            headers: {
+                'Accept': 'application/json',
+                "Content-type": "application/json",
+            },
+        })
+            .then(res => res.json())
+            .then(json => {
+                if (json.status == 200) {
+                    console.log(json)
+                    return json
+                } else {
+                    Alert.alert("", json.message)
+                }
+            })
+            .catch(error => {
+                console.log("response error ===>", error)
+            })
+    } catch (error) {
+        console.log('my error' + error.message);
+    }
+    return api
+}
+export const getDiveCenterDetail = async (centerId) => {
+    let api
+    try {
+        api = await fetch(baseUrl + getCentersDetail, {
+            method: 'POST',
+            headers: {
+                'Accept': 'application/json',
+                "Content-type": "application/json",
+            },
+            body: JSON.stringify({
+                centerId: centerId
+            })
+        })
+            .then(res => res.json())
+            .then(json => {
+                if (json.status == 200) {
+                    console.log(json)
+                    NavigationService.navigate("DiveCenter", {
+                        data: json
+                    })
+                    return
+                } else {
+                    Alert.alert("", json.message)
+                }
+            })
+            .catch(error => {
+                console.log("response error ===>", error)
+            })
+    } catch (error) {
+        console.log('my error' + error.message);
+    }
+    return api
+}
+export const getGenreDetails = async (genreId) => {
+    let api
+    try {
+        api = await fetch(baseUrl + getGenreDetail, {
+            method: 'POST',
+            headers: {
+                'Accept': 'application/json',
+                "Content-type": "application/json",
+            },
+            body: JSON.stringify({
+                genreId: genreId
+            })
+        })
+            .then(res => res.json())
+            .then(json => {
+                if (json.status == 200) {
+                    console.log(json)
+                    NavigationService.navigate('Detail', {
+                        data: json.data
+                    })
+                    return
+                } else {
+                    Alert.alert("", json.message)
+                }
+            })
+            .catch(error => {
+                console.log("response error ===>", error)
+            })
+    } catch (error) {
+        console.log('my error' + error.message);
+    }
+    return api
+}
+export const getPecioDetails = async (pecioId) => {
+    let api
+    try {
+        api = await fetch(baseUrl + getPecioDetail, {
+            method: 'POST',
+            headers: {
+                'Accept': 'application/json',
+                "Content-type": "application/json",
+            },
+            body: JSON.stringify({
+                pecioId: pecioId
+            })
+        })
+            .then(res => res.json())
+            .then(json => {
+                if (json.status == 200) {
+                    console.log(json)
+                    NavigationService.navigate("PeciosDetail", {
+                        data: json.data
+                    })
+                    return
+                } else {
+                    Alert.alert("", json.message)
+                }
+            })
+            .catch(error => {
+                console.log("response error ===>", error)
+            })
+    } catch (error) {
+        console.log('my error' + error.message);
+    }
+    return api
 }
 
 

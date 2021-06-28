@@ -20,12 +20,17 @@ const Register = (props) => {
     const [certificate, setCertificate] = useState("")
     const [email, setEMail] = useState("")
     const [passVisible, setPassVisible] = useState(true)
+    const language = useSelector((state) => state.user.language);
     const showPassword = () => {
         setPassVisible(!passVisible)
     }
     useEffect(() => {
-        Strings.setLanguage('en')
-    }, [])
+        if (!language) {
+            Strings.setLanguage('en')
+        } else {
+            Strings.setLanguage(language)
+        }
+    }, [language])
 
     const _onRegister = () => {
         const validate = /^(([^<>()[\]\.,;:\s@\"]+(\.[^<>()[\]\.,;:\s@\"]+)*)|(\".+\"))@(([^<>()[\]\.,;:\s@\"]+\.)+[^<>()[\]\.,;:\s@\"]{2,})$/i;

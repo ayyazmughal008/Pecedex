@@ -4,7 +4,8 @@ import {
   LOG_OUT,
   TEM_LOGIN,
   USER_LOGIN,
-  COUNTRY_NAME
+  COUNTRY_NAME,
+  SET_LANGUAGE
 
 } from "./action";
 
@@ -12,7 +13,8 @@ const initialUserState = {
   AuthLoading: false,
   isLogin: false,
   login: "",
-  countryData: []
+  countryData: [],
+  language: "en"
 };
 
 const userReducer = (state = initialUserState, action) => {
@@ -46,6 +48,12 @@ const userReducer = (state = initialUserState, action) => {
     return {
       ...state,
       countryData: action.payload.countryData
+    };
+  }
+  if (action.type === SET_LANGUAGE) {
+    return {
+      ...state,
+      language: action.payload.language
     };
   }
   return state;

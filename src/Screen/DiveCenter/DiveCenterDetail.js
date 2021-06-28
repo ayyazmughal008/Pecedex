@@ -8,10 +8,19 @@ import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view
 import Tab from '../../Component/BottomTab'
 import { HomeAction, profileAction, settingAction, mapAction, notificationAction } from '../../Component/BottomTab/actions'
 import { useSelector, useDispatch } from 'react-redux';
+import Strings from '../../Translation'
 
 const DiveCenter = (props) => {
     const dispatch = useDispatch();
     const login = useSelector((state) => state.user.login);
+    const language = useSelector((state) => state.user.language);
+    useEffect(() => {
+        if (!language) {
+            Strings.setLanguage('en')
+        } else {
+            Strings.setLanguage(language)
+        }
+    }, [language])
     const _renderItem = ({ item, index }) => {
         return (
             <View style={[styles.commentView, {

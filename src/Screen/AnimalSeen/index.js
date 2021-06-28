@@ -7,18 +7,27 @@ import { data } from './data'
 import { black } from '../../config/color'
 import { getAnimalSeenList } from '../../Redux/action'
 import { useSelector } from 'react-redux';
+import Strings from '../../Translation'
 
 import { heightPercentageToDP } from '../../Component/MakeMeResponsive'
 import Tab from '../../Component/BottomTab'
 import { HomeAction, profileAction, settingAction, mapAction, notificationAction } from '../../Component/BottomTab/actions'
 
 const Map = (props) => {
+    const language = useSelector((state) => state.user.language);
     const login = useSelector((state) => state.user.login);
     const [isLoading, setIsLoading] = useState(false)
     const [Response, setResponse] = useState('')
     useEffect(() => {
         getApis()
     }, [])
+    useEffect(() => {
+        if (!language) {
+            Strings.setLanguage('en')
+        } else {
+            Strings.setLanguage(language)
+        }
+    }, [language])
 
     const getApis = async () => {
         setIsLoading(true)
