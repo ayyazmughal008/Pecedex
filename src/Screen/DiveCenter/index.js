@@ -147,7 +147,13 @@ const DiveCenter = (props) => {
                 />
                 <TouchableOpacity
                     style={styles.commentView}
-                    onPress={() => { props.navigation.navigate('DiveCenterDetail') }}
+                    onPress={() => {
+                        props.navigation.navigate('DiveCenterDetail', {
+                            array: info.data.comments,
+                            count: info.data.commentsCount,
+                            id: info.data.id
+                        })
+                    }}
                 >
                     <View style={{ flexDirection: "row", alignItems: "center", width: "100%" }}>
                         <FastImage
@@ -184,7 +190,7 @@ const DiveCenter = (props) => {
                                 />
                             </View>
                             <Text style={styles.commentTxt}>
-                                {"312 Comentarios"}
+                                {info.data.commentsCount}{" Comentarios"}
                             </Text>
                         </View>
                     </View>

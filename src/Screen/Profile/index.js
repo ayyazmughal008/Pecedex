@@ -222,38 +222,41 @@ const Profile = (props) => {
                 }]}>
                     {"PHOTOS"}
                 </Text>
-                <FlatList
-                    data={[{ id: 1 }, { id: 1 }, { id: 1 }, { id: 1 }, { id: 1 }, { id: 1 },]}
-                    showsVerticalScrollIndicator={false}
-                    style={{ alignSelf: "center", marginTop: 10 }}
-                    numColumns={3}
-                    keyExtractor={(item, index) => "unique" + index}
-                    renderItem={({ item, index }) => {
-                        return (
-                            <TouchableOpacity
-                                style={{
-                                    width: widthPercentageToDP(26),
-                                    height: heightPercentageToDP(13),
-                                    margin: 5,
-                                }}
-                                onPress={() => props.navigation.navigate('Detail')}
-                            >
-                                <FastImage
-                                    source={require('../../Images/carocodile.jpg')}
+                {!Response || !Response.photos.length ?
+                    <View />
+                    : <FlatList
+                        data={Response.photos}
+                        showsVerticalScrollIndicator={false}
+                        style={{ marginTop: 10 }}
+                        numColumns={3}
+                        keyExtractor={(item, index) => "unique" + index}
+                        renderItem={({ item, index }) => {
+                            return (
+                                <TouchableOpacity
                                     style={{
                                         width: widthPercentageToDP(26),
                                         height: heightPercentageToDP(13),
-                                        //margin: 5,
-                                        borderRadius: widthPercentageToDP(4)
+                                        margin: 5,
                                     }}
-                                    resizeMode={FastImage.resizeMode.cover}
-                                />
-                            </TouchableOpacity>
-                        )
-                    }}
-                />
+                                    onPress={() => props.navigation.navigate('Detail', {
+                                        data: item.genre
+                                    })}
+                                >
+                                    <FastImage
+                                        source={{ uri: item.image }}
+                                        style={{
+                                            width: widthPercentageToDP(26),
+                                            height: heightPercentageToDP(13),
+                                            borderRadius: widthPercentageToDP(4)
+                                        }}
+                                        resizeMode={FastImage.resizeMode.cover}
+                                    />
+                                </TouchableOpacity>
+                            )
+                        }}
+                    />}
             </KeyboardAwareScrollView>
-            <View style={{ height: heightPercentageToDP(7) }} />
+            <View style={{ height: heightPercentageToDP(8) }} />
             <Tab
                 homeClick={() => props.navigation.dispatch(HomeAction)}
                 profileClick={() => props.navigation.dispatch(profileAction)}

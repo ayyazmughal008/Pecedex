@@ -30,6 +30,12 @@ const baseUrl = "http://199.247.13.90/api/",
     getCentersDetail = 'get-center-detail',
     getGenreDetail = 'get-genre-detail',
     getPecioDetail = 'get-pecio-detail',
+    getPointDetail = 'get-point-detail',
+    submitRating = 'submit-rating',
+    getListAll = 'get-list-all',
+    submitinlistpecio = 'submit-in-list-pecio',
+    submitinlistgenre = 'submit-in-list-genre',
+    submitinlistfriend = 'submit-in-list-friend',
     register = 'register';
 
 const country_url = "https://countriesnow.space/api/v0.1/countries/positions"
@@ -713,6 +719,203 @@ export const getPecioDetails = async (pecioId) => {
                         data: json.data
                     })
                     return
+                } else {
+                    Alert.alert("", json.message)
+                }
+            })
+            .catch(error => {
+                console.log("response error ===>", error)
+            })
+    } catch (error) {
+        console.log('my error' + error.message);
+    }
+    return api
+}
+export const getPointsDetails = async (pointId) => {
+    let api
+    try {
+        api = await fetch(baseUrl + getPointDetail, {
+            method: 'POST',
+            headers: {
+                'Accept': 'application/json',
+                "Content-type": "application/json",
+            },
+            body: JSON.stringify({
+                pointId: pointId
+            })
+        })
+            .then(res => res.json())
+            .then(json => {
+                if (json.status == 200) {
+                    console.log(json)
+                    NavigationService.navigate("NewScreen", {
+                        data: json.data
+                    })
+                    return
+                } else {
+                    Alert.alert("", json.message)
+                }
+            })
+            .catch(error => {
+                console.log("response error ===>", error)
+            })
+    } catch (error) {
+        console.log('my error' + error.message);
+    }
+    return api
+}
+export const submitDiveCenterRanking = async (userId, centerId, stars, comment) => {
+    let api
+    try {
+        api = await fetch(baseUrl + submitRating, {
+            method: 'POST',
+            headers: {
+                'Accept': 'application/json',
+                "Content-type": "application/json",
+            },
+            body: JSON.stringify({
+                userId: userId,
+                centerId: centerId,
+                stars: stars,
+                comment: comment,
+            })
+        })
+            .then(res => res.json())
+            .then(json => {
+                if (json.status == 200) {
+                    console.log(json)
+                    Alert.alert("", json.message)
+                    NavigationService.navigate("Home")
+                    return
+                } else {
+                    Alert.alert("", json.message)
+                }
+            })
+            .catch(error => {
+                console.log("response error ===>", error)
+            })
+    } catch (error) {
+        console.log('my error' + error.message);
+    }
+    return api
+}
+export const getAllList = async (userId) => {
+    let api
+    try {
+        api = await fetch(baseUrl + getListAll, {
+            method: 'POST',
+            headers: {
+                'Accept': 'application/json',
+                "Content-type": "application/json",
+            },
+            body: JSON.stringify({
+                userId: userId
+            })
+        })
+            .then(res => res.json())
+            .then(json => {
+                if (json.status == 200) {
+                    console.log(json)
+                    return json
+                } else {
+                    Alert.alert("", json.message)
+                }
+            })
+            .catch(error => {
+                console.log("response error ===>", error)
+            })
+    } catch (error) {
+        console.log('my error' + error.message);
+    }
+    return api
+}
+export const postPeciosList = async (userId, pecioId, value) => {
+    console.log(value)
+    let api
+    try {
+        api = await fetch(baseUrl + submitinlistpecio, {
+            method: 'POST',
+            headers: {
+                'Accept': 'application/json',
+                "Content-type": "application/json",
+            },
+            body: JSON.stringify({
+                userId: userId,
+                pecioId: pecioId,
+                value: value,
+            })
+        })
+            .then(res => res.json())
+            .then(json => {
+                if (json.status == 200) {
+                    //console.log(json)
+                    return json
+                } else {
+                    Alert.alert("", json.message)
+                }
+            })
+            .catch(error => {
+                console.log("response error ===>", error)
+            })
+    } catch (error) {
+        console.log('my error' + error.message);
+    }
+    return api
+}
+export const postGenreList = async (userId, genreId, value) => {
+    console.log(value)
+    let api
+    try {
+        api = await fetch(baseUrl + submitinlistgenre, {
+            method: 'POST',
+            headers: {
+                'Accept': 'application/json',
+                "Content-type": "application/json",
+            },
+            body: JSON.stringify({
+                userId: userId,
+                genreId: genreId,
+                value: value,
+            })
+        })
+            .then(res => res.json())
+            .then(json => {
+                if (json.status == 200) {
+                    //console.log(json)
+                    return json
+                } else {
+                    Alert.alert("", json.message)
+                }
+            })
+            .catch(error => {
+                console.log("response error ===>", error)
+            })
+    } catch (error) {
+        console.log('my error' + error.message);
+    }
+    return api
+}
+export const postFriendList = async (userId, friendId, value) => {
+    console.log(value)
+    let api
+    try {
+        api = await fetch(baseUrl + submitinlistfriend, {
+            method: 'POST',
+            headers: {
+                'Accept': 'application/json',
+                "Content-type": "application/json",
+            },
+            body: JSON.stringify({
+                userId: userId,
+                friendId: friendId,
+                value: value,
+            })
+        })
+            .then(res => res.json())
+            .then(json => {
+                if (json.status == 200) {
+                    //console.log(json)
+                    return json
                 } else {
                     Alert.alert("", json.message)
                 }

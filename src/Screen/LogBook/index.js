@@ -14,15 +14,17 @@ import RNPickerSelect from 'react-native-picker-select';
 import EvilIcons from 'react-native-vector-icons/EvilIcons'
 import MapView, { PROVIDER_GOOGLE, Marker } from 'react-native-maps';
 import { SearchBar } from 'react-native-elements'
-import { getCountryName } from '../../Redux/action'
+import { getCountryName, getAllList, postPeciosList, postGenreList, postFriendList } from '../../Redux/action'
 import { useDispatch, useSelector } from 'react-redux';
 import Strings from '../../Translation'
+import Fontisto from 'react-native-vector-icons/Fontisto'
 
 const LogBook = (props) => {
     const dispatch = useDispatch();
     const AuthLoading = useSelector((state) => state.user.AuthLoading);
     const countryData = useSelector((state) => state.user.countryData);
     const language = useSelector((state) => state.user.language);
+    const login = useSelector((state) => state.user.login);
     const [isLoading, setIsLoading] = useState(false)
     const [isScuba, setScuba] = useState(false)
     const [isRebreader, setRebreader] = useState(false)
@@ -42,6 +44,10 @@ const LogBook = (props) => {
     const [countryList2, setCountryList2] = useState([])
     const [city, setCity] = useState("")
     const [text2, setText2] = useState("")
+    // new text values for Genro, Pecios and team selections
+    const [peciosText, setPeciosText] = useState("")
+    const [animalText, setAnimalText] = useState("")
+    const [teamText, setTeamText] = useState("")
     const [cityList, setCityList] = useState([])
     const [cityList2, setCityList2] = useState([])
     const [TimePickerModal, setTimePickerModal] = useState(false)
@@ -63,18 +69,26 @@ const LogBook = (props) => {
     // new value time Start 
     const [StartTime, setStartTime] = useState("")
     const [EndTime, setEndTime] = useState("")
+    // all Modal switch handle here with default values
     const [STartTimeModal, setSTartTimeModal] = useState(false)
     const [EndTimeModal, setEndTimeModal] = useState(false)
     const [mapModal, setMapModal] = useState(false)
     const [searchModal, setSearchModal] = useState(false)
     const [cityModal, setCityModal] = useState(false)
+    const [peciosModal, setPeciosModal] = useState(false)
+    const [animalModal, setAnimalModal] = useState(false)
+    const [teamModal, setTeamModal] = useState(false)
     const [location, setLocation] = useState("")
-    // new data for suite 
+    const [response, setResponse] = useState("")
+    // tem array for filter searches
+    const [tempPecios, settempPecios] = useState([])
+    const [tempGenre, settempGenre] = useState([])
+    const [tempTeam, settempTeam] = useState([])
 
     useEffect(() => {
         dispatch(getCountryName())
+        saveAllListData()
     }, [])
-
     useEffect(() => {
         setCountryList(countryData)
     }, [countryData])
@@ -85,6 +99,36 @@ const LogBook = (props) => {
             Strings.setLanguage(language)
         }
     }, [language])
+    const saveAllListData = async () => {
+        setIsLoading(true)
+        let menuData = await getAllList(login.data.id)
+        await setResponse(menuData)
+        await setIsLoading(false)
+    }
+    const postPeciosApi = async (id, value) => {
+        setIsLoading(true)
+        let menuData = await postPeciosList(login.data.id, id, value)
+        //await setResponse(prevMovies => ({ ...prevMovies, menuData }))
+        await setResponse(menuData)
+        await settempPecios(menuData.pecios)
+        await setIsLoading(false)
+    }
+    const postGenreApi = async (id, value) => {
+        setIsLoading(true)
+        let menuData = await postGenreList(login.data.id, id, value)
+        //await setResponse(prevMovies => ({ ...prevMovies, menuData }))
+        await setResponse(menuData)
+        await settempGenre(menuData.genres)
+        await setIsLoading(false)
+    }
+    const postFriendApi = async (id, value) => {
+        setIsLoading(true)
+        let menuData = await postFriendList(login.data.id, id, value)
+        //await setResponse(prevMovies => ({ ...prevMovies, menuData }))
+        await setResponse(menuData)
+        await settempTeam(menuData.users)
+        await setIsLoading(false)
+    }
     const getCityName = (country) => {
         setIsLoading(true)
         fetch("https://countriesnow.space/api/v0.1/countries/cities", {
@@ -113,21 +157,28 @@ const LogBook = (props) => {
             })
     }
     const imageModel = (({ item, index }) => {
-        return (
-            <View style={styles.modelView}>
-                <FastImage
-                    source={item.img}
-                    style={styles.imgModel}
-                    resizeMode={FastImage.resizeMode.cover}
-                />
-                <Text style={styles.title}>
-                    {item.title}
-                </Text>
-                {/* <Text style={styles.date}>
-                    {item.date}
-                </Text> */}
-            </View>
-        )
+        if (item.isSelected === 'yes') {
+            return (
+                <View style={styles.modelView}>
+                    {!item.image ?
+                        <FastImage
+                            source={require('../../Images/profile_img5.png')}
+                            style={styles.imgModel}
+                            resizeMode={FastImage.resizeMode.cover}
+                        />
+                        : <FastImage
+                            source={{ uri: item.image }}
+                            style={styles.imgModel}
+                            resizeMode={FastImage.resizeMode.cover}
+                        />
+                    }
+                    <Text style={styles.title}>
+                        {!item.title ? item.name : item.title}
+                    </Text>
+                </View>
+            )
+        }
+
     })
     const handleConfirm = (date) => {
         setMyTime(moment(date).format('HH:mm') + " horas")
@@ -179,6 +230,15 @@ const LogBook = (props) => {
     }
     const toggleCity = () => {
         setCityModal(!cityModal)
+    }
+    const togglePecios = () => {
+        setPeciosModal(!peciosModal)
+    }
+    const toggleAnimal = () => {
+        setAnimalModal(!animalModal)
+    }
+    const toggleTeam = () => {
+        setTeamModal(!teamModal)
     }
     const _onWeatherSelection = (value) => {
         if (value == 1) {
@@ -316,6 +376,157 @@ const LogBook = (props) => {
         //setCountryList(data => ([data, ...newData]));
         setCityList2(newData)
         setText2(text)
+    };
+    const renderSelection = (({ item, index }) => {
+        return (
+            <View style={stylesProps.imageView}>
+                <View style={stylesProps.row}>
+                    <FastImage
+                        source={{ uri: item.image }}
+                        style={styles.imgModel}
+                        resizeMode={FastImage.resizeMode.cover}
+                    />
+                    <Text style={stylesProps.title}>
+                        {item.title}
+                    </Text>
+                </View>
+                <TouchableOpacity
+                    onPress={() => {
+                        if (item.isSelected === 'no') {
+                            postPeciosApi(item.id, "yes")
+                        } else {
+                            postPeciosApi(item.id, "no")
+                        }
+                    }}>
+                    {item.isSelected === 'no' ?
+                        <Fontisto
+                            name="checkbox-passive"
+                            color={blue}
+                            size={30}
+                        />
+                        : <Fontisto
+                            name="checkbox-active"
+                            color={blue}
+                            size={30}
+                        />
+                    }
+                </TouchableOpacity>
+            </View>
+        )
+    })
+    const renderAnimalSelection = (({ item, index }) => {
+        return (
+            <View style={stylesProps.imageView}>
+                <View style={stylesProps.row}>
+                    <FastImage
+                        source={{ uri: item.image }}
+                        style={styles.imgModel}
+                        resizeMode={FastImage.resizeMode.cover}
+                    />
+                    <Text style={stylesProps.title}>
+                        {item.title}
+                    </Text>
+                </View>
+                <TouchableOpacity
+                    onPress={() => {
+                        if (item.isSelected === 'no') {
+                            postGenreApi(item.id, "yes")
+                        } else {
+                            postGenreApi(item.id, "no")
+                        }
+                    }}>
+                    {item.isSelected === 'no' ?
+                        <Fontisto
+                            name="checkbox-passive"
+                            color={blue}
+                            size={30}
+                        />
+                        : <Fontisto
+                            name="checkbox-active"
+                            color={blue}
+                            size={30}
+                        />
+                    }
+                </TouchableOpacity>
+            </View>
+        )
+    })
+    const renderTeamSelection = (({ item, index }) => {
+        return (
+            <View style={stylesProps.imageView}>
+                <View style={stylesProps.row}>
+                    {!item.image ?
+                        <FastImage
+                            source={require('../../Images/profile_img5.png')}
+                            style={styles.imgModel}
+                            resizeMode={FastImage.resizeMode.cover}
+                        />
+                        : <FastImage
+                            source={{ uri: item.image }}
+                            style={styles.imgModel}
+                            resizeMode={FastImage.resizeMode.cover}
+                        />}
+                    <Text style={stylesProps.title}>
+                        {item.name}
+                    </Text>
+                </View>
+                <TouchableOpacity
+                    onPress={() => {
+                        if (item.isSelected === 'no') {
+                            postFriendApi(item.id, "yes")
+                        } else {
+                            postFriendApi(item.id, "no")
+                        }
+                    }}>
+                    {item.isSelected === 'no' ?
+                        <Fontisto
+                            name="checkbox-passive"
+                            color={blue}
+                            size={30}
+                        />
+                        : <Fontisto
+                            name="checkbox-active"
+                            color={blue}
+                            size={30}
+                        />
+                    }
+                </TouchableOpacity>
+            </View>
+        )
+    })
+    // filter functions for multiple selections
+    const searchPeciosFilterFunction = text => {
+        let temList = response.pecios;
+        const newData = temList.filter(item => {
+            const itemData = item.title ? item.title.toUpperCase() : ''.toUpperCase();
+            const textData = text.toUpperCase();
+            return itemData.indexOf(textData) > -1;
+        });
+        //setCountryList(data => ([data, ...newData]));
+        settempPecios(newData)
+        setPeciosText(text)
+    };
+    const searchAnimalFilterFunction = text => {
+        let temList = response.genres;
+        const newData = temList.filter(item => {
+            const itemData = item.title ? item.title.toUpperCase() : ''.toUpperCase();
+            const textData = text.toUpperCase();
+            return itemData.indexOf(textData) > -1;
+        });
+        //setCountryList(data => ([data, ...newData]));
+        settempGenre(newData)
+        setAnimalText(text)
+    };
+    const searchTeamFilterFunction = text => {
+        let temList = response.users;
+        const newData = temList.filter(item => {
+            const itemData = item.name ? item.name.toUpperCase() : ''.toUpperCase();
+            const textData = text.toUpperCase();
+            return itemData.indexOf(textData) > -1;
+        });
+        //setCountryList(data => ([data, ...newData]));
+        settempTeam(newData)
+        setTeamText(text)
     };
 
     return (
@@ -731,31 +942,12 @@ const LogBook = (props) => {
                         />
                     </View>
                     <View style={[styles.logView, {
-                        height: heightPercentageToDP(79),
+                        height: !isScuba ? heightPercentageToDP(65) : heightPercentageToDP(79),
                         marginTop: heightPercentageToDP(2),
-                        //backgroundColor: blue2
+                        //backgroundColor: "red"
                     }]}>
                         <View style={{ width: "100%", height: heightPercentageToDP(22), flexDirection: "row", alignItems: "center", marginTop: heightPercentageToDP(2), justifyContent: "space-between" }}>
-                            <View style={{ width: "25%", height: "100%", alignItems: "center", }}>
-                                <TouchableOpacity
-                                    style={{ width: "100%", height: "65%", }}
-                                >
-                                    <FastImage
-                                        source={require('../../Images/79.png')}
-                                        resizeMode={FastImage.resizeMode.contain}
-                                        style={{ width: "100%", height: "100%" }}
-                                    />
-                                </TouchableOpacity>
-                                <Text style={[styles.tinyText, { color: blue2, textAlign: "center", marginTop: 5 }]}>
-                                    {"Traje"}
-                                </Text>
-                                <Text style={[styles.tinyText, { color: blue2, textAlign: "center" }]}>
-                                    {"humedo"}
-                                </Text>
-                                <Text style={[styles.tinyText, { color: blue2, textAlign: "center", marginTop: 5 }]}>
-                                    {"7 mm"}
-                                </Text>
-                            </View>
+
                             <View style={{ width: "25%", height: "100%", alignItems: "center", }}>
                                 <TouchableOpacity
                                     style={{ width: "100%", height: "65%", }}
@@ -770,7 +962,27 @@ const LogBook = (props) => {
                                     {"Traje"}
                                 </Text>
                                 <Text style={[styles.tinyText, { color: blue2, textAlign: "center" }]}>
-                                    {"humedo"}
+                                    {"corto"}
+                                </Text>
+                            </View>
+                            <View style={{ width: "25%", height: "100%", alignItems: "center", }}>
+                                <TouchableOpacity
+                                    style={{ width: "100%", height: "65%", }}
+                                >
+                                    <FastImage
+                                        source={require('../../Images/79.png')}
+                                        resizeMode={FastImage.resizeMode.contain}
+                                        style={{ width: "100%", height: "100%" }}
+                                    />
+                                </TouchableOpacity>
+                                <Text style={[styles.tinyText, { color: blue2, textAlign: "center", marginTop: 5 }]}>
+                                    {"Traje"}
+                                </Text>
+                                <Text style={[styles.tinyText, { color: blue2, textAlign: "center" }]}>
+                                    {"húmedo"}
+                                </Text>
+                                <Text style={[styles.tinyText, { color: blue2, textAlign: "center", marginTop: 5 }]}>
+                                    {"7 mm"}
                                 </Text>
                             </View>
                             <View style={{ width: "25%", height: "100%", alignItems: "center", }}>
@@ -787,7 +999,7 @@ const LogBook = (props) => {
                                     {"Traje"}
                                 </Text>
                                 <Text style={[styles.tinyText, { color: blue2, textAlign: "center" }]}>
-                                    {"humedo"}
+                                    {"semiseco"}
                                 </Text>
                             </View>
                             <View style={{ width: "25%", height: "100%", alignItems: "center", }}>
@@ -804,7 +1016,7 @@ const LogBook = (props) => {
                                     {"Traje"}
                                 </Text>
                                 <Text style={[styles.tinyText, { color: blue2, textAlign: "center" }]}>
-                                    {"humedo"}
+                                    {"seco"}
                                 </Text>
                             </View>
                         </View>
@@ -929,7 +1141,7 @@ const LogBook = (props) => {
                                 </View>
                             </View>}
                         <View style={[styles.innerLogView, { height: heightPercentageToDP(8), marginTop: 10, justifyContent: "space-between", width: widthPercentageToDP(80) }]}>
-                            <TouchableOpacity style={{ width: "12%", height: "90%" }}>
+                            <TouchableOpacity style={{ width: "13%", height: "90%" }}>
                                 <FastImage
                                     style={{ width: "100%", height: "100%" }}
                                     source={require('../../Images/62.png')}
@@ -949,7 +1161,7 @@ const LogBook = (props) => {
                                     {"Text"}
                                 </Text>
                             </TouchableOpacity>
-                            <TouchableOpacity style={{ width: "14%", height: "85%" }}>
+                            <TouchableOpacity style={{ width: "17%", height: "85%" }}>
                                 <FastImage
                                     style={{ width: "100%", height: "100%" }}
                                     source={require('../../Images/70.png')}
@@ -971,7 +1183,7 @@ const LogBook = (props) => {
                             </TouchableOpacity>
                         </View>
                         <View style={[styles.innerLogView, { height: heightPercentageToDP(8), marginTop: 20, justifyContent: "space-between", width: widthPercentageToDP(80) }]}>
-                            <TouchableOpacity style={{ width: "13%", height: "90%" }}>
+                            <TouchableOpacity style={{ width: "15%", height: "90%" }}>
                                 <FastImage
                                     style={{ width: "100%", height: "100%" }}
                                     source={require('../../Images/66.png')}
@@ -981,7 +1193,7 @@ const LogBook = (props) => {
                                     {"Text"}
                                 </Text>
                             </TouchableOpacity>
-                            <TouchableOpacity style={{ width: "13%", height: "90%" }}>
+                            <TouchableOpacity style={{ width: "17%", height: "90%" }}>
                                 <FastImage
                                     style={{ width: "100%", height: "100%" }}
                                     source={require('../../Images/60.png')}
@@ -991,7 +1203,7 @@ const LogBook = (props) => {
                                     {"Text"}
                                 </Text>
                             </TouchableOpacity>
-                            <TouchableOpacity style={{ width: "17%", height: "90%" }}>
+                            <TouchableOpacity style={{ width: "20%", height: "90%" }}>
                                 <FastImage
                                     style={{ width: "100%", height: "100%" }}
                                     source={require('../../Images/64.png')}
@@ -1015,7 +1227,7 @@ const LogBook = (props) => {
                     </View>
                     <View style={styles.titleView}>
                         <Text style={styles.titleTxt}>
-                            {"HEADING"}
+                            {"PECIOS"}
                         </Text>
                         <FastImage
                             source={require('../../Images/line_right.png')}
@@ -1023,15 +1235,29 @@ const LogBook = (props) => {
                             resizeMode={FastImage.resizeMode.stretch}
                         />
                     </View>
-                    <FlatList
-                        data={data.heading}
-                        showsVerticalScrollIndicator={false}
-                        numColumns={4}
-                        listKey={(item, index) => `_key${index.toString()}`}
-                        //style={{ alignSelf: "center" }}
-                        keyExtractor={(item, index) => "unique" + index}
-                        renderItem={imageModel}
-                    />
+                    <View style={styles.sankSelectionView}>
+                        <Text style={[styles.smallTxt, { color: black }]}>
+                            {""}
+                        </Text>
+                        <TouchableOpacity
+                            onPress={() => togglePecios()}
+                        >
+                            <Text style={[styles.smallTxt, { color: blue }]}>
+                                {"Select Pecios"}
+                            </Text>
+                        </TouchableOpacity>
+                    </View>
+                    {!response || !response.pecios.length ?
+                        <View />
+                        : <FlatList
+                            data={response.pecios}
+                            showsVerticalScrollIndicator={false}
+                            numColumns={4}
+                            listKey={(item, index) => `_key${index.toString()}`}
+                            //style={{ alignSelf: "center" }}
+                            keyExtractor={(item, index) => "unique" + index}
+                            renderItem={imageModel}
+                        />}
                     <View style={styles.titleView}>
                         <Text style={styles.titleTxt}>
                             {"ANIMAL"}
@@ -1042,15 +1268,29 @@ const LogBook = (props) => {
                             resizeMode={FastImage.resizeMode.stretch}
                         />
                     </View>
-                    <FlatList
-                        data={data.animal}
-                        showsVerticalScrollIndicator={false}
-                        numColumns={4}
-                        listKey={(item, index) => `_key${index.toString()}`}
-                        //style={{ alignSelf: "center" }}
-                        keyExtractor={(item, index) => "unique" + index}
-                        renderItem={imageModel}
-                    />
+                    <View style={styles.sankSelectionView}>
+                        <Text style={[styles.smallTxt, { color: black }]}>
+                            {""}
+                        </Text>
+                        <TouchableOpacity
+                            onPress={() => toggleAnimal()}
+                        >
+                            <Text style={[styles.smallTxt, { color: blue }]}>
+                                {"Select Animal"}
+                            </Text>
+                        </TouchableOpacity>
+                    </View>
+                    {!response || !response.genres.length ?
+                        <View />
+                        : <FlatList
+                            data={response.genres}
+                            showsVerticalScrollIndicator={false}
+                            numColumns={4}
+                            listKey={(item, index) => `_key${index.toString()}`}
+                            //style={{ alignSelf: "center" }}
+                            keyExtractor={(item, index) => "unique" + index}
+                            renderItem={imageModel}
+                        />}
                     <View style={styles.titleView}>
                         <Text style={styles.titleTxt}>
                             {"TEAM"}
@@ -1061,15 +1301,30 @@ const LogBook = (props) => {
                             resizeMode={FastImage.resizeMode.stretch}
                         />
                     </View>
-                    <FlatList
-                        data={data.team}
-                        showsVerticalScrollIndicator={false}
-                        numColumns={4}
-                        listKey={(item, index) => `_key${index.toString()}`}
-                        //style={{ alignSelf: "center" }}
-                        keyExtractor={(item, index) => "unique" + index}
-                        renderItem={imageModel}
-                    />
+                    <View style={styles.sankSelectionView}>
+                        <Text style={[styles.smallTxt, { color: black }]}>
+                            {""}
+                        </Text>
+                        <TouchableOpacity
+                            onPress={() => toggleTeam()}
+                        >
+                            <Text style={[styles.smallTxt, { color: blue }]}>
+                                {"Select Team"}
+                            </Text>
+                        </TouchableOpacity>
+                    </View>
+                    {!response || !response.users.length ?
+                        <View />
+                        : <FlatList
+                            data={response.users}
+                            showsVerticalScrollIndicator={false}
+                            numColumns={4}
+                            listKey={(item, index) => `_key${index.toString()}`}
+                            //style={{ alignSelf: "center" }}
+                            keyExtractor={(item, index) => "unique" + index}
+                            renderItem={imageModel}
+                        />
+                    }
                     <View style={styles.titleView}>
                         <Text style={styles.titleTxt}>
                             {"CLASSMATES"}
@@ -1244,6 +1499,151 @@ const LogBook = (props) => {
                     </View>
                 </Modal>
             }
+            {peciosModal &&
+                <Modal
+                    animationType={"fade"}
+                    transparent={false}
+                    visible={peciosModal}
+                    onRequestClose={() => { console.log("Modal has been closed.") }}
+                >
+                    <View style={styles.modalView2}>
+                        <View style={stylesProps.container}>
+                            <View style={styles.row}>
+                                <SearchBar
+                                    placeholder="Search city..."
+                                    lightTheme
+                                    round
+                                    value={peciosText}
+                                    onChangeText={text => searchPeciosFilterFunction(text)}
+                                    autoCorrect={false}
+                                    containerStyle={{ width: widthPercentageToDP(80) }}
+                                />
+                                <TouchableOpacity
+                                    onPress={() => togglePecios()}
+                                >
+                                    <Text style={stylesProps.txt}>
+                                        {"Close"}
+                                    </Text>
+                                </TouchableOpacity>
+                            </View>
+
+                            {!response || !response.pecios.length ?
+                                <View />
+                                : <FlatList
+                                    data={!peciosText ? response.pecios : tempPecios}
+                                    contentContainerStyle={{ alignItems: "center", marginBottom: heightPercentageToDP(5) }}
+                                    keyExtractor={(item, index) => "Unique" + index}
+                                    ItemSeparatorComponent={renderSeparator}
+                                    renderItem={renderSelection}
+                                />}
+                        </View>
+                        {isLoading &&
+                            <ActivityIndicator
+                                size="large"
+                                color={black}
+                                style={styles.loading}
+                            />
+                        }
+                    </View>
+                </Modal>
+            }
+            {animalModal &&
+                <Modal
+                    animationType={"fade"}
+                    transparent={false}
+                    visible={animalModal}
+                    onRequestClose={() => { console.log("Modal has been closed.") }}
+                >
+                    <View style={styles.modalView2}>
+                        <View style={stylesProps.container}>
+                            <View style={styles.row}>
+                                <SearchBar
+                                    placeholder="Search city..."
+                                    lightTheme
+                                    round
+                                    value={animalText}
+                                    onChangeText={text => searchAnimalFilterFunction(text)}
+                                    autoCorrect={false}
+                                    containerStyle={{ width: widthPercentageToDP(80) }}
+                                />
+                                <TouchableOpacity
+                                    onPress={() => toggleAnimal()}
+                                >
+                                    <Text style={stylesProps.txt}>
+                                        {"Close"}
+                                    </Text>
+                                </TouchableOpacity>
+                            </View>
+
+                            {!response || !response.genres.length ?
+                                <View />
+                                : <FlatList
+                                    data={!animalText ? response.genres : tempGenre}
+                                    contentContainerStyle={{ alignItems: "center", marginBottom: heightPercentageToDP(5) }}
+                                    keyExtractor={(item, index) => "Unique" + index}
+                                    ItemSeparatorComponent={renderSeparator}
+                                    renderItem={renderAnimalSelection}
+                                />}
+                        </View>
+                        {isLoading &&
+                            <ActivityIndicator
+                                size="large"
+                                color={black}
+                                style={styles.loading}
+                            />
+                        }
+                    </View>
+                </Modal>
+            }
+            {teamModal &&
+                <Modal
+                    animationType={"fade"}
+                    transparent={false}
+                    visible={teamModal}
+                    onRequestClose={() => { console.log("Modal has been closed.") }}
+                >
+                    <View style={styles.modalView2}>
+                        <View style={stylesProps.container}>
+                            <View style={styles.row}>
+                                <SearchBar
+                                    placeholder="Search city..."
+                                    lightTheme
+                                    round
+                                    value={teamText}
+                                    onChangeText={text => searchTeamFilterFunction(text)}
+                                    autoCorrect={false}
+                                    containerStyle={{ width: widthPercentageToDP(80) }}
+                                />
+                                <TouchableOpacity
+                                    onPress={() => toggleTeam()}
+                                >
+                                    <Text style={stylesProps.txt}>
+                                        {"Close"}
+                                    </Text>
+                                </TouchableOpacity>
+                            </View>
+
+                            {!response || !response.users.length ?
+                                <View />
+                                : <FlatList
+                                    data={!teamText ? response.users : tempTeam}
+                                    contentContainerStyle={{ alignItems: "center", marginBottom: heightPercentageToDP(5) }}
+                                    keyExtractor={(item, index) => "Unique" + index}
+                                    ItemSeparatorComponent={renderSeparator}
+                                    renderItem={renderTeamSelection}
+                                />}
+                        </View>
+                        {isLoading &&
+                            <ActivityIndicator
+                                size="large"
+                                color={black}
+                                style={styles.loading}
+                            />
+                        }
+                    </View>
+                </Modal>
+            }
+
             {AuthLoading &&
                 <ActivityIndicator
                     size="large"
@@ -1277,6 +1677,26 @@ const stylesProps = StyleSheet.create({
         fontSize: widthPercentageToDP(4),
         color: black,
         fontFamily: "Montserrat-SemiBold"
+    },
+    title: {
+        fontSize: widthPercentageToDP(4),
+        color: black,
+        fontFamily: "Montserrat-SemiBold",
+        marginLeft: widthPercentageToDP(2)
+    },
+    imageView: {
+        width: widthPercentageToDP(90),
+        height: heightPercentageToDP(10),
+        flexDirection: "row",
+        alignItems: "center",
+        justifyContent: "space-between",
+        marginTop: heightPercentageToDP(1)
+    },
+    row: {
+        flexDirection: "row",
+        alignItems: "center",
+        width: widthPercentageToDP(30),
+        height: heightPercentageToDP(10),
     }
 
 })

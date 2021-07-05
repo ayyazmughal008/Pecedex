@@ -163,4 +163,11 @@ export const data = {
             label: "Wing"
         },
     ],
+    images: [
+        require('../../Images/8.png'),
+        require('../../Images/108.png'),
+        require('../../Images/lion.jpg'),
+        require('../../Images/shark.jpg'),
+        require('../../Images/carocodile.jpg'),
+    ]
 }

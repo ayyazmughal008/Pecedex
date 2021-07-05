@@ -7,7 +7,7 @@ import MapView, { PROVIDER_GOOGLE, Marker } from 'react-native-maps';
 import { heightPercentageToDP } from '../../Component/MakeMeResponsive'
 import { HomeAction, profileAction, settingAction, mapAction, notificationAction } from '../../Component/BottomTab/actions'
 import Strings from '../../Translation'
-import { getDiveCenters, getDiveCenterDetail, getGenreDetails, getPecioDetails } from '../../Redux/action'
+import { getDiveCenters, getDiveCenterDetail, getGenreDetails, getPecioDetails, getPointsDetails } from '../../Redux/action'
 import { useSelector, useDispatch } from 'react-redux';
 import { black } from '../../config/color'
 
@@ -44,6 +44,11 @@ const Map = (props) => {
     const getPeciosDetailApi = async (id) => {
         setIsLoading(true)
         await getPecioDetails(id)
+        await setIsLoading(false)
+    }
+    const getPointsDetailApi = async (id) => {
+        setIsLoading(true)
+        await getPointsDetails(id)
         await setIsLoading(false)
     }
     return (
@@ -153,6 +158,24 @@ const Map = (props) => {
                             )
                         })
                     }
+                    {!Response || !Response.points.length ?
+                        <View />
+                        : Response.points.map((item, index) => {
+                            return (
+                                <Marker
+                                    key={"unique" + index}
+                                    coordinate={{
+                                        latitude: parseFloat(item.lat),
+                                        longitude: parseFloat(item.lng),
+                                    }}
+                                    //image={require('../../Images/15.png')}
+                                    onPress={() => {
+                                        getPointsDetailApi(item.pointId)
+                                    }}
+                                />
+                            )
+                        })
+                    }
                 </MapView>
 
                 <View style={styles.mapBottom}>
@@ -166,13 +189,22 @@ const Map = (props) => {
                             <Text style={[styles.btnText, { marginLeft: 10 }]}>{"Mis Inmersiones"}</Text>
                         </TouchableOpacity>
                     </View>
-                    <TouchableOpacity
-                        style={{ width: "50%", alignItems: "center", flexDirection: "row", marginTop: 10 }}
-                    //onPress={() => props.navigation.navigate('DiveCenter')}
-                    >
-                        <View style={[styles.circle, { backgroundColor: "red" }]} />
-                        <Text style={[styles.btnText, { marginLeft: 10 }]}>{"Centros de Buceo"}</Text>
-                    </TouchableOpacity>
+                    <View style={{ flexDirection: "row", alignItems: "center", width: "100%" }}>
+                        <TouchableOpacity
+                            style={{ width: "50%", alignItems: "center", flexDirection: "row", marginTop: 10 }}
+                        //onPress={() => props.navigation.navigate('DiveCenter')}
+                        >
+                            <View style={[styles.circle, { backgroundColor: "red" }]} />
+                            <Text style={[styles.btnText, { marginLeft: 10 }]}>{"Centros de Buceo"}</Text>
+                        </TouchableOpacity>
+                        <TouchableOpacity
+                            style={{ width: "50%", alignItems: "center", flexDirection: "row", marginTop: 10 }}
+                        //onPress={() => props.navigation.navigate('NewScreen')}
+                        >
+                            <View style={[styles.circle, { backgroundColor: "Yellow" }]} />
+                            <Text style={[styles.btnText, { marginLeft: 10 }]}>{"Puntos de" + '\n' + "inmersion"}</Text>
+                        </TouchableOpacity>
+                    </View>
                 </View>
                 <View style={{ height: heightPercentageToDP(7) }} />
                 <Tab

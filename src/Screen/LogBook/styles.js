@@ -261,5 +261,18 @@ export const styles = StyleSheet.create({
         height: "55%",
         justifyContent: "center",
         marginLeft: widthPercentageToDP(-4)
+    },
+    sankSelectionView: {
+        width: widthPercentageToDP(90),
+        alignSelf: "center",
+        flexDirection: "row",
+        alignItems: "center",
+        justifyContent: "space-between"
+    },
+    row: {
+        flexDirection: "row",
+        alignItems: "center",
+        width: widthPercentageToDP(100),
+        justifyContent: "space-around"
     }
 })

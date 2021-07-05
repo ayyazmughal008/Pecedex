@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react'
-import { SafeAreaView, View, Text, TouchableOpacity, FlatList } from 'react-native'
+import { SafeAreaView, View, Text, TouchableOpacity, FlatList, ActivityIndicator, Alert } from 'react-native'
 import { styles } from '../../config/styles'
 import FastImage from 'react-native-fast-image'
 import { heightPercentageToDP, widthPercentageToDP } from '../../Component/MakeMeResponsive'
@@ -9,6 +9,7 @@ import Tab from '../../Component/BottomTab'
 import { HomeAction, profileAction, settingAction, mapAction, notificationAction } from '../../Component/BottomTab/actions'
 import { useSelector, useDispatch } from 'react-redux';
 import Card from '../../Component/Review'
+import { submitDiveCenterRanking } from '../../Redux/action'
 import Strings from '../../Translation'
 
 const DiveCenter = (props) => {
@@ -16,6 +17,8 @@ const DiveCenter = (props) => {
     const login = useSelector((state) => state.user.login);
     const [text, setText] = useState("")
     const [rankingValue, setValue] = useState("")
+    const [isLoading, setIsLoading] = useState(false)
+    const id = props.navigation.getParam('id', '123')
     const language = useSelector((state) => state.user.language);
     useEffect(() => {
         if (!language) {
@@ -24,6 +27,18 @@ const DiveCenter = (props) => {
             Strings.setLanguage(language)
         }
     }, [language])
+    const getApis = async (id, centerId, star, comment) => {
+        setIsLoading(true)
+        await submitDiveCenterRanking(id, centerId, star, comment)
+        await setIsLoading(false)
+    }
+    const _onSubmit = () => {
+        if (!text) {
+            Alert.alert("", "Please write something")
+            return
+        }
+        getApis(login.data.id, id, rankingValue, text)
+    }
 
     return (
         <SafeAreaView style={styles.container}>
@@ -66,7 +81,7 @@ const DiveCenter = (props) => {
                         //marginTop: heightPercentageToDP(4),
                         alignSelf: "center"
                     }]}
-                    onPress={() => { }}
+                    onPress={() => { _onSubmit() }}
                 >
                     <Text style={styles.btnText}>
                         {Strings.submit}
@@ -82,7 +97,13 @@ const DiveCenter = (props) => {
                 mapClick={() => props.navigation.dispatch(mapAction)}
                 notiClick={() => props.navigation.dispatch(notificationAction)}
             />
-
+            {isLoading &&
+                <ActivityIndicator
+                    size="large"
+                    color={black}
+                    style={styles.loading}
+                />
+            }
         </SafeAreaView>
     )
 }

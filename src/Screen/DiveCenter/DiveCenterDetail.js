@@ -9,11 +9,15 @@ import Tab from '../../Component/BottomTab'
 import { HomeAction, profileAction, settingAction, mapAction, notificationAction } from '../../Component/BottomTab/actions'
 import { useSelector, useDispatch } from 'react-redux';
 import Strings from '../../Translation'
+import ShowStars from '../../Component/ShowRanking'
 
 const DiveCenter = (props) => {
     const dispatch = useDispatch();
     const login = useSelector((state) => state.user.login);
     const language = useSelector((state) => state.user.language);
+    const array = props.navigation.getParam('array', '123')
+    const count = props.navigation.getParam('count', '123')
+    const id = props.navigation.getParam('id', '123')
     useEffect(() => {
         if (!language) {
             Strings.setLanguage('en')
@@ -23,48 +27,11 @@ const DiveCenter = (props) => {
     }, [language])
     const _renderItem = ({ item, index }) => {
         return (
-            <View style={[styles.commentView, {
-                height: heightPercentageToDP(20),
-            }]}>
-                <Text style={[styles.profileName, { alignSelf: "center", color: blue }]}>
-                    {"FULANITO "}{index + 1}
-                </Text>
-                <View style={{ flexDirection: "row", alignItems: "center", height: "20%", width: "80%", }}>
-                    <FastImage
-                        source={require('../../Images/star.png')}
-                        resizeMode={FastImage.resizeMode.contain}
-                        style={styles.star}
-                    />
-                    <FastImage
-                        source={require('../../Images/star.png')}
-                        resizeMode={FastImage.resizeMode.contain}
-                        style={styles.star}
-                    />
-                    <FastImage
-                        source={require('../../Images/star.png')}
-                        resizeMode={FastImage.resizeMode.contain}
-                        style={styles.star}
-                    />
-                    <FastImage
-                        source={require('../../Images/star.png')}
-                        resizeMode={FastImage.resizeMode.contain}
-                        style={styles.star}
-                    />
-                    <FastImage
-                        source={require('../../Images/star.png')}
-                        resizeMode={FastImage.resizeMode.contain}
-                        style={styles.star}
-                    />
-                </View>
-                <Text style={[styles.commentTxt, { textAlign: "center" }]}>
-                    {"Este centro es muy bueno y repetiria sin duad"}
-                </Text>
-                <FastImage
-                    source={require('../../Images/line.png')}
-                    style={styles.line}
-                    resizeMode={FastImage.resizeMode.stretch}
-                />
-            </View>
+            <ShowStars
+                name={item.name}
+                value={item.stars}
+                comment={item.comment}
+            />
         )
     }
 
@@ -128,10 +95,12 @@ const DiveCenter = (props) => {
                     resizeMode={FastImage.resizeMode.stretch}
                 />
                 <Text style={styles.commentTxt}>
-                    {"312 Comentarios"}
+                    {count}{" Comentarios"}
                 </Text>
                 <Text
-                    onPress={() => props.navigation.navigate('SubmitReview')}
+                    onPress={() => props.navigation.navigate('SubmitReview', {
+                        id: id
+                    })}
                     style={[styles.commentTxt, {
                         textDecorationLine: "underline"
                     }]}>
@@ -139,12 +108,14 @@ const DiveCenter = (props) => {
                 </Text>
             </View>
 
-            <FlatList
-                data={[{ id: 1 }, { id: 1 }, { id: 1 }, { id: 1 }, { id: 1 }, { id: 1 },]}
-                keyExtractor={(item, index) => "unque" + index}
-                showsVerticalScrollIndicator={false}
-                renderItem={_renderItem}
-            />
+            {!array || !array.length ?
+                <View />
+                : <FlatList
+                    data={array}
+                    keyExtractor={(item, index) => "unque" + index}
+                    showsVerticalScrollIndicator={false}
+                    renderItem={_renderItem}
+                />}
 
             <View style={{ height: heightPercentageToDP(7) }} />
             <Tab

@@ -59,7 +59,7 @@ export const styles = StyleSheet.create({
         backgroundColor: blue,
         borderRadius: widthPercentageToDP(7),
         marginBottom: heightPercentageToDP(1),
-        justifyContent:"center"
+        justifyContent: "center"
     },
     input: {
         width: widthPercentageToDP(90),
@@ -125,7 +125,7 @@ export const styles = StyleSheet.create({
     },
     profileView: {
         width: widthPercentageToDP(90),
-        height: heightPercentageToDP(30),
+        height: heightPercentageToDP(27),
         backgroundColor: blue,
         borderRadius: widthPercentageToDP(5),
         alignSelf: "center",
@@ -203,9 +203,27 @@ export const styles = StyleSheet.create({
         alignSelf: "center",
         padding: widthPercentageToDP(2)
     },
+    smallText3: {
+        fontSize: widthPercentageToDP(4),
+        color: black,
+        fontFamily: "Montserrat-SemiBold",
+        textAlign: "center",
+        alignSelf: "center",
+        padding: widthPercentageToDP(1)
+    },
+    description: {
+        fontSize: widthPercentageToDP(4),
+        color: black,
+        fontFamily: "Montserrat-SemiBold",
+        textAlign: "justify",
+        alignSelf: "center",
+        padding: widthPercentageToDP(1),
+        paddingLeft: widthPercentageToDP(4),
+        paddingRight: widthPercentageToDP(4)
+    },
     mapBottom: {
-        width: widthPercentageToDP(90),
-        height: heightPercentageToDP(10),
+        width: widthPercentageToDP(95),
+        height: heightPercentageToDP(12),
         alignSelf: "center",
         position: "absolute",
         bottom: "10%",
@@ -247,7 +265,7 @@ export const styles = StyleSheet.create({
         width: widthPercentageToDP(75),
         height: heightPercentageToDP(0.3),
         alignSelf: "center",
-        marginTop: heightPercentageToDP(3),
+        marginTop: heightPercentageToDP(1),
         marginBottom: heightPercentageToDP(1)
     },
     commentView: {
@@ -298,4 +316,43 @@ export const styles = StyleSheet.create({
         height: heightPercentageToDP(0.3),
         marginLeft: widthPercentageToDP(0.5)
     },
+    waveView: {
+        marginTop: heightPercentageToDP(2),
+        height: heightPercentageToDP(8),
+        width: widthPercentageToDP(90),
+        borderTopWidth: widthPercentageToDP(0.6),
+        borderBottomWidth: widthPercentageToDP(0.6),
+        alignSelf: "center",
+        flexDirection: "row",
+        alignItems: "center",
+        borderColor: blue,
+        justifyContent: "center"
+    },
+    smallIcon: {
+        width: widthPercentageToDP(13),
+        height: widthPercentageToDP(13)
+    },
+    difficultBarView: {
+        //marginTop: heightPercentageToDP(1),
+        width: widthPercentageToDP(90),
+        height: heightPercentageToDP(4),
+        flexDirection: "row",
+        alignSelf: "center"
+    },
+    barValue: {
+        height: "100%",
+        justifyContent: "center",
+        alignItems: "center"
+    },
+    viewLine: {
+        marginTop: heightPercentageToDP(3),
+        height: heightPercentageToDP(10),
+        width: widthPercentageToDP(90),
+        borderTopWidth: widthPercentageToDP(0.6),
+        alignSelf: "center",
+        flexDirection: "row",
+        alignItems: "center",
+        borderColor: blue,
+        justifyContent: "center"
+    }
 })
