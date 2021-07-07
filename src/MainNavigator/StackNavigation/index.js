@@ -5,6 +5,7 @@ import Animal from '../../Screen/Animal'
 import Classes from '../../Screen/Classes'
 import Order from '../../Screen/Order'
 import Family from '../../Screen/Family'
+import Category from '../../Screen/Category'
 import Genre from '../../Screen/Genere'
 import Dive from '../../Screen/Dive'
 import Ranking from '../../Screen/Rankisng'
@@ -47,6 +48,9 @@ export default createStackNavigator(
     },
     Family: {
       screen: Family
+    },
+    Category: {
+      screen: Category
     },
     Genre: {
       screen: Genre

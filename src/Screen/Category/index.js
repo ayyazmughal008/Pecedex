@@ -3,16 +3,16 @@ import { SafeAreaView, View, Text, FlatList, ActivityIndicator } from 'react-nat
 import { styles } from '../../config/styles'
 import FastImage from 'react-native-fast-image'
 import Card from '../../Component/AnimalCard'
-import { data } from './data'
-import { getMenuFamily } from '../../Redux/action'
-import { heightPercentageToDP } from '../../Component/MakeMeResponsive'
+//import { data } from './data'
+import { getMenuCategory } from '../../Redux/action'
 import Tab from '../../Component/BottomTab'
+import { heightPercentageToDP } from '../../Component/MakeMeResponsive'
 import { HomeAction, profileAction, settingAction, mapAction, notificationAction } from '../../Component/BottomTab/actions'
 import { black } from '../../config/color'
 import Strings from '../../Translation'
 import { useSelector, useDispatch } from 'react-redux';
 
-const Order = (props) => {
+const Category = (props) => {
 
     const [isLoading, setIsLoading] = useState(false)
     const [Response, setResponse] = useState('')
@@ -31,7 +31,7 @@ const Order = (props) => {
 
     const getApis = async () => {
         setIsLoading(true)
-        let menuData = await getMenuFamily(id)
+        let menuData = await getMenuCategory(id)
         await setResponse(menuData)
         await setIsLoading(false)
     }
@@ -43,7 +43,7 @@ const Order = (props) => {
                 style={styles.top}
                 resizeMode={FastImage.resizeMode.stretch}
             >
-                <Text style={styles.proInfoTile}>{"FAMILIA CROCODILE"}</Text>
+                <Text style={styles.proInfoTile}>{"CLASE CROCODILE"}</Text>
             </FastImage>
             {!Response || !Response.data ?
                 <View />
@@ -58,7 +58,7 @@ const Order = (props) => {
                                 title={item.title}
                                 animalImg={"http://199.247.13.90/" + item.image}
                                 clickHandler={() => {
-                                    props.navigation.navigate('Category', {
+                                    props.navigation.navigate('Genre', {
                                         id: item.id
                                     })
                                 }}
@@ -85,4 +85,4 @@ const Order = (props) => {
     )
 }
 
-export default Order;
+export default Category;

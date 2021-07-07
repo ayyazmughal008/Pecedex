@@ -5,7 +5,8 @@ import {
   TEM_LOGIN,
   USER_LOGIN,
   COUNTRY_NAME,
-  SET_LANGUAGE
+  SET_LANGUAGE,
+  FCM_TOKEN
 
 } from "./action";
 
@@ -14,7 +15,8 @@ const initialUserState = {
   isLogin: false,
   login: "",
   countryData: [],
-  language: "en"
+  language: "en",
+  token: ""
 };
 
 const userReducer = (state = initialUserState, action) => {
@@ -54,6 +56,12 @@ const userReducer = (state = initialUserState, action) => {
     return {
       ...state,
       language: action.payload.language
+    };
+  }
+  if (action.type === FCM_TOKEN) {
+    return {
+      ...state,
+      token: action.payload.token
     };
   }
   return state;

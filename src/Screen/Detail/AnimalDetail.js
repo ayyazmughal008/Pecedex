@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react'
-import { SafeAreaView, View, Text, FlatList, TouchableOpacity, Linking, ActivityIndicator, PermissionsAndroid } from 'react-native'
+import { SafeAreaView, View, Text, FlatList, TouchableOpacity, Linking, ActivityIndicator, PermissionsAndroid, Dimensions } from 'react-native'
 import { styles } from '../../config/styles'
 import FastImage from 'react-native-fast-image'
 import { widthPercentageToDP, heightPercentageToDP } from '../../Component/MakeMeResponsive'
@@ -14,6 +14,11 @@ import ImagePicker from 'react-native-image-crop-picker';
 import { useSelector, useDispatch } from 'react-redux';
 import Picker from '../Profile/Picker'
 import Strings from '../../Translation'
+import { media } from './data'
+import Carousel from 'react-native-snap-carousel';
+const SLIDER_WIDTH = Dimensions.get('window').width;
+const { width } = Dimensions.get('window');
+import Video from 'react-native-video'
 
 
 const GenreDetail = (props) => {
@@ -24,6 +29,11 @@ const GenreDetail = (props) => {
     const AuthLoading = useSelector((state) => state.user.AuthLoading);
     const [pickerOption, setOption] = useState(false)
     const [isLoading, setIsLoading] = useState(false)
+    const [isStart, setSTart] = useState(false)
+    const [activeSlid, setActiveSlid] = useState(0);
+    useEffect(() => {
+        console.log("My Activie Slide", activeSlid)
+    }, [activeSlid])
     useEffect(() => {
         if (!language) {
             Strings.setLanguage('en')
@@ -130,14 +140,63 @@ const GenreDetail = (props) => {
             console.log(error);
         })
     }
+    const onBuffer = (isBuffering) => {
+        if (isBuffering) {
+            setSTart(true)
+        } else {
+            setSTart(false)
+        }
+    }
+    const _renderSlider = (({ item, index }) => {
+        if (item.mediaType === 'image') {
+            return (
+                <FastImage
+                    source={{ uri: item.imgUrl }}
+                    style={{ width: "100%", height: "100%", }}
+                    resizeMode={FastImage.resizeMode.cover}
+                />
+            )
+        } else {
+            return (
+                <View style={{ flex: 1 }}>
+                    <Video
+                        source={{ uri: item.imgUrl }}  // Can be a URL or a local file.
+                        //ref={(ref) => { this.player = ref }}  // Store reference
+                        resizeMode={"cover"}
+                        paused={index !== activeSlid ? true : false}
+                        onLoadStart={setSTart(true)}
+                        onLoad={setSTart(false)}
+                        onBuffer={onBuffer()}
+                        onError={error => console.log(error)}
+                        controls={false}
+                        style={{ backgroundColor: "black", width: "100%", height: "100%" }}
+                    />
+                    {isStart &&
+                        <ActivityIndicator
+                            size="large"
+                            color={white}
+                            style={{
+                                position: 'absolute',
+                                top: 70,
+                                left: 70,
+                                right: 70,
+                                height: 50,
+                            }}
+                        />
+                    }
+                </View>
+            )
+        }
+
+    })
     return (
         <SafeAreaView style={styles.container}>
             <KeyboardAwareScrollView contentContainerStyle={{ alignItems: "center" }}>
                 <View style={{
                     width: "100%",
-                    height: heightPercentageToDP(35)
+                    height: heightPercentageToDP(35),
                 }}>
-                    <SliderBox
+                    {/* <SliderBox
                         ImageComponent={FastImage}
                         images={data.images}
                         sliderBoxHeight={heightPercentageToDP(35)}
@@ -156,6 +215,14 @@ const GenreDetail = (props) => {
                             padding: 0,
                             margin: 0
                         }}
+                    /> */}
+                    <Carousel
+                        layout={'default'}
+                        data={media}
+                        renderItem={_renderSlider}
+                        sliderWidth={(width)}
+                        itemWidth={(width)}
+                        onSnapToItem={(index) => setActiveSlid(index)}
                     />
                     <TouchableOpacity
                         onPress={() => toggleOption()}

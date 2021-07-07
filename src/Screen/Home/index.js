@@ -3,7 +3,7 @@ import { SafeAreaView, View, Text, TouchableOpacity, TextInput, FlatList, Activi
 import { styles } from '../../config/styles'
 import FastImage from 'react-native-fast-image'
 import Strings from '../../Translation'
-import { getMainMenu } from '../../Redux/action'
+import { getMainMenu, submitFcmToken } from '../../Redux/action'
 import Icon from 'react-native-vector-icons/EvilIcons'
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view'
 import { widthPercentageToDP, heightPercentageToDP } from '../../Component/MakeMeResponsive'
@@ -17,6 +17,8 @@ import { useDispatch, useSelector } from 'react-redux';
 
 const Home = (props) => {
     const language = useSelector((state) => state.user.language);
+    const token = useSelector((state) => state.user.token);
+    const login = useSelector((state) => state.user.login);
     const [isLoading, setIsLoading] = useState(false)
     const [menuResponse, setResponse] = useState('')
     useEffect(() => {
@@ -26,6 +28,10 @@ const Home = (props) => {
             Strings.setLanguage(language)
         }
     }, [language])
+    useEffect(() => {
+        //console.log("My save token is", token)
+        postTokenApi()
+    }, [])
     // useEffect(() => {
     //     //getApis()
     //     AdMobInterstitial.setTestDevices([AdMobInterstitial.simulatorId]);
@@ -54,6 +60,11 @@ const Home = (props) => {
         setIsLoading(true)
         let menuData = await getMainMenu()
         await setResponse(menuData)
+        await setIsLoading(false)
+    }
+    const postTokenApi = async () => {
+        setIsLoading(true)
+        await submitFcmToken(token, login.data.id)
         await setIsLoading(false)
     }
     // const showInterstitial = () => {

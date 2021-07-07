@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react'
-import { SafeAreaView, View, Text, TextInput, TouchableOpacity } from 'react-native'
+import { SafeAreaView, View, Text, TextInput, TouchableOpacity, ActivityIndicator } from 'react-native'
 import { styles } from '../../config/styles'
 import { HomeAction, profileAction, settingAction, mapAction, notificationAction } from '../../Component/BottomTab/actions'
 import Tab from '../../Component/BottomTab'
@@ -8,13 +8,15 @@ import FastImage from 'react-native-fast-image'
 import { black, green, lightRed } from '../../config/color'
 import { useSelector, useDispatch } from 'react-redux';
 import Strings from '../../Translation'
-import { logOut, setLanguage } from '../../Redux/action'
+import { logOut, setLanguage, logoutUser } from '../../Redux/action'
 import RNRestart from 'react-native-restart';
 
 const Setting = (props) => {
     const dispatch = useDispatch();
     const language = useSelector((state) => state.user.language);
     const login = useSelector((state) => state.user.login);
+    const [isLoading, setIsLoading] = useState(false)
+
     useEffect(() => {
         if (!language) {
             Strings.setLanguage('en')
@@ -22,6 +24,13 @@ const Setting = (props) => {
             Strings.setLanguage(language)
         }
     }, [language])
+
+    const logoutApi = async () => {
+        setIsLoading(true)
+        await logoutUser(login.data.id)
+        await setIsLoading(false)
+        dispatch(logOut())
+    }
 
 
     return (
@@ -119,7 +128,6 @@ const Setting = (props) => {
                     {Strings.change}
                 </Text>
             </View>
-
             <TouchableOpacity
                 style={[styles.inputView, {
                     backgroundColor: green,
@@ -128,7 +136,7 @@ const Setting = (props) => {
                     marginTop: heightPercentageToDP(4),
                     alignSelf: "center"
                 }]}
-                onPress={() => { dispatch(logOut()) }}
+                onPress={() => { logoutApi() }}
             >
                 <Text style={styles.btnText}>
                     {Strings.logout}
@@ -141,6 +149,13 @@ const Setting = (props) => {
                 mapClick={() => props.navigation.dispatch(mapAction)}
                 notiClick={() => props.navigation.dispatch(notificationAction)}
             />
+            {isLoading &&
+                <ActivityIndicator
+                    size="large"
+                    color={black}
+                    style={styles.loading}
+                />
+            }
         </SafeAreaView>
     )
 }

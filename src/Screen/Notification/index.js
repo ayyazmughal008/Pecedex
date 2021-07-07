@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react'
-import { SafeAreaView, View, FlatList } from 'react-native'
+import { SafeAreaView, View, FlatList, ActivityIndicator } from 'react-native'
 import { styles } from '../../config/styles'
 import Card from '../../Component/NotiicationCard'
 import FastImage from 'react-native-fast-image'
@@ -9,9 +9,16 @@ import { heightPercentageToDP } from '../../Component/MakeMeResponsive'
 import { HomeAction, profileAction, settingAction, mapAction, notificationAction } from '../../Component/BottomTab/actions'
 import Strings from '../../Translation'
 import { useSelector, useDispatch } from 'react-redux';
+import { black } from '../../config/color'
+import { userNotification } from '../../Redux/action'
 
 const Notification = (props) => {
+    const dispatch = useDispatch();
     const language = useSelector((state) => state.user.language);
+    const login = useSelector((state) => state.user.login);
+    const [Response, setResponse] = useState('')
+    const [isLoading, setIsLoading] = useState(false)
+
     useEffect(() => {
         if (!language) {
             Strings.setLanguage('en')
@@ -19,6 +26,17 @@ const Notification = (props) => {
             Strings.setLanguage(language)
         }
     }, [language])
+    useEffect(() => {
+        getNotificationApi();
+    }, [])
+
+    const getNotificationApi = async () => {
+        setIsLoading(true)
+        const data = await userNotification(login.data.id)
+        await setResponse(data)
+        await setIsLoading(false)
+    }
+
     return (
         <SafeAreaView style={styles.container}>
             <FastImage
@@ -26,20 +44,23 @@ const Notification = (props) => {
                 style={styles.top}
                 resizeMode={FastImage.resizeMode.stretch}
             />
-            <FlatList
-                data={data}
-                showsVerticalScrollIndicator={false}
-                style={{ alignSelf: "center", marginTop: 10 }}
-                keyExtractor={(item, index) => "unique" + index}
-                renderItem={({ item, index }) => {
-                    return (
-                        <Card
-                            title={item.title}
-                            description={item.description}
-                        />
-                    )
-                }}
-            />
+            {!Response || !Response.data.length ?
+                <View />
+                : <FlatList
+                    data={Response.data}
+                    showsVerticalScrollIndicator={false}
+                    style={{ alignSelf: "center", marginTop: 10 }}
+                    keyExtractor={(item, index) => "unique" + index}
+                    renderItem={({ item, index }) => {
+                        return (
+                            <Card
+                                title={item.title}
+                                description={item.description}
+                                date={item.created_at}
+                            />
+                        )
+                    }}
+                />}
             <View style={{ height: heightPercentageToDP(7) }} />
             <Tab
                 homeClick={() => props.navigation.dispatch(HomeAction)}
@@ -48,6 +69,13 @@ const Notification = (props) => {
                 mapClick={() => props.navigation.dispatch(mapAction)}
                 notiClick={() => props.navigation.dispatch(notificationAction)}
             />
+            {isLoading &&
+                <ActivityIndicator
+                    size="large"
+                    color={black}
+                    style={styles.loading}
+                />
+            }
         </SafeAreaView>
     )
 }

@@ -7,6 +7,7 @@ export const TEM_LOGIN = "TEM_LOGIN";
 export const USER_LOGIN = "USER_LOGIN";
 export const COUNTRY_NAME = "COUNTRY_NAME";
 export const SET_LANGUAGE = "SET_LANGUAGE";
+export const FCM_TOKEN = "FCM_TOKEN";
 
 
 const baseUrl = "http://199.247.13.90/api/",
@@ -16,6 +17,7 @@ const baseUrl = "http://199.247.13.90/api/",
     getClasses = 'get-classes',
     getOrders = 'get-orders',
     getFamilies = 'get-families',
+    getCategory = 'get-categories',
     getGenres = 'get-genres',
     getPecios = 'get-pecios',
     seenGenre = 'seen-genre',
@@ -36,10 +38,23 @@ const baseUrl = "http://199.247.13.90/api/",
     submitinlistpecio = 'submit-in-list-pecio',
     submitinlistgenre = 'submit-in-list-genre',
     submitinlistfriend = 'submit-in-list-friend',
+    fcmToken = 'fcm',
+    getNotifications = 'get-notifications',
+    userLogout = 'logout',
     register = 'register';
 
 const country_url = "https://countriesnow.space/api/v0.1/countries/positions"
 
+export const saveToken = (value) => {
+    return dispatch => {
+        dispatch({
+            type: FCM_TOKEN,
+            payload: {
+                token: value
+            }
+        })
+    }
+}
 export const setLanguage = (value) => {
     return dispatch => {
         dispatch({
@@ -263,6 +278,32 @@ export const getMenuFamily = async (id) => {
     }
     return api
 }
+export const getMenuCategory = async (id) => {
+    let api
+    try {
+        api = await fetch(baseUrl + getCategory, {
+            method: 'POST',
+            headers: {
+                'Accept': 'application/json',
+                "Content-type": "application/json",
+            },
+            body: JSON.stringify({
+                familyId: id
+            })
+        })
+            .then(res => res.json())
+            .then(json => {
+                console.log(json)
+                return json
+            })
+            .catch(error => {
+                console.log("response error ===>", error)
+            })
+    } catch (error) {
+        console.log('my error' + error.message);
+    }
+    return api
+}
 export const getMenuGenro = async (id) => {
     let api
     try {
@@ -273,7 +314,7 @@ export const getMenuGenro = async (id) => {
                 "Content-type": "application/json",
             },
             body: JSON.stringify({
-                familyId: id
+                categoryId: id
             })
         })
             .then(res => res.json())
@@ -915,6 +956,98 @@ export const postFriendList = async (userId, friendId, value) => {
             .then(json => {
                 if (json.status == 200) {
                     //console.log(json)
+                    return json
+                } else {
+                    Alert.alert("", json.message)
+                }
+            })
+            .catch(error => {
+                console.log("response error ===>", error)
+            })
+    } catch (error) {
+        console.log('my error' + error.message);
+    }
+    return api
+}
+export const submitFcmToken = async (fcm, userId) => {
+    console.log(fcm, userId)
+    let api
+    try {
+        api = await fetch(baseUrl + fcmToken, {
+            method: 'POST',
+            headers: {
+                'Accept': 'application/json',
+                "Content-type": "application/json",
+            },
+            body: JSON.stringify({
+                fcm: fcm,
+                userId: userId,
+            })
+        })
+            .then(res => res.json())
+            .then(json => {
+                if (json.status == 200) {
+                    //console.log(json)
+                    return json
+                } else {
+                    Alert.alert("", json.message)
+                }
+            })
+            .catch(error => {
+                console.log("response error ===>", error)
+            })
+    } catch (error) {
+        console.log('my error' + error.message);
+    }
+    return api
+}
+export const userNotification = async (userId) => {
+    let api
+    try {
+        api = await fetch(baseUrl + getNotifications, {
+            method: 'POST',
+            headers: {
+                'Accept': 'application/json',
+                "Content-type": "application/json",
+            },
+            body: JSON.stringify({
+                userId: userId,
+            })
+        })
+            .then(res => res.json())
+            .then(json => {
+                if (json.status == 200) {
+                    console.log(json)
+                    return json
+                } else {
+                    Alert.alert("", json.message)
+                }
+            })
+            .catch(error => {
+                console.log("response error ===>", error)
+            })
+    } catch (error) {
+        console.log('my error' + error.message);
+    }
+    return api
+}
+export const logoutUser = async (userId) => {
+    let api
+    try {
+        api = await fetch(baseUrl + userLogout, {
+            method: 'POST',
+            headers: {
+                'Accept': 'application/json',
+                "Content-type": "application/json",
+            },
+            body: JSON.stringify({
+                userId: userId,
+            })
+        })
+            .then(res => res.json())
+            .then(json => {
+                if (json.status == 200) {
+                    console.log(json)
                     return json
                 } else {
                     Alert.alert("", json.message)

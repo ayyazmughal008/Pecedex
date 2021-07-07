@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "805542454000",
+    "project_id": "pecedex-app",
+    "storage_bucket": "pecedex-app.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:805542454000:android:443742df7f14458a5e5835",
+        "android_client_info": {
+          "package_name": "com.pecedex"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "805542454000-lknomjug4ea4pbp98g97d15t3ge3dkhj.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBD-ZpgY20fmO1dZuM66psBix-bkSNySLA"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "805542454000-lknomjug4ea4pbp98g97d15t3ge3dkhj.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

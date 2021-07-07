@@ -24,11 +24,14 @@ const Card = (props) => {
                 source={require('../../Images/line.png')}
                 resizeMode={FastImage.resizeMode.contain}
             />
-            <View style={{ width: widthPercentageToDP(80), alignItems: "center" }}>
-                <Text style= {styles.description}>
+            <View style={{ width: widthPercentageToDP(80), alignItems: "center", alignSelf: "center" }}>
+                <Text style={styles.description}>
                     {props.description}
                 </Text>
             </View>
+            <Text style={styles.dateTxt}>
+                {props.date}
+            </Text>
         </View>
     )
 }
@@ -37,7 +40,7 @@ const styles = StyleSheet.create({
     container: {
         width: widthPercentageToDP(90),
         flex: 0,
-        alignItems: "center",
+        //alignItems: "center",
         marginBottom: heightPercentageToDP(3),
         borderRadius: widthPercentageToDP(4),
         backgroundColor: blue
@@ -47,12 +50,14 @@ const styles = StyleSheet.create({
         height: heightPercentageToDP(5),
         flexDirection: "row",
         alignItems: "center",
-        justifyContent:"space-between",
+        justifyContent: "space-between",
+        alignSelf: "center"
         //backgroundColor:"red"
     },
     line: {
         width: widthPercentageToDP(65),
-        height: heightPercentageToDP(0.1),
+        height: heightPercentageToDP(0.2),
+        alignSelf: "center"
         //backgroundColor:"red"
     },
     title: {
@@ -64,8 +69,20 @@ const styles = StyleSheet.create({
         fontSize: widthPercentageToDP(3.5),
         color: white,
         fontFamily: "Montserrat-Regular",
-        textAlign:"justify",
-        marginBottom:5
+        textAlign: "justify",
+        marginBottom: 5
+    },
+    dateTxt: {
+        fontSize: widthPercentageToDP(3),
+        color: white,
+        fontFamily: "Montserrat-Regular",
+        // position: "absolute",
+        // bottom: "1%",
+        // right: "3%",
+        textAlign: "right",
+        padding: widthPercentageToDP(1),
+        marginRight: widthPercentageToDP(1)
+
     }
 })
 
