@@ -1,5 +1,5 @@
 import React, { useEffect, useState, useRef } from 'react'
-import { SafeAreaView, View, Text, TouchableOpacity, FlatList, TextInput, Modal, StyleSheet, ActivityIndicator, Alert } from 'react-native'
+import { SafeAreaView, View, Text, TouchableOpacity, FlatList, TextInput, Modal, StyleSheet, ActivityIndicator, Alert, PermissionsAndroid } from 'react-native'
 import { styles } from './styles'
 import FastImage from 'react-native-fast-image'
 import { heightPercentageToDP, widthPercentageToDP } from '../../Component/MakeMeResponsive'
@@ -14,10 +14,14 @@ import RNPickerSelect from 'react-native-picker-select';
 import EvilIcons from 'react-native-vector-icons/EvilIcons'
 import MapView, { PROVIDER_GOOGLE, Marker } from 'react-native-maps';
 import { SearchBar } from 'react-native-elements'
-import { getCountryName, getAllList, postPeciosList, postGenreList, postFriendList } from '../../Redux/action'
+import { getCountryName, getAllList, postPeciosList, postGenreList, postFriendList, postLogbookImg, submitLogbookData } from '../../Redux/action'
 import { useDispatch, useSelector } from 'react-redux';
 import Strings from '../../Translation'
 import Fontisto from 'react-native-vector-icons/Fontisto'
+import ImagePicker from 'react-native-image-crop-picker';
+import Picker from '../Profile/Picker'
+
+
 
 const LogBook = (props) => {
     const dispatch = useDispatch();
@@ -26,6 +30,34 @@ const LogBook = (props) => {
     const language = useSelector((state) => state.user.language);
     const login = useSelector((state) => state.user.login);
     const [isLoading, setIsLoading] = useState(false)
+    // new value for suite
+    const [suit1, setSuit1] = useState(false)
+    const [suit2, setSuit2] = useState(false)
+    const [suit3, setSuit3] = useState(false)
+    const [suit4, setSuit4] = useState(false)
+    const [suitCode, setSuitCode] = useState("")
+    const [suitCode78, setSuitCode78] = useState("")
+    // new value for dive center items
+    const [diveItem1, setDiveItem1] = useState(false)
+    const [diveItem2, setDiveItem2] = useState(false)
+    const [diveItem3, setDiveItem3] = useState(false)
+    const [diveItem4, setDiveItem4] = useState(false)
+    const [diveItem5, setDiveItem5] = useState(false)
+    const [diveItem6, setDiveItem6] = useState(false)
+    const [diveItem7, setDiveItem7] = useState(false)
+    const [diveItem8, setDiveItem8] = useState(false)
+    // new value for weather temperature
+    const [weather1, setWeather1] = useState(false)
+    const [weather2, setWeather2] = useState(false)
+    const [weather3, setWeather3] = useState(false)
+    const [weather4, setWeather4] = useState(false)
+    const [weather5, setWeather5] = useState(false)
+    const [weather6, setWeather6] = useState(false)
+    const [weather7, setWeather7] = useState(false)
+    const [weather8, setWeather8] = useState(false)
+    const [weatherCode, setWeatherCode] = useState("")
+    // value for rest items
+    const [waterType, setWaterType] = useState(false)
     const [isScuba, setScuba] = useState(false)
     const [isRebreader, setRebreader] = useState(false)
     const [isJacket, setJacket] = useState(false)
@@ -38,37 +70,33 @@ const LogBook = (props) => {
     const [isNitrox, setNitrox] = useState(false)
     const [myDate, setMyDate] = useState("")
     const [myTime, setMyTime] = useState("")
+    const [StartTime, setStartTime] = useState("")
+    const [EndTime, setEndTime] = useState("")
     const [country, setCountry] = useState("")
-    const [text, setText] = useState("")
-    const [countryList, setCountryList] = useState([])
-    const [countryList2, setCountryList2] = useState([])
+    const [typeImpresion, setTypeImpresion] = useState("")
+    const [maxDeep, setMaxDeep] = useState("")
+    const [startingBar, setStartingBar] = useState("")
+    const [endBar, setEndBar] = useState("")
+    const [immersionSite, setImmersionSite] = useState("")
+    const [opinion, setOpinion] = useState("")
+    const [oxygen, setOxygen] = useState("")
+    const [center, setCenter] = useState("")
+    const [centerId, setCenterId] = useState("")
     const [city, setCity] = useState("")
-    const [text2, setText2] = useState("")
+    const [imagePath, setPath] = useState("")
     // new text values for Genro, Pecios and team selections
     const [peciosText, setPeciosText] = useState("")
     const [animalText, setAnimalText] = useState("")
     const [teamText, setTeamText] = useState("")
-    const [cityList, setCityList] = useState([])
-    const [cityList2, setCityList2] = useState([])
-    const [TimePickerModal, setTimePickerModal] = useState(false)
-    const [DatePickerModal, setDatePickerModal] = useState(false)
-    // new value for weather temperature
-    const [weather1, setWeather1] = useState(false)
-    const [weather2, setWeather2] = useState(false)
-    const [weather3, setWeather3] = useState(false)
-    const [weather4, setWeather4] = useState(false)
-    const [weather5, setWeather5] = useState(false)
-    const [weather6, setWeather6] = useState(false)
-    const [weather7, setWeather7] = useState(false)
-    const [weather8, setWeather8] = useState(false)
+    const [centerText, setCenterText] = useState("")
+    const [text2, setText2] = useState("")
+    const [text, setText] = useState("")
     //  new Value temperature value
     const [temperature, setTemperature] = useState("")
     const [visibility, setVisibility] = useState("")
     const [sweetWater, setSweetWater] = useState(false)
     const [saltWater, setSaltWater] = useState(false)
     // new value time Start 
-    const [StartTime, setStartTime] = useState("")
-    const [EndTime, setEndTime] = useState("")
     // all Modal switch handle here with default values
     const [STartTimeModal, setSTartTimeModal] = useState(false)
     const [EndTimeModal, setEndTimeModal] = useState(false)
@@ -78,12 +106,22 @@ const LogBook = (props) => {
     const [peciosModal, setPeciosModal] = useState(false)
     const [animalModal, setAnimalModal] = useState(false)
     const [teamModal, setTeamModal] = useState(false)
+    const [centerModal, setCenterModal] = useState(false)
+    const [TimePickerModal, setTimePickerModal] = useState(false)
+    const [DatePickerModal, setDatePickerModal] = useState(false)
+    const [pickerOption, setOption] = useState(false)
+    // 
     const [location, setLocation] = useState("")
     const [response, setResponse] = useState("")
     // tem array for filter searches
+    const [cityList, setCityList] = useState([])
+    const [cityList2, setCityList2] = useState([])
     const [tempPecios, settempPecios] = useState([])
     const [tempGenre, settempGenre] = useState([])
     const [tempTeam, settempTeam] = useState([])
+    const [tempCenter, setTempCenter] = useState([])
+    const [countryList, setCountryList] = useState([])
+    const [countryList2, setCountryList2] = useState([])
 
     useEffect(() => {
         dispatch(getCountryName())
@@ -99,6 +137,62 @@ const LogBook = (props) => {
             Strings.setLanguage(language)
         }
     }, [language])
+
+    const _onSubmit = () => {
+        postLogbookApi()
+    }
+    // Api response save functions
+    const postLogbookApi = async () => {
+        setIsLoading(true)
+        await submitLogbookData(
+            country,
+            city,
+            immersionSite,
+            myDate,
+            myTime,
+            location,
+            imagePath,
+            weatherCode,
+            temperature,
+            visibility,
+            waterType,
+            startingBar,
+            endBar,
+            StartTime,
+            EndTime,
+            maxDeep,
+            typeImpresion,
+            suitCode,
+            suitCode78,
+            isScuba,
+            isRebreader,
+            isJacket,
+            isWing,
+            is12,
+            is15,
+            isSteel,
+            isAluminum,
+            isAir,
+            isNitrox,
+            oxygen,
+            diveItem1,
+            diveItem2,
+            diveItem3,
+            diveItem4,
+            diveItem5,
+            diveItem6,
+            diveItem7,
+            diveItem8,
+            response.pecios,
+            response.genres,
+            response.users,
+            center,
+            centerId,
+            opinion,
+            login.data.id, id
+        )
+        await setIsLoading(false)
+    }
     const saveAllListData = async () => {
         setIsLoading(true)
         let menuData = await getAllList(login.data.id)
@@ -129,6 +223,12 @@ const LogBook = (props) => {
         await settempTeam(menuData.users)
         await setIsLoading(false)
     }
+    const postImageApi = async (data) => {
+        setIsLoading(true)
+        let menuData = await postLogbookImg(data)
+        await setPath(menuData.data)
+        await setIsLoading(false)
+    }
     const getCityName = (country) => {
         setIsLoading(true)
         fetch("https://countriesnow.space/api/v0.1/countries/cities", {
@@ -156,30 +256,7 @@ const LogBook = (props) => {
                 console.log("response error ===>", error)
             })
     }
-    const imageModel = (({ item, index }) => {
-        if (item.isSelected === 'yes') {
-            return (
-                <View style={styles.modelView}>
-                    {!item.image ?
-                        <FastImage
-                            source={require('../../Images/profile_img5.png')}
-                            style={styles.imgModel}
-                            resizeMode={FastImage.resizeMode.cover}
-                        />
-                        : <FastImage
-                            source={{ uri: item.image }}
-                            style={styles.imgModel}
-                            resizeMode={FastImage.resizeMode.cover}
-                        />
-                    }
-                    <Text style={styles.title}>
-                        {!item.title ? item.name : item.title}
-                    </Text>
-                </View>
-            )
-        }
-
-    })
+    // date functions
     const handleConfirm = (date) => {
         setMyTime(moment(date).format('HH:mm') + " horas")
         hideTimePicker();
@@ -222,6 +299,7 @@ const LogBook = (props) => {
     const hideEndTimePicker = () => {
         setEndTimeModal(false)
     };
+    // toggle functions
     const toggleMap = () => {
         setMapModal(!mapModal)
     }
@@ -240,6 +318,13 @@ const LogBook = (props) => {
     const toggleTeam = () => {
         setTeamModal(!teamModal)
     }
+    const toggleCenter = () => {
+        setCenterModal(!centerModal)
+    }
+    const toggleOption = () => {
+        setOption(!pickerOption)
+    }
+    //  weather selection switch
     const _onWeatherSelection = (value) => {
         if (value == 1) {
             setWeather1(true)
@@ -250,6 +335,7 @@ const LogBook = (props) => {
             setWeather6(false)
             setWeather7(false)
             setWeather8(false)
+            setWeatherCode("55")
         } else if (value == 2) {
             setWeather1(false)
             setWeather2(true)
@@ -259,6 +345,7 @@ const LogBook = (props) => {
             setWeather6(false)
             setWeather7(false)
             setWeather8(false)
+            setWeatherCode("48")
         } else if (value == 3) {
             setWeather1(false)
             setWeather2(false)
@@ -268,6 +355,7 @@ const LogBook = (props) => {
             setWeather6(false)
             setWeather7(false)
             setWeather8(false)
+            setWeatherCode("54")
         } else if (value == 4) {
             setWeather1(false)
             setWeather2(false)
@@ -277,6 +365,7 @@ const LogBook = (props) => {
             setWeather6(false)
             setWeather7(false)
             setWeather8(false)
+            setWeatherCode("53")
         } else if (value == 5) {
             setWeather1(false)
             setWeather2(false)
@@ -286,6 +375,7 @@ const LogBook = (props) => {
             setWeather6(false)
             setWeather7(false)
             setWeather8(false)
+            setWeatherCode("52")
         } else if (value == 6) {
             setWeather1(false)
             setWeather2(false)
@@ -295,6 +385,7 @@ const LogBook = (props) => {
             setWeather6(true)
             setWeather7(false)
             setWeather8(false)
+            setWeatherCode("50")
         } else if (value == 7) {
             setWeather1(false)
             setWeather2(false)
@@ -304,6 +395,7 @@ const LogBook = (props) => {
             setWeather6(false)
             setWeather7(true)
             setWeather8(false)
+            setWeatherCode("49")
         } else if (value == 8) {
             setWeather1(false)
             setWeather2(false)
@@ -313,47 +405,53 @@ const LogBook = (props) => {
             setWeather6(false)
             setWeather7(false)
             setWeather8(true)
+            setWeatherCode("51")
         }
     }
-    const renderItem = (({ item, index }) => {
-        return (
-            <TouchableOpacity
-                onPress={() => {
-                    setCountry(item.name)
-                    getCityName(item.name)
-                    toggleSearch()
-                }}
-                style={stylesProps.textStyle}>
-                <Text style={stylesProps.txt}>
-                    {item.name}
-                </Text>
-            </TouchableOpacity>
-        )
-    })
-    const renderItem2 = (({ item, index }) => {
-        return (
-            <TouchableOpacity
-                onPress={() => {
-                    setCity(item)
-                    toggleCity()
-                }}
-                style={stylesProps.textStyle}>
-                <Text style={stylesProps.txt}>
-                    {item}
-                </Text>
-            </TouchableOpacity>
-        )
-    })
-    const renderSeparator = () => {
-        return (
-            <View
-                style={{
-                    height: widthPercentageToDP(0.2),
-                    width: widthPercentageToDP(80),
-                    backgroundColor: "#000",
-                }}
-            />
-        );
+    // filter functions
+    const searchPeciosFilterFunction = text => {
+        let temList = response.pecios;
+        const newData = temList.filter(item => {
+            const itemData = item.title ? item.title.toUpperCase() : ''.toUpperCase();
+            const textData = text.toUpperCase();
+            return itemData.indexOf(textData) > -1;
+        });
+        //setCountryList(data => ([data, ...newData]));
+        settempPecios(newData)
+        setPeciosText(text)
+    };
+    const searchAnimalFilterFunction = text => {
+        let temList = response.genres;
+        const newData = temList.filter(item => {
+            const itemData = item.title ? item.title.toUpperCase() : ''.toUpperCase();
+            const textData = text.toUpperCase();
+            return itemData.indexOf(textData) > -1;
+        });
+        //setCountryList(data => ([data, ...newData]));
+        settempGenre(newData)
+        setAnimalText(text)
+    };
+    const searchTeamFilterFunction = text => {
+        let temList = response.users;
+        const newData = temList.filter(item => {
+            const itemData = item.name ? item.name.toUpperCase() : ''.toUpperCase();
+            const textData = text.toUpperCase();
+            return itemData.indexOf(textData) > -1;
+        });
+        //setCountryList(data => ([data, ...newData]));
+        settempTeam(newData)
+        setTeamText(text)
+    };
+    const searchCenterFilterFunction = text => {
+        let temList = response.centers;
+        const newData = temList.filter(item => {
+            const itemData = item.name ? item.name.toUpperCase() : ''.toUpperCase();
+            const textData = text.toUpperCase();
+            return itemData.indexOf(textData) > -1;
+        });
+        //setCountryList(data => ([data, ...newData]));
+        setTempCenter(newData)
+        setCenterText(text)
     };
     const searchFilterFunction = text => {
         let temList = countryList;
@@ -377,6 +475,7 @@ const LogBook = (props) => {
         setCityList2(newData)
         setText2(text)
     };
+    // filter functions for multiple selections
     const renderSelection = (({ item, index }) => {
         return (
             <View style={stylesProps.imageView}>
@@ -494,40 +593,145 @@ const LogBook = (props) => {
             </View>
         )
     })
-    // filter functions for multiple selections
-    const searchPeciosFilterFunction = text => {
-        let temList = response.pecios;
-        const newData = temList.filter(item => {
-            const itemData = item.title ? item.title.toUpperCase() : ''.toUpperCase();
-            const textData = text.toUpperCase();
-            return itemData.indexOf(textData) > -1;
-        });
-        //setCountryList(data => ([data, ...newData]));
-        settempPecios(newData)
-        setPeciosText(text)
+    const renderCenterItem = (({ item, index }) => {
+        return (
+            <TouchableOpacity
+                onPress={() => {
+                    setCenter(item.logo)
+                    setCenterId(item.id)
+                    toggleCenter()
+                }}
+                style={stylesProps.textStyle}>
+                <Text style={stylesProps.txt}>
+                    {item.name}
+                </Text>
+            </TouchableOpacity>
+        )
+    })
+    const renderItem = (({ item, index }) => {
+        return (
+            <TouchableOpacity
+                onPress={() => {
+                    setCountry(item.name)
+                    getCityName(item.name)
+                    toggleSearch()
+                }}
+                style={stylesProps.textStyle}>
+                <Text style={stylesProps.txt}>
+                    {item.name}
+                </Text>
+            </TouchableOpacity>
+        )
+    })
+    const renderItem2 = (({ item, index }) => {
+        return (
+            <TouchableOpacity
+                onPress={() => {
+                    setCity(item)
+                    toggleCity()
+                }}
+                style={stylesProps.textStyle}>
+                <Text style={stylesProps.txt}>
+                    {item}
+                </Text>
+            </TouchableOpacity>
+        )
+    })
+    const renderSeparator = () => {
+        return (
+            <View
+                style={{
+                    height: widthPercentageToDP(0.2),
+                    width: widthPercentageToDP(80),
+                    backgroundColor: "#000",
+                }}
+            />
+        );
     };
-    const searchAnimalFilterFunction = text => {
-        let temList = response.genres;
-        const newData = temList.filter(item => {
-            const itemData = item.title ? item.title.toUpperCase() : ''.toUpperCase();
-            const textData = text.toUpperCase();
-            return itemData.indexOf(textData) > -1;
-        });
-        //setCountryList(data => ([data, ...newData]));
-        settempGenre(newData)
-        setAnimalText(text)
-    };
-    const searchTeamFilterFunction = text => {
-        let temList = response.users;
-        const newData = temList.filter(item => {
-            const itemData = item.name ? item.name.toUpperCase() : ''.toUpperCase();
-            const textData = text.toUpperCase();
-            return itemData.indexOf(textData) > -1;
-        });
-        //setCountryList(data => ([data, ...newData]));
-        settempTeam(newData)
-        setTeamText(text)
-    };
+    const imageModel = (({ item, index }) => {
+        if (item.isSelected === 'yes') {
+            return (
+                <View style={styles.modelView}>
+                    {!item.image ?
+                        <FastImage
+                            source={require('../../Images/profile_img5.png')}
+                            style={styles.imgModel}
+                            resizeMode={FastImage.resizeMode.cover}
+                        />
+                        : <FastImage
+                            source={{ uri: item.image }}
+                            style={styles.imgModel}
+                            resizeMode={FastImage.resizeMode.cover}
+                        />
+                    }
+                    <Text style={styles.title}>
+                        {!item.title ? item.name : item.title}
+                    </Text>
+                </View>
+            )
+        }
+
+    })
+    // camera functions
+    const requestCameraPermission = async () => {
+        try {
+            const granted = await PermissionsAndroid.request(
+                PermissionsAndroid.PERMISSIONS.CAMERA,
+                {
+                    'title': 'Pecedex',
+                    'message': 'Pecedex App needs access to your camera ' +
+                        'so you can take pictures.'
+                }
+            )
+            if (granted === PermissionsAndroid.RESULTS.GRANTED) {
+                _onLunchCamera();
+            } else {
+                console.log("Camera permission denied")
+            }
+        } catch (err) {
+            console.warn(err)
+        }
+    }
+    const _onLunchCamera = () => {
+        let data = "";
+        ImagePicker.openCamera({
+            width: 300,
+            height: 400,
+            cropping: true,
+        }).then(response => {
+            console.log(response)
+            data = {
+                'uri': response.path,
+                'type': response.mime,
+                'name': Date.now() + '_Pecedex.png',
+            }
+            postImageApi(data)
+            //console.log(data)
+        })
+            .catch(err => {
+                console.log(err);
+            })
+    }
+    const _onLunchGallery = () => {
+        let data = "";
+        ImagePicker.openPicker({
+            width: 300,
+            height: 400,
+            cropping: true
+        }).then(image => {
+            console.log(image);
+            data = {
+                'uri': image.path,
+                'type': image.mime,
+                'name': Date.now() + '_Pecedex.png',
+            }
+            postImageApi(data)
+            //console.log(data)
+        }).catch(error => {
+            console.log(error);
+        })
+    }
+
 
     return (
         <View style={[styles.container, { alignItems: "center" }]}>
@@ -555,7 +759,6 @@ const LogBook = (props) => {
                     }]}>
                         <View style={[styles.innerLogView, { height: heightPercentageToDP(20) }]}>
                             <View style={styles.left}>
-
                                 <Text style={[styles.smallTxt, { color: black }]}>
                                     {"Pais:"}
                                 </Text>
@@ -578,7 +781,8 @@ const LogBook = (props) => {
                                         {!city ? "Select City" : city}
                                     </Text>
                                 </TouchableOpacity>
-                                <View style={{ marginTop: 10, }}>
+                                <View
+                                    style={{ marginTop: 10, }}>
                                     <Text style={[styles.smallTxt, { color: black }]}>
                                         {"Lugar de inmersion :"}
                                     </Text>
@@ -586,6 +790,7 @@ const LogBook = (props) => {
                                         style={[styles.smallInput, { paddingTop: 0, paddingBottom: 0, }]}
                                         placeholder="Lugar de inmersion"
                                         placeholderTextColor={blue}
+                                        onChangeText={text => setImmersionSite(text)}
                                     />
                                 </View>
                             </View>
@@ -630,7 +835,10 @@ const LogBook = (props) => {
                                 </View>
                             </View>
                         </View>
-                        <TouchableOpacity style={[styles.sideButton, { top: "10%" }]}>
+                        <TouchableOpacity
+                            style={[styles.sideButton, { top: "10%" }]}
+                            onPress={() => toggleOption()}
+                        >
                             <FastImage
                                 source={require('../../Images/45.png')}
                                 resizeMode={FastImage.resizeMode.contain}
@@ -786,6 +994,7 @@ const LogBook = (props) => {
                             onPress={() => {
                                 setSweetWater(true)
                                 setSaltWater(false)
+                                setWaterType("sweet water")
                             }}
                             style={[styles.smallTxt, { color: sweetWater ? blue2 : black, marginLeft: 15, marginTop: 10 }]}>
                             {"Agua dulce / "}
@@ -793,6 +1002,7 @@ const LogBook = (props) => {
                                 onPress={() => {
                                     setSweetWater(false)
                                     setSaltWater(true)
+                                    setWaterType("salt water")
                                 }}
                                 style={[styles.smallTxt, { color: saltWater ? blue2 : black }]}>
                                 {"Agua salada"}
@@ -829,6 +1039,7 @@ const LogBook = (props) => {
                                         placeholder={"0"}
                                         placeholderTextColor={white}
                                         keyboardType="number-pad"
+                                        onChangeText={text => setStartingBar(text)}
                                     />
                                     <Text style={[styles.tinyText, { color: black }]}>
                                         {"Bares finales:"}
@@ -838,6 +1049,7 @@ const LogBook = (props) => {
                                         placeholder={"70"}
                                         placeholderTextColor={white}
                                         keyboardType="number-pad"
+                                        onChangeText={text => setEndBar(text)}
                                     />
                                     <Text style={[styles.tinyText, { color: black }]}>
                                         {"Consumidos:"}
@@ -907,6 +1119,7 @@ const LogBook = (props) => {
                                 placeholder={"0 metros"}
                                 placeholderTextColor={blue}
                                 keyboardType="number-pad"
+                                onChangeText={text => setMaxDeep(text)}
                             />
                         </View>
                         <View style={{ flexDirection: "row", alignItems: "center", alignSelf: "center", height: "20%", }}>
@@ -920,10 +1133,10 @@ const LogBook = (props) => {
                                         value: null,
                                         color: "#000"
                                     }}
-                                    value={city}
+                                    value={typeImpresion}
                                     style={pickerStyle}
                                     onValueChange={value => {
-                                        setCity(value)
+                                        setTypeImpresion(value)
                                     }}
                                     items={data.diveType}
                                 />
@@ -947,75 +1160,122 @@ const LogBook = (props) => {
                         //backgroundColor: "red"
                     }]}>
                         <View style={{ width: "100%", height: heightPercentageToDP(22), flexDirection: "row", alignItems: "center", marginTop: heightPercentageToDP(2), justifyContent: "space-between" }}>
-
                             <View style={{ width: "25%", height: "100%", alignItems: "center", }}>
                                 <TouchableOpacity
                                     style={{ width: "100%", height: "65%", }}
+                                    onPress={() => {
+                                        setSuit1(true)
+                                        setSuit2(false)
+                                        setSuit3(false)
+                                        setSuit4(false)
+                                        setSuitCode("77")
+                                    }}
                                 >
                                     <FastImage
-                                        source={require('../../Images/76.png')}
+                                        source={suit1 ? require('../../Images/77.png') : require('../../Images/76.png')}
                                         resizeMode={FastImage.resizeMode.contain}
                                         style={{ width: "100%", height: "100%" }}
                                     />
                                 </TouchableOpacity>
-                                <Text style={[styles.tinyText, { color: blue2, textAlign: "center", marginTop: 5 }]}>
+                                <Text style={[styles.tinyText, { color: suit1 ? blue2 : "#a9a9a9", textAlign: "center", marginTop: 5 }]}>
                                     {"Traje"}
                                 </Text>
-                                <Text style={[styles.tinyText, { color: blue2, textAlign: "center" }]}>
+                                <Text style={[styles.tinyText, { color: suit1 ? blue2 : "#a9a9a9", textAlign: "center" }]}>
                                     {"corto"}
                                 </Text>
                             </View>
                             <View style={{ width: "25%", height: "100%", alignItems: "center", }}>
                                 <TouchableOpacity
                                     style={{ width: "100%", height: "65%", }}
+                                    onPress={() => {
+                                        setSuit1(false)
+                                        setSuit2(true)
+                                        setSuit3(false)
+                                        setSuit4(false)
+                                        setSuitCode("78")
+                                    }}
                                 >
                                     <FastImage
-                                        source={require('../../Images/79.png')}
+                                        source={suit2 ? require('../../Images/78.png') : require('../../Images/79.png')}
                                         resizeMode={FastImage.resizeMode.contain}
                                         style={{ width: "100%", height: "100%" }}
                                     />
                                 </TouchableOpacity>
-                                <Text style={[styles.tinyText, { color: blue2, textAlign: "center", marginTop: 5 }]}>
+                                <Text style={[styles.tinyText, { color: suit2 ? blue2 : "#a9a9a9", textAlign: "center", marginTop: 5 }]}>
                                     {"Traje"}
                                 </Text>
-                                <Text style={[styles.tinyText, { color: blue2, textAlign: "center" }]}>
+                                <Text style={[styles.tinyText, { color: suit2 ? blue2 : "#a9a9a9", textAlign: "center" }]}>
                                     {"húmedo"}
                                 </Text>
-                                <Text style={[styles.tinyText, { color: blue2, textAlign: "center", marginTop: 5 }]}>
+                                {/* <Text style={[styles.tinyText, { color: blue2, textAlign: "center", marginTop: 5 }]}>
                                     {"7 mm"}
-                                </Text>
+                                </Text> */}
+                                {suit2 &&
+                                    <TextInput
+                                        style={{
+                                            width: "100%",
+                                            height: "20%",
+                                            paddingTop: 0,
+                                            paddingBottom: 0,
+                                            fontSize: widthPercentageToDP(2.5),
+                                            fontFamily: "Montserrat-SemiBold",
+                                            color: blue,
+                                            paddingLeft: 0,
+                                            //backgroundColor:"red"
+                                        }}
+                                        placeholder="7 mm"
+                                        placeholderTextColor={blue}
+                                        textAlign="center"
+                                        keyboardType="number-pad"
+                                        onChangeText={text => setSuitCode78(text)}
+                                    />
+                                }
                             </View>
                             <View style={{ width: "25%", height: "100%", alignItems: "center", }}>
                                 <TouchableOpacity
                                     style={{ width: "100%", height: "65%", }}
+                                    onPress={() => {
+                                        setSuit1(false)
+                                        setSuit2(false)
+                                        setSuit3(true)
+                                        setSuit4(false)
+                                        setSuitCode("75")
+                                    }}
                                 >
                                     <FastImage
-                                        source={require('../../Images/74.png')}
+                                        source={suit3 ? require('../../Images/75.png') : require('../../Images/74.png')}
                                         resizeMode={FastImage.resizeMode.contain}
                                         style={{ width: "100%", height: "100%" }}
                                     />
                                 </TouchableOpacity>
-                                <Text style={[styles.tinyText, { color: blue2, textAlign: "center", marginTop: 5 }]}>
+                                <Text style={[styles.tinyText, { color: suit3 ? blue2 : "#a9a9a9", textAlign: "center", marginTop: 5 }]}>
                                     {"Traje"}
                                 </Text>
-                                <Text style={[styles.tinyText, { color: blue2, textAlign: "center" }]}>
+                                <Text style={[styles.tinyText, { color: suit3 ? blue2 : "#a9a9a9", textAlign: "center" }]}>
                                     {"semiseco"}
                                 </Text>
                             </View>
                             <View style={{ width: "25%", height: "100%", alignItems: "center", }}>
                                 <TouchableOpacity
                                     style={{ width: "100%", height: "65%", }}
+                                    onPress={() => {
+                                        setSuit1(false)
+                                        setSuit2(false)
+                                        setSuit3(false)
+                                        setSuit4(true)
+                                        setSuitCode("73")
+                                    }}
                                 >
                                     <FastImage
-                                        source={require('../../Images/72.png')}
+                                        source={suit4 ? require('../../Images/73.png') : require('../../Images/72.png')}
                                         resizeMode={FastImage.resizeMode.contain}
                                         style={{ width: "100%", height: "100%" }}
                                     />
                                 </TouchableOpacity>
-                                <Text style={[styles.tinyText, { color: blue2, textAlign: "center", marginTop: 5 }]}>
+                                <Text style={[styles.tinyText, { color: suit4 ? blue2 : "#a9a9a9", textAlign: "center", marginTop: 5 }]}>
                                     {"Traje"}
                                 </Text>
-                                <Text style={[styles.tinyText, { color: blue2, textAlign: "center" }]}>
+                                <Text style={[styles.tinyText, { color: suit4 ? blue2 : "#a9a9a9", textAlign: "center" }]}>
                                     {"seco"}
                                 </Text>
                             </View>
@@ -1133,94 +1393,169 @@ const LogBook = (props) => {
                                                 placeholder="xxx"
                                                 placeholderTextColor={white}
                                                 keyboardType="number-pad"
+                                                onChangeText={text => setOxygen(text)}
                                             />
                                             <Text style={[styles.smallTxt, { color: black }]}>
                                                 {"oxygen"}
                                             </Text>
                                         </View>}
                                 </View>
-                            </View>}
+                            </View>
+                        }
                         <View style={[styles.innerLogView, { height: heightPercentageToDP(8), marginTop: 10, justifyContent: "space-between", width: widthPercentageToDP(80) }]}>
-                            <TouchableOpacity style={{ width: "13%", height: "90%" }}>
+                            <TouchableOpacity
+                                style={{ width: "16%", height: "90%" }}
+                                onPress={() => {
+                                    if (diveItem1) {
+                                        setDiveItem1(false)
+                                    } else {
+                                        setDiveItem1(true)
+                                    }
+                                }}
+
+                            >
                                 <FastImage
                                     style={{ width: "100%", height: "100%" }}
-                                    source={require('../../Images/62.png')}
+                                    source={diveItem1 ? require('../../Images/63.png') : require('../../Images/62.png')}
                                     resizeMode={FastImage.resizeMode.stretch}
                                 />
-                                <Text style={[styles.tinyText, { color: "#a9a9a9", textAlign: "center", marginTop: 5 }]}>
-                                    {"Text"}
+                                <Text style={[styles.tinyText, { color: diveItem1 ? blue2 : "#a9a9a9", textAlign: "center", marginTop: 5 }]}>
+                                    {"Dive computer"}
                                 </Text>
                             </TouchableOpacity>
-                            <TouchableOpacity style={{ width: "14%", height: "85%" }}>
+                            <TouchableOpacity
+                                style={{ width: "15%", height: "85%" }}
+                                onPress={() => {
+                                    if (diveItem2) {
+                                        setDiveItem2(false)
+                                    } else {
+                                        setDiveItem2(true)
+                                    }
+                                }}
+                            >
                                 <FastImage
                                     style={{ width: "100%", height: "100%" }}
-                                    source={require('../../Images/59.png')}
+                                    source={diveItem2 ? require('../../Images/58.png') : require('../../Images/59.png')}
                                     resizeMode={FastImage.resizeMode.stretch}
                                 />
-                                <Text style={[styles.tinyText, { color: "#a9a9a9", textAlign: "center", marginTop: 5 }]}>
-                                    {"Text"}
+                                <Text style={[styles.tinyText, { color: diveItem2 ? blue2 : "#a9a9a9", textAlign: "center", marginTop: 5 }]}>
+                                    {"Compass"}
                                 </Text>
                             </TouchableOpacity>
-                            <TouchableOpacity style={{ width: "17%", height: "85%" }}>
+                            <TouchableOpacity
+                                style={{ width: "17%", height: "85%" }}
+                                onPress={() => {
+                                    if (diveItem3) {
+                                        setDiveItem3(false)
+                                    } else {
+                                        setDiveItem3(true)
+                                    }
+                                }}
+                            >
                                 <FastImage
                                     style={{ width: "100%", height: "100%" }}
-                                    source={require('../../Images/70.png')}
+                                    source={diveItem3 ? require('../../Images/71.png') : require('../../Images/70.png')}
                                     resizeMode={FastImage.resizeMode.stretch}
                                 />
-                                <Text style={[styles.tinyText, { color: "#a9a9a9", textAlign: "center", marginTop: 5 }]}>
-                                    {"Text"}
+                                <Text style={[styles.tinyText, { color: diveItem3 ? blue2 : "#a9a9a9", textAlign: "center", marginTop: 5 }]}>
+                                    {"Torch"}
                                 </Text>
                             </TouchableOpacity>
-                            <TouchableOpacity style={{ width: "13%", height: "90%" }}>
+                            <TouchableOpacity
+                                style={{ width: "15%", height: "90%" }}
+                                onPress={() => {
+                                    if (diveItem4) {
+                                        setDiveItem4(false)
+                                    } else {
+                                        setDiveItem4(true)
+                                    }
+                                }}
+                            >
                                 <FastImage
                                     style={{ width: "100%", height: "100%" }}
-                                    source={require('../../Images/69.png')}
+                                    source={diveItem4 ? require('../../Images/68.png') : require('../../Images/69.png')}
                                     resizeMode={FastImage.resizeMode.stretch}
                                 />
-                                <Text style={[styles.tinyText, { color: "#a9a9a9", textAlign: "center", marginTop: 5 }]}>
-                                    {"Text"}
+                                <Text style={[styles.tinyText, { color: diveItem4 ? blue2 : "#a9a9a9", textAlign: "center", marginTop: 5 }]}>
+                                    {"Dive hood"}
                                 </Text>
                             </TouchableOpacity>
                         </View>
-                        <View style={[styles.innerLogView, { height: heightPercentageToDP(8), marginTop: 20, justifyContent: "space-between", width: widthPercentageToDP(80) }]}>
-                            <TouchableOpacity style={{ width: "15%", height: "90%" }}>
+                        <View style={[styles.innerLogView, { height: heightPercentageToDP(8), marginTop: 25, justifyContent: "space-between", width: widthPercentageToDP(80) }]}>
+                            <TouchableOpacity
+                                style={{ width: "15%", height: "90%" }}
+                                onPress={() => {
+                                    if (diveItem5) {
+                                        setDiveItem5(false)
+                                    } else {
+                                        setDiveItem5(true)
+                                    }
+                                }}
+                            >
                                 <FastImage
                                     style={{ width: "100%", height: "100%" }}
-                                    source={require('../../Images/66.png')}
+                                    source={diveItem5 ? require('../../Images/67.png') : require('../../Images/66.png')}
                                     resizeMode={FastImage.resizeMode.stretch}
                                 />
-                                <Text style={[styles.tinyText, { color: "#a9a9a9", textAlign: "center", marginTop: 5 }]}>
-                                    {"Text"}
+                                <Text style={[styles.tinyText, { color: diveItem5 ? blue2 : "#a9a9a9", textAlign: "center", marginTop: 5 }]}>
+                                    {"Buoy"}
                                 </Text>
                             </TouchableOpacity>
-                            <TouchableOpacity style={{ width: "17%", height: "90%" }}>
+                            <TouchableOpacity
+                                style={{ width: "17%", height: "90%" }}
+                                onPress={() => {
+                                    if (diveItem6) {
+                                        setDiveItem6(false)
+                                    } else {
+                                        setDiveItem6(true)
+                                    }
+                                }}
+                            >
                                 <FastImage
                                     style={{ width: "100%", height: "100%" }}
-                                    source={require('../../Images/60.png')}
+                                    source={diveItem6 ? require('../../Images/61.png') : require('../../Images/60.png')}
                                     resizeMode={FastImage.resizeMode.stretch}
                                 />
-                                <Text style={[styles.tinyText, { color: "#a9a9a9", textAlign: "center", marginTop: 5 }]}>
-                                    {"Text"}
+                                <Text style={[styles.tinyText, { color: diveItem6 ? blue2 : "#a9a9a9", textAlign: "center", marginTop: 5 }]}>
+                                    {"Knife"}
                                 </Text>
                             </TouchableOpacity>
-                            <TouchableOpacity style={{ width: "20%", height: "90%" }}>
+                            <TouchableOpacity
+                                style={{ width: "20%", height: "90%" }}
+                                onPress={() => {
+                                    if (diveItem7) {
+                                        setDiveItem7(false)
+                                    } else {
+                                        setDiveItem7(true)
+                                    }
+                                }}
+                            >
                                 <FastImage
                                     style={{ width: "100%", height: "100%" }}
-                                    source={require('../../Images/64.png')}
+                                    source={diveItem7 ? require('../../Images/65.png') : require('../../Images/64.png')}
                                     resizeMode={FastImage.resizeMode.stretch}
                                 />
-                                <Text style={[styles.tinyText, { color: "#a9a9a9", textAlign: "center", marginTop: 5 }]}>
-                                    {"Text"}
+                                <Text style={[styles.tinyText, { color: diveItem7 ? blue2 : "#a9a9a9", textAlign: "center", marginTop: 5 }]}>
+                                    {"Gloves"}
                                 </Text>
                             </TouchableOpacity>
-                            <TouchableOpacity style={{ width: "13%", height: "90%" }}>
+                            <TouchableOpacity
+                                style={{ width: "13%", height: "90%" }}
+                                onPress={() => {
+                                    if (diveItem8) {
+                                        setDiveItem8(false)
+                                    } else {
+                                        setDiveItem8(true)
+                                    }
+                                }}
+                            >
                                 <FastImage
                                     style={{ width: "100%", height: "100%" }}
-                                    source={require('../../Images/76.png')}
+                                    source={diveItem8 ? require('../../Images/75.png') : require('../../Images/76.png')}
                                     resizeMode={FastImage.resizeMode.stretch}
                                 />
-                                <Text style={[styles.tinyText, { color: "#a9a9a9", textAlign: "center", marginTop: 5 }]}>
-                                    {"Text"}
+                                <Text style={[styles.tinyText, { color: diveItem8 ? blue2 : "#a9a9a9", textAlign: "center", marginTop: 5 }]}>
+                                    {"Shark skin suit"}
                                 </Text>
                             </TouchableOpacity>
                         </View>
@@ -1327,7 +1662,7 @@ const LogBook = (props) => {
                     }
                     <View style={styles.titleView}>
                         <Text style={styles.titleTxt}>
-                            {"CLASSMATES"}
+                            {"SEARCH CENTER"}
                         </Text>
                         <FastImage
                             source={require('../../Images/line_right.png')}
@@ -1335,7 +1670,21 @@ const LogBook = (props) => {
                             resizeMode={FastImage.resizeMode.stretch}
                         />
                     </View>
-                    <View style={styles.writeView}>
+                    <View style={styles.sankSelectionView}>
+                        <Text style={[styles.smallTxt, { color: black }]}>
+                            {""}
+                        </Text>
+                        <TouchableOpacity
+                            onPress={() => toggleCenter()}
+                        >
+                            <Text style={[styles.smallTxt, { color: blue }]}>
+                                {"Select Center"}
+                            </Text>
+                        </TouchableOpacity>
+                    </View>
+                    <View style={[styles.writeView, {
+                        justifyContent: !center ? "space-between" : null,
+                    }]}>
                         <View style={styles.modelView}>
                             <FastImage
                                 source={require('../../Images/fish2.jpg')}
@@ -1346,12 +1695,24 @@ const LogBook = (props) => {
                                 {"Madrid Buceo"}
                             </Text>
                         </View>
-                        <TextInput
-                            style={styles.input}
-                            placeholder="Sello"
-                            placeholderTextColor={black}
-                            textAlign="center"
-                        />
+                        {center ?
+                            <View style={[styles.centerView, {
+                                marginLeft: center ? widthPercentageToDP(10) : 0
+                            }]}>
+                                <FastImage
+                                    source={{ uri: "http://199.247.13.90/" + center }}
+                                    style={{ width: "90%", height: "90%" }}
+                                    resizeMode={FastImage.resizeMode.cover}
+                                />
+                            </View>
+                            : <TextInput
+                                style={styles.input}
+                                placeholder="Sello"
+                                placeholderTextColor={black}
+                                textAlign="center"
+                                onChangeText={text => setCenter(text)}
+                            />
+                        }
                     </View>
                     <View style={styles.titleView}>
                         <Text style={styles.titleTxt}>
@@ -1368,10 +1729,11 @@ const LogBook = (props) => {
                         placeholder="Observaciones"
                         placeholderTextColor={black}
                         textAlign="center"
+                        onChangeText={text => setOpinion(text)}
                     />
                     <TouchableOpacity
                         style={styles.btn}
-                        onPress={() => { }}
+                        onPress={() => { _onSubmit() }}
                     >
                         <Text style={styles.btnText}>
                             {"GUARDAR"}
@@ -1643,7 +2005,70 @@ const LogBook = (props) => {
                     </View>
                 </Modal>
             }
+            {centerModal &&
+                <Modal
+                    animationType={"fade"}
+                    transparent={false}
+                    visible={centerModal}
+                    onRequestClose={() => { console.log("Modal has been closed.") }}
+                >
+                    <View style={styles.modalView2}>
+                        <View style={stylesProps.container}>
+                            <View style={styles.row}>
+                                <SearchBar
+                                    placeholder="Search city..."
+                                    lightTheme
+                                    round
+                                    value={centerText}
+                                    onChangeText={text => searchCenterFilterFunction(text)}
+                                    autoCorrect={false}
+                                    containerStyle={{ width: widthPercentageToDP(80) }}
+                                />
+                                <TouchableOpacity
+                                    onPress={() => toggleCenter()}
+                                >
+                                    <Text style={stylesProps.txt}>
+                                        {"Close"}
+                                    </Text>
+                                </TouchableOpacity>
+                            </View>
 
+                            {!response || !response.centers.length ?
+                                <View />
+                                : <FlatList
+                                    data={!centerText ? response.centers : tempCenter}
+                                    contentContainerStyle={{ alignItems: "center", marginBottom: heightPercentageToDP(5) }}
+                                    keyExtractor={(item, index) => "Unique" + index}
+                                    ItemSeparatorComponent={renderSeparator}
+                                    renderItem={renderCenterItem}
+                                />
+                            }
+                        </View>
+                        {isLoading &&
+                            <ActivityIndicator
+                                size="large"
+                                color={black}
+                                style={styles.loading}
+                            />
+                        }
+                    </View>
+                </Modal>
+            }
+            {pickerOption &&
+                <Picker
+                    isDialogOpen={pickerOption}
+                    cancelClick={() => {
+                        toggleOption()
+                        requestCameraPermission()
+                    }}
+                    okClick={() => {
+                        toggleOption()
+                        _onLunchGallery()
+                    }}
+                    title="Seleccione la opción para la foto de perfil"
+                    closeBox={() => toggleOption()}
+                />
+            }
             {AuthLoading &&
                 <ActivityIndicator
                     size="large"

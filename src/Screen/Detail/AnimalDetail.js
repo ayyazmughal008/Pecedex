@@ -151,7 +151,7 @@ const GenreDetail = (props) => {
         if (item.mediaType === 'image') {
             return (
                 <FastImage
-                    source={{ uri: item.imgUrl }}
+                    source={{ uri: item.url }}
                     style={{ width: "100%", height: "100%", }}
                     resizeMode={FastImage.resizeMode.cover}
                 />
@@ -160,7 +160,7 @@ const GenreDetail = (props) => {
             return (
                 <View style={{ flex: 1 }}>
                     <Video
-                        source={{ uri: item.imgUrl }}  // Can be a URL or a local file.
+                        source={{ uri: item.url }}  // Can be a URL or a local file.
                         //ref={(ref) => { this.player = ref }}  // Store reference
                         resizeMode={"cover"}
                         paused={index !== activeSlid ? true : false}
@@ -218,7 +218,7 @@ const GenreDetail = (props) => {
                     /> */}
                     <Carousel
                         layout={'default'}
-                        data={media}
+                        data={data.media}
                         renderItem={_renderSlider}
                         sliderWidth={(width)}
                         itemWidth={(width)}

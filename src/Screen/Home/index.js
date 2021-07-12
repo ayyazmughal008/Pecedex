@@ -82,21 +82,18 @@ const Home = (props) => {
                     style={styles.top}
                     resizeMode={FastImage.resizeMode.stretch}
                 />
-                <View style={[styles.inputView, {
-                    flexDirection: "row",
-                    alignItems: "center",
-                    justifyContent: "space-between",
-                    alignSelf: "center",
-                    marginTop: 5
-                }]}>
-                    <TextInput
-                        placeholder={Strings.search}
-                        placeholderTextColor="#ffff"
-                        style={styles.input2}
-                        onChangeText={text => setSearch(text)}
-                        keyboardType="email-address"
-                        autoCapitalize="none"
-                    />
+                <TouchableOpacity
+                    onPress={() => props.navigation.navigate("SearchScreen")}
+                    style={[styles.inputView, {
+                        flexDirection: "row",
+                        alignItems: "center",
+                        justifyContent: "space-between",
+                        alignSelf: "center",
+                        marginTop: 5
+                    }]}>
+                    <Text style={styles.searchText}>
+                        {Strings.search}
+                    </Text>
                     <View style={styles.viewPass}>
                         <Text style={[styles.btnText, {
                             fontSize: widthPercentageToDP(6),
@@ -104,19 +101,14 @@ const Home = (props) => {
                         }]}>
                             {"|"}
                         </Text>
-                        <TouchableOpacity
-                        // onPress={() => showPassword()}
-                        >
-                            <Icon
-                                name="search"
-                                color="#ffff"
-                                size={25}
-                                style={{ marginLeft: 5 }}
-                            />
-
-                        </TouchableOpacity>
+                        <Icon
+                            name="search"
+                            color="#ffff"
+                            size={25}
+                            style={{ marginLeft: 5 }}
+                        />
                     </View>
-                </View>
+                </TouchableOpacity>
                 {/* {!menuResponse || !menuResponse.data ?
                     <View />
                     :  */}

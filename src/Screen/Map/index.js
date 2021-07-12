@@ -82,7 +82,13 @@ const Map = (props) => {
                                     onPress={() => {
                                         getCenterDetailApi(item.centerId)
                                     }}
-                                />
+                                >
+                                    {/* <FastImage
+                                        source={require('../../Images/16.png')}
+                                        style={{ height: 35, width: 35 }}
+                                        resizeMode = {FastImage.resizeMode.stretch}
+                                    /> */}
+                                </Marker>
                             )
                         })
                     }
@@ -100,7 +106,12 @@ const Map = (props) => {
                                     onPress={() => {
                                         getPeciosDetailApi(item.pecioId)
                                     }}
-                                />
+                                >
+                                    {/* <FastImage
+                                        source={require('../../Images/15.png')}
+                                        style={{ height: 20, width: 20 }}
+                                    /> */}
+                                </Marker>
                             )
                         })
                     }
@@ -114,11 +125,16 @@ const Map = (props) => {
                                         latitude: parseFloat(item.lat),
                                         longitude: parseFloat(item.lng),
                                     }}
-                                    //image={require('../../Images/15.png')}
+                                    image={require('../../Images/156.png')}
                                     onPress={() => {
                                         getGenreDetailApi(item.genreId)
                                     }}
-                                />
+                                >
+                                    {/* <FastImage
+                                        source={require('../../Images/156.png')}
+                                        style={{ height: 35, width: 35 }}
+                                    /> */}
+                                </Marker>
                             )
                         })
                     }
@@ -132,11 +148,16 @@ const Map = (props) => {
                                         latitude: parseFloat(item.lat),
                                         longitude: parseFloat(item.lng),
                                     }}
-                                    //image={require('../../Images/15.png')}
+                                    image={require('../../Images/158.png')}
                                     onPress={() => {
                                         getCenterDetailApi(item.genreId)
                                     }}
-                                />
+                                >
+                                    {/* <FastImage
+                                        source={require('../../Images/158.png')}
+                                        style={{ height: 35, width: 35 }}
+                                    /> */}
+                                </Marker>
                             )
                         })
                     }
@@ -150,11 +171,16 @@ const Map = (props) => {
                                         latitude: parseFloat(item.lat),
                                         longitude: parseFloat(item.lng),
                                     }}
-                                    //image={require('../../Images/15.png')}
+                                    image={require('../../Images/157.png')}
                                     onPress={() => {
                                         getCenterDetailApi(item.genreId)
                                     }}
-                                />
+                                >
+                                    {/* <FastImage
+                                        source={require('../../Images/157.png')}
+                                        style={{ height: 35, width: 35 }}
+                                    /> */}
+                                </Marker>
                             )
                         })
                     }
@@ -168,11 +194,16 @@ const Map = (props) => {
                                         latitude: parseFloat(item.lat),
                                         longitude: parseFloat(item.lng),
                                     }}
-                                    //image={require('../../Images/15.png')}
+                                    image={require('../../Images/155.png')}
                                     onPress={() => {
                                         getPointsDetailApi(item.pointId)
                                     }}
-                                />
+                                >
+                                    {/* <FastImage
+                                        source={require('../../Images/155.png')}
+                                        style={{ height: 35, width: 35 }}
+                                    /> */}
+                                </Marker>
                             )
                         })
                     }

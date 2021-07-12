@@ -127,11 +127,10 @@ export const styles = StyleSheet.create({
     },
     writeView: {
         width: widthPercentageToDP(90),
-        height: heightPercentageToDP(14),
+        height: heightPercentageToDP(16),
         flexDirection: "row",
         alignSelf: "center",
         alignItems: "center",
-        justifyContent: "space-between",
         marginTop: heightPercentageToDP(1)
     },
     input: {
@@ -142,6 +141,14 @@ export const styles = StyleSheet.create({
         fontSize: widthPercentageToDP(4),
         color: black,
         fontFamily: "Montserrat-SemiBold",
+    },
+    centerView: {
+        width: widthPercentageToDP(35),
+        height: widthPercentageToDP(35),
+        borderRadius: widthPercentageToDP(4),
+        backgroundColor: blue2,
+        justifyContent: "center",
+        alignItems: "center"
     },
     input2: {
         width: widthPercentageToDP(90),

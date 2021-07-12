@@ -91,18 +91,6 @@ export const data = {
             label: "Córdoba"
         },
     ],
-    diveType: [
-        {
-            id: 1,
-            value: "Naturalista",
-            label: "Naturalista"
-        },
-        {
-            id: 1,
-            value: "Naturalista",
-            label: "Naturalista"
-        },
-    ],
     botel: [
         {
             id: 1,
@@ -169,5 +157,40 @@ export const data = {
         require('../../Images/lion.jpg'),
         require('../../Images/shark.jpg'),
         require('../../Images/carocodile.jpg'),
+    ],
+    diveType: [
+        {
+            label: "Baptism",
+            value: "Baptism"
+        },
+        {
+            label: "Diving Course",
+            value: "Diving Course"
+        },
+        {
+            label: "Naturalistic Dive",
+            value: "Naturalistic Dive"
+        },
+        {
+            label: "Wreck Dive",
+            value: "Wreck Dive"
+        },
+        {
+            label: "Cave Dive",
+            value: "Cave Dive"
+        },
+        {
+            label: "Cold Weather Dive",
+            value: "Cold Weather Dive"
+        },
+        {
+            label: "Night Dive",
+            value: "Night Dive"
+        },
+        {
+            label: "Others",
+            value: "Others"
+        }
+
     ]
 }

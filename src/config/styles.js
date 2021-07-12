@@ -77,6 +77,12 @@ export const styles = StyleSheet.create({
         paddingLeft: widthPercentageToDP(5),
         color: white
     },
+    searchText: {
+        fontSize: widthPercentageToDP(4),
+        fontFamily: "Montserrat-Regular",
+        paddingLeft: widthPercentageToDP(5),
+        color: white
+    },
     input3: {
         width: widthPercentageToDP(60),
         height: heightPercentageToDP(5.5),
@@ -354,5 +360,17 @@ export const styles = StyleSheet.create({
         alignItems: "center",
         borderColor: blue,
         justifyContent: "center"
+    },
+    serachView: {
+        width: widthPercentageToDP(90),
+        height: heightPercentageToDP(5.5),
+        backgroundColor: blue,
+        borderRadius: widthPercentageToDP(7),
+        marginBottom: heightPercentageToDP(1),
+        flexDirection: "row",
+        alignItems: "center",
+        justifyContent: "space-between",
+        alignSelf: "center",
+        marginTop: 5
     }
 })

@@ -20,6 +20,7 @@ import PeciosDetail from '../../Screen/Pecios/Detail'
 import SettingScreen from "../../Screen/Setting";
 import MapScreen from "../../Screen/Map";
 import ProfileScreen from "../../Screen/Profile";
+import SearchScreen from "../../Screen/Search";
 import SubmitReview from "../../Screen/DiveCenter/SubmitReview";
 import NotificationScreen from "../../Screen/Notification";
 
@@ -94,6 +95,9 @@ export default createStackNavigator(
     },
     NewScreen: {
       screen: NewScreen
+    },
+    SearchScreen: {
+      screen: SearchScreen
     },
   },
   {
