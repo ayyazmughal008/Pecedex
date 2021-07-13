@@ -9,13 +9,20 @@ const Card = (props) => {
     const imageModel = (({ item, index }) => {
         return (
             <View style={styles.modelView}>
-                <FastImage
-                    source={item.img}
-                    style={styles.imgModel}
-                    resizeMode={FastImage.resizeMode.cover}
-                />
+                {item.image ?
+                    <FastImage
+                        source={{ uri: item.image }}
+                        style={styles.imgModel}
+                        resizeMode={FastImage.resizeMode.cover}
+                    />
+                    : <FastImage
+                        source={require('../../Images/108.png')}
+                        style={styles.imgModel}
+                        resizeMode={FastImage.resizeMode.cover}
+                    />
+                }
                 <Text style={styles.title}>
-                    {item.title}
+                    {"Pecedex"}
                 </Text>
                 <Text style={styles.date}>
                     {item.date}
@@ -65,7 +72,7 @@ const Card = (props) => {
                             <FlatList
                                 data={item.imageModel}
                                 showsVerticalScrollIndicator={false}
-                                style={{ alignSelf: "center" }}
+                                //style={{ alignSelf: "center" }}
                                 listKey={(item, index) => `_key${index.toString() + "1"}`}
                                 numColumns={3}
                                 keyExtractor={(item, index) => "unique" + index}
@@ -116,7 +123,7 @@ const styles = StyleSheet.create({
     title: {
         fontSize: widthPercentageToDP(3),
         color: white,
-        textAlign:"center",
+        textAlign: "center",
         fontFamily: "Montserrat-SemiBold",
         marginTop: heightPercentageToDP(0.5)
     },

@@ -189,7 +189,7 @@ const LogBook = (props) => {
             center,
             centerId,
             opinion,
-            login.data.id, id
+            login.data.id,
         )
         await setIsLoading(false)
     }

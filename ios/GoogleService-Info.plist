@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>CLIENT_ID</key>
+	<string>805542454000-n6oi975sru4ob3br1p422mon2hh0c4ii.apps.googleusercontent.com</string>
+	<key>REVERSED_CLIENT_ID</key>
+	<string>com.googleusercontent.apps.805542454000-n6oi975sru4ob3br1p422mon2hh0c4ii</string>
+	<key>API_KEY</key>
+	<string>AIzaSyAuchwSBZdUrXdG3ay8EYKmsr1o0Xj9b2s</string>
+	<key>GCM_SENDER_ID</key>
+	<string>805542454000</string>
+	<key>PLIST_VERSION</key>
+	<string>1</string>
+	<key>BUNDLE_ID</key>
+	<string>com.pecedex</string>
+	<key>PROJECT_ID</key>
+	<string>pecedex-app</string>
+	<key>STORAGE_BUCKET</key>
+	<string>pecedex-app.appspot.com</string>
+	<key>IS_ADS_ENABLED</key>
+	<false></false>
+	<key>IS_ANALYTICS_ENABLED</key>
+	<false></false>
+	<key>IS_APPINVITE_ENABLED</key>
+	<true></true>
+	<key>IS_GCM_ENABLED</key>
+	<true></true>
+	<key>IS_SIGNIN_ENABLED</key>
+	<true></true>
+	<key>GOOGLE_APP_ID</key>
+	<string>1:805542454000:ios:a3a6a7def0c630995e5835</string>
+</dict>
+</plist>

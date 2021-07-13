@@ -64,7 +64,7 @@ const Register = (props) => {
             <FastImage
                 style={styles.bgImg}
                 source={require('../../Images/bg.jpg')}
-                resizeMode={FastImage.resizeMode.stretch}
+                resizeMode={FastImage.resizeMode.cover}
             >
                 <View style={styles.loginView}>
                     <KeyboardAwareScrollView>

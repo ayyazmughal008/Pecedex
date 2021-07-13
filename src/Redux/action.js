@@ -44,6 +44,7 @@ const baseUrl = "http://199.247.13.90/api/",
     getPath = 'get-path',
     storeDive = 'store-dive',
     userLogout = 'logout',
+    getDives = 'get-dives',
     register = 'register';
 
 const country_url = "https://countriesnow.space/api/v0.1/countries/positions"
@@ -1237,6 +1238,37 @@ export const submitLogbookData = async (
                     return
                 } else {
                     console.log(json)
+                }
+            })
+            .catch(error => {
+                console.log("response error ===>", error)
+            })
+    } catch (error) {
+        console.log('my error' + error.message);
+    }
+    return api
+}
+export const getUserDives = async (userId) => {
+    console.log(userId)
+    let api
+    try {
+        api = await fetch(baseUrl + getDives, {
+            method: 'POST',
+            headers: {
+                'Accept': 'application/json',
+                "Content-type": "application/json",
+            },
+            body: JSON.stringify({
+                userId: userId,
+            })
+        })
+            .then(res => res.json())
+            .then(json => {
+                if (json.status == 200) {
+                    console.log(json)
+                    return json
+                } else {
+                    Alert.alert("", json.message)
                 }
             })
             .catch(error => {
