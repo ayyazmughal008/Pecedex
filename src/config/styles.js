@@ -31,7 +31,7 @@ export const styles = StyleSheet.create({
         alignSelf: "center",
         position: "absolute",
         bottom: "0%",
-        alignItems: "center"
+        alignItems: "center",
         //backgroundColor:"red"
     },
     loginTitle: {

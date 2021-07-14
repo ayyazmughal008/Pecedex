@@ -13,6 +13,7 @@ import { black } from '../../config/color'
 
 const Map = (props) => {
     const language = useSelector((state) => state.user.language);
+    const login = useSelector((state) => state.user.login);
     const [isLoading, setIsLoading] = useState(false)
     const [Response, setResponse] = useState('')
     useEffect(() => {
@@ -27,7 +28,7 @@ const Map = (props) => {
     }, [])
     const getApis = async () => {
         setIsLoading(true)
-        let menuData = await getDiveCenters()
+        let menuData = await getDiveCenters(login.data.id)
         await setResponse(menuData)
         await setIsLoading(false)
     }

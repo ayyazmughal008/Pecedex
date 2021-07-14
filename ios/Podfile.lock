@@ -2,6 +2,8 @@ PODS:
   - boost-for-react-native (1.63.0)
   - CocoaAsyncSocket (7.6.5)
   - DoubleConversion (1.1.6)
+  - FBAudienceNetwork (6.2.1):
+    - FBSDKCoreKit/Basics (>= 7.0.1)
   - FBLazyVector (0.62.2)
   - FBReactNativeSpec (0.62.2):
     - Folly (= 2018.10.22.00)
@@ -10,6 +12,7 @@ PODS:
     - React-Core (= 0.62.2)
     - React-jsi (= 0.62.2)
     - ReactCommon/turbomodule/core (= 0.62.2)
+  - FBSDKCoreKit/Basics (9.3.0)
   - Firebase/CoreOnly (8.1.1):
     - FirebaseCore (= 8.1.0)
   - Firebase/Messaging (8.1.1):
@@ -147,6 +150,9 @@ PODS:
   - GoogleMaps/Base (3.5.0)
   - GoogleMaps/Maps (3.5.0):
     - GoogleMaps/Base
+  - GoogleMobileAdsMediationFacebook (6.2.1.0):
+    - FBAudienceNetwork (= 6.2.1)
+    - Google-Mobile-Ads-SDK (>= 7.69.0)
   - GoogleUserMessagingPlatform (1.4.0)
   - GoogleUtilities/AppDelegateSwizzler (7.4.3):
     - GoogleUtilities/Environment
@@ -349,6 +355,9 @@ PODS:
   - React-jsinspector (0.62.2)
   - react-native-admob (2.0.0-beta.6):
     - React
+  - react-native-admob-native-ads (0.4.1):
+    - GoogleMobileAdsMediationFacebook
+    - React-Core
   - react-native-google-maps (0.28.0):
     - Google-Maps-iOS-Utils (= 2.1.0)
     - GoogleMaps (= 3.5.0)
@@ -522,6 +531,7 @@ DEPENDENCIES:
   - React-jsiexecutor (from `../node_modules/react-native/ReactCommon/jsiexecutor`)
   - React-jsinspector (from `../node_modules/react-native/ReactCommon/jsinspector`)
   - react-native-admob (from `../node_modules/react-native-admob`)
+  - react-native-admob-native-ads (from `../node_modules/react-native-admob-native-ads`)
   - react-native-google-maps (from `../node_modules/react-native-maps`)
   - react-native-maps (from `../node_modules/react-native-maps`)
   - react-native-restart (from `../node_modules/react-native-restart`)
@@ -562,6 +572,8 @@ SPEC REPOS:
   trunk:
     - boost-for-react-native
     - CocoaAsyncSocket
+    - FBAudienceNetwork
+    - FBSDKCoreKit
     - Firebase
     - FirebaseCore
     - FirebaseCoreDiagnostics
@@ -581,6 +593,7 @@ SPEC REPOS:
     - GoogleAppMeasurement
     - GoogleDataTransport
     - GoogleMaps
+    - GoogleMobileAdsMediationFacebook
     - GoogleUserMessagingPlatform
     - GoogleUtilities
     - libevent
@@ -625,6 +638,8 @@ EXTERNAL SOURCES:
     :path: "../node_modules/react-native/ReactCommon/jsinspector"
   react-native-admob:
     :path: "../node_modules/react-native-admob"
+  react-native-admob-native-ads:
+    :path: "../node_modules/react-native-admob-native-ads"
   react-native-google-maps:
     :path: "../node_modules/react-native-maps"
   react-native-maps:
@@ -698,8 +713,10 @@ SPEC CHECKSUMS:
   boost-for-react-native: 39c7adb57c4e60d6c5479dd8623128eb5b3f0f2c
   CocoaAsyncSocket: 065fd1e645c7abab64f7a6a2007a48038fdc6a99
   DoubleConversion: 5805e889d232975c086db112ece9ed034df7a0b2
+  FBAudienceNetwork: 6e85fd17319e49c0234d60026bee154389badf2c
   FBLazyVector: 4aab18c93cd9546e4bfed752b4084585eca8b245
   FBReactNativeSpec: 5465d51ccfeecb7faa12f9ae0024f2044ce4044e
+  FBSDKCoreKit: 0d1ae58388a458b8222f72025804cdc84eb5d0c3
   Firebase: 4bb49ae87756034cef870fa3c4006235eb46f475
   FirebaseCore: 389c4ce9a7cce4a7e25eb22326b4bee0050557b2
   FirebaseCoreDiagnostics: 7e873baabcfaa9512f538554ae4fa0817aaafbdb
@@ -721,6 +738,7 @@ SPEC CHECKSUMS:
   GoogleAppMeasurement: fd19169c3034975cb934e865e5667bfdce59df7f
   GoogleDataTransport: 04c3e9a480bbcaa2ec3f5d27f1cdeb6a92f20c8d
   GoogleMaps: 32ca02de09de357a10ac773f2c70f1986751392d
+  GoogleMobileAdsMediationFacebook: f5bd88a62e3cd5db72873a0578089f246ad3aa20
   GoogleUserMessagingPlatform: b168e8c46cd8f92aa3e34b584c4ca78a411ce367
   GoogleUtilities: 45dbb24a7f351d69d0a601482b39ad6c32e30dab
   libevent: 4049cae6c81cdb3654a443be001fb9bdceff7913
@@ -738,6 +756,7 @@ SPEC CHECKSUMS:
   React-jsiexecutor: 1540d1c01bb493ae3124ed83351b1b6a155db7da
   React-jsinspector: 512e560d0e985d0e8c479a54a4e5c147a9c83493
   react-native-admob: cb7f9e5e7d6f1e68bfbf1df8f72b2e23963bc7db
+  react-native-admob-native-ads: c28aa03310b62b1cb8db855381a51e659b9dc3b4
   react-native-google-maps: 46dea4aa4acb7300beff508f64d9f8c84e9fb106
   react-native-maps: 2d405b4e8cee0282e4c02bac434d81450dfea877
   react-native-restart: d4ea7637e193da7558d229b3704d500ec0d75f9c

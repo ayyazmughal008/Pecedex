@@ -650,7 +650,7 @@ export const postGenerImg = (userId, genreId, image) => {
             })
     };
 }
-export const getDiveCenters = async () => {
+export const getDiveCenters = async (userId) => {
     let api
     try {
         api = await fetch(baseUrl + getCenters, {
@@ -659,6 +659,9 @@ export const getDiveCenters = async () => {
                 'Accept': 'application/json',
                 "Content-type": "application/json",
             },
+            body: JSON.stringify({
+                userId: userId
+            })
         })
             .then(res => res.json())
             .then(json => {

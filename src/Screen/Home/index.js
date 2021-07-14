@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useState, useRef } from 'react'
 import { SafeAreaView, View, Text, TouchableOpacity, TextInput, FlatList, ActivityIndicator } from 'react-native'
 import { styles } from '../../config/styles'
 import FastImage from 'react-native-fast-image'
@@ -14,6 +14,7 @@ import { HomeAction, profileAction, settingAction, mapAction, notificationAction
 import { black } from '../../config/color'
 import { AdMobInterstitial } from 'react-native-admob'
 import { useDispatch, useSelector } from 'react-redux';
+import NativeAdView from "react-native-admob-native-ads";
 
 const Home = (props) => {
     const language = useSelector((state) => state.user.language);
@@ -21,6 +22,11 @@ const Home = (props) => {
     const login = useSelector((state) => state.user.login);
     const [isLoading, setIsLoading] = useState(false)
     const [menuResponse, setResponse] = useState('')
+    const nativeAdViewRef = useRef();
+
+    React.useEffect(() => {
+        nativeAdViewRef.current?.loadAd();
+    }, []);
     useEffect(() => {
         if (!language) {
             Strings.setLanguage('en')
@@ -75,6 +81,7 @@ const Home = (props) => {
     }, [])
 
     return (
+
         <SafeAreaView style={styles.container}>
             <KeyboardAwareScrollView>
                 <FastImage
@@ -147,6 +154,12 @@ const Home = (props) => {
                 mapClick={() => props.navigation.dispatch(mapAction)}
                 notiClick={() => props.navigation.dispatch(notificationAction)}
             />
+            {/* <NativeAdView
+                ref={nativeAdViewRef}
+                adUnitID="ca-app-pub-3940256099942544/2247696110"
+            >
+
+            </NativeAdView> */}
             {isLoading &&
                 <ActivityIndicator
                     size="large"

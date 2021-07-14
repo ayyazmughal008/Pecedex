@@ -44,91 +44,93 @@ const Login = (props) => {
             source={require('../../Images/bg.jpg')}
             resizeMode={FastImage.resizeMode.cover}
         >
-            <View style={styles.loginView}>
-                <KeyboardAwareScrollView>
-                    <Text style={[styles.loginTitle, { margin: 10, alignSelf: "center" }]}>
-                        {Strings.signin}
-                    </Text>
-                    <View style={styles.inputView}>
-                        <TextInput
-                            placeholder={Strings.email}
-                            placeholderTextColor="#ffff"
-                            style={styles.input}
-                            onChangeText={text => setName(text)}
-                            keyboardType="email-address"
-                            autoCapitalize="none"
-                        />
-                    </View>
-                    <View style={[styles.inputView, {
-                        flexDirection: "row",
-                        alignItems: "center",
-                        justifyContent: "space-between"
-                    }]}>
-                        <TextInput
-                            placeholder={Strings.password}
-                            placeholderTextColor="#ffff"
-                            style={styles.input2}
-                            onChangeText={text => setPassword(text)}
-                            secureTextEntry={passVisible}
-                            password={passVisible}
-                            //keyboardType="email-address"
-                            autoCapitalize="none"
-                        />
-                        <View style={styles.viewPass}>
-                            <Text style={[styles.btnText, {
-                                fontSize: widthPercentageToDP(6),
-                                marginBottom: 6
-                            }]}>
-                                {"|"}
-                            </Text>
-                            <TouchableOpacity
-                                onPress={() => showPassword()}
-                            >
-                                {!passVisible ?
-                                    <Icon
-                                        name="eye-slash"
-                                        color="#ffff"
-                                        size={25}
-                                        style={{ marginLeft: 5 }}
-                                    />
-                                    : <Icon
-                                        name="eye"
-                                        color="#ffff"
-                                        size={25}
-                                        style={{ marginLeft: 5 }}
-                                    />
-                                }
-                            </TouchableOpacity>
+            <View style={{ flex: 1 }}>
+                <KeyboardAwareScrollView contentContainerStyle={{ flexGrow: 1 }}>
+                    <View style={styles.loginView}>
+                        <Text style={[styles.loginTitle, { margin: 10, alignSelf: "center" }]}>
+                            {Strings.signin}
+                        </Text>
+                        <View style={styles.inputView}>
+                            <TextInput
+                                placeholder={Strings.email}
+                                placeholderTextColor="#ffff"
+                                style={styles.input}
+                                onChangeText={text => setName(text)}
+                                keyboardType="email-address"
+                                autoCapitalize="none"
+                            />
                         </View>
-                    </View>
-                    <TouchableOpacity
-                        style={[styles.inputView, {
-                            backgroundColor: green,
-                            justifyContent: "center",
-                            alignItems: "center"
-                        }]}
-                        onPress={() => _onSubmit()}
-                    >
-                        <Text style={styles.btnText}>
-                            {Strings.login}
-                        </Text>
-                    </TouchableOpacity>
-                    <Text style={styles.notMemberText}>
-                        {Strings.notMember}
-                    </Text>
-                    <TouchableOpacity
-                        style={[styles.inputView, {
-                            backgroundColor: green,
-                            justifyContent: "center",
+                        <View style={[styles.inputView, {
+                            flexDirection: "row",
                             alignItems: "center",
-                            marginTop: 5
-                        }]}
-                        onPress={() => props.navigation.navigate('Register')}
-                    >
-                        <Text style={styles.btnText}>
-                            {Strings.register}
+                            justifyContent: "space-between"
+                        }]}>
+                            <TextInput
+                                placeholder={Strings.password}
+                                placeholderTextColor="#ffff"
+                                style={styles.input2}
+                                onChangeText={text => setPassword(text)}
+                                secureTextEntry={passVisible}
+                                password={passVisible}
+                                //keyboardType="email-address"
+                                autoCapitalize="none"
+                            />
+                            <View style={styles.viewPass}>
+                                <Text style={[styles.btnText, {
+                                    fontSize: widthPercentageToDP(6),
+                                    marginBottom: 6
+                                }]}>
+                                    {"|"}
+                                </Text>
+                                <TouchableOpacity
+                                    onPress={() => showPassword()}
+                                >
+                                    {!passVisible ?
+                                        <Icon
+                                            name="eye-slash"
+                                            color="#ffff"
+                                            size={25}
+                                            style={{ marginLeft: 5 }}
+                                        />
+                                        : <Icon
+                                            name="eye"
+                                            color="#ffff"
+                                            size={25}
+                                            style={{ marginLeft: 5 }}
+                                        />
+                                    }
+                                </TouchableOpacity>
+                            </View>
+                        </View>
+                        <TouchableOpacity
+                            style={[styles.inputView, {
+                                backgroundColor: green,
+                                justifyContent: "center",
+                                alignItems: "center"
+                            }]}
+                            onPress={() => _onSubmit()}
+                        >
+                            <Text style={styles.btnText}>
+                                {Strings.login}
+                            </Text>
+                        </TouchableOpacity>
+                        <Text style={styles.notMemberText}>
+                            {Strings.notMember}
                         </Text>
-                    </TouchableOpacity>
+                        <TouchableOpacity
+                            style={[styles.inputView, {
+                                backgroundColor: green,
+                                justifyContent: "center",
+                                alignItems: "center",
+                                marginTop: 5
+                            }]}
+                            onPress={() => props.navigation.navigate('Register')}
+                        >
+                            <Text style={styles.btnText}>
+                                {Strings.register}
+                            </Text>
+                        </TouchableOpacity>
+                    </View>
                 </KeyboardAwareScrollView>
             </View>
             {AuthLoading &&
