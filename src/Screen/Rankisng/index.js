@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react'
-import { SafeAreaView, View, Text, FlatList, TouchableOpacity } from 'react-native'
+import { SafeAreaView, View, Text, FlatList, TouchableOpacity, ActivityIndicator } from 'react-native'
 import { styles } from '../../config/styles'
 import FastImage from 'react-native-fast-image'
 import { black, blue, white } from '../../config/color'
@@ -9,6 +9,7 @@ import { data } from './data'
 import Card from '../../Component/RankingCard'
 import { HomeAction, profileAction, settingAction, mapAction, notificationAction } from '../../Component/BottomTab/actions'
 import Tab from '../../Component/BottomTab'
+import { getUserScore } from '../../Redux/action'
 import { useSelector, useDispatch } from 'react-redux';
 import Strings from '../../Translation'
 
@@ -16,6 +17,8 @@ const Profile = (props) => {
     const dispatch = useDispatch();
     const login = useSelector((state) => state.user.login);
     const language = useSelector((state) => state.user.language);
+    const [isLoading, setIsLoading] = useState(false)
+    const [Response, setResponse] = useState('')
     useEffect(() => {
         if (!language) {
             Strings.setLanguage('en')
@@ -23,6 +26,15 @@ const Profile = (props) => {
             Strings.setLanguage(language)
         }
     }, [language])
+    useEffect(() => {
+        getCount()
+    }, [])
+    const getCount = async () => {
+        setIsLoading(true)
+        let menuData = await getUserScore(login.data.id)
+        await setResponse(menuData)
+        await setIsLoading(false)
+    }
     return (
         <SafeAreaView style={styles.container}>
             <KeyboardAwareScrollView>
@@ -50,9 +62,9 @@ const Profile = (props) => {
                         {"PUNTUACION"}
                     </Text>
                     <Text style={[styles.profileName, { color: white, fontSize: widthPercentageToDP(5), alignSelf: "center" }]}>
-                        {"000001536"}
+                        {!Response ? "0" : !Response.scoreTotal ? "0" : Response.scoreTotal}
                     </Text>
-                    <View style={[styles.profileInfo, { width: widthPercentageToDP(50) }]}>
+                    <View style={[styles.profileInfo, { width: widthPercentageToDP(50), marginTop: 0 }]}>
                         <FastImage
                             source={require('../../Images/seaCap.png')}
                             style={{ width: 35, height: 35 }}
@@ -62,7 +74,7 @@ const Profile = (props) => {
                             style={styles.proInfoTile}
                         //onPress={() => props.navigation.navigate('Dive')}
                         >
-                            {"00000324"}
+                            {!Response ? "0" : !Response.scoreDive ? "0" : Response.scoreDive}
                         </Text>
                     </View>
                     <View style={[styles.profileInfo, { width: widthPercentageToDP(50) }]}>
@@ -75,7 +87,7 @@ const Profile = (props) => {
                             style={styles.proInfoTile}
                         //onPress={() => props.navigation.navigate('AnimalSeen')} 
                         >
-                            {"00000024"}
+                            {!Response ? "0" : !Response.scoreGenre ? "0" : Response.scoreGenre}
                         </Text>
                     </View>
                     <View style={[styles.profileInfo, { width: widthPercentageToDP(50) }]}>
@@ -88,7 +100,7 @@ const Profile = (props) => {
                             style={styles.proInfoTile}
                         //onPress={() => props.navigation.navigate('Pecios')}
                         >
-                            {"00000724"}
+                            {!Response ? "0" : !Response.scorePecio ? "0" : Response.scorePecio}
                         </Text>
                     </View>
                 </View>
@@ -104,21 +116,23 @@ const Profile = (props) => {
                     }}
                 /> */}
 
-                <FlatList
-                    data={data}
-                    showsVerticalScrollIndicator={false}
-                    style={{ alignSelf: "center", marginTop: 10 }}
-                    keyExtractor={(item, index) => "unique" + index}
-                    renderItem={({ item, index }) => {
-                        return (
-                            <Card
-                                rank={index + 1}
-                                title={item.title}
-                                score={item.score}
-                            />
-                        )
-                    }}
-                />
+                {!Response || !Response.topTen.length ?
+                    <View />
+                    : <FlatList
+                        data={Response.topTen}
+                        showsVerticalScrollIndicator={false}
+                        style={{ alignSelf: "center", marginTop: 10 }}
+                        keyExtractor={(item, index) => "unique" + index}
+                        renderItem={({ item, index }) => {
+                            return (
+                                <Card
+                                    rank={index + 1}
+                                    title={item.name}
+                                    score={item.score}
+                                />
+                            )
+                        }}
+                    />}
             </KeyboardAwareScrollView>
             <View style={{ height: heightPercentageToDP(7) }} />
             <Tab
@@ -128,6 +142,13 @@ const Profile = (props) => {
                 mapClick={() => props.navigation.dispatch(mapAction)}
                 notiClick={() => props.navigation.dispatch(notificationAction)}
             />
+            {isLoading &&
+                <ActivityIndicator
+                    size="large"
+                    color={black}
+                    style={styles.loading}
+                />
+            }
         </SafeAreaView>
     )
 }

@@ -194,7 +194,7 @@ dependencies {
     implementation fileTree(dir: "libs", include: ["*.jar"])
     //noinspection GradleDynamicVersion
     implementation "com.facebook.react:react-native:+"  // From node_modules
-
+    implementation("com.google.android.gms:play-services-ads:19.8.0") { force = true; }
     implementation "androidx.swiperefreshlayout:swiperefreshlayout:1.0.0"
     implementation(project(':react-native-maps')){
        exclude group: 'com.google.android.gms', module: 'play-services-base'

@@ -7,7 +7,7 @@ import MapView, { PROVIDER_GOOGLE, Marker } from 'react-native-maps';
 import { heightPercentageToDP } from '../../Component/MakeMeResponsive'
 import { HomeAction, profileAction, settingAction, mapAction, notificationAction } from '../../Component/BottomTab/actions'
 import Strings from '../../Translation'
-import { getDiveCenters, getDiveCenterDetail, getGenreDetails, getPecioDetails, getPointsDetails } from '../../Redux/action'
+import { getDiveCenters, getDiveCenterDetail, getGenreDetails, getPecioDetails, getPointsDetails, getDivesDetails } from '../../Redux/action'
 import { useSelector, useDispatch } from 'react-redux';
 import { black } from '../../config/color'
 
@@ -52,6 +52,11 @@ const Map = (props) => {
         await getPointsDetails(id)
         await setIsLoading(false)
     }
+    const getDiveDetailApi = async (id) => {
+        setIsLoading(true)
+        await getDivesDetails(id)
+        await setIsLoading(false)
+    }
     return (
         <SafeAreaView style={styles.container}>
             <View style={StyleSheet.absoluteFillObject}>
@@ -69,6 +74,30 @@ const Map = (props) => {
                         longitudeDelta: 30.1421,
                     }}
                 >
+                    {!Response || !Response.dives.length ?
+                        <View />
+                        : Response.dives.map((item, index) => {
+                            return (
+                                <Marker
+                                    key={"unique" + index}
+                                    coordinate={{
+                                        latitude: parseFloat(item.lat),
+                                        longitude: parseFloat(item.lng),
+                                    }}
+                                    image={require('../../Images/14.png')}
+                                    onPress={() => {
+                                        getDiveDetailApi(item.diveId)
+                                    }}
+                                >
+                                    {/* <FastImage
+                                        source={require('../../Images/16.png')}
+                                        style={{ height: 35, width: 35 }}
+                                        resizeMode = {FastImage.resizeMode.stretch}
+                                    /> */}
+                                </Marker>
+                            )
+                        })
+                    }
                     {!Response || !Response.centers.length ?
                         <View />
                         : Response.centers.map((item, index) => {

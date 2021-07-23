@@ -152,7 +152,7 @@ const Profile = (props) => {
                             style={styles.proInfoTile}
                             onPress={() => props.navigation.navigate('Dive')}
                         >
-                            {"526 Inmersiones"}
+                            {!Response ? "0 Inmersiones" : !Response.divesTotal ? "" : Response.divesTotal + " Inmersiones"}
                         </Text>
                     </View>
                     <View style={styles.profileInfo}>
@@ -205,12 +205,20 @@ const Profile = (props) => {
                 <Text style={[styles.profileName, { color: black, fontSize: widthPercentageToDP(4.5), alignSelf: "center" }]}>
                     {"PUNTUACION"}
                 </Text>
-                <Text
-                    style={[styles.profileName, { color: blue, fontSize: widthPercentageToDP(6.5), alignSelf: "center" }]}
-                    onPress={() => props.navigation.navigate('Ranking')}
-                >
-                    {"000001536"}
-                </Text>
+                {!Response ?
+                    <Text
+                        style={[styles.profileName, { color: blue, fontSize: widthPercentageToDP(6.5), alignSelf: "center" }]}
+                        onPress={() => props.navigation.navigate('Ranking')}
+                    >
+                        {"0"}
+                    </Text>
+                    : <Text
+                        style={[styles.profileName, { color: blue, fontSize: widthPercentageToDP(6.5), alignSelf: "center" }]}
+                        onPress={() => props.navigation.navigate('Ranking')}
+                    >
+                        {Response.scoreTotal}
+                    </Text>
+                }
                 <FastImage
                     source={require('../../Images/line.png')}
                     resizeMode={FastImage.resizeMode.stretch}

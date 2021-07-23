@@ -58,6 +58,8 @@ const Dive = (props) => {
                             <Card
                                 year={item.year}
                                 months={item.months}
+                                navigate={props.navigation.navigate}
+                                destination="UpdateLogBook"
                             />
                         )
                     }}

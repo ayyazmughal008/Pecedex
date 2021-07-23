@@ -8,7 +8,11 @@ const Card = (props) => {
 
     const imageModel = (({ item, index }) => {
         return (
-            <View style={styles.modelView}>
+            <TouchableOpacity
+                onPress={() => props.navigate(props.destination, {
+                    data: item
+                })}
+                style={styles.modelView}>
                 {item.image ?
                     <FastImage
                         source={{ uri: item.image }}
@@ -27,7 +31,7 @@ const Card = (props) => {
                 <Text style={styles.date}>
                     {item.date}
                 </Text>
-            </View>
+            </TouchableOpacity>
         )
     })
 
@@ -142,6 +146,7 @@ const styles = StyleSheet.create({
         fontSize: widthPercentageToDP(4),
         color: blue,
         fontFamily: "Montserrat-SemiBold",
+        paddingLeft: widthPercentageToDP(1)
     }
 
 })

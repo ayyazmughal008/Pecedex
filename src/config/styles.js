@@ -110,7 +110,7 @@ export const styles = StyleSheet.create({
     },
     top: {
         width: widthPercentageToDP(100),
-        height: heightPercentageToDP(9),
+        height: heightPercentageToDP(7),
         justifyContent: "center",
         alignItems: "center"
     },
@@ -175,6 +175,12 @@ export const styles = StyleSheet.create({
         color: blue,
         marginTop: 10
         //marginLeft: widthPercentageToDP(5)
+    },
+    proInfoTile3: {
+        fontSize: widthPercentageToDP(5.5),
+        color: white,
+        fontFamily: "Montserrat-SemiBold",
+        marginLeft: widthPercentageToDP(5)
     },
     shareView: {
         width: widthPercentageToDP(100),

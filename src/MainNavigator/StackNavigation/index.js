@@ -10,6 +10,7 @@ import Genre from '../../Screen/Genere'
 import Dive from '../../Screen/Dive'
 import Ranking from '../../Screen/Rankisng'
 import LogBook from '../../Screen/LogBook'
+import UpdateLogBook from '../../Screen/LogBook/UpdateLogbook'
 import NewScreen from '../../Screen/LogBook/NewScreen'
 import RankingDetail from '../../Screen/RankingDetail'
 import AnimalSeen from '../../Screen/AnimalSeen'
@@ -70,6 +71,9 @@ export default createStackNavigator(
     },
     LogBook: {
       screen: LogBook
+    },
+    UpdateLogBook: {
+      screen: UpdateLogBook
     },
     DiveCenter: {
       screen: DiveCenter

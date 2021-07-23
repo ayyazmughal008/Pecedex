@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react'
-import { SafeAreaView, View, Text, FlatList, ActivityIndicator } from 'react-native'
+import { SafeAreaView, View, Text, FlatList, ActivityIndicator, DeviceEventEmitter } from 'react-native'
 import { styles } from '../../config/styles'
 import FastImage from 'react-native-fast-image'
 import Card from '../../Component/PeciosCard'
@@ -11,6 +11,9 @@ import { heightPercentageToDP } from '../../Component/MakeMeResponsive'
 import { HomeAction, profileAction, settingAction, mapAction, notificationAction } from '../../Component/BottomTab/actions'
 import { black } from '../../config/color'
 import Strings from '../../Translation'
+import { AdView } from '../../AdsServices/AdView'
+import { Events } from '../../AdsServices/utils'
+let viewableItemsChanged = null;
 
 const Map = (props) => {
     const [isLoading, setIsLoading] = useState(false)
@@ -45,6 +48,41 @@ const Map = (props) => {
         await setResponse(menuData)
         await setIsLoading(false)
     }
+    const onScrollEnd = React.useCallback(() => {
+        DeviceEventEmitter.emit(
+            Events.onViewableItemsChanged,
+            viewableItemsChanged,
+        );
+    }, []);
+
+    /**
+     * [STEP I] When viewable items change in the list
+     * we want to know what items are visible and store them
+     * in a variable for later us.
+     */
+    const onViewableItemsChanged = React.useCallback((e) => {
+        viewableItemsChanged = e;
+    }, []);
+    const renderItem = React.useCallback(
+        ({ item, index }) =>
+            item.ad ? (
+                /**
+                 * loadOnMount -> We are telling the AdView to not load the ad when
+                 * it is mounted.
+                 */
+                <AdView loadOnMount={true} index={index} type="image" media={false} />
+            ) : (
+                <Card
+                    title={item.title}
+                    animalImg={"http://199.247.13.90/" + item.image}
+                    shortText={item.short}
+                    clickHandler={() => props.navigation.navigate("PeciosDetail", {
+                        data: item
+                    })}
+                />
+            ),
+        [],
+    );
 
     return (
         <SafeAreaView style={styles.container}>
@@ -60,20 +98,20 @@ const Map = (props) => {
                 : <FlatList
                     data={Response.data}
                     showsVerticalScrollIndicator={false}
-                    style={{ alignSelf: "center", marginTop: 15 }}
-                    keyExtractor={(item, index) => "unique" + index}
-                    renderItem={({ item, index }) => {
-                        return (
-                            <Card
-                                title={item.title}
-                                animalImg={"http://199.247.13.90/" + item.image}
-                                shortText={item.short}
-                                clickHandler={() => props.navigation.navigate("PeciosDetail", {
-                                    data: item
-                                })}
-                            />
-                        )
+                    contentContainerStyle={{
+                        justifyContent: 'center',
+                        alignItems: 'center',
                     }}
+                    style={{
+                        height: '100%',
+                        width: '100%',
+                    }}
+                    onScrollAnimationEnd={onScrollEnd}
+                    onMomentumScrollEnd={onScrollEnd}
+                    onScrollEndDrag={onScrollEnd}
+                    onViewableItemsChanged={onViewableItemsChanged}
+                    keyExtractor={(item, index) => "unique" + index}
+                    renderItem={renderItem}
                 />}
             <View style={{ height: heightPercentageToDP(7) }} />
             <Tab

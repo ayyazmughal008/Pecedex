@@ -33,6 +33,7 @@ const baseUrl = "http://199.247.13.90/api/",
     getGenreDetail = 'get-genre-detail',
     getPecioDetail = 'get-pecio-detail',
     getPointDetail = 'get-point-detail',
+    getDiveDetail = 'get-dive-detail',
     submitRating = 'submit-rating',
     getListAll = 'get-list-all',
     submitinlistpecio = 'submit-in-list-pecio',
@@ -45,6 +46,8 @@ const baseUrl = "http://199.247.13.90/api/",
     storeDive = 'store-dive',
     userLogout = 'logout',
     getDives = 'get-dives',
+    getScore = 'get-score',
+    updateDive = 'update-dive',
     register = 'register';
 
 const country_url = "https://countriesnow.space/api/v0.1/countries/positions"
@@ -812,6 +815,39 @@ export const getPointsDetails = async (pointId) => {
     }
     return api
 }
+export const getDivesDetails = async (diveId) => {
+    let api
+    try {
+        api = await fetch(baseUrl + getDiveDetail, {
+            method: 'POST',
+            headers: {
+                'Accept': 'application/json',
+                "Content-type": "application/json",
+            },
+            body: JSON.stringify({
+                diveId: diveId
+            })
+        })
+            .then(res => res.json())
+            .then(json => {
+                if (json.status == 200) {
+                    console.log(json)
+                    NavigationService.navigate("UpdateLogBook", {
+                        data: json.data
+                    })
+                    return
+                } else {
+                    Alert.alert("", json.message)
+                }
+            })
+            .catch(error => {
+                console.log("response error ===>", error)
+            })
+    } catch (error) {
+        console.log('my error' + error.message);
+    }
+    return api
+}
 export const submitDiveCenterRanking = async (userId, centerId, stars, comment) => {
     let api
     try {
@@ -1251,11 +1287,166 @@ export const submitLogbookData = async (
     }
     return api
 }
+export const updateLogbookData = async (
+    country,
+    city,
+    immersionSite,
+    myDate,
+    myTime,
+    location,
+    imagePath,
+    weatherCode,
+    temperature,
+    visibility,
+    waterType,
+    startingBar,
+    endBar,
+    StartTime,
+    EndTime,
+    maxDeep,
+    typeImpresion,
+    suitCode,
+    suitCode78,
+    isScuba,
+    isRebreader,
+    isJacket,
+    isWing,
+    is12,
+    is15,
+    isSteel,
+    isAluminum,
+    isAir,
+    isNitrox,
+    oxygen,
+    diveItem1,
+    diveItem2,
+    diveItem3,
+    diveItem4,
+    diveItem5,
+    diveItem6,
+    diveItem7,
+    diveItem8,
+    pecios,
+    genres,
+    users,
+    center,
+    centerId,
+    opinion,
+    userId,
+    diveId
+) => {
+    let api
+    try {
+        api = await fetch(baseUrl + updateDive, {
+            method: 'POST',
+            headers: {
+                'Accept': 'application/json',
+                "Content-type": "application/json",
+            },
+            body: JSON.stringify({
+                country: country,
+                city: city,
+                immersionSite: immersionSite,
+                date: myDate,
+                time: myTime,
+                location: location,
+                image: imagePath,
+                weather: weatherCode,
+                temperature: temperature,
+                visibility: visibility,
+                waterType: waterType,
+                startBar: startingBar,
+                endBar: endBar,
+                startTime: StartTime,
+                endTime: EndTime,
+                maxDeep: maxDeep,
+                typeImpresion: typeImpresion,
+                suitCode: suitCode,
+                suitCode78: suitCode78,
+                scuba: isScuba,
+                rebreader: isRebreader,
+                jacket: isJacket,
+                wings: isWing,
+                bottle12L: is12,
+                bottle15L: is15,
+                steel: isSteel,
+                aluminum: isAluminum,
+                air: isAir,
+                nitrox: isNitrox,
+                oxygen: oxygen,
+                diveItem1: diveItem1,
+                diveItem2: diveItem2,
+                diveItem3: diveItem3,
+                diveItem4: diveItem4,
+                diveItem5: diveItem5,
+                diveItem6: diveItem6,
+                diveItem7: diveItem7,
+                diveItem8: diveItem8,
+                pecios: pecios,
+                animal: genres,
+                team: users,
+                center: center,
+                centerId: centerId,
+                opinion: opinion,
+                userId: userId,
+                diveId: diveId
+            })
+        })
+            .then(res => res.json())
+            .then(json => {
+                if (json.status == 200) {
+                    console.log(json)
+                    NavigationService.navigate("Home")
+                    Alert.alert("", json.message)
+                    return
+                } else {
+                    console.log(json)
+                }
+            })
+            .catch(error => {
+                console.log("response error ===>", error)
+            })
+    } catch (error) {
+        console.log('my error' + error.message);
+    }
+    return api
+}
 export const getUserDives = async (userId) => {
     console.log(userId)
     let api
     try {
         api = await fetch(baseUrl + getDives, {
+            method: 'POST',
+            headers: {
+                'Accept': 'application/json',
+                "Content-type": "application/json",
+            },
+            body: JSON.stringify({
+                userId: userId,
+            })
+        })
+            .then(res => res.json())
+            .then(json => {
+                if (json.status == 200) {
+                    console.log(json)
+                    return json
+                } else {
+                    Alert.alert("", json.message)
+                }
+            })
+            .catch(error => {
+                console.log("response error ===>", error)
+            })
+    } catch (error) {
+        console.log('my error' + error.message);
+    }
+    return api
+}
+export const getUserScore = async (userId) => {
+    console.log(userId)
+    let api
+    try {
+        api = await fetch(baseUrl + getScore, {
             method: 'POST',
             headers: {
                 'Accept': 'application/json',
