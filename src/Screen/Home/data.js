@@ -6,7 +6,7 @@ export const data = [
     },
     {
         id: 1,
-        title: "Animal",
+        title: "Animals",
         animalImg: require('../../Images/108.png')
     },
     {

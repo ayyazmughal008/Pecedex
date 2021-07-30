@@ -48,6 +48,7 @@ const baseUrl = "http://199.247.13.90/api/",
     getDives = 'get-dives',
     getScore = 'get-score',
     updateDive = 'update-dive',
+    setLanguages = 'set-language',
     register = 'register';
 
 const country_url = "https://countriesnow.space/api/v0.1/countries/positions"
@@ -161,7 +162,7 @@ export const userRegister = (name, email, password, certificate) => {
             })
     };
 }
-export const getMainMenu = async () => {
+export const getMainMenu = async (userId) => {
     let api
     try {
         api = await fetch(baseUrl + getMenu, {
@@ -170,6 +171,9 @@ export const getMainMenu = async () => {
                 'Accept': 'application/json',
                 "Content-type": "application/json",
             },
+            body: JSON.stringify({
+                userId: userId
+            })
         })
             .then(res => res.json())
             .then(json => {
@@ -184,7 +188,7 @@ export const getMainMenu = async () => {
     }
     return api
 }
-export const getMenuFiles = async () => {
+export const getMenuFiles = async (userId) => {
     let api
     try {
         api = await fetch(baseUrl + getFiles, {
@@ -193,6 +197,9 @@ export const getMenuFiles = async () => {
                 'Accept': 'application/json',
                 "Content-type": "application/json",
             },
+            body: JSON.stringify({
+                userId: userId
+            })
         })
             .then(res => res.json())
             .then(json => {
@@ -207,7 +214,7 @@ export const getMenuFiles = async () => {
     }
     return api
 }
-export const getMenuClasses = async (id) => {
+export const getMenuClasses = async (id, userId) => {
     let api
     try {
         api = await fetch(baseUrl + getClasses, {
@@ -217,7 +224,8 @@ export const getMenuClasses = async (id) => {
                 "Content-type": "application/json",
             },
             body: JSON.stringify({
-                fileId: id
+                fileId: id,
+                userId: userId,
             })
         })
             .then(res => res.json())
@@ -233,7 +241,7 @@ export const getMenuClasses = async (id) => {
     }
     return api
 }
-export const getMenuOrders = async (id) => {
+export const getMenuOrders = async (id, userId) => {
     let api
     try {
         api = await fetch(baseUrl + getOrders, {
@@ -243,7 +251,8 @@ export const getMenuOrders = async (id) => {
                 "Content-type": "application/json",
             },
             body: JSON.stringify({
-                classId: id
+                classId: id,
+                userId: userId,
             })
         })
             .then(res => res.json())
@@ -259,7 +268,7 @@ export const getMenuOrders = async (id) => {
     }
     return api
 }
-export const getMenuFamily = async (id) => {
+export const getMenuFamily = async (id, userId) => {
     let api
     try {
         api = await fetch(baseUrl + getFamilies, {
@@ -269,7 +278,8 @@ export const getMenuFamily = async (id) => {
                 "Content-type": "application/json",
             },
             body: JSON.stringify({
-                orderId: id
+                orderId: id,
+                userId: userId,
             })
         })
             .then(res => res.json())
@@ -285,7 +295,7 @@ export const getMenuFamily = async (id) => {
     }
     return api
 }
-export const getMenuCategory = async (id) => {
+export const getMenuCategory = async (id, userId) => {
     let api
     try {
         api = await fetch(baseUrl + getCategory, {
@@ -295,7 +305,8 @@ export const getMenuCategory = async (id) => {
                 "Content-type": "application/json",
             },
             body: JSON.stringify({
-                familyId: id
+                familyId: id,
+                userId: userId,
             })
         })
             .then(res => res.json())
@@ -311,7 +322,7 @@ export const getMenuCategory = async (id) => {
     }
     return api
 }
-export const getMenuGenro = async (id) => {
+export const getMenuGenro = async (id, userId) => {
     let api
     try {
         api = await fetch(baseUrl + getGenres, {
@@ -321,7 +332,8 @@ export const getMenuGenro = async (id) => {
                 "Content-type": "application/json",
             },
             body: JSON.stringify({
-                categoryId: id
+                categoryId: id,
+                userId: userId
             })
         })
             .then(res => res.json())
@@ -337,7 +349,7 @@ export const getMenuGenro = async (id) => {
     }
     return api
 }
-export const getPeciosData = async (id) => {
+export const getPeciosData = async (userId) => {
     console.log("Peicos api")
     let api
     try {
@@ -347,6 +359,9 @@ export const getPeciosData = async (id) => {
                 'Accept': 'application/json',
                 "Content-type": "application/json",
             },
+            body: JSON.stringify({
+                userId: userId
+            })
         })
             .then(res => res.json())
             .then(json => {
@@ -653,7 +668,16 @@ export const postGenerImg = (userId, genreId, image) => {
             })
     };
 }
-export const getDiveCenters = async (userId) => {
+export const getDiveCenters = async (
+    userId,
+    centers,
+    pecios,
+    genreEasy,
+    genreMedium,
+    genreDifficult,
+    points,
+    dives
+) => {
     let api
     try {
         api = await fetch(baseUrl + getCenters, {
@@ -663,7 +687,14 @@ export const getDiveCenters = async (userId) => {
                 "Content-type": "application/json",
             },
             body: JSON.stringify({
-                userId: userId
+                userId: userId,
+                centers: centers,
+                pecios: pecios,
+                genreEasy: genreEasy,
+                genreMedium: genreMedium,
+                genreDifficult: genreDifficult,
+                points: points,
+                dives: dives
             })
         })
             .then(res => res.json())
@@ -683,7 +714,7 @@ export const getDiveCenters = async (userId) => {
     }
     return api
 }
-export const getDiveCenterDetail = async (centerId) => {
+export const getDiveCenterDetail = async (centerId, userId) => {
     let api
     try {
         api = await fetch(baseUrl + getCentersDetail, {
@@ -693,7 +724,8 @@ export const getDiveCenterDetail = async (centerId) => {
                 "Content-type": "application/json",
             },
             body: JSON.stringify({
-                centerId: centerId
+                centerId: centerId,
+                userId: userId,
             })
         })
             .then(res => res.json())
@@ -716,7 +748,7 @@ export const getDiveCenterDetail = async (centerId) => {
     }
     return api
 }
-export const getGenreDetails = async (genreId) => {
+export const getGenreDetails = async (genreId, userId) => {
     let api
     try {
         api = await fetch(baseUrl + getGenreDetail, {
@@ -726,7 +758,8 @@ export const getGenreDetails = async (genreId) => {
                 "Content-type": "application/json",
             },
             body: JSON.stringify({
-                genreId: genreId
+                genreId: genreId,
+                userId: userId,
             })
         })
             .then(res => res.json())
@@ -749,7 +782,7 @@ export const getGenreDetails = async (genreId) => {
     }
     return api
 }
-export const getPecioDetails = async (pecioId) => {
+export const getPecioDetails = async (pecioId, userId) => {
     let api
     try {
         api = await fetch(baseUrl + getPecioDetail, {
@@ -759,7 +792,8 @@ export const getPecioDetails = async (pecioId) => {
                 "Content-type": "application/json",
             },
             body: JSON.stringify({
-                pecioId: pecioId
+                pecioId: pecioId,
+                userId: userId,
             })
         })
             .then(res => res.json())
@@ -782,7 +816,7 @@ export const getPecioDetails = async (pecioId) => {
     }
     return api
 }
-export const getPointsDetails = async (pointId) => {
+export const getPointsDetails = async (pointId, userId) => {
     let api
     try {
         api = await fetch(baseUrl + getPointDetail, {
@@ -792,7 +826,8 @@ export const getPointsDetails = async (pointId) => {
                 "Content-type": "application/json",
             },
             body: JSON.stringify({
-                pointId: pointId
+                pointId: pointId,
+                userId: userId,
             })
         })
             .then(res => res.json())
@@ -815,7 +850,7 @@ export const getPointsDetails = async (pointId) => {
     }
     return api
 }
-export const getDivesDetails = async (diveId) => {
+export const getDivesDetails = async (diveId, userId) => {
     let api
     try {
         api = await fetch(baseUrl + getDiveDetail, {
@@ -825,7 +860,8 @@ export const getDivesDetails = async (diveId) => {
                 "Content-type": "application/json",
             },
             body: JSON.stringify({
-                diveId: diveId
+                diveId: diveId,
+                userId: userId,
             })
         })
             .then(res => res.json())
@@ -1209,7 +1245,8 @@ export const submitLogbookData = async (
     center,
     centerId,
     opinion,
-    userId
+    userId,
+    poblation
 ) => {
     console.log("My image:", imagePath)
     let api
@@ -1265,7 +1302,8 @@ export const submitLogbookData = async (
                 center: center,
                 centerId: centerId,
                 opinion: opinion,
-                userId: userId
+                userId: userId,
+                poblation: poblation
             })
         })
             .then(res => res.json())
@@ -1461,6 +1499,38 @@ export const getUserScore = async (userId) => {
                 if (json.status == 200) {
                     console.log(json)
                     return json
+                } else {
+                    Alert.alert("", json.message)
+                }
+            })
+            .catch(error => {
+                console.log("response error ===>", error)
+            })
+    } catch (error) {
+        console.log('my error' + error.message);
+    }
+    return api
+}
+export const sendUserLanguage = async (userId, lang) => {
+    console.log(userId)
+    let api
+    try {
+        api = await fetch(baseUrl + setLanguages, {
+            method: 'POST',
+            headers: {
+                'Accept': 'application/json',
+                "Content-type": "application/json",
+            },
+            body: JSON.stringify({
+                userId: userId,
+                lang: lang,
+            })
+        })
+            .then(res => res.json())
+            .then(json => {
+                if (json.status == 200) {
+                    console.log(json)
+                    Alert.alert("", json.message)
                 } else {
                     Alert.alert("", json.message)
                 }

@@ -885,49 +885,56 @@ const LogBook = (props) => {
                         marginTop: heightPercentageToDP(2),
                         //backgroundColor: blue2
                     }]}>
-                        <View style={{ marginTop: heightPercentageToDP(0), flexDirection: "row", alignItems: "center" }}>
+                        <View style={{ marginTop: heightPercentageToDP(1), flexDirection: "row", alignItems: "center" }}>
                             <TouchableOpacity
                                 onPress={() => _onWeatherSelection(1)}
                                 style={[styles.weatherBtn, {
-                                    backgroundColor: weather1 ? blue : "#cccccc"
+                                    //backgroundColor: weather1 ? blue : "#cccccc"
                                 }]}>
                                 <FastImage
-                                    source={require('../../Images/55.png')}
+                                    source={weather1 ? require('../../Images/55.png')
+                                        : require('../../Images/55-1.png')}
                                     resizeMode={FastImage.resizeMode.cover}
-                                    style={{ width: "90%", height: "90%" }}
+                                    style={{ width: "100%", height: "100%" }}
                                 />
                             </TouchableOpacity>
                             <TouchableOpacity
                                 onPress={() => _onWeatherSelection(2)}
                                 style={[styles.weatherBtn, {
-                                    backgroundColor: weather2 ? blue : "#cccccc"
+                                    //backgroundColor: weather2 ? blue : "#cccccc"
                                 }]}>
                                 <FastImage
-                                    source={require('../../Images/48.png')}
+                                    source={weather2 ? require('../../Images/48.png')
+                                        : require('../../Images/48-1.png')
+                                    }
                                     resizeMode={FastImage.resizeMode.cover}
-                                    style={{ width: "90%", height: "90%" }}
+                                    style={{ width: "100%", height: "100%" }}
                                 />
                             </TouchableOpacity>
                             <TouchableOpacity
                                 onPress={() => _onWeatherSelection(3)}
                                 style={[styles.weatherBtn, {
-                                    backgroundColor: weather3 ? blue : "#cccccc"
+                                    //backgroundColor: weather3 ? blue : "#cccccc"
                                 }]}>
                                 <FastImage
-                                    source={require('../../Images/54.png')}
+                                    source={weather3 ? require('../../Images/54.png')
+                                        : require('../../Images/54-1.png')
+                                    }
                                     resizeMode={FastImage.resizeMode.cover}
-                                    style={{ width: "90%", height: "90%" }}
+                                    style={{ width: "100%", height: "100%" }}
                                 />
                             </TouchableOpacity>
                             <TouchableOpacity
                                 onPress={() => _onWeatherSelection(4)}
                                 style={[styles.weatherBtn, {
-                                    backgroundColor: weather4 ? blue : "#cccccc"
+                                    //backgroundColor: weather4 ? blue : "#cccccc"
                                 }]}>
                                 <FastImage
-                                    source={require('../../Images/53.png')}
+                                    source={weather4 ? require('../../Images/53.png')
+                                        : require('../../Images/53-1.png')
+                                    }
                                     resizeMode={FastImage.resizeMode.cover}
-                                    style={{ width: "90%", height: "90%" }}
+                                    style={{ width: "100%", height: "100%" }}
                                 />
                             </TouchableOpacity>
                         </View>
@@ -935,45 +942,53 @@ const LogBook = (props) => {
                             <TouchableOpacity
                                 onPress={() => _onWeatherSelection(5)}
                                 style={[styles.weatherBtn, {
-                                    backgroundColor: weather5 ? blue : "#cccccc"
+                                    //backgroundColor: weather5 ? blue : "#cccccc"
                                 }]}>
                                 <FastImage
-                                    source={require('../../Images/52.png')}
+                                    source={weather5 ? require('../../Images/52.png')
+                                        : require('../../Images/52-1.png')
+                                    }
                                     resizeMode={FastImage.resizeMode.cover}
-                                    style={{ width: "90%", height: "90%" }}
+                                    style={{ width: "100%", height: "100%" }}
                                 />
                             </TouchableOpacity>
                             <TouchableOpacity
                                 onPress={() => _onWeatherSelection(6)}
                                 style={[styles.weatherBtn, {
-                                    backgroundColor: weather6 ? blue : "#cccccc"
+                                    //backgroundColor: weather6 ? blue : "#cccccc"
                                 }]}>
                                 <FastImage
-                                    source={require('../../Images/50.png')}
+                                    source={weather6 ? require('../../Images/50.png')
+                                        : require('../../Images/50-1.png')
+                                    }
                                     resizeMode={FastImage.resizeMode.cover}
-                                    style={{ width: "90%", height: "90%" }}
+                                    style={{ width: "100%", height: "100%" }}
                                 />
                             </TouchableOpacity>
                             <TouchableOpacity
                                 onPress={() => _onWeatherSelection(7)}
                                 style={[styles.weatherBtn, {
-                                    backgroundColor: weather7 ? blue : "#cccccc"
+                                    //backgroundColor: weather7 ? blue : "#cccccc"
                                 }]}>
                                 <FastImage
-                                    source={require('../../Images/49.png')}
+                                    source={weather7 ? require('../../Images/49.png')
+                                        : require('../../Images/49-1.png')
+                                    }
                                     resizeMode={FastImage.resizeMode.cover}
-                                    style={{ width: "90%", height: "90%" }}
+                                    style={{ width: "100%", height: "100%" }}
                                 />
                             </TouchableOpacity>
                             <TouchableOpacity
                                 onPress={() => _onWeatherSelection(8)}
                                 style={[styles.weatherBtn, {
-                                    backgroundColor: weather8 ? blue : "#cccccc"
+                                    //backgroundColor: weather8 ? blue : "#cccccc"
                                 }]}>
                                 <FastImage
-                                    source={require('../../Images/51.png')}
+                                    source={weather8 ? require('../../Images/51.png')
+                                        : require('../../Images/51-1.png')
+                                    }
                                     resizeMode={FastImage.resizeMode.cover}
-                                    style={{ width: "90%", height: "90%" }}
+                                    style={{ width: "100%", height: "100%" }}
                                 />
                             </TouchableOpacity>
                         </View>
@@ -1195,10 +1210,10 @@ const LogBook = (props) => {
                                         style={{ width: "100%", height: "100%" }}
                                     />
                                 </TouchableOpacity>
-                                <Text style={[styles.tinyText, { color: suit1 ? blue2 : "#a9a9a9", textAlign: "center", marginTop: 5 }]}>
+                                <Text style={[styles.tinyText, { color: suit1 ? black : white, textAlign: "center", marginTop: 5 }]}>
                                     {"Traje"}
                                 </Text>
-                                <Text style={[styles.tinyText, { color: suit1 ? blue2 : "#a9a9a9", textAlign: "center" }]}>
+                                <Text style={[styles.tinyText, { color: suit1 ? black : white, textAlign: "center" }]}>
                                     {"corto"}
                                 </Text>
                             </View>
@@ -1219,10 +1234,10 @@ const LogBook = (props) => {
                                         style={{ width: "100%", height: "100%" }}
                                     />
                                 </TouchableOpacity>
-                                <Text style={[styles.tinyText, { color: suit2 ? blue2 : "#a9a9a9", textAlign: "center", marginTop: 5 }]}>
+                                <Text style={[styles.tinyText, { color: suit2 ? black : white, textAlign: "center", marginTop: 5 }]}>
                                     {"Traje"}
                                 </Text>
-                                <Text style={[styles.tinyText, { color: suit2 ? blue2 : "#a9a9a9", textAlign: "center" }]}>
+                                <Text style={[styles.tinyText, { color: suit2 ? black : white, textAlign: "center" }]}>
                                     {"húmedo"}
                                 </Text>
                                 {/* <Text style={[styles.tinyText, { color: blue2, textAlign: "center", marginTop: 5 }]}>
@@ -1237,12 +1252,12 @@ const LogBook = (props) => {
                                             paddingBottom: 0,
                                             fontSize: widthPercentageToDP(2.5),
                                             fontFamily: "Montserrat-SemiBold",
-                                            color: blue,
+                                            color: white,
                                             paddingLeft: 0,
                                             //backgroundColor:"red"
                                         }}
                                         placeholder="7 mm"
-                                        placeholderTextColor={blue}
+                                        placeholderTextColor={white}
                                         textAlign="center"
                                         keyboardType="number-pad"
                                         value={suitCode78}
@@ -1267,10 +1282,10 @@ const LogBook = (props) => {
                                         style={{ width: "100%", height: "100%" }}
                                     />
                                 </TouchableOpacity>
-                                <Text style={[styles.tinyText, { color: suit3 ? blue2 : "#a9a9a9", textAlign: "center", marginTop: 5 }]}>
+                                <Text style={[styles.tinyText, { color: suit3 ? black : white, textAlign: "center", marginTop: 5 }]}>
                                     {"Traje"}
                                 </Text>
-                                <Text style={[styles.tinyText, { color: suit3 ? blue2 : "#a9a9a9", textAlign: "center" }]}>
+                                <Text style={[styles.tinyText, { color: suit3 ? black : white, textAlign: "center" }]}>
                                     {"semiseco"}
                                 </Text>
                             </View>
@@ -1291,10 +1306,10 @@ const LogBook = (props) => {
                                         style={{ width: "100%", height: "100%" }}
                                     />
                                 </TouchableOpacity>
-                                <Text style={[styles.tinyText, { color: suit4 ? blue2 : "#a9a9a9", textAlign: "center", marginTop: 5 }]}>
+                                <Text style={[styles.tinyText, { color: suit4 ? black : white, textAlign: "center", marginTop: 5 }]}>
                                     {"Traje"}
                                 </Text>
-                                <Text style={[styles.tinyText, { color: suit4 ? blue2 : "#a9a9a9", textAlign: "center" }]}>
+                                <Text style={[styles.tinyText, { color: suit4 ? black : white, textAlign: "center" }]}>
                                     {"seco"}
                                 </Text>
                             </View>
@@ -1439,7 +1454,7 @@ const LogBook = (props) => {
                                     source={diveItem1 ? require('../../Images/63.png') : require('../../Images/62.png')}
                                     resizeMode={FastImage.resizeMode.stretch}
                                 />
-                                <Text style={[styles.tinyText, { color: diveItem1 ? blue2 : "#a9a9a9", textAlign: "center", marginTop: 5 }]}>
+                                <Text style={[styles.tinyText, { color: diveItem1 ? black : white, textAlign: "center", marginTop: 5 }]}>
                                     {"Dive computer"}
                                 </Text>
                             </TouchableOpacity>
@@ -1458,7 +1473,7 @@ const LogBook = (props) => {
                                     source={diveItem2 ? require('../../Images/58.png') : require('../../Images/59.png')}
                                     resizeMode={FastImage.resizeMode.stretch}
                                 />
-                                <Text style={[styles.tinyText, { color: diveItem2 ? blue2 : "#a9a9a9", textAlign: "center", marginTop: 5 }]}>
+                                <Text style={[styles.tinyText, { color: diveItem2 ? black : white, textAlign: "center", marginTop: 5 }]}>
                                     {"Compass"}
                                 </Text>
                             </TouchableOpacity>
@@ -1477,7 +1492,7 @@ const LogBook = (props) => {
                                     source={diveItem3 ? require('../../Images/71.png') : require('../../Images/70.png')}
                                     resizeMode={FastImage.resizeMode.stretch}
                                 />
-                                <Text style={[styles.tinyText, { color: diveItem3 ? blue2 : "#a9a9a9", textAlign: "center", marginTop: 5 }]}>
+                                <Text style={[styles.tinyText, { color: diveItem3 ? black : white, textAlign: "center", marginTop: 5 }]}>
                                     {"Torch"}
                                 </Text>
                             </TouchableOpacity>
@@ -1496,7 +1511,7 @@ const LogBook = (props) => {
                                     source={diveItem4 ? require('../../Images/68.png') : require('../../Images/69.png')}
                                     resizeMode={FastImage.resizeMode.stretch}
                                 />
-                                <Text style={[styles.tinyText, { color: diveItem4 ? blue2 : "#a9a9a9", textAlign: "center", marginTop: 5 }]}>
+                                <Text style={[styles.tinyText, { color: diveItem4 ? black : white, textAlign: "center", marginTop: 5 }]}>
                                     {"Dive hood"}
                                 </Text>
                             </TouchableOpacity>
@@ -1517,7 +1532,7 @@ const LogBook = (props) => {
                                     source={diveItem5 ? require('../../Images/67.png') : require('../../Images/66.png')}
                                     resizeMode={FastImage.resizeMode.stretch}
                                 />
-                                <Text style={[styles.tinyText, { color: diveItem5 ? blue2 : "#a9a9a9", textAlign: "center", marginTop: 5 }]}>
+                                <Text style={[styles.tinyText, { color: diveItem5 ? black : white, textAlign: "center", marginTop: 5 }]}>
                                     {"Buoy"}
                                 </Text>
                             </TouchableOpacity>
@@ -1536,7 +1551,7 @@ const LogBook = (props) => {
                                     source={diveItem6 ? require('../../Images/61.png') : require('../../Images/60.png')}
                                     resizeMode={FastImage.resizeMode.stretch}
                                 />
-                                <Text style={[styles.tinyText, { color: diveItem6 ? blue2 : "#a9a9a9", textAlign: "center", marginTop: 5 }]}>
+                                <Text style={[styles.tinyText, { color: diveItem6 ? black : white, textAlign: "center", marginTop: 5 }]}>
                                     {"Knife"}
                                 </Text>
                             </TouchableOpacity>
@@ -1555,7 +1570,7 @@ const LogBook = (props) => {
                                     source={diveItem7 ? require('../../Images/65.png') : require('../../Images/64.png')}
                                     resizeMode={FastImage.resizeMode.stretch}
                                 />
-                                <Text style={[styles.tinyText, { color: diveItem7 ? blue2 : "#a9a9a9", textAlign: "center", marginTop: 5 }]}>
+                                <Text style={[styles.tinyText, { color: diveItem7 ? black : white, textAlign: "center", marginTop: 5 }]}>
                                     {"Gloves"}
                                 </Text>
                             </TouchableOpacity>
@@ -1574,7 +1589,7 @@ const LogBook = (props) => {
                                     source={diveItem8 ? require('../../Images/75.png') : require('../../Images/76.png')}
                                     resizeMode={FastImage.resizeMode.stretch}
                                 />
-                                <Text style={[styles.tinyText, { color: diveItem8 ? blue2 : "#a9a9a9", textAlign: "center", marginTop: 5 }]}>
+                                <Text style={[styles.tinyText, { color: diveItem8 ? black : white, textAlign: "center", marginTop: 5 }]}>
                                     {"Shark skin suit"}
                                 </Text>
                             </TouchableOpacity>

@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react'
-import { SafeAreaView, View, Text, TouchableOpacity, Linking } from 'react-native'
+import { SafeAreaView, View, Text, TouchableOpacity, Linking, Platform, Alert } from 'react-native'
 import { styles } from '../../config/styles'
 import FastImage from 'react-native-fast-image'
 import { heightPercentageToDP, widthPercentageToDP } from '../../Component/MakeMeResponsive'
@@ -12,6 +12,7 @@ import { HomeAction, profileAction, settingAction, mapAction, notificationAction
 import Strings from '../../Translation'
 import { useSelector, useDispatch } from 'react-redux';
 import HTML from "react-native-render-html";
+import Share from 'react-native-share';
 
 const DiveCenter = (props) => {
     const language = useSelector((state) => state.user.language);
@@ -23,6 +24,43 @@ const DiveCenter = (props) => {
             Strings.setLanguage(language)
         }
     }, [language])
+
+    const callNumber = phone => {
+        console.log('callNumber ----> ', phone);
+        let phoneNumber = phone;
+        if (Platform.OS !== 'android') {
+            phoneNumber = `telprompt:${phone}`;
+        }
+        else {
+            phoneNumber = `tel:${phone}`;
+        }
+        Linking.canOpenURL(phoneNumber)
+            .then(supported => {
+                if (!supported) {
+                    Alert.alert('Phone number is not available');
+                } else {
+                    return Linking.openURL(phoneNumber);
+                }
+            })
+            .catch(err => console.log(err));
+    };
+    const shareMessage = async () => {
+        const shareOptions = {
+            title: 'PECEDEX',
+            message: "Have a look at this amazing application.",
+            failOnCancel: false,
+            url: "https://youtu.be/M1YpXF4sEHQ",
+        };
+
+        try {
+            const ShareResponse = await Share.open(shareOptions);
+            console.log(ShareResponse)
+            //setResult(JSON.stringify(ShareResponse, null, 2));
+        } catch (error) {
+            console.log('Error =>', error);
+            //setResult('error: '.concat(getErrorString(error)));
+        }
+    };
     return (
         <SafeAreaView style={styles.container}>
             <KeyboardAwareScrollView>
@@ -30,13 +68,21 @@ const DiveCenter = (props) => {
                     source={{ uri: "http://199.247.13.90/" + info.data.image }}
                     style={[styles.top, { height: heightPercentageToDP(30) }]}
                     resizeMode={FastImage.resizeMode.cover}
-                />
+                >
+                    <FastImage
+                        source={{ uri: "http://199.247.13.90/" + info.data.logo }}
+                        resizeMode={FastImage.resizeMode.cover}
+                        style={styles.diveLogo}
+                    />
+                </FastImage>
 
                 <Text style={[styles.profileName, { alignSelf: "center", color: blue }]}>
                     {info.data.name}
                 </Text>
                 <View style={styles.infoBox}>
-                    <View style={{ flexDirection: "row", alignItems: "center", width: "100%" }}>
+                    <TouchableOpacity
+                        onPress={() => Linking.openURL(`mailto:${info.data.email}`)}
+                        style={{ flexDirection: "row", alignItems: "center", width: "100%" }}>
                         <Icon
                             name="gmail"
                             color={blue}
@@ -45,8 +91,10 @@ const DiveCenter = (props) => {
                         <Text style={styles.infoTxt}>
                             {info.data.email}
                         </Text>
-                    </View>
-                    <View style={{ flexDirection: "row", alignItems: "center", width: "100%", marginTop: 5 }}>
+                    </TouchableOpacity>
+                    <TouchableOpacity
+                        onPress={() => callNumber(info.data.telephone)}
+                        style={{ flexDirection: "row", alignItems: "center", width: "100%", marginTop: 5 }}>
                         <Icon2
                             name="phone"
                             color={blue}
@@ -55,8 +103,10 @@ const DiveCenter = (props) => {
                         <Text style={styles.infoTxt}>
                             {info.data.telephone}
                         </Text>
-                    </View>
-                    <View style={{ flexDirection: "row", alignItems: "center", width: "100%", marginTop: 5 }}>
+                    </TouchableOpacity>
+                    <TouchableOpacity
+                        onPress={() => props.navigation.goBack()}
+                        style={{ flexDirection: "row", alignItems: "center", width: "100%", marginTop: 5 }}>
                         <Icon2
                             name="map-marker"
                             color={blue}
@@ -66,7 +116,7 @@ const DiveCenter = (props) => {
                         <Text style={styles.infoTxt}>
                             {info.data.address}
                         </Text>
-                    </View>
+                    </TouchableOpacity>
                 </View>
                 <View style={styles.socialView}>
                     <TouchableOpacity
@@ -132,6 +182,20 @@ const DiveCenter = (props) => {
                     >
                         <FastImage
                             source={require('../../Images/133.png')}
+                            resizeMode={FastImage.resizeMode.contain}
+                            style={{
+                                width: widthPercentageToDP(11),
+                                height: heightPercentageToDP(5.5),
+                            }}
+                        />
+                    </TouchableOpacity>
+                    <TouchableOpacity
+                        onPress={() => {
+                            //shareMessage();
+                        }}
+                    >
+                        <FastImage
+                            source={require('../../Images/tiktok.png')}
                             resizeMode={FastImage.resizeMode.contain}
                             style={{
                                 width: widthPercentageToDP(11),

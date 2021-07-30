@@ -23,6 +23,7 @@
 		8CE7DB99F5DA4443A70C9EF6 /* Montserrat-SemiBold.otf in Resources */ = {isa = PBXBuildFile; fileRef = 6C17105829764B439D81BDC9 /* Montserrat-SemiBold.otf */; };
 		92CFD002C36F27D15C952E48 /* libPods-Pecedex-PecedexTests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 6C151F7228272439532C2BD4 /* libPods-Pecedex-PecedexTests.a */; };
 		B6C43C6706B74FDBAD595988 /* Montserrat-Regular.otf in Resources */ = {isa = PBXBuildFile; fileRef = 17E488A132EB4096A7683014 /* Montserrat-Regular.otf */; };
+		1128C2A4398B4F328D940BCE /* MontserratAlternates-BoldItalic.otf in Resources */ = {isa = PBXBuildFile; fileRef = 48C43FDB8A66490889DFAAA5 /* MontserratAlternates-BoldItalic.otf */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -90,6 +91,7 @@
 		ED297162215061F000B7C4FE /* JavaScriptCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = JavaScriptCore.framework; path = System/Library/Frameworks/JavaScriptCore.framework; sourceTree = SDKROOT; };
 		ED2971642150620600B7C4FE /* JavaScriptCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = JavaScriptCore.framework; path = Platforms/AppleTVOS.platform/Developer/SDKs/AppleTVOS12.0.sdk/System/Library/Frameworks/JavaScriptCore.framework; sourceTree = DEVELOPER_DIR; };
 		F05C4F306058446D9C3C8FE2 /* Foundation.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = Foundation.ttf; path = "../node_modules/react-native-vector-icons/Fonts/Foundation.ttf"; sourceTree = "<group>"; };
+		48C43FDB8A66490889DFAAA5 /* MontserratAlternates-BoldItalic.otf */ = {isa = PBXFileReference; name = "MontserratAlternates-BoldItalic.otf"; path = "../assets/fonts/MontserratAlternates-BoldItalic.otf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -244,6 +246,7 @@
 				C55EF4309C7A448293F7A408 /* Octicons.ttf */,
 				75746006CF5145649E78B803 /* SimpleLineIcons.ttf */,
 				B11B42A2052649929D379448 /* Zocial.ttf */,
+				48C43FDB8A66490889DFAAA5 /* MontserratAlternates-BoldItalic.otf */,
 			);
 			name = Resources;
 			sourceTree = "<group>";
@@ -399,6 +402,7 @@
 				18D2EA87269C861E00FD8C2A /* GoogleService-Info.plist in Resources */,
 				B6C43C6706B74FDBAD595988 /* Montserrat-Regular.otf in Resources */,
 				8CE7DB99F5DA4443A70C9EF6 /* Montserrat-SemiBold.otf in Resources */,
+				1128C2A4398B4F328D940BCE /* MontserratAlternates-BoldItalic.otf in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

@@ -8,7 +8,7 @@ import FastImage from 'react-native-fast-image'
 import { black, green, lightRed } from '../../config/color'
 import { useSelector, useDispatch } from 'react-redux';
 import Strings from '../../Translation'
-import { logOut, setLanguage, logoutUser } from '../../Redux/action'
+import { logOut, setLanguage, logoutUser, sendUserLanguage } from '../../Redux/action'
 import RNRestart from 'react-native-restart';
 
 const Setting = (props) => {
@@ -30,6 +30,12 @@ const Setting = (props) => {
         await logoutUser(login.data.id)
         await setIsLoading(false)
         dispatch(logOut())
+    }
+    const languageApi = async (language) => {
+        setIsLoading(true)
+        await sendUserLanguage(login.data.id, language)
+        await setIsLoading(false)
+        RNRestart.Restart();
     }
 
 
@@ -114,13 +120,13 @@ const Setting = (props) => {
                     onPress={() => {
                         if (!language) {
                             dispatch(setLanguage('en'));
-                            RNRestart.Restart();
+                            languageApi("en")
                         } else if (language === 'es') {
                             dispatch(setLanguage('en'));
-                            RNRestart.Restart();
+                            languageApi("en")
                         } else {
                             dispatch(setLanguage('es'));
-                            RNRestart.Restart();
+                            languageApi("es")
                         }
 
                     }}

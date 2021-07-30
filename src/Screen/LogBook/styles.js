@@ -15,10 +15,18 @@ export const styles = StyleSheet.create({
         alignItems: 'center',
         justifyContent: 'center'
     },
+    bgImg: {
+        position: "absolute",
+        zIndex: 1000,
+        width: "100%",
+        height: "88%",
+        bottom: "0%",
+        //backgroundColor:"red"
+    },
     top: {
         width: widthPercentageToDP(100),
-        height: heightPercentageToDP(9),
-        justifyContent: "center",
+        height: heightPercentageToDP(14),
+        //justifyContent: "center",
         alignItems: "center"
     },
     logView: {
@@ -38,7 +46,7 @@ export const styles = StyleSheet.create({
         width: widthPercentageToDP(90),
         borderRadius: widthPercentageToDP(5),
         alignItems: "center",
-        backgroundColor: blue,
+        backgroundColor: blue2,
         flexDirection: "row",
         alignItems: "center",
         marginTop: heightPercentageToDP(1)
@@ -46,6 +54,7 @@ export const styles = StyleSheet.create({
     left: {
         width: "50%",
         height: "100%",
+        marginLeft: widthPercentageToDP(1),
         //backgroundColor:"red",
         //justifyContent: "center"
     },
@@ -61,7 +70,7 @@ export const styles = StyleSheet.create({
     weatherBtn: {
         width: widthPercentageToDP(17),
         height: heightPercentageToDP(8),
-        backgroundColor: "#cccccc",
+        //backgroundColor: "#cccccc",
         borderRadius: widthPercentageToDP(3),
         marginLeft: widthPercentageToDP(2),
         justifyContent: "center",
@@ -178,18 +187,18 @@ export const styles = StyleSheet.create({
         // fontWeight: "bold"
     },
     smallInput: {
-        color: blue,
+        color: white,
         fontFamily: "Montserrat-SemiBold",
         fontSize: widthPercentageToDP(3.7),
         width: "100%",
         height: "45%",
         //backgroundColor: "red",
-        marginTop: 5,
+        //marginTop: 5,
         paddingTop: 0,
         paddingBottom: 0,
     },
     smallInput2: {
-        color: blue,
+        color: white,
         fontFamily: "Montserrat-SemiBold",
         fontSize: widthPercentageToDP(3.7),
         width: "100%",
@@ -217,7 +226,7 @@ export const styles = StyleSheet.create({
         paddingTop: 0,
         paddingBottom: 0,
         fontFamily: "Montserrat-SemiBold",
-        color: blue,
+        color: white,
         fontSize: widthPercentageToDP(3.7),
         paddingLeft: 0
     },

@@ -98,14 +98,16 @@ const Profile = (props) => {
         setOption(!pickerOption)
     }
     return (
-        <SafeAreaView style={styles.container}>
+        <SafeAreaView style={[styles.container,{alignItems:"center"}]}>
             <KeyboardAwareScrollView>
                 <FastImage
-                    source={require('../../Images/top.png')}
-                    style={styles.top}
+                    source={require('../../Images/22.png')}
+                    style={styles.top2}
                     resizeMode={FastImage.resizeMode.stretch}
                 />
-                <View style={styles.profileImgView}>
+                <View style={[styles.profileImgView,{
+                    marginTop:heightPercentageToDP(-14)
+                }]}>
                     {!login.data.image ?
                         <FastImage
                             style={styles.profileImg}
@@ -226,7 +228,7 @@ const Profile = (props) => {
                 />
                 <Text style={[styles.profileName, {
                     color: blue,
-                    marginLeft: widthPercentageToDP(10)
+                    marginLeft: widthPercentageToDP(5)
                 }]}>
                     {"PHOTOS"}
                 </Text>

@@ -57,7 +57,7 @@ const GenreDetail = (props) => {
                         height: heightPercentageToDP(5),
                     }}
                 />
-                <Text style={[styles.smallText, { flex: 1, flexWrap: 'wrap' }]}>
+                <Text style={[styles.smallText, { flex: 1, flexWrap: 'wrap', marginTop: 5 }]}>
                     {item.text}
                 </Text>
 
@@ -240,7 +240,7 @@ const GenreDetail = (props) => {
                     </TouchableOpacity>
                 </View>
                 <View style={styles.shareView}>
-                    <View style={{ width: "60%", height: "100%", justifyContent: "center" }}>
+                    <View style={{ width: "45%", height: "100%", justifyContent: "center" }}>
                         <TouchableOpacity
                             onPress={() => {
                                 getApis()
@@ -248,10 +248,11 @@ const GenreDetail = (props) => {
                             style={styles.shareButton}>
                             <FastImage
                                 source={require('../../Images/85.png')}
-                                resizeMode={FastImage.resizeMode.contain}
+                                resizeMode={FastImage.resizeMode.stretch}
                                 style={{
-                                    width: widthPercentageToDP(8),
-                                    height: heightPercentageToDP(4),
+                                    width: widthPercentageToDP(14),
+                                    height: heightPercentageToDP(5.5),
+                                    marginLeft:widthPercentageToDP(3)
                                 }}
                             />
                         </TouchableOpacity>

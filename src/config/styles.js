@@ -12,6 +12,14 @@ export const styles = StyleSheet.create({
         width: "100%",
         height: "100%",
     },
+    bgImg2: {
+        position: "absolute",
+        zIndex: 1000,
+        width: "100%",
+        height: "92%",
+        bottom: "0%",
+        //backgroundColor:"red"
+    },
     topImg: {
         width: widthPercentageToDP(100),
         height: heightPercentageToDP(55),
@@ -110,7 +118,13 @@ export const styles = StyleSheet.create({
     },
     top: {
         width: widthPercentageToDP(100),
-        height: heightPercentageToDP(7),
+        height: heightPercentageToDP(11),
+        //justifyContent: "center",
+        alignItems: "center"
+    },
+    top2: {
+        width: widthPercentageToDP(100),
+        height: heightPercentageToDP(20),
         justifyContent: "center",
         alignItems: "center"
     },
@@ -170,7 +184,7 @@ export const styles = StyleSheet.create({
     proInfoTile2: {
         fontSize: widthPercentageToDP(5),
         color: white,
-        fontFamily: "Montserrat-SemiBold",
+        fontFamily: "MontserratAlternates-BoldItalic",
         alignSelf: "center",
         color: blue,
         marginTop: 10
@@ -181,6 +195,13 @@ export const styles = StyleSheet.create({
         color: white,
         fontFamily: "Montserrat-SemiBold",
         marginLeft: widthPercentageToDP(5)
+    },
+    headerTitle: {
+        fontSize: widthPercentageToDP(5.5),
+        color: white,
+        fontFamily: "Montserrat-SemiBold",
+        textAlign: "center",
+        padding: widthPercentageToDP(2)
     },
     shareView: {
         width: widthPercentageToDP(100),
@@ -234,13 +255,13 @@ export const styles = StyleSheet.create({
         paddingRight: widthPercentageToDP(4)
     },
     mapBottom: {
-        width: widthPercentageToDP(95),
-        height: heightPercentageToDP(12),
+        width: widthPercentageToDP(40),
         alignSelf: "center",
         position: "absolute",
+        right: "2%",
         bottom: "10%",
         borderRadius: widthPercentageToDP(4),
-        backgroundColor: blue,
+        backgroundColor: 'transparent',
         justifyContent: "center"
     },
     circle: {
@@ -265,7 +286,7 @@ export const styles = StyleSheet.create({
         marginLeft: widthPercentageToDP(5)
     },
     socialView: {
-        width: widthPercentageToDP(80),
+        width: widthPercentageToDP(90),
         height: heightPercentageToDP(6),
         alignItems: "center",
         alignSelf: "center",
@@ -292,6 +313,16 @@ export const styles = StyleSheet.create({
     squre: {
         width: widthPercentageToDP(20),
         height: widthPercentageToDP(20),
+        borderWidth: widthPercentageToDP(0.5),
+        borderColor: blue
+    },
+    diveLogo: {
+        width: widthPercentageToDP(20),
+        height: heightPercentageToDP(10),
+        position: "absolute",
+        top: "4%",
+        right: "5%",
+        borderRadius: widthPercentageToDP(2)
     },
     starView: {
         width: "70%",
@@ -377,6 +408,22 @@ export const styles = StyleSheet.create({
         alignItems: "center",
         justifyContent: "space-between",
         alignSelf: "center",
-        marginTop: 5
-    }
+        marginTop: heightPercentageToDP(2)
+    },
+    shortcutView: {
+        width: widthPercentageToDP(90),
+        height: heightPercentageToDP(15),
+        backgroundColor: blue,
+        borderRadius: widthPercentageToDP(4),
+        alignSelf: "center",
+        marginTop: heightPercentageToDP(2),
+        justifyContent: "center",
+        marginTop: heightPercentageToDP(5)
+    },
+    shortCutTxt: {
+        fontSize: widthPercentageToDP(3.5),
+        fontFamily: "Montserrat-SemiBold",
+        color: white,
+        padding: widthPercentageToDP(0.5)
+    },
 })

@@ -41,7 +41,7 @@ const Login = (props) => {
     return (
         <FastImage
             style={styles.bgImg}
-            source={require('../../Images/bg.jpg')}
+            source={require('../../Images/b_ground.jpg')}
             resizeMode={FastImage.resizeMode.cover}
         >
             <View style={{ flex: 1 }}>

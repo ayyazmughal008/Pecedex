@@ -38,7 +38,7 @@ const Map = (props) => {
 
     const getApis = async () => {
         setIsLoading(true)
-        let menuData = await getPeciosData()
+        let menuData = await getPeciosData(login.data.id)
         await setResponse(menuData)
         await setIsLoading(false)
     }

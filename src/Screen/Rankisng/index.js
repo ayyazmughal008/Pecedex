@@ -39,11 +39,13 @@ const Profile = (props) => {
         <SafeAreaView style={styles.container}>
             <KeyboardAwareScrollView>
                 <FastImage
-                    source={require('../../Images/top.png')}
-                    style={styles.top}
+                    source={require('../../Images/22.png')}
+                    style={styles.top2}
                     resizeMode={FastImage.resizeMode.stretch}
                 />
-                <View style={styles.profileImgView}>
+                <View style={[styles.profileImgView,{
+                    marginTop:heightPercentageToDP(-15)
+                }]}>
                     {!login.data.image ?
                         <FastImage
                             style={styles.profileImg}

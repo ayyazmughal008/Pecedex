@@ -23,6 +23,19 @@ const Card = (props) => {
                     {props.shortText}
                 </Text>
             </View>
+            {(props.seen && props.seen === "yes") &&
+                <FastImage
+                    source={require('../../Images/85.png')}
+                    resizeMode={FastImage.resizeMode.contain}
+                    style={{
+                        width: widthPercentageToDP(8),
+                        height: heightPercentageToDP(4),
+                        position: "absolute",
+                        top: "5%",
+                        right: "2%"
+                    }}
+                />
+            }
         </TouchableOpacity>
     )
 }

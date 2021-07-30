@@ -16,6 +16,7 @@ import { Events } from '../../AdsServices/utils'
 let viewableItemsChanged = null;
 const Map = (props) => {
     const language = useSelector((state) => state.user.language);
+    const login = useSelector((state) => state.user.login);
     const [isLoading, setIsLoading] = useState(false)
     const [Response, setResponse] = useState('')
     const nativeAdViewRef = useRef();
@@ -33,7 +34,7 @@ const Map = (props) => {
 
     const getApis = async () => {
         setIsLoading(true)
-        let menuData = await getMenuFiles()
+        let menuData = await getMenuFiles(login.data.id)
         await setResponse(menuData)
         await setIsLoading(false)
     }
@@ -79,48 +80,56 @@ const Map = (props) => {
     return (
         <SafeAreaView style={styles.container}>
             <FastImage
-                source={require('../../Images/top.png')}
+                source={require('../../Images/108.png')}
                 style={styles.top}
-                resizeMode={FastImage.resizeMode.stretch}
+                resizeMode={FastImage.resizeMode.cover}
             >
-                <Text style={styles.proInfoTile}>{"ANIMAL"}</Text>
+                <Text style={styles.headerTitle}>{"ANIMALS"}</Text>
             </FastImage>
-            {!Response || !Response.data ?
-                <View />
-                : <FlatList
-                    data={Response.data}
-                    showsVerticalScrollIndicator={false}
-                    contentContainerStyle={{
-                        justifyContent: 'center',
-                        alignItems: 'center',
-                    }}
-                    style={{
-                        height: '100%',
-                        width: '100%',
-                    }}
-                    onScrollAnimationEnd={onScrollEnd}
-                    onMomentumScrollEnd={onScrollEnd}
-                    onScrollEndDrag={onScrollEnd}
-                    onViewableItemsChanged={onViewableItemsChanged}
-                    keyExtractor={(item, index) => "unique" + index}
-                    renderItem={renderItem}
+            <FastImage
+                source={require('../../Images/BG.png')}
+                resizeMode={FastImage.resizeMode.stretch}
+                style={styles.bgImg2}
+            >
+                {!Response || !Response.data ?
+                    <View />
+                    : <FlatList
+                        data={Response.data}
+                        showsVerticalScrollIndicator={false}
+                        contentContainerStyle={{
+                            justifyContent: 'center',
+                            alignItems: 'center',
+                        }}
+                        style={{
+                            height: '100%',
+                            width: '100%',
+                            marginTop: heightPercentageToDP(5)
+                        }}
+                        onScrollAnimationEnd={onScrollEnd}
+                        onMomentumScrollEnd={onScrollEnd}
+                        onScrollEndDrag={onScrollEnd}
+                        onViewableItemsChanged={onViewableItemsChanged}
+                        keyExtractor={(item, index) => "unique" + index}
+                        renderItem={renderItem}
+                    />
+                }
+                <View style={{ height: heightPercentageToDP(5) }} />
+                <Tab
+                    homeClick={() => props.navigation.dispatch(HomeAction)}
+                    profileClick={() => props.navigation.dispatch(profileAction)}
+                    settingClick={() => props.navigation.dispatch(settingAction)}
+                    mapClick={() => props.navigation.dispatch(mapAction)}
+                    notiClick={() => props.navigation.dispatch(notificationAction)}
                 />
-            }
-            <View style={{ height: heightPercentageToDP(5) }} />
-            <Tab
-                homeClick={() => props.navigation.dispatch(HomeAction)}
-                profileClick={() => props.navigation.dispatch(profileAction)}
-                settingClick={() => props.navigation.dispatch(settingAction)}
-                mapClick={() => props.navigation.dispatch(mapAction)}
-                notiClick={() => props.navigation.dispatch(notificationAction)}
-            />
-            {isLoading &&
-                <ActivityIndicator
-                    size="large"
-                    color={black}
-                    style={styles.loading}
-                />
-            }
+                {isLoading &&
+                    <ActivityIndicator
+                        size="large"
+                        color={black}
+                        style={styles.loading}
+                    />
+                }
+            </FastImage>
+
         </SafeAreaView>
     )
 }

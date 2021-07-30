@@ -111,70 +111,69 @@ const Home = (props) => {
                 style={styles.top}
                 resizeMode={FastImage.resizeMode.stretch}
             />
-            <TouchableOpacity
-                onPress={() => props.navigation.navigate("SearchScreen")}
-                style={[styles.inputView, {
-                    flexDirection: "row",
-                    alignItems: "center",
-                    justifyContent: "space-between",
-                    alignSelf: "center",
-                    marginTop: 5
-                }]}>
-                <Text style={styles.searchText}>
-                    {Strings.search}
-                </Text>
-                <View style={styles.viewPass}>
-                    <Text style={[styles.btnText, {
-                        fontSize: widthPercentageToDP(6),
-                        marginBottom: 6
-                    }]}>
-                        {"|"}
-                    </Text>
-                    <Icon
-                        name="search"
-                        color="#ffff"
-                        size={25}
-                        style={{ marginLeft: 5 }}
-                    />
-                </View>
-            </TouchableOpacity>
-            {/* {!menuResponse || !menuResponse.data ?
-                    <View />
-                    :  */}
-            <FlatList
-                data={data}
-                showsVerticalScrollIndicator={false}
-                contentContainerStyle={{
-                    justifyContent: 'center',
-                    alignItems: 'center',
-                }}
-                style={{
-                    height: '100%',
-                    width: '100%',
-                }}
-                onScrollAnimationEnd={onScrollEnd}
-                onMomentumScrollEnd={onScrollEnd}
-                onScrollEndDrag={onScrollEnd}
-                onViewableItemsChanged={onViewableItemsChanged}
-                keyExtractor={(item, index) => "unique" + index}
-                renderItem={renderItem}
-            />
-            {/* } */}
-
-            <View style={{ height: heightPercentageToDP(7) }} />
-            <Tab
-                homeClick={() => props.navigation.dispatch(HomeAction)}
-                profileClick={() => props.navigation.dispatch(profileAction)}
-                settingClick={() => props.navigation.dispatch(settingAction)}
-                mapClick={() => props.navigation.dispatch(mapAction)}
-                notiClick={() => props.navigation.dispatch(notificationAction)}
-            />
-            {/* <NativeAdView
-                ref={nativeAdViewRef}
-                adUnitID="ca-app-pub-3940256099942544/2247696110"
+            <FastImage
+                source={require('../../Images/BG.png')}
+                resizeMode={FastImage.resizeMode.stretch}
+                style={styles.bgImg2}
             >
+                <TouchableOpacity
+                    onPress={() => props.navigation.navigate("SearchScreen")}
+                    style={[styles.inputView, {
+                        flexDirection: "row",
+                        alignItems: "center",
+                        justifyContent: "space-between",
+                        alignSelf: "center",
+                        marginTop: heightPercentageToDP(5)
+                    }]}>
+                    <Text style={styles.searchText}>
+                        {Strings.search}
+                    </Text>
+                    <View style={styles.viewPass}>
+                        <Text style={[styles.btnText, {
+                            fontSize: widthPercentageToDP(6),
+                            marginBottom: 6
+                        }]}>
+                            {"|"}
+                        </Text>
+                        <Icon
+                            name="search"
+                            color="#ffff"
+                            size={25}
+                            style={{ marginLeft: 5 }}
+                        />
+                    </View>
+                </TouchableOpacity>
 
-            </NativeAdView> */}
+                <FlatList
+                    data={data}
+                    showsVerticalScrollIndicator={false}
+                    contentContainerStyle={{
+                        justifyContent: 'center',
+                        alignItems: 'center',
+                    }}
+                    style={{
+                        height: '100%',
+                        width: '100%',
+                    }}
+                    onScrollAnimationEnd={onScrollEnd}
+                    onMomentumScrollEnd={onScrollEnd}
+                    onScrollEndDrag={onScrollEnd}
+                    onViewableItemsChanged={onViewableItemsChanged}
+                    keyExtractor={(item, index) => "unique" + index}
+                    renderItem={renderItem}
+                />
+                <View style={{ height: heightPercentageToDP(7) }} />
+                <Tab
+                    homeClick={() => props.navigation.dispatch(HomeAction)}
+                    profileClick={() => props.navigation.dispatch(profileAction)}
+                    settingClick={() => props.navigation.dispatch(settingAction)}
+                    mapClick={() => props.navigation.dispatch(mapAction)}
+                    notiClick={() => props.navigation.dispatch(notificationAction)}
+                />
+            </FastImage>
+
+
+
             {isLoading &&
                 <ActivityIndicator
                     size="large"
