@@ -1,4 +1,4 @@
-import { StyleSheet } from 'react-native'
+import { StyleSheet, Platform } from 'react-native'
 import { widthPercentageToDP, heightPercentageToDP } from '../Component/MakeMeResponsive'
 import { blue, lightRed, green, white, black } from '../config/color'
 
@@ -16,7 +16,7 @@ export const styles = StyleSheet.create({
         position: "absolute",
         zIndex: 1000,
         width: "100%",
-        height: "92%",
+        height: Platform.OS === "ios" ? "96%" : "92%",
         bottom: "0%",
         //backgroundColor:"red"
     },

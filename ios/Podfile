@@ -78,8 +78,8 @@ target 'Pecedex' do
   pod 'Folly', :podspec => '../node_modules/react-native/third-party-podspecs/Folly.podspec'
 
   pod 'react-native-splash-screen', :path => '../node_modules/react-native-splash-screen'
-  pod 'react-native-admob', path: '../node_modules/react-native-admob'
-# React Native Maps dependencies
+  # pod 'react-native-admob', path: '../node_modules/react-native-admob'
+  # React Native Maps dependencies
   rn_maps_path = '../node_modules/react-native-maps'
   pod 'react-native-google-maps', :path => rn_maps_path
   pod 'Google-Mobile-Ads-SDK', '~> 7.69.0'
