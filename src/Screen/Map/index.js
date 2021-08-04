@@ -67,49 +67,49 @@ const Map = (props) => {
     }
     const actions = [
         {
-            text: "Pecios",
+            text: Strings.pecios,
             name: "pecios",
             position: 2,
             color: '#207cfc',
         },
         {
-            text: "Mis Inmersiones",
+            text: Strings.Mis_Inmersiones,
             name: "logbook",
             position: 1,
             color: "#58fc1c"
         },
         {
-            text: "Centros de Buceo",
+            text: Strings.Centros_de_Buceo,
             name: "dive_center",
             position: 3,
             color: '#ff2c2c'
         },
         {
-            text: "Puntos de inmersion",
+            text: Strings.Puntos_de_inmersion,
             name: "new_screen",
             position: 4,
             color: '#30fcd4'
         },
         {
-            text: "Género Fácil",
+            text: Strings.genre_easy,
             name: "genre_easy",
             position: 5,
             color: '#d0fc34'
         },
         {
-            text: "Género Medio",
+            text: Strings.genre_medium,
             name: "genre_medium",
             position: 6,
             color: '#fff434'
         },
         {
-            text: "Género Difícil",
+            text: Strings.genre_dificult,
             name: "genre_difficult",
             position: 7,
             color: '#ffa42c'
         },
         {
-            text: "Mostrar todo",
+            text: Strings.show_all,
             name: "show_all",
             position: 7,
             color: '#b82cfc'

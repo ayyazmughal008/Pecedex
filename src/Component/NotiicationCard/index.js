@@ -17,6 +17,7 @@ const Card = (props) => {
                     name="delete"
                     color={white}
                     size={25}
+                    onPress={props.deleteNotifications}
                 />
             </View>
             <FastImage

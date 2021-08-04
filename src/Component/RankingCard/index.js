@@ -79,7 +79,7 @@ const styles = StyleSheet.create({
         color: black,
         fontFamily: "Montserrat-SemiBold",
         position: "absolute",
-        left:"43%",
+        left:"41%",
         top: "6%"
     }
 })

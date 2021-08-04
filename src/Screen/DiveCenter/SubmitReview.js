@@ -34,7 +34,7 @@ const DiveCenter = (props) => {
     }
     const _onSubmit = () => {
         if (!text) {
-            Alert.alert("", "Please write something")
+            Alert.alert("", Strings.Please_write_something)
             return
         }
         getApis(login.data.id, id, rankingValue, text)

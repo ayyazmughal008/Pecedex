@@ -51,6 +51,14 @@ export const styles = StyleSheet.create({
         alignItems: "center",
         marginTop: heightPercentageToDP(1)
     },
+    innerLogView3: {
+        height: heightPercentageToDP(14),
+        width: widthPercentageToDP(70),
+        alignItems: "center",
+        backgroundColor: blue2,
+        flexDirection: "row",
+        marginTop: heightPercentageToDP(1)
+    },
     left: {
         width: "50%",
         height: "100%",
@@ -63,9 +71,29 @@ export const styles = StyleSheet.create({
         height: "100%",
         //backgroundColor:"yellow"
     },
+    left2: {
+        width: "50%",
+        height: "100%",
+        marginLeft: widthPercentageToDP(1),
+        width: "45%",
+        backgroundColor: blue2,
+        borderRadius: widthPercentageToDP(6),
+        flexDirection: "row",
+        alignItems: "center"
+    },
+    right2: {
+        width: "50%",
+        height: "100%",
+        width: "45%",
+        backgroundColor: blue2,
+        borderRadius: widthPercentageToDP(6),
+        flexDirection: "row",
+        alignItems: "center"
+    },
     smallTxt: {
         fontSize: widthPercentageToDP(3.7),
         fontFamily: "Montserrat-SemiBold",
+        fontWeight: "normal"
     },
     weatherBtn: {
         width: widthPercentageToDP(17),
@@ -77,7 +105,7 @@ export const styles = StyleSheet.create({
         alignItems: "center"
     },
     tinyText: {
-        fontSize: widthPercentageToDP(2.5),
+        fontSize: widthPercentageToDP(2.9),
         fontFamily: "Montserrat-SemiBold",
     },
     tinyText2: {
@@ -220,7 +248,7 @@ export const styles = StyleSheet.create({
         paddingLeft: 0
     },
     tinyInput2: {
-        width: "50%",
+        width: "10%",
         height: "80%",
         //backgroundColor: "red",
         paddingTop: 0,
@@ -290,5 +318,10 @@ export const styles = StyleSheet.create({
         alignItems: "center",
         width: widthPercentageToDP(100),
         justifyContent: "space-around"
+    },
+    uploadImageView: {
+        width: "100%",
+        height: heightPercentageToDP(7),
+        //backgroundColor:"red"
     }
 })

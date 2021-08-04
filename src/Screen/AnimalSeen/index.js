@@ -45,7 +45,7 @@ const Map = (props) => {
                 style={styles.top}
                 resizeMode={FastImage.resizeMode.stretch}
             >
-                <Text style={styles.proInfoTile}>{"ANIMAL"}</Text>
+                <Text style={styles.headerTitle}>{Strings.ANIMAL}</Text>
             </FastImage>
             {!Response || !Response.data ?
                 <View />

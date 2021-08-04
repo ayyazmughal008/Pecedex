@@ -8,7 +8,7 @@ import Icon from 'react-native-vector-icons/EvilIcons'
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view'
 import { widthPercentageToDP, heightPercentageToDP } from '../../Component/MakeMeResponsive'
 import Card from '../../Component/HomeCard/'
-import { data } from './data'
+//import { data } from './data'
 import Tab from '../../Component/BottomTab'
 import { HomeAction, profileAction, settingAction, mapAction, notificationAction } from '../../Component/BottomTab/actions'
 import { black } from '../../config/color'
@@ -24,7 +24,28 @@ const Home = (props) => {
     const [isLoading, setIsLoading] = useState(false)
     const [menuResponse, setResponse] = useState('')
     const nativeAdViewRef = useRef();
+    const data = [
+        {
+            id: 1,
+            title: Strings.pecios,
+            animalImg: require('../../Images/8.png')
+        },
+        {
+            id: 1,
+            title: Strings.animals,
+            animalImg: require('../../Images/108.png')
+        },
+        {
+            id: 1,
+            ad: true
+        },
+        {
+            id: 1,
+            title: Strings.logbook,
+            animalImg: require('../../Images/109.png')
+        },
 
+    ]
     React.useEffect(() => {
         nativeAdViewRef.current?.loadAd();
     }, []);
@@ -36,7 +57,7 @@ const Home = (props) => {
         }
     }, [language])
     useEffect(() => {
-        //console.log("My save token is", token)
+        console.log("My save token is", login)
         postTokenApi()
     }, [])
 
@@ -52,14 +73,6 @@ const Home = (props) => {
         await setIsLoading(false)
     }
 
-    /**
-  * [STEP II] We only want to know about the viewable
-  * items when user stops scrolling. So as soon as the
-  * scrolling ends we will send an event to all Ad Items
-  * in the list to check which item is visible currently.
-  *
-  * Go to AdView.js for next steps.
-  */
     const onScrollEnd = React.useCallback(() => {
         DeviceEventEmitter.emit(
             Events.onViewableItemsChanged,
@@ -67,11 +80,6 @@ const Home = (props) => {
         );
     }, []);
 
-    /**
-     * [STEP I] When viewable items change in the list
-     * we want to know what items are visible and store them
-     * in a variable for later us.
-     */
     const onViewableItemsChanged = React.useCallback((e) => {
         viewableItemsChanged = e;
     }, []);
@@ -95,7 +103,7 @@ const Home = (props) => {
                             props.navigation.navigate('Animal')
                         } else if (index == 3) {
                             //props.navigation.navigate('NewScreen')
-                            props.navigation.navigate('LogBook')
+                            props.navigation.navigate('Dive')
                         }
                     }}
                 />

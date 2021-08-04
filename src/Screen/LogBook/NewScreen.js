@@ -12,6 +12,7 @@ import { useDispatch, useSelector } from 'react-redux';
 //import { data } from './data'
 import { SliderBox } from "react-native-image-slider-box";
 import Card from '../../Component/NewCard'
+import Strings from '../../Translation'
 
 const NewScreen = (props) => {
     const dispatch = useDispatch();
@@ -64,19 +65,19 @@ const NewScreen = (props) => {
                     </Text>
                 </View>
                 <Text style={[styles.smallText3, { marginTop: heightPercentageToDP(2) }]}>
-                    {"Profundidad: "}
+                    {Strings.depth}{": "}
                     <Text style={[styles.smallText3, { color: blue }]}>
                         {data.deep}
                     </Text>
                 </Text>
                 <Text style={[styles.smallText3, { padding: 0 }]}>
-                    {"Tipo de inmersion: "}
+                    {Strings.type_of_dives}{": "}
                     <Text style={[styles.smallText3, { color: blue }]}>
                         {data.type}
                     </Text>
                 </Text>
                 <Text style={[styles.smallText3, { marginTop: heightPercentageToDP(2) }]}>
-                    {"Diffcultad:"}
+                    {Strings.difficulty}{":"}
                 </Text>
                 <View style={styles.difficultBarView}>
                     <View style={[styles.barValue, {
@@ -85,7 +86,7 @@ const NewScreen = (props) => {
                         opacity: data.level === 'low' ? 1 : 0.3
                     }]}>
                         <Text style={styles.smallText}>
-                            {"Baja"}
+                            {Strings.short}
                         </Text>
                     </View>
                     <View style={[styles.barValue, {
@@ -94,7 +95,7 @@ const NewScreen = (props) => {
                         opacity: data.level === 'medium' ? 1 : 0.3
                     }]}>
                         <Text style={styles.smallText}>
-                            {"Media"}
+                            {Strings.half}
                         </Text>
                     </View>
                     <View style={[styles.barValue, {
@@ -103,7 +104,7 @@ const NewScreen = (props) => {
                         opacity: data.level === 'high' ? 1 : 0.3
                     }]}>
                         <Text style={styles.smallText}>
-                            {"Alta"}
+                            {Strings.high}
                         </Text>
                     </View>
                 </View>

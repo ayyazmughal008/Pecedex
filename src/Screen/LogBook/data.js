@@ -1,3 +1,4 @@
+import Strings from '../../Translation'
 export const data = {
     heading: [
         {
@@ -160,37 +161,113 @@ export const data = {
     ],
     diveType: [
         {
-            label: "Baptism",
-            value: "Baptism"
+            label: Strings.Baptism,
+            value: Strings.Baptism
         },
         {
-            label: "Diving Course",
-            value: "Diving Course"
+            label: Strings.Diving_Course,
+            value: Strings.Diving_Course
         },
         {
-            label: "Naturalistic Dive",
-            value: "Naturalistic Dive"
+            label: Strings.Naturalistic_Dive,
+            value: Strings.Naturalistic_Dive
         },
         {
-            label: "Wreck Dive",
-            value: "Wreck Dive"
+            label: Strings.Wreck_Dive,
+            value: Strings.Wreck_Dive
         },
         {
-            label: "Cave Dive",
-            value: "Cave Dive"
+            label: Strings.Cave_Dive,
+            value: Strings.Cave_Dive
         },
         {
-            label: "Cold Weather Dive",
-            value: "Cold Weather Dive"
+            label: Strings.Cold_Weather_Dive,
+            value: Strings.Cold_Weather_Dive
         },
         {
-            label: "Night Dive",
-            value: "Night Dive"
+            label: Strings.Night_Dive,
+            value: Strings.Night_Dive
         },
         {
-            label: "Others",
-            value: "Others"
+            label: Strings.Others,
+            value: Strings.Others
         }
 
-    ]
+    ],
+    Type: [
+        {
+            label: "sea",
+            value: "sea"
+        },
+        {
+            label: "river",
+            value: "river"
+        },
+        {
+            label: "other",
+            value: "other"
+        },
+
+    ],
+    Current: [
+        {
+            label: "none",
+            value: "none"
+        },
+        {
+            label: "slight",
+            value: "slight"
+        },
+        {
+            label: "moderate",
+            value: "moderate"
+        },
+        {
+            label: "strong",
+            value: "strong"
+        },
+
+    ],
+    Access: [
+        {
+            label: "coast",
+            value: "coast"
+        },
+        {
+            label: "boat",
+            value: "boat"
+        },
+        {
+            label: "other",
+            value: "other"
+        },
+    ],
+    Material: [
+        {
+            label: "Steel",
+            value: "Steel"
+        },
+        {
+            label: "Aluminum",
+            value: "Aluminum"
+        },
+        {
+            label: "Other",
+            value: "Other"
+        },
+    ],
+    Mix: [
+        {
+            label: "Air",
+            value: "Air"
+        },
+        {
+            label: "Nitrox",
+            value: "Nitrox"
+        },
+        {
+            label: "Trimix Mix",
+            value: "Trimix Mix"
+        },
+    ],
 }

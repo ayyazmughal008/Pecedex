@@ -84,7 +84,11 @@ const Map = (props) => {
                 style={styles.top}
                 resizeMode={FastImage.resizeMode.cover}
             >
-                <Text style={styles.headerTitle}>{"ANIMALS"}</Text>
+                <Text
+                    onPress={() => props.navigation.goBack()}
+                    style={styles.headerTitle}>
+                    {Strings.ANIMAL}
+                </Text>
             </FastImage>
             <FastImage
                 source={require('../../Images/BG.png')}

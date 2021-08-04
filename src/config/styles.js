@@ -1,6 +1,6 @@
 import { StyleSheet, Platform } from 'react-native'
 import { widthPercentageToDP, heightPercentageToDP } from '../Component/MakeMeResponsive'
-import { blue, lightRed, green, white, black } from '../config/color'
+import { blue, lightRed, green, white, black, darkBlue } from '../config/color'
 
 export const styles = StyleSheet.create({
     container: {
@@ -184,7 +184,7 @@ export const styles = StyleSheet.create({
     proInfoTile2: {
         fontSize: widthPercentageToDP(5),
         color: white,
-        fontFamily: "MontserratAlternates-BoldItalic",
+        fontFamily: "Montserrat-SemiBold",
         alignSelf: "center",
         color: blue,
         marginTop: 10
@@ -221,7 +221,7 @@ export const styles = StyleSheet.create({
         alignItems: "center"
     },
     smallText: {
-        fontSize: widthPercentageToDP(3.5),
+        fontSize: widthPercentageToDP(4),
         color: black,
         fontFamily: "Montserrat-SemiBold",
         textAlign: "center",
@@ -298,8 +298,8 @@ export const styles = StyleSheet.create({
         width: widthPercentageToDP(75),
         height: heightPercentageToDP(0.3),
         alignSelf: "center",
-        marginTop: heightPercentageToDP(1),
-        marginBottom: heightPercentageToDP(1)
+        // marginTop: heightPercentageToDP(1),
+        // marginBottom: heightPercentageToDP(1)
     },
     commentView: {
         width: widthPercentageToDP(80),
@@ -308,21 +308,26 @@ export const styles = StyleSheet.create({
         alignItems: "center",
         alignSelf: "center",
         //backgroundColor:"red",
-        marginTop: heightPercentageToDP(1)
+        //marginTop: heightPercentageToDP(1)
     },
     squre: {
         width: widthPercentageToDP(20),
         height: widthPercentageToDP(20),
         borderWidth: widthPercentageToDP(0.5),
-        borderColor: blue
+        borderColor: blue,
+        borderRadius: widthPercentageToDP(2),
+        alignSelf: "center",
+        marginTop: heightPercentageToDP(1)
     },
     diveLogo: {
         width: widthPercentageToDP(20),
         height: heightPercentageToDP(10),
         position: "absolute",
-        top: "4%",
-        right: "5%",
-        borderRadius: widthPercentageToDP(2)
+        top: "1%",
+        right: "1%",
+        borderRadius: widthPercentageToDP(2),
+        borderWidth: widthPercentageToDP(0.2),
+        borderColor: blue
     },
     starView: {
         width: "70%",
@@ -334,7 +339,7 @@ export const styles = StyleSheet.create({
     },
     star: {
         width: "20%",
-        height: "100%"
+        height: "90%"
     },
     commentTxt: {
         fontSize: widthPercentageToDP(4.5),
@@ -412,8 +417,8 @@ export const styles = StyleSheet.create({
     },
     shortcutView: {
         width: widthPercentageToDP(90),
-        height: heightPercentageToDP(15),
-        backgroundColor: blue,
+        flex: 0,
+        backgroundColor: darkBlue,
         borderRadius: widthPercentageToDP(4),
         alignSelf: "center",
         marginTop: heightPercentageToDP(2),
@@ -424,6 +429,43 @@ export const styles = StyleSheet.create({
         fontSize: widthPercentageToDP(3.5),
         fontFamily: "Montserrat-SemiBold",
         color: white,
-        padding: widthPercentageToDP(0.5)
+        padding: widthPercentageToDP(1)
+    },
+    tabBar: {
+        position: 'absolute',
+        right: 0,
+        bottom: 0,
+        left: 0,
+        backgroundColor: 'transparent'
+    },
+    tabsContainer: {
+        flexDirection: 'row',
+        height: 50,
+        paddingTop: 0,
+        paddingBottom: 0,
+        width: widthPercentageToDP(60),
+        alignSelf: "center",
+        //backgroundColor:"red"
+    },
+    socialImages: {
+        width: widthPercentageToDP(10),
+        height: heightPercentageToDP(4),
+    },
+    roundButton: {
+        width: widthPercentageToDP(20),
+        height: widthPercentageToDP(20),
+        borderRadius: widthPercentageToDP(20) / 2,
+        backgroundColor: blue,
+        justifyContent: "center",
+        alignItems: "center",
+        position: "absolute",
+        bottom: "10%",
+        right: "4%",
+        zIndex: 3
+    },
+    plusText: {
+        fontSize: widthPercentageToDP(10),
+        fontFamily: "Montserrat-SemiBold",
+        color: white
     },
 })

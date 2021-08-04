@@ -95,7 +95,7 @@ const DiveCenter = (props) => {
                     resizeMode={FastImage.resizeMode.stretch}
                 />
                 <Text style={styles.commentTxt}>
-                    {count}{" Comentarios"}
+                    {count}{" "}{Strings.Comments}
                 </Text>
                 <Text
                     onPress={() => props.navigation.navigate('SubmitReview', {
@@ -104,7 +104,7 @@ const DiveCenter = (props) => {
                     style={[styles.commentTxt, {
                         textDecorationLine: "underline"
                     }]}>
-                    {"Write Review"}
+                    {Strings.Write_Review}
                 </Text>
             </View>
 

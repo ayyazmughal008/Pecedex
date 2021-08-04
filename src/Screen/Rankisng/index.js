@@ -43,8 +43,8 @@ const Profile = (props) => {
                     style={styles.top2}
                     resizeMode={FastImage.resizeMode.stretch}
                 />
-                <View style={[styles.profileImgView,{
-                    marginTop:heightPercentageToDP(-15)
+                <View style={[styles.profileImgView, {
+                    marginTop: heightPercentageToDP(-15)
                 }]}>
                     {!login.data.image ?
                         <FastImage
@@ -59,14 +59,22 @@ const Profile = (props) => {
                         />
                     }
                 </View>
-                <View style={styles.profileView}>
+                <View style={[styles.profileView,{height:heightPercentageToDP(30)}]}>
                     <Text style={[styles.profileName, { color: black, fontSize: widthPercentageToDP(5), alignSelf: "center" }]}>
-                        {"PUNTUACION"}
+                        {Strings.PUNCTUATION}
                     </Text>
                     <Text style={[styles.profileName, { color: white, fontSize: widthPercentageToDP(5), alignSelf: "center" }]}>
                         {!Response ? "0" : !Response.scoreTotal ? "0" : Response.scoreTotal}
                     </Text>
-                    <View style={[styles.profileInfo, { width: widthPercentageToDP(50), marginTop: 0 }]}>
+                    <View style={{
+                        width: widthPercentageToDP(60),
+                        height: heightPercentageToDP(0.2),
+                        backgroundColor: white,
+                        alignSelf: "center",
+                        margin:heightPercentageToDP(1)
+                    }}
+                    />
+                    <View style={[styles.profileInfo, { width: widthPercentageToDP(50)}]}>
                         <FastImage
                             source={require('../../Images/seaCap.png')}
                             style={{ width: 35, height: 35 }}

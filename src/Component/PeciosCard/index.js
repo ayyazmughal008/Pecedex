@@ -31,8 +31,8 @@ const Card = (props) => {
                         width: widthPercentageToDP(8),
                         height: heightPercentageToDP(4),
                         position: "absolute",
-                        top: "5%",
-                        right: "2%"
+                        bottom:"5%",
+                        right: "5%"
                     }}
                 />
             }
@@ -43,9 +43,9 @@ const Card = (props) => {
 const styles = StyleSheet.create({
     container: {
         width: widthPercentageToDP(90),
-        height: heightPercentageToDP(15),
+        height: heightPercentageToDP(13),
         marginBottom: heightPercentageToDP(3),
-        borderRadius: widthPercentageToDP(5),
+        borderRadius: widthPercentageToDP(7),
         flexDirection: "row",
         alignItems: "center",
         backgroundColor: blue
@@ -64,9 +64,9 @@ const styles = StyleSheet.create({
     },
     img: {
         width: widthPercentageToDP(30),
-        height: heightPercentageToDP(15),
-        borderTopLeftRadius: widthPercentageToDP(5),
-        borderBottomLeftRadius: widthPercentageToDP(5)
+        height: heightPercentageToDP(13),
+        borderTopLeftRadius: widthPercentageToDP(7),
+        borderBottomLeftRadius: widthPercentageToDP(7)
     },
     right: {
         width: "100%",

@@ -127,10 +127,7 @@ const DiveCenter = (props) => {
                         <FastImage
                             source={require('../../Images/129.png')}
                             resizeMode={FastImage.resizeMode.contain}
-                            style={{
-                                width: widthPercentageToDP(11),
-                                height: heightPercentageToDP(5.5),
-                            }}
+                            style={styles.socialImages}
                         />
                     </TouchableOpacity>
                     <TouchableOpacity
@@ -141,10 +138,7 @@ const DiveCenter = (props) => {
                         <FastImage
                             source={require('../../Images/130.png')}
                             resizeMode={FastImage.resizeMode.contain}
-                            style={{
-                                width: widthPercentageToDP(11),
-                                height: heightPercentageToDP(5.5),
-                            }}
+                            style={styles.socialImages}
                         />
                     </TouchableOpacity>
                     <TouchableOpacity
@@ -155,10 +149,7 @@ const DiveCenter = (props) => {
                         <FastImage
                             source={require('../../Images/131.png')}
                             resizeMode={FastImage.resizeMode.contain}
-                            style={{
-                                width: widthPercentageToDP(11),
-                                height: heightPercentageToDP(5.5),
-                            }}
+                            style={styles.socialImages}
                         />
                     </TouchableOpacity>
                     <TouchableOpacity
@@ -169,10 +160,7 @@ const DiveCenter = (props) => {
                         <FastImage
                             source={require('../../Images/132.png')}
                             resizeMode={FastImage.resizeMode.contain}
-                            style={{
-                                width: widthPercentageToDP(11),
-                                height: heightPercentageToDP(5.5),
-                            }}
+                            style={styles.socialImages}
                         />
                     </TouchableOpacity>
                     <TouchableOpacity
@@ -183,31 +171,30 @@ const DiveCenter = (props) => {
                         <FastImage
                             source={require('../../Images/133.png')}
                             resizeMode={FastImage.resizeMode.contain}
-                            style={{
-                                width: widthPercentageToDP(11),
-                                height: heightPercentageToDP(5.5),
-                            }}
+                            style={styles.socialImages}
                         />
                     </TouchableOpacity>
                     <TouchableOpacity
                         onPress={() => {
-                            //shareMessage();
+                            Linking.openURL(info.data.tiktokLink);
                         }}
                     >
                         <FastImage
                             source={require('../../Images/tiktok.png')}
                             resizeMode={FastImage.resizeMode.contain}
-                            style={{
-                                width: widthPercentageToDP(11),
-                                height: heightPercentageToDP(5.5),
-                            }}
+                            style={styles.socialImages}
                         />
                     </TouchableOpacity>
                 </View>
                 <FastImage
                     source={require('../../Images/line.png')}
-                    style={styles.line}
+                    style={[styles.line, { marginTop: heightPercentageToDP(1) }]}
                     resizeMode={FastImage.resizeMode.stretch}
+                />
+                <FastImage
+                    source={{ uri: "http://199.247.13.90/" + info.data.certifier }}
+                    resizeMode={FastImage.resizeMode.contain}
+                    style={styles.squre}
                 />
                 <TouchableOpacity
                     style={styles.commentView}
@@ -219,44 +206,37 @@ const DiveCenter = (props) => {
                         })
                     }}
                 >
-                    <View style={{ flexDirection: "row", alignItems: "center", width: "100%" }}>
-                        <FastImage
-                            source={{ uri: "http://199.247.13.90/" + info.data.certifier }}
-                            resizeMode={FastImage.resizeMode.contain}
-                            style={styles.squre}
-                        />
-                        <View style={styles.starView}>
-                            <View style={{ flexDirection: "row", alignItems: "center", height: "45%", width: "100%", }}>
-                                <FastImage
-                                    source={require('../../Images/star.png')}
-                                    resizeMode={FastImage.resizeMode.contain}
-                                    style={styles.star}
-                                />
-                                <FastImage
-                                    source={require('../../Images/star.png')}
-                                    resizeMode={FastImage.resizeMode.contain}
-                                    style={styles.star}
-                                />
-                                <FastImage
-                                    source={require('../../Images/star.png')}
-                                    resizeMode={FastImage.resizeMode.contain}
-                                    style={styles.star}
-                                />
-                                <FastImage
-                                    source={require('../../Images/star.png')}
-                                    resizeMode={FastImage.resizeMode.contain}
-                                    style={styles.star}
-                                />
-                                <FastImage
-                                    source={require('../../Images/star.png')}
-                                    resizeMode={FastImage.resizeMode.contain}
-                                    style={styles.star}
-                                />
-                            </View>
-                            <Text style={styles.commentTxt}>
-                                {info.data.commentsCount}{" Comentarios"}
-                            </Text>
+                    <View style={[styles.starView, { alignSelf: "center" }]}>
+                        <View style={{ flexDirection: "row", height: "45%", width: "70%", }}>
+                            <FastImage
+                                source={require('../../Images/star.png')}
+                                resizeMode={FastImage.resizeMode.contain}
+                                style={styles.star}
+                            />
+                            <FastImage
+                                source={require('../../Images/star.png')}
+                                resizeMode={FastImage.resizeMode.contain}
+                                style={styles.star}
+                            />
+                            <FastImage
+                                source={require('../../Images/star.png')}
+                                resizeMode={FastImage.resizeMode.contain}
+                                style={styles.star}
+                            />
+                            <FastImage
+                                source={require('../../Images/star.png')}
+                                resizeMode={FastImage.resizeMode.contain}
+                                style={styles.star}
+                            />
+                            <FastImage
+                                source={require('../../Images/star.png')}
+                                resizeMode={FastImage.resizeMode.contain}
+                                style={styles.star}
+                            />
                         </View>
+                        <Text style={styles.commentTxt}>
+                            {info.data.commentsCount}{" "}{Strings.Comments}
+                        </Text>
                     </View>
                 </TouchableOpacity>
                 <FastImage
@@ -265,7 +245,7 @@ const DiveCenter = (props) => {
                     resizeMode={FastImage.resizeMode.stretch}
                 />
                 <Text style={[styles.profileName, { alignSelf: "flex-start", color: blue, marginLeft: widthPercentageToDP(5) }]}>
-                    {"ACTIVIDADES"}
+                    {Strings.ACTIVITIES}
                 </Text>
                 <HTML
                     source={{ html: info.data.activities }}
@@ -284,7 +264,7 @@ const DiveCenter = (props) => {
                 />
                 {/* new liness  */}
                 <Text style={[styles.profileName, { alignSelf: "flex-start", color: blue, marginLeft: widthPercentageToDP(5) }]}>
-                    {"CURSOS DE BUCEO"}
+                    {Strings.DIVING_COURSES}
                 </Text>
                 <HTML
                     source={{ html: info.data.courses }}
@@ -303,7 +283,7 @@ const DiveCenter = (props) => {
                 />
                 {/* new liness  */}
                 <Text style={[styles.profileName, { alignSelf: "flex-start", color: blue, marginLeft: widthPercentageToDP(5) }]}>
-                    {"OTROS SERVICIOS"}
+                    {Strings.OTHER_SERVICES}
                 </Text>
                 <HTML
                     source={{ html: info.data.services }}

@@ -4,7 +4,7 @@ import { styles } from '../../config/styles'
 import FastImage from 'react-native-fast-image'
 import Strings from '../../Translation'
 import { black, blue, green, white } from '../../config/color'
-import { userRegister } from '../../Redux/action'
+import { userRegister, getUserCertificate, getUserDegree } from '../../Redux/action'
 import { useDispatch, useSelector } from 'react-redux';
 import { temLogin } from '../../Redux/action'
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view'
@@ -18,9 +18,13 @@ const Register = (props) => {
     const [name, setName] = useState("")
     const [password, setPassword] = useState("")
     const [certificate, setCertificate] = useState("")
+    const [degree, setDegree] = useState("")
     const [email, setEMail] = useState("")
     const [passVisible, setPassVisible] = useState(true)
     const language = useSelector((state) => state.user.language);
+    const [isLoading, setIsLoading] = useState(false)
+    const [Response, setResponse] = useState('')
+    const [DegreeResponse, setDegreeResponse] = useState('')
     const showPassword = () => {
         setPassVisible(!passVisible)
     }
@@ -42,6 +46,10 @@ const Register = (props) => {
             Alert.alert("", "Por favor ingrese un certificado válido")
             return
         }
+        if (!degree) {
+            Alert.alert("", "Seleccione cualquier título")
+            return
+        }
         if (!validate.test(email)) {
             Alert.alert("", "Por favor, introduce una dirección de correo electrónico válida")
             return
@@ -55,8 +63,24 @@ const Register = (props) => {
             name,
             email,
             password,
-            certificate
+            certificate,
+            degree
         ))
+    }
+    useEffect(() => {
+        getCertificateApi()
+    }, [])
+    const getCertificateApi = async () => {
+        setIsLoading(true)
+        let menuData = await getUserCertificate()
+        await setResponse(menuData)
+        await setIsLoading(false)
+    }
+    const getDegreeApi = async (id) => {
+        setIsLoading(true)
+        let menuData = await getUserDegree(id)
+        await setDegreeResponse(menuData)
+        await setIsLoading(false)
     }
 
     return (
@@ -68,7 +92,9 @@ const Register = (props) => {
             >
                 <View style={{ flex: 1 }}>
                     <KeyboardAwareScrollView contentContainerStyle={{ flexGrow: 1 }}>
-                        <View style={styles.loginView}>
+                        <View style={[styles.loginView, {
+                            height: heightPercentageToDP(45),
+                        }]}>
                             <Text style={[styles.loginTitle, { margin: 10, alignSelf: "center" }]}>
                                 {Strings.Signup}
                             </Text>
@@ -83,28 +109,78 @@ const Register = (props) => {
                                 />
                             </View>
                             <View style={styles.inputDropdownView}>
-                                {/* <TextInput
-                                placeholder={Strings.certificate}
-                                placeholderTextColor="#ffff"
-                                style={styles.input}
-                                onChangeText={text => setCertificate(text)}
-                                keyboardType="email-address"
-                                autoCapitalize="none"
-                            /> */}
-                                <RNPickerSelect
-                                    placeholder={{
-                                        label: Strings.certificate,
-                                        value: null,
-                                        color: "#000"
-                                    }}
-                                    value={certificate}
-                                    style={pickerStyle}
-                                    onValueChange={value => {
-                                        setCertificate(value)
-                                    }}
-                                    items={[{ label: "value", value: "value" }]}
-                                />
+                                {!Response || !Response.data.length ?
+                                    <RNPickerSelect
+                                        placeholder={{
+                                            label: Strings.certificate,
+                                            value: null,
+                                            color: "#000"
+                                        }}
+                                        value={certificate}
+                                        style={pickerStyle}
+                                        onValueChange={value => {
+                                            setCertificate(value)
+                                        }}
+                                        items={[{ label: "value", value: "value" }]}
+                                    />
+                                    : <RNPickerSelect
+                                        placeholder={{
+                                            label: Strings.certificate,
+                                            value: null,
+                                            color: "#000"
+                                        }}
+                                        value={certificate}
+                                        style={pickerStyle}
+                                        onValueChange={(value, id) => {
+                                            setCertificate(value);
+                                            getDegreeApi(id);
+                                        }}
+                                        items={Response.data}
+                                    />}
                             </View>
+                            {!certificate ?
+                                <View />
+                                : certificate === "Others" ?
+                                    <View style={styles.inputDropdownView}>
+                                        <TextInput
+                                            placeholder={"Degree"}
+                                            placeholderTextColor="#ffff"
+                                            style={styles.input}
+                                            onChangeText={text => setDegree(text)}
+                                            keyboardType="email-address"
+                                            autoCapitalize="none"
+                                        />
+                                    </View>
+                                    : <View style={styles.inputDropdownView}>
+                                        {!DegreeResponse || !DegreeResponse.data.length ?
+                                            <RNPickerSelect
+                                                placeholder={{
+                                                    label: "Degree",
+                                                    value: null,
+                                                    color: "#000"
+                                                }}
+                                                value={degree}
+                                                style={pickerStyle}
+                                                onValueChange={value => {
+                                                    setDegree(value)
+                                                }}
+                                                items={[{ label: "value", value: "value" }]}
+                                            />
+                                            : <RNPickerSelect
+                                                placeholder={{
+                                                    label: "Degree",
+                                                    value: null,
+                                                    color: "#000"
+                                                }}
+                                                value={degree}
+                                                style={pickerStyle}
+                                                onValueChange={value => {
+                                                    setDegree(value)
+                                                }}
+                                                items={DegreeResponse.data}
+                                            />}
+                                    </View>
+                            }
                             <View style={styles.inputView}>
                                 <TextInput
                                     placeholder={Strings.email}
@@ -174,7 +250,14 @@ const Register = (props) => {
                 </View>
                 {AuthLoading &&
                     <ActivityIndicator
-                        size="small"
+                        size="large"
+                        color={black}
+                        style={styles.loading}
+                    />
+                }
+                {isLoading &&
+                    <ActivityIndicator
+                        size="large"
                         color={black}
                         style={styles.loading}
                     />

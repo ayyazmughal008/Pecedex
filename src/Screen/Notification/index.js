@@ -10,7 +10,7 @@ import { HomeAction, profileAction, settingAction, mapAction, notificationAction
 import Strings from '../../Translation'
 import { useSelector, useDispatch } from 'react-redux';
 import { black } from '../../config/color'
-import { userNotification } from '../../Redux/action'
+import { userNotification, deleteUserNotification } from '../../Redux/action'
 
 const Notification = (props) => {
     const dispatch = useDispatch();
@@ -36,6 +36,12 @@ const Notification = (props) => {
         await setResponse(data)
         await setIsLoading(false)
     }
+    const deleteNotiApi = async (id) => {
+        setIsLoading(true)
+        const data = await deleteUserNotification(login.data.id, id)
+        await setResponse(data)
+        await setIsLoading(false)
+    }
 
     return (
         <SafeAreaView style={styles.container}>
@@ -57,6 +63,7 @@ const Notification = (props) => {
                                 title={item.title}
                                 description={item.description}
                                 date={item.created_at}
+                                deleteNotifications={() => deleteNotiApi(item.id)}
                             />
                         )
                     }}

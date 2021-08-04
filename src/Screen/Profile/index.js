@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react'
-import { SafeAreaView, View, Text, FlatList, TouchableOpacity, ActivityIndicator, PermissionsAndroid } from 'react-native'
+import { SafeAreaView, View, Text, FlatList, TouchableOpacity, ActivityIndicator, PermissionsAndroid, Alert } from 'react-native'
 import { styles } from '../../config/styles'
 import FastImage from 'react-native-fast-image'
 import { black, blue, white } from '../../config/color'
@@ -7,10 +7,11 @@ import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view
 import { heightPercentageToDP, widthPercentageToDP } from '../../Component/MakeMeResponsive'
 import { HomeAction, profileAction, settingAction, mapAction, notificationAction } from '../../Component/BottomTab/actions'
 import Tab from '../../Component/BottomTab'
+import UpdateCert from './UpdateCertificate'
 import { useSelector, useDispatch } from 'react-redux';
 import Feather from 'react-native-vector-icons/Feather'
 import ImagePicker from 'react-native-image-crop-picker';
-import { postProfileImg, getSeenCount } from '../../Redux/action'
+import { postProfileImg, getSeenCount, getUserCertificate, getUserDegree, updateDegrees } from '../../Redux/action'
 import Picker from './Picker'
 import Strings from '../../Translation'
 
@@ -20,7 +21,12 @@ const Profile = (props) => {
     const AuthLoading = useSelector((state) => state.user.AuthLoading);
     const [isLoading, setIsLoading] = useState(false)
     const [pickerOption, setOption] = useState(false)
+    const [isDialogOpen, setIsDialogOpen] = useState(false)
     const [Response, setResponse] = useState('')
+    const [certificateResponse, setCertificateResponse] = useState('')
+    const [DegreeResponse, setDegreeResponse] = useState('')
+    const [certificate, setCertificate] = useState('')
+    const [degree, setDegree] = useState('')
     const language = useSelector((state) => state.user.language);
     useEffect(() => {
         if (!language) {
@@ -97,16 +103,34 @@ const Profile = (props) => {
     const toggleOption = () => {
         setOption(!pickerOption)
     }
+    const toggleCertificate = () => {
+        setIsDialogOpen(!isDialogOpen)
+    }
+    useEffect(() => {
+        getCertificateApi()
+    }, [])
+    const getCertificateApi = async () => {
+        setIsLoading(true)
+        let menuData = await getUserCertificate()
+        await setCertificateResponse(menuData)
+        await setIsLoading(false)
+    }
+    const getDegreeApi = async (id) => {
+        setIsLoading(true)
+        let menuData = await getUserDegree(id)
+        await setDegreeResponse(menuData)
+        await setIsLoading(false)
+    }
     return (
-        <SafeAreaView style={[styles.container,{alignItems:"center"}]}>
-            <KeyboardAwareScrollView>
+        <SafeAreaView style={[styles.container, { alignItems: "center" }]}>
+            <KeyboardAwareScrollView contentContainerStyle={{ flexGrow: 1, alignItems: "center" }}>
                 <FastImage
                     source={require('../../Images/22.png')}
                     style={styles.top2}
                     resizeMode={FastImage.resizeMode.stretch}
                 />
-                <View style={[styles.profileImgView,{
-                    marginTop:heightPercentageToDP(-14)
+                <View style={[styles.profileImgView, {
+                    marginTop: heightPercentageToDP(-14)
                 }]}>
                     {!login.data.image ?
                         <FastImage
@@ -137,24 +161,47 @@ const Profile = (props) => {
                         />
                     </TouchableOpacity>
                 </View>
-                <View style={styles.profileView}>
+                <View style={[styles.profileView,{
+                    height: heightPercentageToDP(30),
+                }]}>
+                    <TouchableOpacity
+                        onPress={() => {
+                            toggleCertificate()
+                        }}
+                        style={{
+                            position: "absolute",
+                            right: "4%",
+                            top: "18%",
+                            zIndex:3
+                        }}
+                    >
+                        <Feather
+                            name="edit"
+                            color={white}
+                            size={25}
+                        />
+                    </TouchableOpacity>
                     <Text style={styles.profileName}>
                         {login.data.name}
                     </Text>
-                    <Text style={styles.btnText}>
-                        {"PADI advance Open Water Diver"}
+                    <Text style={[styles.btnText, {
+                        paddingLeft: widthPercentageToDP(4),
+                        paddingRight: widthPercentageToDP(10),
+                        textAlign:"center"
+                    }]}>
+                        {login.data.certificate}{" "}{login.data.degree}
                     </Text>
                     <View style={styles.profileInfo}>
                         <FastImage
                             source={require('../../Images/seaCap.png')}
                             style={{ width: 35, height: 35 }}
-                            resizeMode={FastImage.resizeMode.cover}
+                            resizeMode={FastImage.resizeMode.contain}
                         />
                         <Text
                             style={styles.proInfoTile}
                             onPress={() => props.navigation.navigate('Dive')}
                         >
-                            {!Response ? "0 Inmersiones" : !Response.divesTotal ? "" : Response.divesTotal + " Inmersiones"}
+                            {!Response ? "0 " + Strings.dives : Response.divesTotal + " " + Strings.dives}
                         </Text>
                     </View>
                     <View style={styles.profileInfo}>
@@ -168,12 +215,12 @@ const Profile = (props) => {
                                 style={styles.proInfoTile}
                             //onPress={() => props.navigation.navigate('AnimalSeen')} 
                             >
-                                {"0 / 0 animal vistos"}
+                                {"0 / 0 "}{Strings.animal_vistos}
                             </Text>
                             : <Text
                                 style={styles.proInfoTile}
                                 onPress={() => props.navigation.navigate('AnimalSeen')} >
-                                {Response.genresCount}{" / "}{Response.genresCountTotal}{" animal vistos"}
+                                {Response.genresCount}{" / "}{Response.genresCountTotal}{" "} {Strings.animal_vistos}
                             </Text>}
                     </View>
                     <View style={styles.profileInfo}>
@@ -187,14 +234,14 @@ const Profile = (props) => {
                                 style={styles.proInfoTile}
                             //onPress={() => props.navigation.navigate('Pecios')}
                             >
-                                {"0 / 0 pecios vistos"}
+                                {"0 / 0 "}{Strings.pecios_vistos}
                             </Text>
                             : <Text
                                 style={styles.proInfoTile}
                                 onPress={() => props.navigation.navigate('Pecios', {
                                     isSeen: true
                                 })}>
-                                {Response.peciosCount}{" / "}{Response.peciosCountTotal}{" pecios vistos"}
+                                {Response.peciosCount}{" / "}{Response.peciosCountTotal}{" "}{Strings.pecios_vistos}
                             </Text>
                         }
                     </View>
@@ -205,7 +252,7 @@ const Profile = (props) => {
                     style={styles.line}
                 />
                 <Text style={[styles.profileName, { color: black, fontSize: widthPercentageToDP(4.5), alignSelf: "center" }]}>
-                    {"PUNTUACION"}
+                    {Strings.PUNCTUATION}
                 </Text>
                 {!Response ?
                     <Text
@@ -228,16 +275,18 @@ const Profile = (props) => {
                 />
                 <Text style={[styles.profileName, {
                     color: blue,
-                    marginLeft: widthPercentageToDP(5)
+                    alignSelf: "flex-start",
+                    marginLeft: widthPercentageToDP(8)
                 }]}>
-                    {"PHOTOS"}
+                    {Strings.PHOTOS}
                 </Text>
                 {!Response || !Response.photos.length ?
                     <View />
                     : <FlatList
                         data={Response.photos}
                         showsVerticalScrollIndicator={false}
-                        style={{ marginTop: 10 }}
+                        style={{ marginTop: 10, width: widthPercentageToDP(85) }}
+                        //contentContainerStyle={{ alignItems: "center" }}
                         numColumns={3}
                         keyExtractor={(item, index) => "unique" + index}
                         renderItem={({ item, index }) => {
@@ -301,6 +350,31 @@ const Profile = (props) => {
                     }}
                     title="Seleccione la opción para la foto de perfil"
                     closeBox={() => toggleOption()}
+                />
+            }
+            {isDialogOpen &&
+                <UpdateCert
+                    isDialogOpen={isDialogOpen}
+                    closeBox2={() => toggleCertificate()}
+                    certificateResponse={certificateResponse}
+                    certificate={certificate}
+                    setCertificate={(value, id) => {
+                        setCertificate(value);
+                        getDegreeApi(id);
+                    }}
+                    DegreeResponse={DegreeResponse}
+                    degree={degree}
+                    setDegree={value => {
+                        setDegree(value)
+                    }}
+                    updateCertDegree={() => {
+                        if (!degree) {
+                            Alert.alert("", "Seleccione cualquier título")
+                            return
+                        }
+                        toggleCertificate();
+                        dispatch(updateDegrees(login.data.id, certificate, degree));
+                    }}
                 />
             }
         </SafeAreaView>

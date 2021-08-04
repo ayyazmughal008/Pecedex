@@ -49,6 +49,10 @@ const baseUrl = "http://199.247.13.90/api/",
     getScore = 'get-score',
     updateDive = 'update-dive',
     setLanguages = 'set-language',
+    getCertificates = 'get-certificates',
+    getDegrees = 'get-degrees',
+    deleteNotification = 'delete-notification',
+    updateCertificateDegree = 'update-certificate-degree',
     register = 'register';
 
 const country_url = "https://countriesnow.space/api/v0.1/countries/positions"
@@ -126,7 +130,7 @@ export const userLogin = (username, password) => {
             })
     };
 }
-export const userRegister = (name, email, password, certificate) => {
+export const userRegister = (name, email, password, certificate, degree) => {
     return dispatch => {
         dispatch({ type: AUTH_LOADING, payload: true });
         fetch(baseUrl + register, {
@@ -139,7 +143,8 @@ export const userRegister = (name, email, password, certificate) => {
                 name: name,
                 email: email,
                 password: password,
-                certificate: certificate
+                certificate: certificate,
+                degree: degree
             })
         })
             .then(res => res.json())
@@ -1512,7 +1517,7 @@ export const getUserScore = async (userId) => {
     return api
 }
 export const sendUserLanguage = async (userId, lang) => {
-    console.log(userId)
+    console.log("my current language is", lang)
     let api
     try {
         api = await fetch(baseUrl + setLanguages, {
@@ -1533,6 +1538,133 @@ export const sendUserLanguage = async (userId, lang) => {
                     Alert.alert("", json.message)
                 } else {
                     Alert.alert("", json.message)
+                }
+            })
+            .catch(error => {
+                console.log("response error ===>", error)
+            })
+    } catch (error) {
+        console.log('my error' + error.message);
+    }
+    return api
+}
+export const getUserCertificate = async () => {
+    let api
+    try {
+        api = await fetch(baseUrl + getCertificates, {
+            method: 'POST',
+            headers: {
+                'Accept': 'application/json',
+                "Content-type": "application/json",
+            },
+        })
+            .then(res => res.json())
+            .then(json => {
+                if (json.status == 200) {
+                    console.log(json)
+                    return json;
+                } else {
+                    console.log(json)
+                }
+            })
+            .catch(error => {
+                console.log("response error ===>", error)
+            })
+    } catch (error) {
+        console.log('my error' + error.message);
+    }
+    return api
+}
+export const getUserDegree = async (characterId) => {
+    let api
+    try {
+        api = await fetch(baseUrl + getDegrees, {
+            method: 'POST',
+            headers: {
+                'Accept': 'application/json',
+                "Content-type": "application/json",
+            },
+            body: JSON.stringify({
+                characterId: characterId
+            })
+        })
+            .then(res => res.json())
+            .then(json => {
+                if (json.status == 200) {
+                    console.log(json)
+                    return json;
+                } else {
+                    console.log(json)
+                }
+            })
+            .catch(error => {
+                console.log("response error ===>", error)
+            })
+    } catch (error) {
+        console.log('my error' + error.message);
+    }
+    return api
+}
+export const updateDegrees = (userId, certificate, degree) => {
+    return dispatch => {
+        dispatch({ type: AUTH_LOADING, payload: true });
+        fetch(baseUrl + updateCertificateDegree, {
+            method: 'POST',
+            headers: {
+                'Accept': 'application/json',
+                "Content-type": "application/json",
+            },
+            body: JSON.stringify({
+                userId: userId,
+                certificate: certificate,
+                degree: degree,
+            })
+        })
+            .then(res => res.json())
+            .then(json => {
+                dispatch({ type: AUTH_LOADING, payload: false });
+                console.log(json)
+                if (json.status == 200) {
+                    dispatch({
+                        type: USER_LOGIN,
+                        payload: {
+                            login: json
+                        }
+                    })
+                } else if (json.status == 401) {
+                    Alert.alert("", json.message)
+                } else {
+                    Alert.alert("", json.message)
+                }
+
+            })
+            .catch(error => {
+                dispatch({ type: AUTH_LOADING, payload: false });
+                console.log(error)
+            })
+    };
+}
+export const deleteUserNotification = async (userId, notificationId) => {
+    let api
+    try {
+        api = await fetch(baseUrl + deleteNotification, {
+            method: 'POST',
+            headers: {
+                'Accept': 'application/json',
+                "Content-type": "application/json",
+            },
+            body: JSON.stringify({
+                userId: userId,
+                notificationId: notificationId
+            })
+        })
+            .then(res => res.json())
+            .then(json => {
+                if (json.status == 200) {
+                    console.log(json)
+                    return json;
+                } else {
+                    console.log(json)
                 }
             })
             .catch(error => {

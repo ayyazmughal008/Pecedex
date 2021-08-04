@@ -15,7 +15,7 @@ import { useSelector, useDispatch } from 'react-redux';
 import Picker from '../Profile/Picker'
 import Strings from '../../Translation'
 import { media } from './data'
-import Carousel from 'react-native-snap-carousel';
+import Carousel, { Pagination } from 'react-native-snap-carousel';
 const SLIDER_WIDTH = Dimensions.get('window').width;
 const { width } = Dimensions.get('window');
 import Video from 'react-native-video'
@@ -48,7 +48,12 @@ const GenreDetail = (props) => {
     }
     const _renderItem = (({ item, index }) => {
         return (
-            <View style={{ alignItems: "center", marginRight: widthPercentageToDP(1), marginTop: heightPercentageToDP(1) }}>
+            <View style={{
+                width: widthPercentageToDP(40),
+                alignItems: "center",
+                marginTop: heightPercentageToDP(2),
+                flexDirection: "row"
+            }}>
                 <FastImage
                     source={{ uri: item.image }}
                     resizeMode={FastImage.resizeMode.contain}
@@ -57,7 +62,7 @@ const GenreDetail = (props) => {
                         height: heightPercentageToDP(5),
                     }}
                 />
-                <Text style={[styles.smallText, { flex: 1, flexWrap: 'wrap', marginTop: 5 }]}>
+                <Text style={[styles.smallText, { flex: 0, flexWrap: 'wrap', }]}>
                     {item.text}
                 </Text>
 
@@ -196,26 +201,6 @@ const GenreDetail = (props) => {
                     width: "100%",
                     height: heightPercentageToDP(35),
                 }}>
-                    {/* <SliderBox
-                        ImageComponent={FastImage}
-                        images={data.images}
-                        sliderBoxHeight={heightPercentageToDP(35)}
-                        onCurrentImagePressed={index => console.warn(`image ${index} pressed`)}
-                        dotColor={blue}
-                        // ImageComponentStyle={{
-                        //     opacity: 0.8,
-                        //     backgroundColor: 'rgba(52, 52, 52, 0.8)',
-                        // }}
-                        inactiveDotColor={white}
-                        dotStyle={{
-                            width: 13,
-                            height: 13,
-                            borderRadius: 13,
-                            marginHorizontal: -7,
-                            padding: 0,
-                            margin: 0
-                        }}
-                    /> */}
                     <Carousel
                         layout={'default'}
                         data={data.media}
@@ -238,9 +223,33 @@ const GenreDetail = (props) => {
                             style={{ width: widthPercentageToDP(8), height: widthPercentageToDP(8) }}
                         />
                     </TouchableOpacity>
+                    <View style={styles.tabBar}>
+                        <Pagination
+                            containerStyle={styles.tabsContainer}
+                            renderDots={activeIndex => (
+                                data.media.map((screen, i) => (
+                                    <View
+                                        style={{ flex: 1, alignItems: 'center' }}
+                                        key={i}>
+                                        <View
+                                            style={{
+                                                width: widthPercentageToDP(3),
+                                                height: widthPercentageToDP(3),
+                                                borderRadius: widthPercentageToDP(3) / 2,
+                                                backgroundColor: activeIndex === i ? blue : white,
+                                                marginHorizontal: widthPercentageToDP(-4)
+                                            }}
+                                        />
+                                    </View>
+                                ))
+                            )}
+                            activeDotIndex={activeSlid}
+                            dotsLength={data.media.length}
+                        />
+                    </View>
                 </View>
                 <View style={styles.shareView}>
-                    <View style={{ width: "45%", height: "100%", justifyContent: "center" }}>
+                    <View style={{ width: "45%", height: "100%", flexDirection: "row", alignItems: "center" }}>
                         <TouchableOpacity
                             onPress={() => {
                                 getApis()
@@ -251,13 +260,22 @@ const GenreDetail = (props) => {
                                 resizeMode={FastImage.resizeMode.stretch}
                                 style={{
                                     width: widthPercentageToDP(14),
-                                    height: heightPercentageToDP(5.5),
-                                    marginLeft:widthPercentageToDP(3)
+                                    height: heightPercentageToDP(5),
+                                    marginLeft: widthPercentageToDP(3)
                                 }}
                             />
                         </TouchableOpacity>
+                        <FastImage
+                            source={require('../../Images/eye2.png')}
+                            resizeMode={FastImage.resizeMode.contain}
+                            style={{
+                                width: widthPercentageToDP(10),
+                                height: widthPercentageToDP(10),
+                                marginLeft: widthPercentageToDP(5)
+                            }}
+                        />
                     </View>
-                    <View style={{ width: "40%", height: "100%", alignItems: "center", justifyContent: "space-between", flexDirection: "row" }}>
+                    <View style={{ width: "48%", height: "100%", alignItems: "center", justifyContent: "space-between", flexDirection: "row" }}>
                         <TouchableOpacity
                             onPress={() => {
                                 Linking.openURL(data.videoLink);
@@ -301,7 +319,9 @@ const GenreDetail = (props) => {
                 <Text style={styles.proInfoTile2}>
                     {data.title}
                 </Text>
-                <Text style={styles.smallText}>
+                <Text style={[styles.smallText, {
+                    fontFamily: "MontserratAlternates-BoldItalic"
+                }]}>
                     {data.description}
                 </Text>
                 <View style={{
@@ -355,8 +375,9 @@ const GenreDetail = (props) => {
                 />
                 <FlatList
                     data={data.icons}
-                    numColumns={4}
-                    contentContainerStyle={{ marginTop: heightPercentageToDP(1) }}
+                    numColumns={2}
+                    contentContainerStyle={{ marginTop: heightPercentageToDP(1), alignItems: "center" }}
+                    style={{ width: widthPercentageToDP(80) }}
                     showsVerticalScrollIndicator={false}
                     keyExtractor={(item, index) => "unique" + index}
                     renderItem={_renderItem}

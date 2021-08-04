@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react'
-import { SafeAreaView, View, Text, FlatList, ActivityIndicator } from 'react-native'
+import { SafeAreaView, View, Text, FlatList, ActivityIndicator, TouchableOpacity } from 'react-native'
 import { styles } from '../../config/styles'
 import FastImage from 'react-native-fast-image'
 import Card from '../../Component/DiveCard'
@@ -38,7 +38,7 @@ const Dive = (props) => {
     }
 
     return (
-        <SafeAreaView style={styles.container}>
+        <SafeAreaView style={[styles.container, { alignItems: "center" }]}>
             <FastImage
                 source={require('../../Images/top.png')}
                 style={styles.top}
@@ -64,6 +64,13 @@ const Dive = (props) => {
                         )
                     }}
                 />}
+            <TouchableOpacity
+                onPress={() => { props.navigation.navigate('LogBook') }}
+                style={styles.roundButton}>
+                <Text style={styles.plusText}>
+                    {"+"}
+                </Text>
+            </TouchableOpacity>
             <View style={{ height: heightPercentageToDP(7) }} />
             <Tab
                 homeClick={() => props.navigation.dispatch(HomeAction)}

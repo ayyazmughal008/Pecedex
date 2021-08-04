@@ -91,7 +91,11 @@ const Category = (props) => {
                     style={styles.top}
                     resizeMode={FastImage.resizeMode.cover}
                 >
-                    <Text style={styles.headerTitle}>{!Response ? "" : !Response.headerTitle ? "" : Response.headerTitle}</Text>
+                    <Text
+                        onPress={() => props.navigation.goBack()}
+                        style={styles.headerTitle}>
+                        {!Response ? "" : !Response.headerTitle ? "" : Response.headerTitle}
+                    </Text>
                 </FastImage>
 
             }

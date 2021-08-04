@@ -2,7 +2,7 @@ import React from 'react'
 import { View, TouchableOpacity, Text, TextInput, StyleSheet } from 'react-native'
 import { widthPercentageToDP, heightPercentageToDP } from '../MakeMeResponsive'
 import FastImage from 'react-native-fast-image'
-
+import Strings from '../../Translation'
 const SurveyItems = (props) => {
 
     return (
@@ -115,7 +115,7 @@ const SurveyItems = (props) => {
                 </TouchableOpacity>
             </View>
             <TextInput
-                placeholder="Please write your review"
+                placeholder={Strings.Please_write_your_review}
                 placeholderTextColor="#000"
                 style={styles.input}
                 numberOfLines={5}
