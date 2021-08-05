@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react'
-import { SafeAreaView, View, Text, FlatList, TouchableOpacity, Linking, ActivityIndicator, PermissionsAndroid, Dimensions } from 'react-native'
+import { SafeAreaView, View, Text, FlatList, TouchableOpacity, Linking, ActivityIndicator, PermissionsAndroid, Dimensions, ScrollView, Alert } from 'react-native'
 import { styles } from '../../config/styles'
 import FastImage from 'react-native-fast-image'
 import { widthPercentageToDP, heightPercentageToDP } from '../../Component/MakeMeResponsive'
@@ -29,6 +29,7 @@ const GenreDetail = (props) => {
     const AuthLoading = useSelector((state) => state.user.AuthLoading);
     const [pickerOption, setOption] = useState(false)
     const [isLoading, setIsLoading] = useState(false)
+    const [Response, setResponse] = useState(false)
     const [isStart, setSTart] = useState(false)
     const [activeSlid, setActiveSlid] = useState(0);
     useEffect(() => {
@@ -41,9 +42,13 @@ const GenreDetail = (props) => {
             Strings.setLanguage(language)
         }
     }, [language])
-    const getApis = async () => {
+    useEffect(() => {
+        getApis("yes")
+    }, [])
+    const getApis = async (value) => {
         setIsLoading(true)
-        await postGenerSeen(data.id, login.data.id)
+        let seenData = await postGenerSeen(data.id, login.data.id, value)
+        await setResponse(seenData)
         await setIsLoading(false)
     }
     const _renderItem = (({ item, index }) => {
@@ -52,7 +57,10 @@ const GenreDetail = (props) => {
                 width: widthPercentageToDP(40),
                 alignItems: "center",
                 marginTop: heightPercentageToDP(2),
-                flexDirection: "row"
+                flexDirection: "row",
+                //backgroundColor: "red",
+                marginRight: widthPercentageToDP(2),
+                justifyContent:"center"
             }}>
                 <FastImage
                     source={{ uri: item.image }}
@@ -62,7 +70,7 @@ const GenreDetail = (props) => {
                         height: heightPercentageToDP(5),
                     }}
                 />
-                <Text style={[styles.smallText, { flex: 0, flexWrap: 'wrap', }]}>
+                <Text style={[styles.smallText, { flex: 0, flexWrap: 'wrap', marginLeft: widthPercentageToDP(5) }]}>
                     {item.text}
                 </Text>
 
@@ -158,7 +166,7 @@ const GenreDetail = (props) => {
                 <FastImage
                     source={{ uri: item.url }}
                     style={{ width: "100%", height: "100%", }}
-                    resizeMode={FastImage.resizeMode.cover}
+                    resizeMode={FastImage.resizeMode.stretch}
                 />
             )
         } else {
@@ -199,7 +207,7 @@ const GenreDetail = (props) => {
             <KeyboardAwareScrollView contentContainerStyle={{ alignItems: "center" }}>
                 <View style={{
                     width: "100%",
-                    height: heightPercentageToDP(35),
+                    height: heightPercentageToDP(39),
                 }}>
                     <Carousel
                         layout={'default'}
@@ -225,7 +233,13 @@ const GenreDetail = (props) => {
                     </TouchableOpacity>
                     <View style={styles.tabBar}>
                         <Pagination
-                            containerStyle={styles.tabsContainer}
+                            containerStyle={[styles.tabsContainer, {
+                                width: data.media.length < 4 ?
+                                    widthPercentageToDP(10)
+                                    : data.media.length < 10 ?
+                                        widthPercentageToDP(30)
+                                        : widthPercentageToDP(60)
+                            }]}
                             renderDots={activeIndex => (
                                 data.media.map((screen, i) => (
                                     <View
@@ -250,11 +264,7 @@ const GenreDetail = (props) => {
                 </View>
                 <View style={styles.shareView}>
                     <View style={{ width: "45%", height: "100%", flexDirection: "row", alignItems: "center" }}>
-                        <TouchableOpacity
-                            onPress={() => {
-                                getApis()
-                            }}
-                            style={styles.shareButton}>
+                        {!Response ?
                             <FastImage
                                 source={require('../../Images/85.png')}
                                 resizeMode={FastImage.resizeMode.stretch}
@@ -264,16 +274,23 @@ const GenreDetail = (props) => {
                                     marginLeft: widthPercentageToDP(3)
                                 }}
                             />
-                        </TouchableOpacity>
-                        <FastImage
-                            source={require('../../Images/eye2.png')}
-                            resizeMode={FastImage.resizeMode.contain}
-                            style={{
-                                width: widthPercentageToDP(10),
-                                height: widthPercentageToDP(10),
-                                marginLeft: widthPercentageToDP(5)
-                            }}
-                        />
+                            : <TouchableOpacity
+                                onPress={() => {
+                                    getApis("no")
+                                }}
+                                style={styles.shareButton}>
+                                <FastImage
+                                    source={Response.seen === 'yes' ?
+                                        require('../../Images/85.png')
+                                        : require('../../Images/camera.png')}
+                                    resizeMode={FastImage.resizeMode.stretch}
+                                    style={{
+                                        width: widthPercentageToDP(14),
+                                        height: heightPercentageToDP(5),
+                                        marginLeft: widthPercentageToDP(3)
+                                    }}
+                                />
+                            </TouchableOpacity>}
                     </View>
                     <View style={{ width: "48%", height: "100%", alignItems: "center", justifyContent: "space-between", flexDirection: "row" }}>
                         <TouchableOpacity
@@ -325,48 +342,36 @@ const GenreDetail = (props) => {
                     {data.description}
                 </Text>
                 <View style={{
-                    alignSelf: "center", width: widthPercentageToDP(80), flexDirection: "row", alignItems: "center", justifyContent: "space-around"
+                    width: "80%",
+                    height: heightPercentageToDP(4),
+                    marginTop: heightPercentageToDP(1)
+                    //backgroundColor:"red"
                 }}>
-                    <FastImage
-                        source={require('../../Images/139.png')}
-                        resizeMode={FastImage.resizeMode.contain}
-                        style={{
-                            width: widthPercentageToDP(8),
-                            height: heightPercentageToDP(4),
-                        }}
-                    />
-                    <FastImage
-                        source={require('../../Images/140.png')}
-                        resizeMode={FastImage.resizeMode.contain}
-                        style={{
-                            width: widthPercentageToDP(8),
-                            height: heightPercentageToDP(4),
-                        }}
-                    />
-                    <FastImage
-                        source={require('../../Images/141.png')}
-                        resizeMode={FastImage.resizeMode.contain}
-                        style={{
-                            width: widthPercentageToDP(8),
-                            height: heightPercentageToDP(4),
-                        }}
-                    />
-                    <FastImage
-                        source={require('../../Images/142.png')}
-                        resizeMode={FastImage.resizeMode.contain}
-                        style={{
-                            width: widthPercentageToDP(8),
-                            height: heightPercentageToDP(4),
-                        }}
-                    />
-                    <FastImage
-                        source={require('../../Images/143.png')}
-                        resizeMode={FastImage.resizeMode.contain}
-                        style={{
-                            width: widthPercentageToDP(8),
-                            height: heightPercentageToDP(4),
-                        }}
-                    />
+                    <ScrollView
+                        horizontal
+                        contentContainerStyle={{ flexGrow: 1, alignItems: "center" }}>
+                        {data.qualities.map((item, index) => {
+                            return (
+                                <TouchableOpacity
+                                    key={"unique" + index}
+                                    onPress={() => {
+                                        Alert.alert("", item.title)
+                                    }}>
+                                    <FastImage
+                                        source={{ uri: item.image }}
+                                        resizeMode={FastImage.resizeMode.contain}
+                                        style={{
+                                            width: widthPercentageToDP(8),
+                                            height: heightPercentageToDP(4),
+                                            marginLeft: widthPercentageToDP(3),
+                                            marginRight: widthPercentageToDP(3),
+                                        }}
+                                    />
+                                </TouchableOpacity>
+                            )
+                        })}
+                    </ScrollView>
+
                 </View>
                 <FastImage
                     source={require('../../Images/line.png')}
@@ -376,15 +381,15 @@ const GenreDetail = (props) => {
                 <FlatList
                     data={data.icons}
                     numColumns={2}
-                    contentContainerStyle={{ marginTop: heightPercentageToDP(1), alignItems: "center" }}
-                    style={{ width: widthPercentageToDP(80) }}
+                    contentContainerStyle={{ marginTop: heightPercentageToDP(1) }}
+                    style={{ width: widthPercentageToDP(80), }}
                     showsVerticalScrollIndicator={false}
                     keyExtractor={(item, index) => "unique" + index}
                     renderItem={_renderItem}
                 />
 
             </KeyboardAwareScrollView>
-            <View style={{ height: heightPercentageToDP(7) }} />
+            <View style={{ height: heightPercentageToDP(10) }} />
             <Tab
                 homeClick={() => props.navigation.dispatch(HomeAction)}
                 profileClick={() => props.navigation.dispatch(profileAction)}

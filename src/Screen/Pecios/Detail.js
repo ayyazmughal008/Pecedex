@@ -28,6 +28,7 @@ const PeciosDetail = (props) => {
     const [isLoading, setIsLoading] = useState(false)
     const language = useSelector((state) => state.user.language);
     const [isStart, setSTart] = useState(false)
+    const [Response, setResponse] = useState(false)
     const [activeSlid, setActiveSlid] = useState(0);
     useEffect(() => {
         console.log("My Activie Slide", activeSlid)
@@ -39,31 +40,19 @@ const PeciosDetail = (props) => {
             Strings.setLanguage(language)
         }
     }, [language])
-    const listDat = [
-        {
-            image: require('../../Images/95.png'),
-            text: "distribución"
-        },
-        {
-            image: require('../../Images/99.png'),
-            text: "profundidad"
-        },
-        {
-            image: require('../../Images/100.png'),
-            text: "altura"
-        },
-        {
-            image: require('../../Images/98.png'),
-            text: "ancho"
-        },
-    ]
+    useEffect(() => {
+        getApis("yes")
+    }, [])
     const _renderItem = (({ item, index }) => {
         return (
             <View style={{
                 width: widthPercentageToDP(40),
                 alignItems: "center",
                 marginTop: heightPercentageToDP(2),
-                flexDirection: "row"
+                flexDirection: "row",
+                //backgroundColor: "red",
+                marginRight: widthPercentageToDP(2),
+                justifyContent: "center"
             }}>
                 <FastImage
                     source={{ uri: item.image }}
@@ -73,7 +62,7 @@ const PeciosDetail = (props) => {
                         height: heightPercentageToDP(5),
                     }}
                 />
-                <Text style={[styles.smallText, { flex: 0, flexWrap: 'wrap', }]}>
+                <Text style={[styles.smallText, { flex: 0, flexWrap: 'wrap', marginLeft: widthPercentageToDP(5) }]}>
                     {item.text}
                 </Text>
 
@@ -97,9 +86,10 @@ const PeciosDetail = (props) => {
             //setResult('error: '.concat(getErrorString(error)));
         }
     };
-    const getApis = async () => {
+    const getApis = async (value) => {
         setIsLoading(true)
-        await postPecioSeen(data.id, login.data.id)
+        let seenData = await postPecioSeen(data.id, login.data.id, value)
+        await setResponse(seenData)
         await setIsLoading(false)
     }
     const toggleOption = () => {
@@ -240,7 +230,13 @@ const PeciosDetail = (props) => {
                 </TouchableOpacity>
                 <View style={styles.tabBar}>
                     <Pagination
-                        containerStyle={styles.tabsContainer}
+                        containerStyle={[styles.tabsContainer, {
+                            width: data.media.length < 4 ?
+                                widthPercentageToDP(20)
+                                : data.media.length < 10 ?
+                                    widthPercentageToDP(30)
+                                    : widthPercentageToDP(60)
+                        }]}
                         renderDots={activeIndex => (
                             data.media.map((screen, i) => (
                                 <View
@@ -265,11 +261,7 @@ const PeciosDetail = (props) => {
             </View>
             <View style={styles.shareView}>
                 <View style={{ width: "45%", height: "100%", flexDirection: "row", alignItems: "center" }}>
-                    <TouchableOpacity
-                        onPress={() => {
-                            getApis()
-                        }}
-                        style={styles.shareButton}>
+                    {!Response ?
                         <FastImage
                             source={require('../../Images/85.png')}
                             resizeMode={FastImage.resizeMode.stretch}
@@ -279,16 +271,24 @@ const PeciosDetail = (props) => {
                                 marginLeft: widthPercentageToDP(3)
                             }}
                         />
-                    </TouchableOpacity>
-                    <FastImage
-                        source={require('../../Images/eye2.png')}
-                        resizeMode={FastImage.resizeMode.contain}
-                        style={{
-                            width: widthPercentageToDP(10),
-                            height: widthPercentageToDP(10),
-                            marginLeft: widthPercentageToDP(5)
-                        }}
-                    />
+                        : <TouchableOpacity
+                            onPress={() => {
+                                getApis("no")
+                            }}
+                            style={styles.shareButton}>
+                            <FastImage
+                                source={Response.seen === 'yes' ?
+                                    require('../../Images/85.png')
+                                    : require('../../Images/camera.png')}
+                                resizeMode={FastImage.resizeMode.stretch}
+                                style={{
+                                    width: widthPercentageToDP(14),
+                                    height: heightPercentageToDP(5),
+                                    marginLeft: widthPercentageToDP(3)
+                                }}
+                            />
+                        </TouchableOpacity>
+                    }
                 </View>
                 <View style={{ width: "48%", height: "100%", alignItems: "center", justifyContent: "space-between", flexDirection: "row" }}>
                     <TouchableOpacity
@@ -347,7 +347,7 @@ const PeciosDetail = (props) => {
             <FlatList
                 data={data.icons}
                 numColumns={2}
-                contentContainerStyle={{ marginTop: heightPercentageToDP(1), alignItems: "center" }}
+                contentContainerStyle={{ marginTop: heightPercentageToDP(1), }}
                 style={{ width: widthPercentageToDP(80) }}
                 showsVerticalScrollIndicator={false}
                 keyExtractor={(item, index) => "unique" + index}

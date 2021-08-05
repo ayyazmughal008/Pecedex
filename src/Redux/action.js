@@ -381,7 +381,7 @@ export const getPeciosData = async (userId) => {
     }
     return api
 }
-export const postGenerSeen = async (genreId, userId) => {
+export const postGenerSeen = async (genreId, userId, isFirst) => {
     let api
     try {
         api = await fetch(baseUrl + seenGenre, {
@@ -392,14 +392,20 @@ export const postGenerSeen = async (genreId, userId) => {
             },
             body: JSON.stringify({
                 genreId: genreId,
-                userId: userId
+                userId: userId,
+                isFirst: isFirst
             })
         })
             .then(res => res.json())
             .then(json => {
                 console.log(json)
                 if (json.status == 200) {
-                    Alert.alert("", json.message)
+                    if (isFirst === "no") {
+                        Alert.alert("", json.message)
+                        return json
+                    } else {
+                        return json
+                    }
                 } else {
                     Alert.alert("", json.message)
                 }
@@ -413,7 +419,7 @@ export const postGenerSeen = async (genreId, userId) => {
     }
     return api
 }
-export const postPecioSeen = async (pecioId, userId) => {
+export const postPecioSeen = async (pecioId, userId, isFirst) => {
     let api
     try {
         api = await fetch(baseUrl + seenPecio, {
@@ -424,14 +430,20 @@ export const postPecioSeen = async (pecioId, userId) => {
             },
             body: JSON.stringify({
                 pecioId: pecioId,
-                userId: userId
+                userId: userId,
+                isFirst: isFirst,
             })
         })
             .then(res => res.json())
             .then(json => {
                 console.log(json)
                 if (json.status == 200) {
-                    Alert.alert("", json.message)
+                    if (isFirst === "no") {
+                        Alert.alert("", json.message)
+                        return json
+                    } else {
+                        return json
+                    }
                 } else {
                     Alert.alert("", json.message)
                 }

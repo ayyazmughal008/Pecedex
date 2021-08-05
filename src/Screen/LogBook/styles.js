@@ -187,16 +187,23 @@ export const styles = StyleSheet.create({
         justifyContent: "center",
         alignItems: "center"
     },
-    input2: {
+    observationView: {
         width: widthPercentageToDP(90),
         height: heightPercentageToDP(14),
+        backgroundColor: blue,
+        alignItems: "center",
+        alignSelf: "center",
+        borderRadius: widthPercentageToDP(4),
+        marginTop: heightPercentageToDP(2)
+    },
+    input2: {
+        width: widthPercentageToDP(90),
+        height: heightPercentageToDP(13),
         textAlignVertical: "top",
-        backgroundColor: "#cccccc",
         fontSize: widthPercentageToDP(4),
         color: black,
         fontFamily: "Montserrat-SemiBold",
-        alignSelf: "center",
-        marginTop: heightPercentageToDP(1),
+        padding: widthPercentageToDP(1)
     },
     btn: {
         width: widthPercentageToDP(90),
@@ -323,5 +330,27 @@ export const styles = StyleSheet.create({
         width: "100%",
         height: heightPercentageToDP(7),
         //backgroundColor:"red"
+    },
+    sampleViews: {
+        flexDirection: "row",
+        alignItems: "center",
+        height: "30%",
+        width: "100%",
+        marginLeft: 15,
+    },
+    sampleViews2: {
+        flexDirection: "row",
+        alignItems: "center",
+        alignSelf: "center",
+        height: "20%",
+    },
+    scubaView: {
+        width: "100%",
+        height: heightPercentageToDP(22),
+        flexDirection: "row",
+        alignItems: "center",
+        marginTop: heightPercentageToDP(2),
+        justifyContent: "space-between"
     }
+
 })

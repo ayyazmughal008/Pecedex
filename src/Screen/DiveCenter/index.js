@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react'
-import { SafeAreaView, View, Text, TouchableOpacity, Linking, Platform, Alert } from 'react-native'
+import { SafeAreaView, View, Text, TouchableOpacity, Linking, Platform, Alert, ScrollView } from 'react-native'
 import { styles } from '../../config/styles'
 import FastImage from 'react-native-fast-image'
 import { heightPercentageToDP, widthPercentageToDP } from '../../Component/MakeMeResponsive'
@@ -182,7 +182,10 @@ const DiveCenter = (props) => {
                         <FastImage
                             source={require('../../Images/tiktok.png')}
                             resizeMode={FastImage.resizeMode.contain}
-                            style={styles.socialImages}
+                            style={[styles.socialImages, {
+                                width: widthPercentageToDP(10),
+                                height: heightPercentageToDP(5),
+                            }]}
                         />
                     </TouchableOpacity>
                 </View>
@@ -191,11 +194,22 @@ const DiveCenter = (props) => {
                     style={[styles.line, { marginTop: heightPercentageToDP(1) }]}
                     resizeMode={FastImage.resizeMode.stretch}
                 />
-                <FastImage
-                    source={{ uri: "http://199.247.13.90/" + info.data.certifier }}
-                    resizeMode={FastImage.resizeMode.contain}
-                    style={styles.squre}
-                />
+                <View style={{ width: "60%", alignSelf: "center",marginTop: heightPercentageToDP(1), }}>
+                    <ScrollView
+                        horizontal
+                        contentContainerStyle={{ alignItems: "center", flexGrow: 1 }}>
+                        {info.data.certifiers.map((item, index) => {
+                            return (
+                                <FastImage
+                                    key={"unique" + index}
+                                    source={{ uri: "http://199.247.13.90/" + item }}
+                                    resizeMode={FastImage.resizeMode.contain}
+                                    style={styles.squre}
+                                />
+                            )
+                        })}
+                    </ScrollView>
+                </View>
                 <TouchableOpacity
                     style={styles.commentView}
                     onPress={() => {

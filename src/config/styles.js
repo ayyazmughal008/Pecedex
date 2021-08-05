@@ -317,7 +317,7 @@ export const styles = StyleSheet.create({
         borderColor: blue,
         borderRadius: widthPercentageToDP(2),
         alignSelf: "center",
-        marginTop: heightPercentageToDP(1)
+        marginLeft: widthPercentageToDP(2)
     },
     diveLogo: {
         width: widthPercentageToDP(20),
@@ -443,7 +443,6 @@ export const styles = StyleSheet.create({
         height: 50,
         paddingTop: 0,
         paddingBottom: 0,
-        width: widthPercentageToDP(60),
         alignSelf: "center",
         //backgroundColor:"red"
     },
