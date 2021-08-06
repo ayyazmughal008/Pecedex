@@ -15,6 +15,7 @@ import Icon from 'react-native-vector-icons/EvilIcons'
 
 const Map = (props) => {
     const language = useSelector((state) => state.user.language);
+    const login = useSelector((state) => state.user.login);
     const [isLoading, setIsLoading] = useState(false)
     const [Response, setResponse] = useState('')
     const [searchText, setSearch] = useState('')
@@ -32,7 +33,7 @@ const Map = (props) => {
 
     const getApis = async (text) => {
         setIsLoading(true)
-        let menuData = await searchList(text)
+        let menuData = await searchList(text, login.data.id)
         await setResponse(menuData)
         await setIsLoading(false)
     }

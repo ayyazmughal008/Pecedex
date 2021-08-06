@@ -202,7 +202,18 @@ const LogBook = (props) => {
             centerId,
             opinion,
             login.data.id,
-            poblation
+            // new values
+            poblation,
+            type,
+            current,
+            access,
+            ballast,
+            bottles,
+            material,
+            mix,
+            trimMix1,
+            trimMix2,
+            timeDiff
         )
         await setIsLoading(false)
     }
@@ -666,7 +677,25 @@ const LogBook = (props) => {
     const imageModel = (({ item, index }) => {
         if (item.isSelected === 'yes') {
             return (
-                <View style={styles.modelView}>
+                <TouchableOpacity
+                    onPress={() => {
+                        if (item.activities) {
+                            props.navigation.navigate("DiveCenter", {
+                                data: item
+                            })
+                        } else if (item.qualities) {
+                            props.navigation.navigate('Detail', {
+                                data: item
+                            })
+                        } else if (item.fcm) {
+                            console.log("Users");
+                        } else {
+                            props.navigation.navigate("PeciosDetail", {
+                                data: item
+                            })
+                        }
+                    }}
+                    style={styles.modelView}>
                     {!item.image ?
                         <FastImage
                             source={require('../../Images/profile_img5.png')}
@@ -682,7 +711,7 @@ const LogBook = (props) => {
                     <Text style={styles.title}>
                         {!item.title ? item.name : item.title}
                     </Text>
-                </View>
+                </TouchableOpacity>
             )
         }
 
@@ -1018,7 +1047,7 @@ const LogBook = (props) => {
                                     {Strings.Water_temperature}{" : "}
                                 </Text>
                                 <TextInput
-                                    style={[styles.smallInput, { height: "70%", width: "10%", paddingTop: 0, paddingBottom: 0, }]}
+                                    style={[styles.smallInput, { height: "70%", width: "6%", paddingTop: 0, paddingBottom: 0, }]}
                                     placeholder="10"
                                     placeholderTextColor={white}
                                     keyboardType="numeric"
@@ -1035,7 +1064,7 @@ const LogBook = (props) => {
                                     {Strings.Visibility}{" : "}
                                 </Text>
                                 <TextInput
-                                    style={[styles.smallInput, { height: "70%", width: "10%", paddingTop: 0, paddingBottom: 0, }]}
+                                    style={[styles.smallInput, { height: "70%", width: "6%", paddingTop: 0, paddingBottom: 0, }]}
                                     placeholder={"7"}
                                     placeholderTextColor={white}
                                     keyboardType="numeric"
@@ -1119,11 +1148,11 @@ const LogBook = (props) => {
                             <View style={[styles.innerLogView, { height: heightPercentageToDP(17), marginTop: heightPercentageToDP(2), justifyContent: "space-around" }]}>
                                 <View style={styles.left2}>
                                     <FastImage
-                                        source={require('../../Images/56.png')}
+                                        source={require('../../Images/oxygen.png')}
                                         resizeMode={FastImage.resizeMode.stretch}
-                                        style={{ width: "40%", height: "50%", marginLeft: 8 }}
+                                        style={{ width: "17%", height: "50%", marginLeft: 8 }}
                                     />
-                                    <View style={{ width: "50%", height: "70%", marginLeft: 5 }}>
+                                    <View style={{ width: "65%", height: "70%", marginLeft: 5 }}>
                                         <Text style={[styles.tinyText, { color: black }]}>
                                             {Strings.starting_bar}{":"}
                                         </Text>
@@ -1158,7 +1187,7 @@ const LogBook = (props) => {
                                     <FastImage
                                         source={require('../../Images/57.png')}
                                         resizeMode={FastImage.resizeMode.stretch}
-                                        style={{ width: "35%", height: "50%", marginLeft: 8 }}
+                                        style={{ width: "35%", height: "45%", marginLeft: 8 }}
                                     />
                                     <View style={{ width: "50%", height: "70%", marginLeft: 5 }}>
                                         <Text style={[styles.tinyText, { color: black }]}>
@@ -1432,7 +1461,7 @@ const LogBook = (props) => {
                                     <FastImage
                                         source={require('../../Images/oxygen.png')}
                                         resizeMode={FastImage.resizeMode.stretch}
-                                        style={{ width: "12%", height: "70%", marginLeft: 8 }}
+                                        style={{ width: "10%", height: "70%", marginLeft: 8 }}
                                     />
                                     <View style={{ width: "80%", height: "100%", marginLeft: widthPercentageToDP(4) }}>
                                         <View style={{ flexDirection: "row", alignItems: "center", marginTop: 5 }}>
@@ -1654,7 +1683,7 @@ const LogBook = (props) => {
                                     </Text>
                                 </TouchableOpacity>
                                 <TouchableOpacity
-                                    style={{ width: "20%", height: "90%" }}
+                                    style={{ width: "23%", height: "90%" }}
                                     onPress={() => {
                                         if (diveItem7) {
                                             setDiveItem7(false)
@@ -1673,7 +1702,7 @@ const LogBook = (props) => {
                                     </Text>
                                 </TouchableOpacity>
                                 <TouchableOpacity
-                                    style={{ width: "13%", height: "90%" }}
+                                    style={{ width: "16%", height: "90%" }}
                                     onPress={() => {
                                         if (diveItem8) {
                                             setDiveItem8(false)
@@ -1717,7 +1746,7 @@ const LogBook = (props) => {
                                 showsVerticalScrollIndicator={false}
                                 numColumns={4}
                                 listKey={(item, index) => `_key${index.toString()}`}
-                                //style={{ alignSelf: "center" }}
+                                //style={{ width:widthPercentageToDP(90) }}
                                 keyExtractor={(item, index) => "unique" + index}
                                 renderItem={imageModel}
                             />}
@@ -1816,15 +1845,25 @@ const LogBook = (props) => {
                                 </Text>
                             </View>
                             {center ?
-                                <View style={[styles.centerView, {
-                                    marginLeft: center ? widthPercentageToDP(10) : 0
-                                }]}>
+                                <TouchableOpacity
+                                    onPress={() => {
+                                        let data = {
+                                            data: center
+                                        }
+                                        props.navigation.navigate("DiveCenter", {
+                                            data: data
+                                        })
+                                        //console.log(center)
+                                    }}
+                                    style={[styles.centerView, {
+                                        marginLeft: center ? widthPercentageToDP(10) : 0
+                                    }]}>
                                     <FastImage
                                         source={{ uri: "http://199.247.13.90/" + center.logo }}
                                         style={{ width: "90%", height: "90%" }}
                                         resizeMode={FastImage.resizeMode.cover}
                                     />
-                                </View>
+                                </TouchableOpacity>
                                 : <TextInput
                                     style={styles.input}
                                     placeholder="Sello"
@@ -1990,7 +2029,7 @@ const LogBook = (props) => {
                             <View style={stylesProps.container}>
                                 <View style={styles.row}>
                                     <SearchBar
-                                        placeholder="Search city..."
+                                        placeholder={Strings.select_pecios}
                                         lightTheme
                                         round
                                         value={peciosText}
@@ -2038,7 +2077,7 @@ const LogBook = (props) => {
                             <View style={stylesProps.container}>
                                 <View style={styles.row}>
                                     <SearchBar
-                                        placeholder="Search city..."
+                                        placeholder={Strings.select_animal}
                                         lightTheme
                                         round
                                         value={animalText}
@@ -2086,7 +2125,7 @@ const LogBook = (props) => {
                             <View style={stylesProps.container}>
                                 <View style={styles.row}>
                                     <SearchBar
-                                        placeholder="Search city..."
+                                        placeholder={Strings.select_team}
                                         lightTheme
                                         round
                                         value={teamText}
@@ -2134,7 +2173,7 @@ const LogBook = (props) => {
                             <View style={stylesProps.container}>
                                 <View style={styles.row}>
                                     <SearchBar
-                                        placeholder="Search city..."
+                                        placeholder={Strings.select_center}
                                         lightTheme
                                         round
                                         value={centerText}
@@ -2234,7 +2273,8 @@ const stylesProps = StyleSheet.create({
         flexDirection: "row",
         alignItems: "center",
         justifyContent: "space-between",
-        marginTop: heightPercentageToDP(1)
+        marginTop:heightPercentageToDP(1),
+        marginBottom:heightPercentageToDP(1)
     },
     row: {
         flexDirection: "row",

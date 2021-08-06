@@ -53,6 +53,8 @@ const baseUrl = "http://199.247.13.90/api/",
     getDegrees = 'get-degrees',
     deleteNotification = 'delete-notification',
     updateCertificateDegree = 'update-certificate-degree',
+    changePassword = 'change-password',
+    erase = 'erase',
     register = 'register';
 
 const country_url = "https://countriesnow.space/api/v0.1/countries/positions"
@@ -1157,7 +1159,7 @@ export const logoutUser = async (userId) => {
     }
     return api
 }
-export const searchList = async (searchText) => {
+export const searchList = async (searchText, userId) => {
     let api
     try {
         api = await fetch(baseUrl + search, {
@@ -1168,6 +1170,7 @@ export const searchList = async (searchText) => {
             },
             body: JSON.stringify({
                 search: searchText,
+                userId: userId
             })
         })
             .then(res => res.json())
@@ -1263,7 +1266,18 @@ export const submitLogbookData = async (
     centerId,
     opinion,
     userId,
-    poblation
+    // new values
+    poblation,
+    type,
+    current,
+    access,
+    ballast,
+    bottles,
+    material,
+    mix,
+    trimMix1,
+    trimMix2,
+    timeDiff
 ) => {
     console.log("My image:", imagePath)
     let api
@@ -1320,7 +1334,17 @@ export const submitLogbookData = async (
                 centerId: centerId,
                 opinion: opinion,
                 userId: userId,
-                poblation: poblation
+                poblation: poblation,
+                type,
+                current: current,
+                access: access,
+                ballast: ballast,
+                bottles: bottles,
+                material: material,
+                mix: mix,
+                trimMix1: trimMix1,
+                trimMix2: trimMix2,
+                timeDiff: timeDiff
             })
         })
             .then(res => res.json())
@@ -1388,7 +1412,19 @@ export const updateLogbookData = async (
     centerId,
     opinion,
     userId,
-    diveId
+    diveId,
+    // new values
+    poblation,
+    type,
+    current,
+    access,
+    ballast,
+    bottles,
+    material,
+    mix,
+    trimMix1,
+    trimMix2,
+    timeDiff
 ) => {
     let api
     try {
@@ -1444,7 +1480,18 @@ export const updateLogbookData = async (
                 centerId: centerId,
                 opinion: opinion,
                 userId: userId,
-                diveId: diveId
+                diveId: diveId,
+                poblation: poblation,
+                type,
+                current: current,
+                access: access,
+                ballast: ballast,
+                bottles: bottles,
+                material: material,
+                mix: mix,
+                trimMix1: trimMix1,
+                trimMix2: trimMix2,
+                timeDiff: timeDiff
             })
         })
             .then(res => res.json())
@@ -1676,6 +1723,73 @@ export const deleteUserNotification = async (userId, notificationId) => {
                     console.log(json)
                     return json;
                 } else {
+                    console.log(json)
+                }
+            })
+            .catch(error => {
+                console.log("response error ===>", error)
+            })
+    } catch (error) {
+        console.log('my error' + error.message);
+    }
+    return api
+}
+export const updatePassword = async (userId, oldPassword, newPassword) => {
+    let api
+    try {
+        api = await fetch(baseUrl + changePassword, {
+            method: 'POST',
+            headers: {
+                'Accept': 'application/json',
+                "Content-type": "application/json",
+            },
+            body: JSON.stringify({
+                userId: userId,
+                oldPassword: oldPassword,
+                newPassword: newPassword
+            })
+        })
+            .then(res => res.json())
+            .then(json => {
+                if (json.status == 200) {
+                    Alert.alert("", json.message)
+                    console.log(json)
+                    NavigationService.navigate("Home")
+                    return json;
+                } else {
+                    Alert.alert("", json.message)
+                    console.log(json)
+                }
+            })
+            .catch(error => {
+                console.log("response error ===>", error)
+            })
+    } catch (error) {
+        console.log('my error' + error.message);
+    }
+    return api
+}
+export const eraseData = async (userId) => {
+    let api
+    try {
+        api = await fetch(baseUrl + erase, {
+            method: 'POST',
+            headers: {
+                'Accept': 'application/json',
+                "Content-type": "application/json",
+            },
+            body: JSON.stringify({
+                userId: userId,
+            })
+        })
+            .then(res => res.json())
+            .then(json => {
+                if (json.status == 200) {
+                    console.log(json)
+                    NavigationService.navigate("LogBook")
+                    return json;
+                } else {
+                    Alert.alert("", json.message)
                     console.log(json)
                 }
             })

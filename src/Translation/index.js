@@ -126,7 +126,11 @@ const Strings = new LocalizedStrings({
         access: "Access",
         ballast: "Ballast",
         material: "Material",
-        mix: "Mix"
+        mix: "Mix",
+        forget_pass: "Change Password",
+        old_pass:"Old password",
+        new_pass: "New password",
+        confirm_new:"Confirm new password"
     },
     es: {
         signin: "INICIAR SESIÓN",
@@ -253,7 +257,11 @@ const Strings = new LocalizedStrings({
         access: "Acceso",
         ballast: "Lastre",
         material: "Material",
-        mix: "Mezola"
+        mix: "Mezola",
+        forget_pass: "Cambiar la contraseña",
+        old_pass:"Contraseña anterior",
+        new_pass: "Nueva contraseña",
+        confirm_new:"Confirmar nueva contraseña"
 
     },
 });

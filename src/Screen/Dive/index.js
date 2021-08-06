@@ -5,7 +5,7 @@ import FastImage from 'react-native-fast-image'
 import Card from '../../Component/DiveCard'
 import { data } from './data'
 import Tab from '../../Component/BottomTab'
-import { getUserDives } from '../../Redux/action'
+import { getUserDives, eraseData } from '../../Redux/action'
 import { heightPercentageToDP } from '../../Component/MakeMeResponsive'
 import { HomeAction, profileAction, settingAction, mapAction, notificationAction } from '../../Component/BottomTab/actions'
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view'
@@ -34,6 +34,11 @@ const Dive = (props) => {
         setIsLoading(true)
         let menuData = await getUserDives(login.data.id)
         await setResponse(menuData)
+        await setIsLoading(false)
+    }
+    const eraseApis = async () => {
+        setIsLoading(true)
+        await eraseData(login.data.id)
         await setIsLoading(false)
     }
 
@@ -65,7 +70,7 @@ const Dive = (props) => {
                     }}
                 />}
             <TouchableOpacity
-                onPress={() => { props.navigation.navigate('LogBook') }}
+                onPress={() => { eraseApis() }}
                 style={styles.roundButton}>
                 <Text style={styles.plusText}>
                     {"+"}

@@ -79,7 +79,8 @@ export const styles = StyleSheet.create({
         backgroundColor: blue2,
         borderRadius: widthPercentageToDP(6),
         flexDirection: "row",
-        alignItems: "center"
+        alignItems: "center",
+        justifyContent:"space-between"
     },
     right2: {
         width: "50%",
@@ -274,6 +275,7 @@ export const styles = StyleSheet.create({
     modalView2: {
         flex: 1,
         alignItems: 'center',
+        marginTop:heightPercentageToDP(5)
         //justifyContent: "center",
         //flexDirection: "column"
     },

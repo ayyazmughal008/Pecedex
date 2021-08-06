@@ -24,6 +24,7 @@ import ProfileScreen from "../../Screen/Profile";
 import SearchScreen from "../../Screen/Search";
 import SubmitReview from "../../Screen/DiveCenter/SubmitReview";
 import NotificationScreen from "../../Screen/Notification";
+import ForgetPWD from '../../Screen/ForgetPasword'
 
 export default createStackNavigator(
   {
@@ -102,6 +103,9 @@ export default createStackNavigator(
     },
     SearchScreen: {
       screen: SearchScreen
+    },
+    ForgetPWD: {
+      screen: ForgetPWD
     },
   },
   {

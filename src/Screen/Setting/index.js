@@ -95,7 +95,9 @@ const Setting = (props) => {
                     placeholderTextColor={black}
                     editable={false}
                 />
-                <Text style={[styles.btnText, { color: lightRed }]}>
+                <Text
+                    onPress={() => props.navigation.navigate('ForgetPWD')}
+                    style={[styles.btnText, { color: lightRed }]}>
                     {Strings.change}
                 </Text>
             </View>

@@ -86,17 +86,17 @@ const LogBook = (props) => {
     const [city, setCity] = useState(newData.city)
     const [imagePath, setPath] = useState("")
     // new value fo logbook
-    const [timeDiff, setTimeDiff] = useState("")
-    const [poblation, setPoblation] = useState("")
-    const [type, setType] = useState("")
-    const [current, setCurrent] = useState("")
-    const [access, setAccess] = useState("")
-    const [ballast, setBallast] = useState("")
-    const [bottles, setBottles] = useState("")
-    const [material, setMaterial] = useState("")
-    const [mix, setMix] = useState("")
-    const [trimMix1, setTrimMix1] = useState("")
-    const [trimMix2, setTrimMix2] = useState("")
+    const [timeDiff, setTimeDiff] = useState(newData.timeDiff)
+    const [poblation, setPoblation] = useState(newData.poblation)
+    const [type, setType] = useState(newData.type)
+    const [current, setCurrent] = useState(newData.current)
+    const [access, setAccess] = useState(newData.access)
+    const [ballast, setBallast] = useState(newData.ballast)
+    const [bottles, setBottles] = useState(newData.bottles)
+    const [material, setMaterial] = useState(newData.material)
+    const [mix, setMix] = useState(newData.mix)
+    const [trimMix1, setTrimMix1] = useState(newData.trimMix1)
+    const [trimMix2, setTrimMix2] = useState(newData.trimMix2)
     // new text values for Genro, Pecios and team selections
     const [peciosText, setPeciosText] = useState("")
     const [animalText, setAnimalText] = useState("")
@@ -215,7 +215,18 @@ const LogBook = (props) => {
             centerId,
             opinion,
             login.data.id,
-            newData.id
+            newData.id,
+            poblation,
+            type,
+            current,
+            access,
+            ballast,
+            bottles,
+            material,
+            mix,
+            trimMix1,
+            trimMix2,
+            timeDiff
         )
         await setIsLoading(false)
     }
