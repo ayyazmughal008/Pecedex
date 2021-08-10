@@ -13,10 +13,15 @@ import Strings from '../../Translation'
 import { useSelector, useDispatch } from 'react-redux';
 import HTML from "react-native-render-html";
 import Share from 'react-native-share';
+import Stars from '../../Component/ShowStars'
+import { saveCenterId } from '../../Redux/action'
 
 const DiveCenter = (props) => {
+    const dispatch = useDispatch()
     const language = useSelector((state) => state.user.language);
+    const centerId = useSelector((state) => state.user.centerId);
     const info = props.navigation.getParam('data', "2uhih")
+    const [myId, setMyId] = useState("")
     useEffect(() => {
         if (!language) {
             Strings.setLanguage('en')
@@ -24,6 +29,11 @@ const DiveCenter = (props) => {
             Strings.setLanguage(language)
         }
     }, [language])
+    useEffect(() => {
+        if (info) {
+            setMyId(info.data.id)
+        }
+    }, [info])
 
     const callNumber = phone => {
         console.log('callNumber ----> ', phone);
@@ -194,7 +204,7 @@ const DiveCenter = (props) => {
                     style={[styles.line, { marginTop: heightPercentageToDP(1) }]}
                     resizeMode={FastImage.resizeMode.stretch}
                 />
-                <View style={{ width: "60%", alignSelf: "center",marginTop: heightPercentageToDP(1), }}>
+                <View style={{ width: "60%", alignSelf: "center", marginTop: heightPercentageToDP(1), }}>
                     <ScrollView
                         horizontal
                         contentContainerStyle={{ alignItems: "center", flexGrow: 1 }}>
@@ -213,41 +223,18 @@ const DiveCenter = (props) => {
                 <TouchableOpacity
                     style={styles.commentView}
                     onPress={() => {
+                        //dispatch(saveCenterId(myId));
+                        //alert(myId);
                         props.navigation.navigate('DiveCenterDetail', {
                             array: info.data.comments,
                             count: info.data.commentsCount,
-                            id: info.data.id
-                        })
+                            id: myId,
+                            average: info.averageStars
+                        });
                     }}
                 >
                     <View style={[styles.starView, { alignSelf: "center" }]}>
-                        <View style={{ flexDirection: "row", height: "45%", width: "70%", }}>
-                            <FastImage
-                                source={require('../../Images/star.png')}
-                                resizeMode={FastImage.resizeMode.contain}
-                                style={styles.star}
-                            />
-                            <FastImage
-                                source={require('../../Images/star.png')}
-                                resizeMode={FastImage.resizeMode.contain}
-                                style={styles.star}
-                            />
-                            <FastImage
-                                source={require('../../Images/star.png')}
-                                resizeMode={FastImage.resizeMode.contain}
-                                style={styles.star}
-                            />
-                            <FastImage
-                                source={require('../../Images/star.png')}
-                                resizeMode={FastImage.resizeMode.contain}
-                                style={styles.star}
-                            />
-                            <FastImage
-                                source={require('../../Images/star.png')}
-                                resizeMode={FastImage.resizeMode.contain}
-                                style={styles.star}
-                            />
-                        </View>
+                        <Stars value={info.averageStars} />
                         <Text style={styles.commentTxt}>
                             {info.data.commentsCount}{" "}{Strings.Comments}
                         </Text>

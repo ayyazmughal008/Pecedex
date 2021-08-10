@@ -96,6 +96,7 @@ const LogBook = (props) => {
     const [mix, setMix] = useState("")
     const [trimMix1, setTrimMix1] = useState("")
     const [trimMix2, setTrimMix2] = useState("")
+    const [centerTexts, setCenterTexts] = useState("")
     // new text values for Genro, Pecios and team selections
     const [peciosText, setPeciosText] = useState("")
     const [animalText, setAnimalText] = useState("")
@@ -213,7 +214,8 @@ const LogBook = (props) => {
             mix,
             trimMix1,
             trimMix2,
-            timeDiff
+            timeDiff,
+            centerTexts
         )
         await setIsLoading(false)
     }
@@ -1047,7 +1049,7 @@ const LogBook = (props) => {
                                     {Strings.Water_temperature}{" : "}
                                 </Text>
                                 <TextInput
-                                    style={[styles.smallInput, { height: "70%", width: "6%", paddingTop: 0, paddingBottom: 0, }]}
+                                    style={[styles.smallInput, { height: "70%", width: "8%", paddingTop: 0, paddingBottom: 0, }]}
                                     placeholder="10"
                                     placeholderTextColor={white}
                                     keyboardType="numeric"
@@ -1064,7 +1066,7 @@ const LogBook = (props) => {
                                     {Strings.Visibility}{" : "}
                                 </Text>
                                 <TextInput
-                                    style={[styles.smallInput, { height: "70%", width: "6%", paddingTop: 0, paddingBottom: 0, }]}
+                                    style={[styles.smallInput, { height: "70%", width: "8%", paddingTop: 0, paddingBottom: 0, }]}
                                     placeholder={"7"}
                                     placeholderTextColor={white}
                                     keyboardType="numeric"
@@ -1150,7 +1152,7 @@ const LogBook = (props) => {
                                     <FastImage
                                         source={require('../../Images/oxygen.png')}
                                         resizeMode={FastImage.resizeMode.stretch}
-                                        style={{ width: "17%", height: "50%", marginLeft: 8 }}
+                                        style={{ width: "15%", height: "50%", marginLeft: 8 }}
                                     />
                                     <View style={{ width: "65%", height: "70%", marginLeft: 5 }}>
                                         <Text style={[styles.tinyText, { color: black }]}>
@@ -1187,7 +1189,7 @@ const LogBook = (props) => {
                                     <FastImage
                                         source={require('../../Images/57.png')}
                                         resizeMode={FastImage.resizeMode.stretch}
-                                        style={{ width: "35%", height: "45%", marginLeft: 8 }}
+                                        style={{ width: "33%", height: "45%", marginLeft: 8 }}
                                     />
                                     <View style={{ width: "50%", height: "70%", marginLeft: 5 }}>
                                         <Text style={[styles.tinyText, { color: black }]}>
@@ -1869,8 +1871,8 @@ const LogBook = (props) => {
                                     placeholder="Sello"
                                     placeholderTextColor={black}
                                     textAlign="center"
-                                    value={center}
-                                    onChangeText={text => setCenter(text)}
+                                    value={centerTexts}
+                                    onChangeText={text => setCenterTexts(text)}
                                 />
                             }
                         </View>
@@ -2273,8 +2275,8 @@ const stylesProps = StyleSheet.create({
         flexDirection: "row",
         alignItems: "center",
         justifyContent: "space-between",
-        marginTop:heightPercentageToDP(1),
-        marginBottom:heightPercentageToDP(1)
+        marginTop: heightPercentageToDP(2),
+        marginBottom: heightPercentageToDP(2)
     },
     row: {
         flexDirection: "row",

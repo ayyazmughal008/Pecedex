@@ -8,6 +8,7 @@ export const USER_LOGIN = "USER_LOGIN";
 export const COUNTRY_NAME = "COUNTRY_NAME";
 export const SET_LANGUAGE = "SET_LANGUAGE";
 export const FCM_TOKEN = "FCM_TOKEN";
+export const CENTER_ID = "CENTER_ID";
 
 
 const baseUrl = "http://199.247.13.90/api/",
@@ -59,6 +60,16 @@ const baseUrl = "http://199.247.13.90/api/",
 
 const country_url = "https://countriesnow.space/api/v0.1/countries/positions"
 
+export const saveCenterId = (value) => {
+    return dispatch => {
+        dispatch({
+            type: CENTER_ID,
+            payload: {
+                centerId: value
+            }
+        })
+    }
+}
 export const saveToken = (value) => {
     return dispatch => {
         dispatch({
@@ -870,6 +881,7 @@ export const getPointsDetails = async (pointId, userId) => {
     return api
 }
 export const getDivesDetails = async (diveId, userId) => {
+    console.log(diveId)
     let api
     try {
         api = await fetch(baseUrl + getDiveDetail, {
@@ -892,6 +904,7 @@ export const getDivesDetails = async (diveId, userId) => {
                     })
                     return
                 } else {
+                    //console.log(json)
                     Alert.alert("", json.message)
                 }
             })
@@ -924,7 +937,7 @@ export const submitDiveCenterRanking = async (userId, centerId, stars, comment) 
                 if (json.status == 200) {
                     console.log(json)
                     Alert.alert("", json.message)
-                    NavigationService.navigate("Home")
+                    //NavigationService.navigate("DiveCenter")
                     return
                 } else {
                     Alert.alert("", json.message)
@@ -1277,9 +1290,9 @@ export const submitLogbookData = async (
     mix,
     trimMix1,
     trimMix2,
-    timeDiff
+    timeDiff,
+    centerTexts
 ) => {
-    console.log("My image:", imagePath)
     let api
     try {
         api = await fetch(baseUrl + storeDive, {
@@ -1335,7 +1348,7 @@ export const submitLogbookData = async (
                 opinion: opinion,
                 userId: userId,
                 poblation: poblation,
-                type,
+                type: type,
                 current: current,
                 access: access,
                 ballast: ballast,
@@ -1344,13 +1357,14 @@ export const submitLogbookData = async (
                 mix: mix,
                 trimMix1: trimMix1,
                 trimMix2: trimMix2,
-                timeDiff: timeDiff
+                timeDiff: timeDiff,
+                centerTexts: centerTexts,
             })
         })
             .then(res => res.json())
             .then(json => {
                 if (json.status == 200) {
-                    console.log(json)
+                    //console.log(json)
                     NavigationService.navigate("Home")
                     Alert.alert("", json.message)
                     return
@@ -1424,7 +1438,8 @@ export const updateLogbookData = async (
     mix,
     trimMix1,
     trimMix2,
-    timeDiff
+    timeDiff,
+    centerTexts
 ) => {
     let api
     try {
@@ -1482,7 +1497,7 @@ export const updateLogbookData = async (
                 userId: userId,
                 diveId: diveId,
                 poblation: poblation,
-                type,
+                type: type,
                 current: current,
                 access: access,
                 ballast: ballast,
@@ -1491,7 +1506,8 @@ export const updateLogbookData = async (
                 mix: mix,
                 trimMix1: trimMix1,
                 trimMix2: trimMix2,
-                timeDiff: timeDiff
+                timeDiff: timeDiff,
+                centerTexts: centerTexts,
             })
         })
             .then(res => res.json())

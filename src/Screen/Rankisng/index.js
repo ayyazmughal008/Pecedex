@@ -59,7 +59,7 @@ const Profile = (props) => {
                         />
                     }
                 </View>
-                <View style={[styles.profileView,{height:heightPercentageToDP(30)}]}>
+                <View style={[styles.profileView, { height: heightPercentageToDP(30) }]}>
                     <Text style={[styles.profileName, { color: black, fontSize: widthPercentageToDP(5), alignSelf: "center" }]}>
                         {Strings.PUNCTUATION}
                     </Text>
@@ -71,10 +71,10 @@ const Profile = (props) => {
                         height: heightPercentageToDP(0.2),
                         backgroundColor: white,
                         alignSelf: "center",
-                        margin:heightPercentageToDP(1)
+                        margin: heightPercentageToDP(1)
                     }}
                     />
-                    <View style={[styles.profileInfo, { width: widthPercentageToDP(50)}]}>
+                    <View style={[styles.profileInfo, { width: widthPercentageToDP(50) }]}>
                         <FastImage
                             source={require('../../Images/seaCap.png')}
                             style={{ width: 35, height: 35 }}
@@ -136,7 +136,7 @@ const Profile = (props) => {
                         renderItem={({ item, index }) => {
                             return (
                                 <Card
-                                    rank={index + 1}
+                                    rank={index}
                                     title={item.name}
                                     score={item.score}
                                 />

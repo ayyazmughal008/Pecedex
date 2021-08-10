@@ -10,18 +10,96 @@ const Card = (props) => {
     return (
         <View style={styles.container}>
             <View style={styles.topView}>
-                <FastImage
-                    source={require('../../Images/award.png')}
-                    resizeMode={FastImage.resizeMode.contain}
-                    style={{
-                        width: widthPercentageToDP(12),
-                        height: heightPercentageToDP(6)
-                    }}
-                >
-                    <Text style={styles.smallText}>
-                        {props.rank}
-                    </Text>
-                </FastImage>
+                {props.rank == 0 ?
+                    <FastImage
+                        source={require('../../Images/medal1.png')}
+                        resizeMode={FastImage.resizeMode.contain}
+                        style={{
+                            width: widthPercentageToDP(12),
+                            height: heightPercentageToDP(6)
+                        }}
+                    />
+                    : props.rank == 1 ?
+                        <FastImage
+                            source={require('../../Images/medal2.png')}
+                            resizeMode={FastImage.resizeMode.contain}
+                            style={{
+                                width: widthPercentageToDP(12),
+                                height: heightPercentageToDP(6)
+                            }}
+                        />
+                        : props.rank == 2 ?
+                            <FastImage
+                                source={require('../../Images/medal3.png')}
+                                resizeMode={FastImage.resizeMode.contain}
+                                style={{
+                                    width: widthPercentageToDP(12),
+                                    height: heightPercentageToDP(6)
+                                }}
+                            />
+                            : props.rank == 3 ?
+                                <FastImage
+                                    source={require('../../Images/medal4.png')}
+                                    resizeMode={FastImage.resizeMode.contain}
+                                    style={{
+                                        width: widthPercentageToDP(12),
+                                        height: heightPercentageToDP(6)
+                                    }}
+                                />
+                                : props.rank == 4 ?
+                                    <FastImage
+                                        source={require('../../Images/medal5.png')}
+                                        resizeMode={FastImage.resizeMode.contain}
+                                        style={{
+                                            width: widthPercentageToDP(12),
+                                            height: heightPercentageToDP(6)
+                                        }}
+                                    />
+                                    : props.rank == 5 ?
+                                        <FastImage
+                                            source={require('../../Images/medal6.png')}
+                                            resizeMode={FastImage.resizeMode.contain}
+                                            style={{
+                                                width: widthPercentageToDP(12),
+                                                height: heightPercentageToDP(6)
+                                            }}
+                                        />
+                                        : props.rank == 6 ?
+                                            <FastImage
+                                                source={require('../../Images/medal7.png')}
+                                                resizeMode={FastImage.resizeMode.contain}
+                                                style={{
+                                                    width: widthPercentageToDP(12),
+                                                    height: heightPercentageToDP(6)
+                                                }}
+                                            />
+                                            : props.rank == 7 ?
+                                                <FastImage
+                                                    source={require('../../Images/medal8.png')}
+                                                    resizeMode={FastImage.resizeMode.contain}
+                                                    style={{
+                                                        width: widthPercentageToDP(12),
+                                                        height: heightPercentageToDP(6)
+                                                    }}
+                                                />
+                                                : props.rank == 8 ?
+                                                    <FastImage
+                                                        source={require('../../Images/medal9.png')}
+                                                        resizeMode={FastImage.resizeMode.contain}
+                                                        style={{
+                                                            width: widthPercentageToDP(12),
+                                                            height: heightPercentageToDP(6)
+                                                        }}
+                                                    />
+                                                    : <FastImage
+                                                        source={require('../../Images/medal2.png')}
+                                                        resizeMode={FastImage.resizeMode.contain}
+                                                        style={{
+                                                            width: widthPercentageToDP(12),
+                                                            height: heightPercentageToDP(6)
+                                                        }}
+                                                    />
+                }
                 <View style={{ width: "100%", marginLeft: widthPercentageToDP(2) }}>
                     <Text style={styles.title}>
                         {props.title}
@@ -61,7 +139,7 @@ const styles = StyleSheet.create({
     line: {
         width: widthPercentageToDP(60),
         height: heightPercentageToDP(0.2),
-        marginTop:heightPercentageToDP(1)
+        marginTop: heightPercentageToDP(1)
         //backgroundColor:"red"
     },
     title: {
@@ -79,7 +157,7 @@ const styles = StyleSheet.create({
         color: black,
         fontFamily: "Montserrat-SemiBold",
         position: "absolute",
-        left:"41%",
+        left: "41%",
         top: "15%"
     }
 })

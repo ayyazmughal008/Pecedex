@@ -97,6 +97,7 @@ const LogBook = (props) => {
     const [mix, setMix] = useState(newData.mix)
     const [trimMix1, setTrimMix1] = useState(newData.trimMix1)
     const [trimMix2, setTrimMix2] = useState(newData.trimMix2)
+    const [centerTexts, setCenterTexts] = useState(newData.centerTexts)
     // new text values for Genro, Pecios and team selections
     const [peciosText, setPeciosText] = useState("")
     const [animalText, setAnimalText] = useState("")
@@ -226,7 +227,8 @@ const LogBook = (props) => {
             mix,
             trimMix1,
             trimMix2,
-            timeDiff
+            timeDiff,
+            centerTexts
         )
         await setIsLoading(false)
     }
@@ -690,7 +692,25 @@ const LogBook = (props) => {
     const imageModel = (({ item, index }) => {
         if (item.isSelected === 'yes') {
             return (
-                <View style={styles.modelView}>
+                <TouchableOpacity
+                    onPress={() => {
+                        if (item.activities) {
+                            props.navigation.navigate("DiveCenter", {
+                                data: item
+                            })
+                        } else if (item.qualities) {
+                            props.navigation.navigate('Detail', {
+                                data: item
+                            })
+                        } else if (item.fcm) {
+                            console.log("Users");
+                        } else {
+                            props.navigation.navigate("PeciosDetail", {
+                                data: item
+                            })
+                        }
+                    }}
+                    style={styles.modelView}>
                     {!item.image ?
                         <FastImage
                             source={require('../../Images/profile_img5.png')}
@@ -706,7 +726,7 @@ const LogBook = (props) => {
                     <Text style={styles.title}>
                         {!item.title ? item.name : item.title}
                     </Text>
-                </View>
+                </TouchableOpacity>
             )
         }
 
@@ -1042,7 +1062,7 @@ const LogBook = (props) => {
                                     {Strings.Water_temperature}{" : "}
                                 </Text>
                                 <TextInput
-                                    style={[styles.smallInput, { height: "70%", width: "10%", paddingTop: 0, paddingBottom: 0, }]}
+                                    style={[styles.smallInput, { height: "70%", width: "8%", paddingTop: 0, paddingBottom: 0, }]}
                                     placeholder="10"
                                     placeholderTextColor={white}
                                     keyboardType="numeric"
@@ -1059,7 +1079,7 @@ const LogBook = (props) => {
                                     {Strings.Visibility}{" : "}
                                 </Text>
                                 <TextInput
-                                    style={[styles.smallInput, { height: "70%", width: "10%", paddingTop: 0, paddingBottom: 0, }]}
+                                    style={[styles.smallInput, { height: "70%", width: "8%", paddingTop: 0, paddingBottom: 0, }]}
                                     placeholder={"7"}
                                     placeholderTextColor={white}
                                     keyboardType="numeric"
@@ -1143,11 +1163,11 @@ const LogBook = (props) => {
                             <View style={[styles.innerLogView, { height: heightPercentageToDP(17), marginTop: heightPercentageToDP(2), justifyContent: "space-around" }]}>
                                 <View style={styles.left2}>
                                     <FastImage
-                                        source={require('../../Images/56.png')}
+                                        source={require('../../Images/oxygen.png')}
                                         resizeMode={FastImage.resizeMode.stretch}
-                                        style={{ width: "40%", height: "50%", marginLeft: 8 }}
+                                        style={{ width: "15%", height: "50%", marginLeft: 8 }}
                                     />
-                                    <View style={{ width: "50%", height: "70%", marginLeft: 5 }}>
+                                    <View style={{ width: "65%", height: "70%", marginLeft: 5 }}>
                                         <Text style={[styles.tinyText, { color: black }]}>
                                             {Strings.starting_bar}{":"}
                                         </Text>
@@ -1182,7 +1202,7 @@ const LogBook = (props) => {
                                     <FastImage
                                         source={require('../../Images/57.png')}
                                         resizeMode={FastImage.resizeMode.stretch}
-                                        style={{ width: "35%", height: "50%", marginLeft: 8 }}
+                                        style={{ width: "33%", height: "45%", marginLeft: 8 }}
                                     />
                                     <View style={{ width: "50%", height: "70%", marginLeft: 5 }}>
                                         <Text style={[styles.tinyText, { color: black }]}>
@@ -1824,11 +1844,18 @@ const LogBook = (props) => {
                             justifyContent: !center ? "space-between" : null,
                         }]}>
                             <View style={styles.modelView}>
-                                <FastImage
-                                    source={require('../../Images/fish2.jpg')}
-                                    style={styles.imgModel}
-                                    resizeMode={FastImage.resizeMode.cover}
-                                />
+                                {!center ?
+                                    <FastImage
+                                        source={require('../../Images/fish2.jpg')}
+                                        style={styles.imgModel}
+                                        resizeMode={FastImage.resizeMode.cover}
+                                    />
+                                    : <FastImage
+                                        source={{ uri: "http://199.247.13.90/" + center.image }}
+                                        style={styles.imgModel}
+                                        resizeMode={FastImage.resizeMode.cover}
+                                    />
+                                }
                                 <Text style={styles.title}>
                                     {Strings.madrid_diving}
                                 </Text>
@@ -1838,7 +1865,7 @@ const LogBook = (props) => {
                                     marginLeft: center ? widthPercentageToDP(10) : 0
                                 }]}>
                                     <FastImage
-                                        source={{ uri: "http://199.247.13.90/" + center }}
+                                        source={{ uri: "http://199.247.13.90/" + center.logo }}
                                         style={{ width: "90%", height: "90%" }}
                                         resizeMode={FastImage.resizeMode.cover}
                                     />
@@ -1848,8 +1875,8 @@ const LogBook = (props) => {
                                     placeholder="Sello"
                                     placeholderTextColor={black}
                                     textAlign="center"
-                                    value={center}
-                                    onChangeText={text => setCenter(text)}
+                                    value={centerTexts}
+                                    onChangeText={text => setCenterTexts(text)}
                                 />
                             }
                         </View>
@@ -2251,7 +2278,8 @@ const stylesProps = StyleSheet.create({
         flexDirection: "row",
         alignItems: "center",
         justifyContent: "space-between",
-        marginTop: heightPercentageToDP(1)
+        marginTop: heightPercentageToDP(2),
+        marginBottom: heightPercentageToDP(2)
     },
     row: {
         flexDirection: "row",

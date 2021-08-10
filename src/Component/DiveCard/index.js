@@ -1,17 +1,29 @@
-import React from 'react'
-import { View, TouchableOpacity, Text, StyleSheet, FlatList } from 'react-native'
-import { blue, white } from '../../config/color'
+import React, { useState } from 'react'
+import { View, TouchableOpacity, Text, StyleSheet, FlatList, ActivityIndicator } from 'react-native'
+import { black, blue, white } from '../../config/color'
+import { getDivesDetails } from '../../Redux/action'
 import { widthPercentageToDP, heightPercentageToDP } from '../MakeMeResponsive'
 import FastImage from 'react-native-fast-image'
+import { useSelector, useDispatch } from 'react-redux';
 
 const Card = (props) => {
+    const [isLoading, setIsLoading] = useState(false)
+    const login = useSelector((state) => state.user.login);
 
+    const getApis = async (diveId) => {
+        setIsLoading(true)
+        await getDivesDetails(diveId, login.data.id)
+        await setIsLoading(false)
+    }
     const imageModel = (({ item, index }) => {
         return (
             <TouchableOpacity
-                onPress={() => props.navigate(props.destination, {
-                    data: item
-                })}
+                onPress={() => {
+                    // props.navigate(props.destination, {
+                    //     data: item
+                    // })
+                    getApis(item.id)
+                }}
                 style={styles.modelView}>
                 {item.image ?
                     <FastImage
@@ -51,6 +63,13 @@ const Card = (props) => {
                     resizeMode={FastImage.resizeMode.stretch}
                     style={styles.line}
                 />
+                {isLoading &&
+                    <ActivityIndicator
+                        size="large"
+                        color={black}
+                        style={styles.loading}
+                    />
+                }
             </View>
             {!props.months || !props.months.length ?
                 <View />
@@ -95,7 +114,7 @@ const styles = StyleSheet.create({
         width: widthPercentageToDP(90),
         flex: 0,
         marginBottom: heightPercentageToDP(1),
-        alignItems: "center"
+        alignItems: "center",
     },
     yearView: {
         width: widthPercentageToDP(90),
@@ -147,7 +166,16 @@ const styles = StyleSheet.create({
         color: blue,
         fontFamily: "Montserrat-SemiBold",
         paddingLeft: widthPercentageToDP(1)
-    }
+    },
+    loading: {
+        position: 'absolute',
+        left: 0,
+        right: 0,
+        top: 0,
+        bottom: 0,
+        alignItems: 'center',
+        justifyContent: 'center'
+    },
 
 })
 

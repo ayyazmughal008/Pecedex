@@ -15,10 +15,12 @@ import Strings from '../../Translation'
 const DiveCenter = (props) => {
     const dispatch = useDispatch();
     const login = useSelector((state) => state.user.login);
+    const centerId = useSelector((state) => state.user.centerId);
     const [text, setText] = useState("")
     const [rankingValue, setValue] = useState("")
     const [isLoading, setIsLoading] = useState(false)
     const id = props.navigation.getParam('id', '123')
+    const [myId, setMyId] = useState("")
     const language = useSelector((state) => state.user.language);
     useEffect(() => {
         if (!language) {
@@ -27,17 +29,35 @@ const DiveCenter = (props) => {
             Strings.setLanguage(language)
         }
     }, [language])
+    // useEffect(() => {
+    //     console.log("my id is", centerId)
+    // }, [centerId])
+    useEffect(() => {
+        if (id) {
+            setMyId(id)
+        }
+    }, [id])
     const getApis = async (id, centerId, star, comment) => {
         setIsLoading(true)
         await submitDiveCenterRanking(id, centerId, star, comment)
         await setIsLoading(false)
+        await setValue("")
+        await setText("")
     }
     const _onSubmit = () => {
+        if (!myId) {
+            Alert.alert("", "ID is null in physical device")
+            return
+        }
+        if (!rankingValue) {
+            Alert.alert("", "Please choose at least one star")
+            return
+        }
         if (!text) {
             Alert.alert("", Strings.Please_write_something)
             return
         }
-        getApis(login.data.id, id, rankingValue, text)
+        getApis(login.data.id, myId, rankingValue, text)
     }
 
     return (

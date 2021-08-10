@@ -10,6 +10,7 @@ import { HomeAction, profileAction, settingAction, mapAction, notificationAction
 import { useSelector, useDispatch } from 'react-redux';
 import Strings from '../../Translation'
 import ShowStars from '../../Component/ShowRanking'
+import Stars from '../../Component/ShowStars'
 
 const DiveCenter = (props) => {
     const dispatch = useDispatch();
@@ -17,7 +18,9 @@ const DiveCenter = (props) => {
     const language = useSelector((state) => state.user.language);
     const array = props.navigation.getParam('array', '123')
     const count = props.navigation.getParam('count', '123')
+    const average = props.navigation.getParam('average', '123')
     const id = props.navigation.getParam('id', '123')
+    const [myId, setMyId] = useState("")
     useEffect(() => {
         if (!language) {
             Strings.setLanguage('en')
@@ -25,6 +28,11 @@ const DiveCenter = (props) => {
             Strings.setLanguage(language)
         }
     }, [language])
+    useEffect(() => {
+        if (id) {
+            setMyId(id)
+        }
+    }, [id])
     const _renderItem = ({ item, index }) => {
         return (
             <ShowStars
@@ -62,33 +70,7 @@ const DiveCenter = (props) => {
                 borderRadius: widthPercentageToDP(5),
                 height: heightPercentageToDP(20),
             }]}>
-                <View style={{ flexDirection: "row", alignItems: "center", height: "25%", width: "90%", }}>
-                    <FastImage
-                        source={require('../../Images/star.png')}
-                        resizeMode={FastImage.resizeMode.contain}
-                        style={styles.star}
-                    />
-                    <FastImage
-                        source={require('../../Images/star.png')}
-                        resizeMode={FastImage.resizeMode.contain}
-                        style={styles.star}
-                    />
-                    <FastImage
-                        source={require('../../Images/star.png')}
-                        resizeMode={FastImage.resizeMode.contain}
-                        style={styles.star}
-                    />
-                    <FastImage
-                        source={require('../../Images/star.png')}
-                        resizeMode={FastImage.resizeMode.contain}
-                        style={styles.star}
-                    />
-                    <FastImage
-                        source={require('../../Images/star.png')}
-                        resizeMode={FastImage.resizeMode.contain}
-                        style={styles.star}
-                    />
-                </View>
+                <Stars value={average} />
                 <FastImage
                     source={require('../../Images/line.png')}
                     style={styles.line}
@@ -98,9 +80,13 @@ const DiveCenter = (props) => {
                     {count}{" "}{Strings.Comments}
                 </Text>
                 <Text
-                    onPress={() => props.navigation.navigate('SubmitReview', {
-                        id: id
-                    })}
+                    onPress={() => {
+                        //alert(myId);
+                        props.navigation.navigate('SubmitReview', {
+                            id: myId
+                        });
+                    }
+                    }
                     style={[styles.commentTxt, {
                         textDecorationLine: "underline"
                     }]}>

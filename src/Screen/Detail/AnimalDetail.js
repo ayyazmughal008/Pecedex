@@ -33,7 +33,7 @@ const GenreDetail = (props) => {
     const [isStart, setSTart] = useState(false)
     const [activeSlid, setActiveSlid] = useState(0);
     useEffect(() => {
-        console.log("My Activie Slide", activeSlid)
+        console.log("My Activie Slide", data.qualities.length)
     }, [activeSlid])
     useEffect(() => {
         if (!language) {
@@ -60,7 +60,7 @@ const GenreDetail = (props) => {
                 flexDirection: "row",
                 //backgroundColor: "red",
                 marginRight: widthPercentageToDP(2),
-                justifyContent:"center"
+                justifyContent: "center"
             }}>
                 <FastImage
                     source={{ uri: item.image }}
@@ -342,10 +342,15 @@ const GenreDetail = (props) => {
                     {data.description}
                 </Text>
                 <View style={{
-                    width: "80%",
+                    width: data.qualities.length < 2
+                        ? "15%"
+                        : data.qualities.length < 4 ?
+                            "40%"
+                            : "80%",
                     height: heightPercentageToDP(4),
-                    marginTop: heightPercentageToDP(1)
-                    //backgroundColor:"red"
+                    marginTop: heightPercentageToDP(1),
+                    alignItems: "center",
+                    //backgroundColor: "red"
                 }}>
                     <ScrollView
                         horizontal
