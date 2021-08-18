@@ -5,19 +5,23 @@ import FastImage from 'react-native-fast-image'
 import Card from '../../Component/DiveCard'
 import { data } from './data'
 import Tab from '../../Component/BottomTab'
-import { getUserDives, eraseData } from '../../Redux/action'
+import { getUserDives, eraseData, deleteUserDives } from '../../Redux/action'
 import { heightPercentageToDP } from '../../Component/MakeMeResponsive'
 import { HomeAction, profileAction, settingAction, mapAction, notificationAction } from '../../Component/BottomTab/actions'
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view'
 import Strings from '../../Translation'
 import { useSelector, useDispatch } from 'react-redux';
-import { black } from '../../config/color'
+import { black, blue, blue2 } from '../../config/color'
+import AwesomeAlert from 'react-native-awesome-alerts';
+
 
 const Dive = (props) => {
     const language = useSelector((state) => state.user.language);
     const login = useSelector((state) => state.user.login);
     const [isLoading, setIsLoading] = useState(false)
     const [Response, setResponse] = useState('')
+    const [imageId, setId] = useState('')
+    const [showAlert, setAlert] = useState(false)
     useEffect(() => {
         if (!language) {
             Strings.setLanguage('en')
@@ -25,11 +29,14 @@ const Dive = (props) => {
             Strings.setLanguage(language)
         }
     }, [language])
-
     useEffect(() => {
         getApis();
     }, [])
-
+    useEffect(() => {
+        if (imageId) {
+            setAlert(true)
+        }
+    }, [imageId])
     const getApis = async () => {
         setIsLoading(true)
         let menuData = await getUserDives(login.data.id)
@@ -41,6 +48,13 @@ const Dive = (props) => {
         await eraseData(login.data.id)
         await setIsLoading(false)
     }
+    const deleteApis = async () => {
+        setIsLoading(true)
+        await deleteUserDives(login.data.id, imageId)
+        await setIsLoading(false)
+        getApis()
+    }
+
 
     return (
         <SafeAreaView style={[styles.container, { alignItems: "center" }]}>
@@ -65,6 +79,8 @@ const Dive = (props) => {
                                 months={item.months}
                                 navigate={props.navigation.navigate}
                                 destination="UpdateLogBook"
+                                //longPress = {()=> setAlert(true)}
+                                longPress={imageId => setId(imageId)}
                             />
                         )
                     }}
@@ -89,6 +105,29 @@ const Dive = (props) => {
                     size="large"
                     color={black}
                     style={styles.loading}
+                />
+            }
+            {showAlert &&
+                <AwesomeAlert
+                    show={showAlert}
+                    showProgress={false}
+                    title="Alert"
+                    message="Do you really want to delete the dive?"
+                    closeOnTouchOutside={false}
+                    closeOnHardwareBackPress={false}
+                    showCancelButton={true}
+                    showConfirmButton={true}
+                    cancelText="No"
+                    confirmText="Yes, delete it"
+                    confirmButtonColor={blue}
+                    cancelButtonColor={blue2}
+                    onCancelPressed={() => {
+                        setAlert(false);
+                    }}
+                    onConfirmPressed={() => {
+                        setAlert(false);
+                        deleteApis()
+                    }}
                 />
             }
         </SafeAreaView>

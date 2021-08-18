@@ -56,6 +56,8 @@ const baseUrl = "http://199.247.13.90/api/",
     updateCertificateDegree = 'update-certificate-degree',
     changePassword = 'change-password',
     erase = 'erase',
+    deleteUpload = 'delete-upload',
+    deleteDive = 'delete-dive',
     register = 'register';
 
 const country_url = "https://countriesnow.space/api/v0.1/countries/positions"
@@ -1806,6 +1808,69 @@ export const eraseData = async (userId) => {
                     return json;
                 } else {
                     Alert.alert("", json.message)
+                    console.log(json)
+                }
+            })
+            .catch(error => {
+                console.log("response error ===>", error)
+            })
+    } catch (error) {
+        console.log('my error' + error.message);
+    }
+    return api
+}
+export const deleteUploadImage = async (userId,uploadId) => {
+    let api
+    try {
+        api = await fetch(baseUrl + deleteUpload, {
+            method: 'POST',
+            headers: {
+                'Accept': 'application/json',
+                "Content-type": "application/json",
+            },
+            body: JSON.stringify({
+                userId: userId,
+                uploadId: uploadId,
+            })
+        })
+            .then(res => res.json())
+            .then(json => {
+                if (json.status == 200) {
+                    console.log(json)
+                    return
+                } else {
+                    console.log(json)
+                }
+            })
+            .catch(error => {
+                console.log("response error ===>", error)
+            })
+    } catch (error) {
+        console.log('my error' + error.message);
+    }
+    return api
+}
+export const deleteUserDives = async (userId,diveId) => {
+    console.log("my dive is is", diveId)
+    let api
+    try {
+        api = await fetch(baseUrl + deleteDive, {
+            method: 'POST',
+            headers: {
+                'Accept': 'application/json',
+                "Content-type": "application/json",
+            },
+            body: JSON.stringify({
+                userId: userId,
+                diveId: diveId,
+            })
+        })
+            .then(res => res.json())
+            .then(json => {
+                if (json.status == 200) {
+                    console.log(json)
+                    return
+                } else {
                     console.log(json)
                 }
             })

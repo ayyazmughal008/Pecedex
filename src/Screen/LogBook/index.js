@@ -777,8 +777,118 @@ const LogBook = (props) => {
             console.log(error);
         })
     }
+    // drop down options
+    const diveType = [
+        {
+            label: Strings.Baptism,
+            value: Strings.Baptism
+        },
+        {
+            label: Strings.Diving_Course,
+            value: Strings.Diving_Course
+        },
+        {
+            label: Strings.Naturalistic_Dive,
+            value: Strings.Naturalistic_Dive
+        },
+        {
+            label: Strings.Wreck_Dive,
+            value: Strings.Wreck_Dive
+        },
+        {
+            label: Strings.Cave_Dive,
+            value: Strings.Cave_Dive
+        },
+        {
+            label: Strings.Cold_Weather_Dive,
+            value: Strings.Cold_Weather_Dive
+        },
+        {
+            label: Strings.Night_Dive,
+            value: Strings.Night_Dive
+        },
+        {
+            label: Strings.Others,
+            value: Strings.Others
+        }
 
+    ]
+    const Type = [
+        {
+            label: Strings.sea,
+            value: Strings.sea
+        },
+        {
+            label: Strings.river,
+            value: Strings.river
+        },
+        {
+            label: Strings.other,
+            value: Strings.other
+        },
 
+    ]
+    const Current = [
+        {
+            label: Strings.none,
+            value: Strings.none
+        },
+        {
+            label: Strings.slight,
+            value: Strings.slight
+        },
+        {
+            label: Strings.moderate,
+            value: Strings.moderate
+        },
+        {
+            label: Strings.strong,
+            value: Strings.strong
+        },
+
+    ]
+    const Access = [
+        {
+            label: Strings.coast,
+            value: Strings.coast
+        },
+        {
+            label: Strings.boat,
+            value: Strings.boat
+        },
+        {
+            label: Strings.other,
+            value: Strings.other
+        },
+    ]
+    const Material = [
+        {
+            label: Strings.Steel,
+            value: Strings.Steel
+        },
+        {
+            label: Strings.Aluminum,
+            value: Strings.Aluminum
+        },
+        {
+            label: Strings.other,
+            value: Strings.other
+        },
+    ]
+    const Mix = [
+        {
+            label: Strings.Air,
+            value: Strings.Air
+        },
+        {
+            label: Strings.Nitrox,
+            value: Strings.Nitrox
+        },
+        {
+            label: Strings.Trimix_Mix,
+            value: Strings.Trimix_Mix
+        },
+    ]
     return (
         <View style={[styles.container, { alignItems: "center" }]}>
             <FastImage
@@ -790,8 +900,8 @@ const LogBook = (props) => {
                 source={require('../../Images/BG.png')}
                 resizeMode={FastImage.resizeMode.stretch}
                 style={styles.bgImg}>
-                <KeyboardAwareScrollView contentContainerStyle={{ flexGrow: 1 }}>
-                    <View style={{ flex: 1 }}>
+                <KeyboardAwareScrollView contentContainerStyle={{ flexGrow: 1, }}>
+                    <View style={{ flex: 1, alignItems: "center" }}>
                         <View style={styles.titleView}>
                             <Text style={styles.titleTxt}>
                                 {Strings.LOCATION}
@@ -932,7 +1042,7 @@ const LogBook = (props) => {
                                 {Strings.ENVIRONMENT}
                             </Text>
                         </View>
-                        <View style={[styles.logView, {
+                        <View style={[styles.logView2, {
                             height: heightPercentageToDP(40),
                             marginTop: heightPercentageToDP(2),
                             backgroundColor: blue
@@ -1044,12 +1154,12 @@ const LogBook = (props) => {
                                     />
                                 </TouchableOpacity>
                             </View>
-                            <View style={{ width: "100%", flexDirection: "row", alignItems: "center", }}>
+                            <View style={{ width: "70%", flexDirection: "row", alignItems: "center", }}>
                                 <Text style={[styles.smallTxt, { color: black, marginLeft: 15, }]}>
                                     {Strings.Water_temperature}{" : "}
                                 </Text>
                                 <TextInput
-                                    style={[styles.smallInput, { height: "70%", width: "8%", paddingTop: 0, paddingBottom: 0, }]}
+                                    style={[styles.smallInput, { height: "70%", width: "12%", paddingTop: 0, paddingBottom: 0, }]}
                                     placeholder="10"
                                     placeholderTextColor={white}
                                     keyboardType="numeric"
@@ -1061,12 +1171,12 @@ const LogBook = (props) => {
                                     {"*C"}
                                 </Text>
                             </View>
-                            <View style={{ width: "100%", flexDirection: "row", alignItems: "center", }}>
+                            <View style={{ width: "70%", flexDirection: "row", alignItems: "center", }}>
                                 <Text style={[styles.smallTxt, { color: black, marginLeft: 15, }]}>
                                     {Strings.Visibility}{" : "}
                                 </Text>
                                 <TextInput
-                                    style={[styles.smallInput, { height: "70%", width: "8%", paddingTop: 0, paddingBottom: 0, }]}
+                                    style={[styles.smallInput, { height: "70%", width: "12%", paddingTop: 0, paddingBottom: 0, }]}
                                     placeholder={"7"}
                                     placeholderTextColor={white}
                                     keyboardType="numeric"
@@ -1078,29 +1188,30 @@ const LogBook = (props) => {
                                     {Strings.meters}
                                 </Text>
                             </View>
-                            <Text
-                                onPress={() => {
+                            <View style={{ width: "70%", flexDirection: "row", alignItems: "center", }}>
+                                <Text onPress={() => {
                                     setSweetWater(true)
                                     setSaltWater(false)
                                     setWaterType("sweet water")
                                 }}
-                                style={[styles.smallTxt, { color: sweetWater ? white : black, }]}>
-                                {Strings.sweet_water}{" / "}
-                                <Text
-                                    onPress={() => {
-                                        setSweetWater(false)
-                                        setSaltWater(true)
-                                        setWaterType("salt water")
-                                    }}
-                                    style={[styles.smallTxt, { color: saltWater ? white : black }]}>
-                                    {Strings.salt_water}
+                                    style={[styles.smallTxt, { color: sweetWater ? white : black, marginLeft: widthPercentageToDP(4) }]}>
+                                    {Strings.sweet_water}{" / "}
+                                    <Text
+                                        onPress={() => {
+                                            setSweetWater(false)
+                                            setSaltWater(true)
+                                            setWaterType("salt water")
+                                        }}
+                                        style={[styles.smallTxt, { color: saltWater ? white : black }]}>
+                                        {Strings.salt_water}
+                                    </Text>
                                 </Text>
-                            </Text>
-                            <View style={{ flexDirection: "row", alignItems: "center", alignSelf: "center", height: "13%", }}>
+                            </View>
+                            <View style={{ flexDirection: "row", alignItems: "center", alignSelf: "center", height: "10%", marginLeft: widthPercentageToDP(4), }}>
                                 <Text style={[styles.smallTxt, { color: black }]}>
                                     {Strings.type}{" :"}
                                 </Text>
-                                <View style={{ width: "50%", height: "100%", justifyContent: "center" }}>
+                                <View style={{ width: language === 'es' ? "50%" : "56%", height: "100%", justifyContent: "center" }}>
                                     <RNPickerSelect
                                         placeholder={{
                                             label: Strings.type,
@@ -1112,15 +1223,15 @@ const LogBook = (props) => {
                                         onValueChange={value => {
                                             setType(value)
                                         }}
-                                        items={data.Type}
+                                        items={Type}
                                     />
                                 </View>
                             </View>
-                            <View style={{ flexDirection: "row", alignItems: "center", alignSelf: "center", height: "13%", }}>
+                            <View style={{ flexDirection: "row", alignItems: "center", alignSelf: "center", height: "9%", marginLeft: widthPercentageToDP(8), marginTop: -5 }}>
                                 <Text style={[styles.smallTxt, { color: black }]}>
                                     {Strings.currents}{" :"}
                                 </Text>
-                                <View style={{ width: "50%", height: "100%", justifyContent: "center" }}>
+                                <View style={{ width: language === 'es' ? "50%" : "54%", height: "100%", justifyContent: "center" }}>
                                     <RNPickerSelect
                                         placeholder={{
                                             label: Strings.currents,
@@ -1132,7 +1243,7 @@ const LogBook = (props) => {
                                         onValueChange={value => {
                                             setCurrent(value)
                                         }}
-                                        items={data.Current}
+                                        items={Current}
                                     />
                                 </View>
                             </View>
@@ -1191,7 +1302,7 @@ const LogBook = (props) => {
                                         resizeMode={FastImage.resizeMode.stretch}
                                         style={{ width: "33%", height: "45%", marginLeft: 8 }}
                                     />
-                                    <View style={{ width: "50%", height: "70%", marginLeft: 5 }}>
+                                    <View style={{ width: "50%", height: "90%", marginLeft: 5, }}>
                                         <Text style={[styles.tinyText, { color: black }]}>
                                             {Strings.start_time}{":"}
                                         </Text>
@@ -1236,7 +1347,7 @@ const LogBook = (props) => {
                                     </View>
                                 </View>
                             </View>
-                            <View style={{ flexDirection: "row", alignItems: "center", alignSelf: "center" }}>
+                            <View style={{ flexDirection: "row", alignItems: "center", width: "97%", }}>
                                 <Text style={[styles.smallTxt, { color: black, marginLeft: 15 }]}>
                                     {Strings.max_deep}{" : "}
                                 </Text>
@@ -1252,7 +1363,7 @@ const LogBook = (props) => {
                                     {Strings.meters}
                                 </Text>
                             </View>
-                            <View style={{ flexDirection: "row", alignItems: "center", alignSelf: "center", height: "13%", }}>
+                            <View style={{ flexDirection: "row", alignItems: "center", alignSelf: "center", height: "13%",width: "90%" }}>
                                 <Text style={[styles.smallTxt, { color: black }]}>
                                     {Strings.type_of_dives}{" :"}
                                 </Text>
@@ -1268,11 +1379,11 @@ const LogBook = (props) => {
                                         onValueChange={value => {
                                             setTypeImpresion(value)
                                         }}
-                                        items={data.diveType}
+                                        items={diveType}
                                     />
                                 </View>
                             </View>
-                            <View style={{ flexDirection: "row", alignItems: "center", alignSelf: "center", height: "13%", }}>
+                            <View style={{ flexDirection: "row", alignItems: "center", alignSelf: "center", height: "13%", width: "90%" }}>
                                 <Text style={[styles.smallTxt, { color: black }]}>
                                     {Strings.access}{" :"}
                                 </Text>
@@ -1288,7 +1399,7 @@ const LogBook = (props) => {
                                         onValueChange={value => {
                                             setAccess(value)
                                         }}
-                                        items={data.Access}
+                                        items={Access}
                                     />
                                 </View>
                             </View>
@@ -1498,7 +1609,7 @@ const LogBook = (props) => {
                                                     onValueChange={value => {
                                                         setMaterial(value)
                                                     }}
-                                                    items={data.Material}
+                                                    items={Material}
                                                 />
                                             </View>
                                         </View>
@@ -1518,7 +1629,7 @@ const LogBook = (props) => {
                                                     onValueChange={value => {
                                                         setMix(value)
                                                     }}
-                                                    items={data.Mix}
+                                                    items={Mix}
                                                 />
                                             </View>
                                         </View>
@@ -1748,7 +1859,7 @@ const LogBook = (props) => {
                                 showsVerticalScrollIndicator={false}
                                 numColumns={4}
                                 listKey={(item, index) => `_key${index.toString()}`}
-                                //style={{ width:widthPercentageToDP(90) }}
+                                style={{ width: widthPercentageToDP(90) }}
                                 keyExtractor={(item, index) => "unique" + index}
                                 renderItem={imageModel}
                             />}
@@ -1776,7 +1887,7 @@ const LogBook = (props) => {
                                 showsVerticalScrollIndicator={false}
                                 numColumns={4}
                                 listKey={(item, index) => `_key${index.toString()}`}
-                                //style={{ alignSelf: "center" }}
+                                style={{ width: widthPercentageToDP(90) }}
                                 keyExtractor={(item, index) => "unique" + index}
                                 renderItem={imageModel}
                             />}
@@ -1804,7 +1915,7 @@ const LogBook = (props) => {
                                 showsVerticalScrollIndicator={false}
                                 numColumns={4}
                                 listKey={(item, index) => `_key${index.toString()}`}
-                                //style={{ alignSelf: "center" }}
+                                style={{ width: widthPercentageToDP(90) }}
                                 keyExtractor={(item, index) => "unique" + index}
                                 renderItem={imageModel}
                             />

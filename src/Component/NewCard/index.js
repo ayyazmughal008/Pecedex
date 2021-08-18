@@ -21,13 +21,13 @@ const Card = (props) => {
                     </View>
                     <View style={styles.right}>
                         <Text style={[styles.monthTxt, { color: black }]}>
-                            {"Temperatura del agua: "}
+                            {"Temperatura del agua: "} {'\n'}
                             <Text style={styles.monthTxt}>
                                 {props.aguaTemp}
                             </Text>
                         </Text>
                         <Text style={[styles.monthTxt, { color: black }]}>
-                            {"Temperatura del aire: "}
+                            {"Temperatura del aire: "}{'\n'}
                             <Text style={styles.monthTxt}>
                                 {props.aireTemp}
                             </Text>

@@ -204,7 +204,16 @@ const DiveCenter = (props) => {
                     style={[styles.line, { marginTop: heightPercentageToDP(1) }]}
                     resizeMode={FastImage.resizeMode.stretch}
                 />
-                <View style={{ width: "60%", alignSelf: "center", marginTop: heightPercentageToDP(1), }}>
+                <View style={{
+                    width: info.data.certifiers.length < 2 ?
+                        "22%" : info.data.certifiers.length < 4 ?
+                            "45%" :
+                            info.data.certifiers.length < 6 ?
+                                "65%" : "100%",
+                    alignSelf: "center",
+                    marginTop: heightPercentageToDP(1),
+                    //backgroundColor:"red"
+                }}>
                     <ScrollView
                         horizontal
                         contentContainerStyle={{ alignItems: "center", flexGrow: 1 }}>
@@ -229,7 +238,8 @@ const DiveCenter = (props) => {
                             array: info.data.comments,
                             count: info.data.commentsCount,
                             id: myId,
-                            average: info.averageStars
+                            average: info.averageStars,
+                            totalAverage: info.totalAverage
                         });
                     }}
                 >
@@ -245,7 +255,7 @@ const DiveCenter = (props) => {
                     style={styles.line}
                     resizeMode={FastImage.resizeMode.stretch}
                 />
-                <Text style={[styles.profileName, { alignSelf: "flex-start", color: blue, marginLeft: widthPercentageToDP(5) }]}>
+                <Text style={[styles.profileName, { alignSelf: "flex-start", color: blue, marginLeft: widthPercentageToDP(5), marginTop: heightPercentageToDP(4) }]}>
                     {Strings.ACTIVITIES}
                 </Text>
                 <HTML

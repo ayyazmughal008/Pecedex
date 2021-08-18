@@ -10,12 +10,15 @@ import { useSelector, useDispatch } from 'react-redux';
 import Strings from '../../Translation'
 import { logOut, setLanguage, logoutUser, sendUserLanguage } from '../../Redux/action'
 import RNRestart from 'react-native-restart';
+import { GooglePay } from 'react-native-google-pay';
 
 const Setting = (props) => {
     const dispatch = useDispatch();
     const language = useSelector((state) => state.user.language);
     const login = useSelector((state) => state.user.login);
     const [isLoading, setIsLoading] = useState(false)
+    const allowedCardNetworks = ['VISA', 'MASTERCARD'];
+    const allowedCardAuthMethods = ['PAN_ONLY', 'CRYPTOGRAM_3DS'];
 
     useEffect(() => {
         if (!language) {
@@ -24,7 +27,6 @@ const Setting = (props) => {
             Strings.setLanguage(language)
         }
     }, [language])
-
     const logoutApi = async () => {
         setIsLoading(true)
         await logoutUser(login.data.id)
@@ -36,6 +38,48 @@ const Setting = (props) => {
         await sendUserLanguage(login.data.id, language)
         await setIsLoading(false)
         RNRestart.Restart();
+    }
+    const _onMonthlyClick = () => {
+        const requestData = {
+            cardPaymentMethod: {
+                tokenizationSpecification: {
+                    type: 'PAYMENT_GATEWAY',
+                    // stripe (see Example):
+                    // gateway: 'stripe',
+                    // gatewayMerchantId: '',
+                    // stripe: {
+                    //     publishableKey: 'pk_test_TYooMQauvdEDq54NiTphI7jx',
+                    //     version: '2018-11-08',
+                    // },
+                    // other:
+                    gateway: 'example',
+                    gatewayMerchantId: 'exampleGatewayMerchantId',
+                },
+                allowedCardNetworks,
+                allowedCardAuthMethods,
+            },
+            transaction: {
+                totalPrice: '10',
+                totalPriceStatus: 'FINAL',
+                currencyCode: 'USD',
+            },
+            merchantName: 'Example Merchant',
+        };
+        // Set the environment before the payment request
+        GooglePay.setEnvironment(GooglePay.ENVIRONMENT_TEST);
+
+        // Check if Google Pay is available
+        GooglePay.isReadyToPay(allowedCardNetworks, allowedCardAuthMethods)
+            .then((ready) => {
+                if (ready) {
+                    // Request payment token
+                    GooglePay.requestPayment(requestData)
+                        .then((token) => {
+                            console.log(token)
+                        })
+                        .catch((error) => console.log(error.code, error.message));
+                }
+            })
     }
 
 
@@ -136,17 +180,42 @@ const Setting = (props) => {
                     {Strings.change}
                 </Text>
             </View>
+            <Text style={[styles.titleTxt, { alignSelf: "center" }]}>
+                {Strings.membership}
+            </Text>
             <TouchableOpacity
-                style={[styles.inputView, {
-                    backgroundColor: green,
-                    justifyContent: "center",
-                    alignItems: "center",
-                    marginTop: heightPercentageToDP(4),
+                style={[styles.logoutBtn, {
+                    borderColor: green,
+                    alignSelf: "center",
+                    marginTop: heightPercentageToDP(1)
+                }]}
+                onPress={() => { _onMonthlyClick() }}
+            >
+                <Text style={styles.logoutBtnTxt}>
+                    {"$ 20.00 / PER MONTHLY"}
+                </Text>
+            </TouchableOpacity>
+            <TouchableOpacity
+                style={[styles.logoutBtn, {
+                    borderColor: "#FFD700",
+                    alignSelf: "center",
+                    marginTop: heightPercentageToDP(1)
+                }]}
+                onPress={() => { logoutApi() }}
+            >
+                <Text style={styles.logoutBtnTxt}>
+                    {"$ 100.00 / PER YEARLY"}
+                </Text>
+            </TouchableOpacity>
+            <TouchableOpacity
+                style={[styles.logoutBtn, {
+                    position: "absolute",
+                    bottom: "10%",
                     alignSelf: "center"
                 }]}
                 onPress={() => { logoutApi() }}
             >
-                <Text style={styles.btnText}>
+                <Text style={styles.logoutBtnTxt}>
                     {Strings.logout}
                 </Text>
             </TouchableOpacity>

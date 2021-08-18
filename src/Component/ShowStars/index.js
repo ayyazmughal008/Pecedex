@@ -112,7 +112,7 @@ const SurveyItems = (props) => {
 const styles = StyleSheet.create({
     container: {
         flex: 0,
-        width: widthPercentageToDP(100),
+        //width: widthPercentageToDP(100),
         alignItems: 'center',
         marginTop: widthPercentageToDP(2)
     },

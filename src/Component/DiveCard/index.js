@@ -1,13 +1,16 @@
 import React, { useState } from 'react'
 import { View, TouchableOpacity, Text, StyleSheet, FlatList, ActivityIndicator } from 'react-native'
-import { black, blue, white } from '../../config/color'
+import { black, blue, blue2, white } from '../../config/color'
 import { getDivesDetails } from '../../Redux/action'
 import { widthPercentageToDP, heightPercentageToDP } from '../MakeMeResponsive'
 import FastImage from 'react-native-fast-image'
 import { useSelector, useDispatch } from 'react-redux';
+import AwesomeAlert from 'react-native-awesome-alerts';
 
 const Card = (props) => {
     const [isLoading, setIsLoading] = useState(false)
+    const [imageId, setId] = useState('')
+    const [showAlert, setAlert] = useState(false)
     const login = useSelector((state) => state.user.login);
 
     const getApis = async (diveId) => {
@@ -24,6 +27,8 @@ const Card = (props) => {
                     // })
                     getApis(item.id)
                 }}
+                delayLongPress={1000}
+                onLongPress={() => props.longPress(item.id)}
                 style={styles.modelView}>
                 {item.image ?
                     <FastImage
@@ -38,7 +43,10 @@ const Card = (props) => {
                     />
                 }
                 <Text style={styles.title}>
-                    {"Pecedex"}
+                    {item.country}
+                </Text>
+                <Text style={styles.title}>
+                    {item.city}
                 </Text>
                 <Text style={styles.date}>
                     {item.date}
@@ -68,6 +76,29 @@ const Card = (props) => {
                         size="large"
                         color={black}
                         style={styles.loading}
+                    />
+                }
+                {showAlert &&
+                    <AwesomeAlert
+                        show={showAlert}
+                        showProgress={false}
+                        title="Alert"
+                        message="Do you really want to delete the dives?"
+                        closeOnTouchOutside={false}
+                        closeOnHardwareBackPress={false}
+                        showCancelButton={true}
+                        showConfirmButton={true}
+                        cancelText="No"
+                        confirmText="Yes, delete it"
+                        confirmButtonColor={blue}
+                        cancelButtonColor={blue2}
+                        onCancelPressed={() => {
+                            setAlert(false);
+                        }}
+                        onConfirmPressed={() => {
+                            setAlert(false);
+                            //deleteApi(imageId);
+                        }}
                     />
                 }
             </View>
@@ -148,7 +179,7 @@ const styles = StyleSheet.create({
         color: white,
         textAlign: "center",
         fontFamily: "Montserrat-SemiBold",
-        marginTop: heightPercentageToDP(0.5)
+        //marginTop: heightPercentageToDP(0.1)
     },
     date: {
         fontSize: widthPercentageToDP(3),

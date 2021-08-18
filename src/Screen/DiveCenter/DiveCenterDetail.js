@@ -20,6 +20,7 @@ const DiveCenter = (props) => {
     const count = props.navigation.getParam('count', '123')
     const average = props.navigation.getParam('average', '123')
     const id = props.navigation.getParam('id', '123')
+    const totalAverage = props.navigation.getParam('totalAverage', '123')
     const [myId, setMyId] = useState("")
     useEffect(() => {
         if (!language) {
@@ -64,45 +65,107 @@ const DiveCenter = (props) => {
                     />
                 }
             </View>
-            <View style={{ marginTop: heightPercentageToDP(1) }} />
-            <View style={[styles.commentView, {
-                backgroundColor: blue,
-                borderRadius: widthPercentageToDP(5),
-                height: heightPercentageToDP(20),
-            }]}>
-                <Stars value={average} />
-                <FastImage
-                    source={require('../../Images/line.png')}
-                    style={styles.line}
-                    resizeMode={FastImage.resizeMode.stretch}
-                />
-                <Text style={styles.commentTxt}>
-                    {count}{" "}{Strings.Comments}
-                </Text>
-                <Text
-                    onPress={() => {
-                        //alert(myId);
-                        props.navigation.navigate('SubmitReview', {
-                            id: myId
-                        });
-                    }
-                    }
-                    style={[styles.commentTxt, {
-                        textDecorationLine: "underline"
-                    }]}>
-                    {Strings.Write_Review}
-                </Text>
-            </View>
+            <KeyboardAwareScrollView contentContainerStyle={{ flexGrow: 1 }}>
 
-            {!array || !array.length ?
-                <View />
-                : <FlatList
-                    data={array}
-                    keyExtractor={(item, index) => "unque" + index}
-                    showsVerticalScrollIndicator={false}
-                    renderItem={_renderItem}
-                />}
+                <View style={{ marginTop: heightPercentageToDP(1) }} />
+                <View style={[styles.commentView, {
+                    backgroundColor: blue,
+                    borderRadius: widthPercentageToDP(5),
+                    height: heightPercentageToDP(45),
+                }]}>
+                    <View style={{
+                        width: "100%",
+                        flexDirection: "row",
+                        alignItems: "center",
+                        justifyContent: "space-around",
+                        //backgroundColor:"red"
+                    }}>
+                        <Stars value={5} />
+                        <Text style={styles.commentTxt}>
+                            {totalAverage.fiveStars}
+                        </Text>
+                    </View>
+                    <View style={{
+                        width: "100%",
+                        flexDirection: "row",
+                        alignItems: "center",
+                        justifyContent: "space-around",
+                        //backgroundColor:"red"
+                    }}>
+                        <Stars value={4} />
+                        <Text style={styles.commentTxt}>
+                            {totalAverage.fourStars}
+                        </Text>
+                    </View>
+                    <View style={{
+                        width: "100%",
+                        flexDirection: "row",
+                        alignItems: "center",
+                        justifyContent: "space-around",
+                        //backgroundColor:"red"
+                    }}>
+                        <Stars value={3} />
+                        <Text style={styles.commentTxt}>
+                            {totalAverage.threeStars}
+                        </Text>
+                    </View>
+                    <View style={{
+                        width: "100%",
+                        flexDirection: "row",
+                        alignItems: "center",
+                        justifyContent: "space-around",
+                        //backgroundColor:"red"
+                    }}>
+                        <Stars value={2} />
+                        <Text style={styles.commentTxt}>
+                            {totalAverage.twoStars}
+                        </Text>
+                    </View>
+                    <View style={{
+                        width: "100%",
+                        flexDirection: "row",
+                        alignItems: "center",
+                        justifyContent: "space-around",
+                        //backgroundColor:"red"
+                    }}>
+                        <Stars value={1} />
+                        <Text style={styles.commentTxt}>
+                            {totalAverage.oneStars}
+                        </Text>
+                    </View>
+                    <FastImage
+                        source={require('../../Images/line.png')}
+                        style={styles.line}
+                        resizeMode={FastImage.resizeMode.stretch}
+                    />
+                    <Text style={styles.commentTxt}>
+                        {count}{" "}{Strings.Comments}
+                    </Text>
+                    <Text
+                        onPress={() => {
+                            //alert(myId);
+                            props.navigation.navigate('SubmitReview', {
+                                id: myId
+                            });
+                        }
+                        }
+                        style={[styles.commentTxt, {
+                            textDecorationLine: "underline"
+                        }]}>
+                        {Strings.Write_Review}
+                    </Text>
+                </View>
 
+                {!array || !array.length ?
+                    <View />
+                    : <FlatList
+                        data={array}
+                        keyExtractor={(item, index) => "unque" + index}
+                        showsVerticalScrollIndicator={false}
+                        renderItem={_renderItem}
+                    />
+                }
+            </KeyboardAwareScrollView>
             <View style={{ height: heightPercentageToDP(7) }} />
             <Tab
                 homeClick={() => props.navigation.dispatch(HomeAction)}

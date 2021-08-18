@@ -28,7 +28,7 @@ const Strings = new LocalizedStrings({
         ANIMAL: "ANIMALS",
         PADI_advance_Open_Water_Diver: "PADI advance Open Water Diver",
         dives: "Dives",
-        animal_vistos: "seen animal",
+        animal_vistos: "seen animals",
         pecios_vistos: "wrecks seen",
         PUNCTUATION: "PUNCTUATION",
         PHOTOS: "PHOTOS",
@@ -130,7 +130,23 @@ const Strings = new LocalizedStrings({
         forget_pass: "Change Password",
         old_pass:"Old password",
         new_pass: "New password",
-        confirm_new:"Confirm new password"
+        confirm_new:"Confirm new password",
+        membership:"Membership",
+        // logbook new drop down values
+        sea:"sea",
+        river:"river",
+        other:"other",
+        none:"none",
+        slight:"slight",
+        moderate:"moderate",
+        strong:"strong",
+        coast:"coast",
+        boat:"boat",
+        Steel:"Steel",
+        Aluminum:"Aluminum",
+        Air:"Air",
+        Nitrox:"Nitrox",
+        Trimix_Mix:"Trimix Mix"
     },
     es: {
         signin: "INICIAR SESIÓN",
@@ -159,7 +175,7 @@ const Strings = new LocalizedStrings({
         PECIOS: "PECIOS",
         PADI_advance_Open_Water_Diver: "PADI advance Open Water Diver",
         dives: "Inmersiones",
-        animal_vistos: "animal visto",
+        animal_vistos: "animales vistos",
         pecios_vistos: "pecios vistos",
         PUNCTUATION: "PUNTUACIÓN",
         PHOTOS: "FOTOS",
@@ -261,7 +277,23 @@ const Strings = new LocalizedStrings({
         forget_pass: "Cambiar la contraseña",
         old_pass:"Contraseña anterior",
         new_pass: "Nueva contraseña",
-        confirm_new:"Confirmar nueva contraseña"
+        confirm_new:"Confirmar nueva contraseña",
+        membership:"Membership",
+        // logbook new drop down values
+        sea:"mar",
+        river:"río",
+        other:"otro",
+        none:"Ninguno",
+        slight:"Ligera",
+        moderate:"Moderada",
+        strong:"fuerte",
+        coast:"costa",
+        boat:"bote",
+        Steel:"Acero",
+        Aluminum:"Aluminio",
+        Air:"Aire",
+        Nitrox:"Nitrox",
+        Trimix_Mix:"Mezcla de Trimix"
 
     },
 });

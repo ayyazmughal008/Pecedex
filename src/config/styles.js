@@ -93,7 +93,7 @@ export const styles = StyleSheet.create({
     },
     input3: {
         width: widthPercentageToDP(60),
-        height: heightPercentageToDP(5.5),
+        height: heightPercentageToDP(5),
         fontSize: widthPercentageToDP(3.5),
         fontFamily: "Montserrat-Regular",
         paddingLeft: widthPercentageToDP(5),
@@ -226,7 +226,8 @@ export const styles = StyleSheet.create({
         fontFamily: "Montserrat-SemiBold",
         textAlign: "center",
         alignSelf: "center",
-        padding: widthPercentageToDP(2)
+        padding: widthPercentageToDP(1),
+        //backgroundColor:"red"
     },
     smallText2: {
         fontSize: widthPercentageToDP(3),
@@ -252,7 +253,7 @@ export const styles = StyleSheet.create({
         alignSelf: "center",
         padding: widthPercentageToDP(1),
         paddingLeft: widthPercentageToDP(4),
-        paddingRight: widthPercentageToDP(4)
+        paddingRight: widthPercentageToDP(4),
     },
     mapBottom: {
         width: widthPercentageToDP(40),
@@ -277,6 +278,7 @@ export const styles = StyleSheet.create({
         height: heightPercentageToDP(15),
         alignItems: "center",
         alignSelf: "center",
+        marginTop:heightPercentageToDP(2)
         //backgroundColor: blue
     },
     infoTxt: {
@@ -304,7 +306,7 @@ export const styles = StyleSheet.create({
     commentView: {
         width: widthPercentageToDP(80),
         height: heightPercentageToDP(13),
-        justifyContent: "center",
+        //justifyContent: "center",
         alignItems: "center",
         alignSelf: "center",
         //backgroundColor:"red",
@@ -352,7 +354,7 @@ export const styles = StyleSheet.create({
         flexDirection: "row",
         alignItems: "center",
         alignSelf: "center",
-        marginTop: heightPercentageToDP(2)
+        marginTop: heightPercentageToDP(1)
     },
     titleTxt: {
         fontSize: widthPercentageToDP(4.5),
@@ -467,4 +469,18 @@ export const styles = StyleSheet.create({
         fontFamily: "Montserrat-SemiBold",
         color: white
     },
+    logoutBtn: {
+        width: widthPercentageToDP(90),
+        height: heightPercentageToDP(5.5),
+        borderColor: "red",
+        borderWidth:widthPercentageToDP(0.4),
+        borderRadius: widthPercentageToDP(3),
+        justifyContent:"center",
+        alignItems:"center"
+    },
+    logoutBtnTxt:{
+        fontSize: widthPercentageToDP(4),
+        color: black,
+        fontFamily: "Montserrat-Regular"
+    }
 })

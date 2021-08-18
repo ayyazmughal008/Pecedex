@@ -138,7 +138,7 @@ const styles = StyleSheet.create({
         flexDirection: "row",
         flexWrap: "wrap",
         alignItems: "center",
-        width: widthPercentageToDP(85),
+        width: widthPercentageToDP(50),
         marginTop: widthPercentageToDP(2),
         marginBottom: widthPercentageToDP(2),
         justifyContent: "space-between"

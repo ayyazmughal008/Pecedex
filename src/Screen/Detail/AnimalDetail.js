@@ -54,26 +54,30 @@ const GenreDetail = (props) => {
     const _renderItem = (({ item, index }) => {
         return (
             <View style={{
-                width: widthPercentageToDP(40),
-                alignItems: "center",
-                marginTop: heightPercentageToDP(2),
-                flexDirection: "row",
+                width: widthPercentageToDP(50),
+                height: heightPercentageToDP(5),
+                marginTop: heightPercentageToDP(1),
+                //flexDirection: "row",
+                //alignItems:"center",
                 //backgroundColor: "red",
                 marginRight: widthPercentageToDP(2),
                 justifyContent: "center"
             }}>
-                <FastImage
-                    source={{ uri: item.image }}
-                    resizeMode={FastImage.resizeMode.contain}
-                    style={{
-                        width: widthPercentageToDP(10),
-                        height: heightPercentageToDP(5),
-                    }}
-                />
-                <Text style={[styles.smallText, { flex: 0, flexWrap: 'wrap', marginLeft: widthPercentageToDP(5) }]}>
-                    {item.text}
-                </Text>
-
+                <View style={{flexDirection:"row",alignItems:"center"}}>
+                    <FastImage
+                        source={{ uri: item.image }}
+                        resizeMode={FastImage.resizeMode.contain}
+                        style={{
+                            width: widthPercentageToDP(8),
+                            height: heightPercentageToDP(3),
+                            alignSelf: "flex-start",
+                            marginLeft: widthPercentageToDP(7)
+                        }}
+                    />
+                    <Text style={[styles.smallText, { flex: 0, flexWrap: 'wrap', marginLeft: widthPercentageToDP(5), padding: 0 }]}>
+                        {item.text}
+                    </Text>
+                </View>
             </View>
         )
     })
@@ -166,7 +170,7 @@ const GenreDetail = (props) => {
                 <FastImage
                     source={{ uri: item.url }}
                     style={{ width: "100%", height: "100%", }}
-                    resizeMode={FastImage.resizeMode.stretch}
+                    resizeMode={FastImage.resizeMode.cover}
                 />
             )
         } else {
@@ -207,7 +211,7 @@ const GenreDetail = (props) => {
             <KeyboardAwareScrollView contentContainerStyle={{ alignItems: "center" }}>
                 <View style={{
                     width: "100%",
-                    height: heightPercentageToDP(39),
+                    height: heightPercentageToDP(35),
                 }}>
                     <Carousel
                         layout={'default'}
@@ -235,9 +239,9 @@ const GenreDetail = (props) => {
                         <Pagination
                             containerStyle={[styles.tabsContainer, {
                                 width: data.media.length < 4 ?
-                                    widthPercentageToDP(10)
+                                    widthPercentageToDP(20)
                                     : data.media.length < 10 ?
-                                        widthPercentageToDP(30)
+                                        widthPercentageToDP(40)
                                         : widthPercentageToDP(60)
                             }]}
                             renderDots={activeIndex => (
@@ -384,17 +388,17 @@ const GenreDetail = (props) => {
                     resizeMode={FastImage.resizeMode.stretch}
                 />
                 <FlatList
+                    key={'h'}
                     data={data.icons}
                     numColumns={2}
-                    contentContainerStyle={{ marginTop: heightPercentageToDP(1) }}
-                    style={{ width: widthPercentageToDP(80), }}
+                    style={{ width: widthPercentageToDP(100), }}
                     showsVerticalScrollIndicator={false}
                     keyExtractor={(item, index) => "unique" + index}
                     renderItem={_renderItem}
                 />
 
             </KeyboardAwareScrollView>
-            <View style={{ height: heightPercentageToDP(10) }} />
+            <View style={{ height: heightPercentageToDP(5) }} />
             <Tab
                 homeClick={() => props.navigation.dispatch(HomeAction)}
                 profileClick={() => props.navigation.dispatch(profileAction)}

@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react'
 import { SafeAreaView, View, Text, FlatList, TouchableOpacity, ActivityIndicator, PermissionsAndroid, Alert } from 'react-native'
 import { styles } from '../../config/styles'
 import FastImage from 'react-native-fast-image'
-import { black, blue, white } from '../../config/color'
+import { black, blue, blue2, white } from '../../config/color'
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view'
 import { heightPercentageToDP, widthPercentageToDP } from '../../Component/MakeMeResponsive'
 import { HomeAction, profileAction, settingAction, mapAction, notificationAction } from '../../Component/BottomTab/actions'
@@ -11,9 +11,10 @@ import UpdateCert from './UpdateCertificate'
 import { useSelector, useDispatch } from 'react-redux';
 import Feather from 'react-native-vector-icons/Feather'
 import ImagePicker from 'react-native-image-crop-picker';
-import { postProfileImg, getSeenCount, getUserCertificate, getUserDegree, updateDegrees } from '../../Redux/action'
+import { postProfileImg, getSeenCount, getUserCertificate, getUserDegree, updateDegrees, deleteUploadImage } from '../../Redux/action'
 import Picker from './Picker'
 import Strings from '../../Translation'
+import AwesomeAlert from 'react-native-awesome-alerts';
 
 const Profile = (props) => {
     const dispatch = useDispatch();
@@ -27,6 +28,8 @@ const Profile = (props) => {
     const [DegreeResponse, setDegreeResponse] = useState('')
     const [certificate, setCertificate] = useState('')
     const [degree, setDegree] = useState('')
+    const [imageId, setId] = useState('')
+    const [showAlert, setAlert] = useState(false)
     const language = useSelector((state) => state.user.language);
     useEffect(() => {
         if (!language) {
@@ -100,6 +103,12 @@ const Profile = (props) => {
         await setResponse(menuData)
         await setIsLoading(false)
     }
+    const deleteApi = async (id) => {
+        setIsLoading(true)
+        await deleteUploadImage(login.data.id, id)
+        await setIsLoading(false)
+        getCount()
+    }
     const toggleOption = () => {
         setOption(!pickerOption)
     }
@@ -120,6 +129,9 @@ const Profile = (props) => {
         let menuData = await getUserDegree(id)
         await setDegreeResponse(menuData)
         await setIsLoading(false)
+    }
+    const toggleAlert = () => {
+        setAlert(!showAlert)
     }
     return (
         <SafeAreaView style={[styles.container, { alignItems: "center" }]}>
@@ -161,7 +173,7 @@ const Profile = (props) => {
                         />
                     </TouchableOpacity>
                 </View>
-                <View style={[styles.profileView,{
+                <View style={[styles.profileView, {
                     height: heightPercentageToDP(30),
                 }]}>
                     <TouchableOpacity
@@ -172,7 +184,7 @@ const Profile = (props) => {
                             position: "absolute",
                             right: "4%",
                             top: "18%",
-                            zIndex:3
+                            zIndex: 3
                         }}
                     >
                         <Feather
@@ -187,7 +199,7 @@ const Profile = (props) => {
                     <Text style={[styles.btnText, {
                         paddingLeft: widthPercentageToDP(4),
                         paddingRight: widthPercentageToDP(10),
-                        textAlign:"center"
+                        textAlign: "center"
                     }]}>
                         {login.data.certificate}{" "}{login.data.degree}
                     </Text>
@@ -300,7 +312,11 @@ const Profile = (props) => {
                                     onPress={() => props.navigation.navigate('Detail', {
                                         data: item.genre
                                     })}
-                                >
+                                    delayLongPress={1000}
+                                    onLongPress={() => {
+                                        setAlert(true);
+                                        setId(item.id)
+                                    }}>
                                     <FastImage
                                         source={{ uri: item.image }}
                                         style={{
@@ -374,6 +390,29 @@ const Profile = (props) => {
                         }
                         toggleCertificate();
                         dispatch(updateDegrees(login.data.id, certificate, degree));
+                    }}
+                />
+            }
+            {showAlert &&
+                <AwesomeAlert
+                    show={showAlert}
+                    showProgress={false}
+                    title="Alert"
+                    message="Do you really want to delete the image?"
+                    closeOnTouchOutside={false}
+                    closeOnHardwareBackPress={false}
+                    showCancelButton={true}
+                    showConfirmButton={true}
+                    cancelText="No"
+                    confirmText="Yes, delete it"
+                    confirmButtonColor= {blue}
+                    cancelButtonColor = {blue2}
+                    onCancelPressed={() => {
+                        setAlert(false);
+                    }}
+                    onConfirmPressed={() => {
+                        setAlert(false);
+                        deleteApi(imageId);
                     }}
                 />
             }

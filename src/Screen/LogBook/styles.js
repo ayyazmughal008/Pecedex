@@ -36,6 +36,13 @@ export const styles = StyleSheet.create({
         alignSelf: "center",
         alignItems: "center"
     },
+    logView2: {
+        width: widthPercentageToDP(90),
+        //backgroundColor: blue,
+        borderRadius: widthPercentageToDP(5),
+        alignSelf: "center",
+        alignItems: "center"
+    },
     innerLogView: {
         width: widthPercentageToDP(90),
         flexDirection: "row",
@@ -83,7 +90,7 @@ export const styles = StyleSheet.create({
         justifyContent:"space-between"
     },
     right2: {
-        width: "50%",
+        //width: "50%",
         height: "100%",
         width: "45%",
         backgroundColor: blue2,
