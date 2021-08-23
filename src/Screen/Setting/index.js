@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react'
-import { SafeAreaView, View, Text, TextInput, TouchableOpacity, ActivityIndicator } from 'react-native'
+import { SafeAreaView, View, Text, TextInput, TouchableOpacity, ActivityIndicator, Platform } from 'react-native'
 import { styles } from '../../config/styles'
 import { HomeAction, profileAction, settingAction, mapAction, notificationAction } from '../../Component/BottomTab/actions'
 import Tab from '../../Component/BottomTab'
@@ -189,7 +189,11 @@ const Setting = (props) => {
                     alignSelf: "center",
                     marginTop: heightPercentageToDP(1)
                 }]}
-                onPress={() => { _onMonthlyClick() }}
+                onPress={() => {
+                    if (Platform.OS === "android") {
+                        _onMonthlyClick()
+                    }
+                }}
             >
                 <Text style={styles.logoutBtnTxt}>
                     {"$ 20.00 / PER MONTHLY"}
