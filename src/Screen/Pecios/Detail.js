@@ -46,26 +46,35 @@ const PeciosDetail = (props) => {
     const _renderItem = (({ item, index }) => {
         return (
             <View style={{
-                width: widthPercentageToDP(40),
-                alignItems: "center",
-                marginTop: heightPercentageToDP(2),
-                flexDirection: "row",
-                //backgroundColor: "red",
+                width: widthPercentageToDP(50),
+                height: heightPercentageToDP(5),
+                marginTop: heightPercentageToDP(1),
                 marginRight: widthPercentageToDP(2),
-                justifyContent: "center"
             }}>
-                <FastImage
-                    source={{ uri: item.image }}
-                    resizeMode={FastImage.resizeMode.contain}
-                    style={{
-                        width: widthPercentageToDP(10),
-                        height: heightPercentageToDP(5),
-                    }}
-                />
-                <Text style={[styles.smallText, { flex: 0, flexWrap: 'wrap', marginLeft: widthPercentageToDP(5) }]}>
-                    {item.text}
-                </Text>
-
+                <View style={{ flexDirection: "row", alignItems: "center" }}>
+                    <View style={{ width: "30%", height: "100%", justifyContent: "center", alignItems: "center" }}>
+                        <FastImage
+                            source={{ uri: item.image }}
+                            resizeMode={FastImage.resizeMode.contain}
+                            style={{
+                                width: "60%",
+                                height: "80%"
+                            }}
+                        />
+                    </View>
+                    <View style={{ width: "70%", height: "100%", alignItems: "flex-start", justifyContent: "center" }}>
+                        <Text style={{
+                            fontSize: widthPercentageToDP(2.8),
+                            flex: 0,
+                            flexWrap: 'wrap',
+                            textAlign: "left",
+                            fontFamily: "Montserrat-SemiBold",
+                            padding: 3
+                        }}>
+                            {item.text}
+                        </Text>
+                    </View>
+                </View>
             </View>
         )
     })
@@ -335,19 +344,24 @@ const PeciosDetail = (props) => {
                 {data.title}
             </Text>
             <Text style={[styles.smallText, {
-                fontFamily: "MontserratAlternates-BoldItalic"
+                fontFamily: "MontserratAlternates-BoldItalic",
+                marginTop:heightPercentageToDP(-0.2)
             }]}>
                 {data.description}
             </Text>
             <FastImage
                 source={require('../../Images/line.png')}
-                style={{ width: widthPercentageToDP(90), height: widthPercentageToDP(0.5), alignSelf: "center" }}
+                style={{ 
+                    width: widthPercentageToDP(90), 
+                    height: widthPercentageToDP(0.5), 
+                    alignSelf: "center",
+                    marginTop:heightPercentageToDP(1) 
+                    }}
                 resizeMode={FastImage.resizeMode.stretch}
             />
             <FlatList
                 data={data.icons}
                 numColumns={2}
-                contentContainerStyle={{ marginTop: heightPercentageToDP(1), }}
                 style={{ width: widthPercentageToDP(80) }}
                 showsVerticalScrollIndicator={false}
                 keyExtractor={(item, index) => "unique" + index}

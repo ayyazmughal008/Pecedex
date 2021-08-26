@@ -9,6 +9,7 @@ export const COUNTRY_NAME = "COUNTRY_NAME";
 export const SET_LANGUAGE = "SET_LANGUAGE";
 export const FCM_TOKEN = "FCM_TOKEN";
 export const CENTER_ID = "CENTER_ID";
+export const MAIN_MENU = "MAIN_MENU";
 
 
 const baseUrl = "http://199.247.13.90/api/",
@@ -182,10 +183,10 @@ export const userRegister = (name, email, password, certificate, degree) => {
             })
     };
 }
-export const getMainMenu = async (userId) => {
-    let api
-    try {
-        api = await fetch(baseUrl + getMenu, {
+export const getMainMenu = (userId) => {
+    return dispatch => {
+        dispatch({ type: AUTH_LOADING, payload: true });
+        fetch(baseUrl + getMenu, {
             method: 'POST',
             headers: {
                 'Accept': 'application/json',
@@ -197,17 +198,54 @@ export const getMainMenu = async (userId) => {
         })
             .then(res => res.json())
             .then(json => {
+                dispatch({ type: AUTH_LOADING, payload: false });
                 console.log(json)
-                return json
+                if (json.status == 200) {
+                    dispatch({
+                        type: MAIN_MENU,
+                        payload: {
+                            menuData: json
+                        }
+                    })
+                } else if (json.status == 401) {
+                    Alert.alert("", json.message)
+                } else {
+                    Alert.alert("", json.message)
+                }
+
             })
             .catch(error => {
-                console.log("response error ===>", error)
+                dispatch({ type: AUTH_LOADING, payload: false });
+                console.log(error)
             })
-    } catch (error) {
-        console.log('my error' + error.message);
-    }
-    return api
+    };
 }
+// export const getMainMenu = async (userId) => {
+//     let api
+//     try {
+//         api = await fetch(baseUrl + getMenu, {
+//             method: 'POST',
+//             headers: {
+//                 'Accept': 'application/json',
+//                 "Content-type": "application/json",
+//             },
+//             body: JSON.stringify({
+//                 userId: userId
+//             })
+//         })
+//             .then(res => res.json())
+//             .then(json => {
+//                 console.log(json)
+//                 return json
+//             })
+//             .catch(error => {
+//                 console.log("response error ===>", error)
+//             })
+//     } catch (error) {
+//         console.log('my error' + error.message);
+//     }
+//     return api
+// }
 export const getMenuFiles = async (userId) => {
     let api
     try {

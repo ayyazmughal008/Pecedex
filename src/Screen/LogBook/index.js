@@ -891,11 +891,20 @@ const LogBook = (props) => {
     ]
     return (
         <View style={[styles.container, { alignItems: "center" }]}>
-            <FastImage
-                source={require('../../Images/logbookImage.jpg')}
-                style={styles.top}
-                resizeMode={FastImage.resizeMode.cover}
-            />
+            {!imagePath ?
+                <FastImage
+                    source={require('../../Images/logbookImage.jpg')}
+                    style={styles.top}
+                    resizeMode={FastImage.resizeMode.cover}
+                />
+                : <View style={styles.uploadImageView}>
+                    <FastImage
+                        source={{ uri: imagePath }}
+                        resizeMode={FastImage.resizeMode.cover}
+                        style={styles.top}
+                    />
+                </View>
+            }
             <FastImage
                 source={require('../../Images/BG.png')}
                 resizeMode={FastImage.resizeMode.stretch}
@@ -908,7 +917,7 @@ const LogBook = (props) => {
                             </Text>
                         </View>
                         <View style={[styles.logView, {
-                            height: imagePath ? heightPercentageToDP(35) : heightPercentageToDP(30),
+                            height: heightPercentageToDP(30),
                             marginTop: heightPercentageToDP(2),
                             justifyContent: "center",
                             backgroundColor: blue
@@ -1022,20 +1031,6 @@ const LogBook = (props) => {
                                     style={{ width: "100%", height: "100%" }}
                                 />
                             </TouchableOpacity>
-                            {!imagePath ?
-                                <View />
-                                : <View style={styles.uploadImageView}>
-                                    <FastImage
-                                        source={{ uri: imagePath }}
-                                        resizeMode={FastImage.resizeMode.cover}
-                                        style={{
-                                            width: "20%",
-                                            height: "100%",
-                                            marginLeft: widthPercentageToDP(2)
-                                        }}
-                                    />
-                                </View>
-                            }
                         </View>
                         <View style={styles.titleView}>
                             <Text style={styles.titleTxt}>
@@ -1211,7 +1206,7 @@ const LogBook = (props) => {
                                 <Text style={[styles.smallTxt, { color: black }]}>
                                     {Strings.type}{" :"}
                                 </Text>
-                                <View style={{ width: language === 'es' ? "50%" : "56%", height: "100%", justifyContent: "center" }}>
+                                <View style={{ width: language === 'es' ? "40%" : "56%", height: "100%", justifyContent: "center" }}>
                                     <RNPickerSelect
                                         placeholder={{
                                             label: Strings.type,
@@ -1363,7 +1358,7 @@ const LogBook = (props) => {
                                     {Strings.meters}
                                 </Text>
                             </View>
-                            <View style={{ flexDirection: "row", alignItems: "center", alignSelf: "center", height: "13%",width: "90%" }}>
+                            <View style={{ flexDirection: "row", alignItems: "center", alignSelf: "center", height: "13%", width: "90%" }}>
                                 <Text style={[styles.smallTxt, { color: black }]}>
                                     {Strings.type_of_dives}{" :"}
                                 </Text>
@@ -1410,7 +1405,7 @@ const LogBook = (props) => {
                             </Text>
                         </View>
                         <View style={[styles.logView, {
-                            height: !isScuba ? heightPercentageToDP(55) : heightPercentageToDP(75),
+                            height: !isScuba ? heightPercentageToDP(60) : heightPercentageToDP(78),
                             marginTop: heightPercentageToDP(2),
                             backgroundColor: blue
                         }]}>
@@ -1718,7 +1713,7 @@ const LogBook = (props) => {
                                     </Text>
                                 </TouchableOpacity>
                                 <TouchableOpacity
-                                    style={{ width: "17%", height: "85%" }}
+                                    style={{ width: "18%", height: "85%" }}
                                     onPress={() => {
                                         if (diveItem3) {
                                             setDiveItem3(false)
@@ -1756,7 +1751,7 @@ const LogBook = (props) => {
                                     </Text>
                                 </TouchableOpacity>
                             </View>
-                            <View style={[styles.innerLogView, { height: heightPercentageToDP(8), marginTop: heightPercentageToDP(4), justifyContent: "space-between", width: widthPercentageToDP(80) }]}>
+                            <View style={[styles.innerLogView, { height: heightPercentageToDP(8), marginTop: heightPercentageToDP(8), justifyContent: "space-between", width: widthPercentageToDP(80) }]}>
                                 <TouchableOpacity
                                     style={{ width: "15%", height: "90%" }}
                                     onPress={() => {
@@ -1815,7 +1810,7 @@ const LogBook = (props) => {
                                     </Text>
                                 </TouchableOpacity>
                                 <TouchableOpacity
-                                    style={{ width: "16%", height: "90%" }}
+                                    style={{ width: "17%", height: "90%" }}
                                     onPress={() => {
                                         if (diveItem8) {
                                             setDiveItem8(false)

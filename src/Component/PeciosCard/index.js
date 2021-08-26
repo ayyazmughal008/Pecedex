@@ -31,7 +31,7 @@ const Card = (props) => {
                         width: widthPercentageToDP(8),
                         height: heightPercentageToDP(4),
                         position: "absolute",
-                        bottom:"5%",
+                        bottom: "5%",
                         right: "5%"
                     }}
                 />
@@ -51,10 +51,17 @@ const styles = StyleSheet.create({
         backgroundColor: blue
     },
     title: {
+        width:widthPercentageToDP(55),
         fontSize: widthPercentageToDP(4.5),
         color: white,
         fontFamily: "Montserrat-SemiBold",
-        marginTop: heightPercentageToDP(1)
+        marginTop: heightPercentageToDP(1),
+        //backgroundColor:"red",
+        // flex:2,
+        flexWrap: 'wrap',
+        // flexShrink: 1,
+        //flexGrow: 1,
+        // paddingRight:widthPercentageToDP(5)
     },
     shortTitle: {
         fontSize: widthPercentageToDP(4),

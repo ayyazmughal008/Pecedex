@@ -187,7 +187,7 @@ export const styles = StyleSheet.create({
         fontFamily: "Montserrat-SemiBold",
         alignSelf: "center",
         color: blue,
-        marginTop: 10
+        //marginTop: heightPercentageToDP(1)
         //marginLeft: widthPercentageToDP(5)
     },
     proInfoTile3: {
@@ -205,7 +205,7 @@ export const styles = StyleSheet.create({
     },
     shareView: {
         width: widthPercentageToDP(100),
-        height: heightPercentageToDP(7),
+        height: heightPercentageToDP(6),
         alignItems: "center",
         flexDirection: "row",
         justifyContent: "space-between",
@@ -226,7 +226,7 @@ export const styles = StyleSheet.create({
         fontFamily: "Montserrat-SemiBold",
         textAlign: "center",
         alignSelf: "center",
-        padding: widthPercentageToDP(1),
+        marginTop: heightPercentageToDP(1)
         //backgroundColor:"red"
     },
     smallText2: {
@@ -278,7 +278,7 @@ export const styles = StyleSheet.create({
         height: heightPercentageToDP(15),
         alignItems: "center",
         alignSelf: "center",
-        marginTop:heightPercentageToDP(2)
+        marginTop: heightPercentageToDP(2)
         //backgroundColor: blue
     },
     infoTxt: {
@@ -473,12 +473,12 @@ export const styles = StyleSheet.create({
         width: widthPercentageToDP(90),
         height: heightPercentageToDP(5.5),
         borderColor: "red",
-        borderWidth:widthPercentageToDP(0.4),
+        borderWidth: widthPercentageToDP(0.4),
         borderRadius: widthPercentageToDP(3),
-        justifyContent:"center",
-        alignItems:"center"
+        justifyContent: "center",
+        alignItems: "center"
     },
-    logoutBtnTxt:{
+    logoutBtnTxt: {
         fontSize: widthPercentageToDP(4),
         color: black,
         fontFamily: "Montserrat-Regular"

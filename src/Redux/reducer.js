@@ -7,7 +7,8 @@ import {
   COUNTRY_NAME,
   SET_LANGUAGE,
   FCM_TOKEN,
-  CENTER_ID
+  CENTER_ID,
+  MAIN_MENU
 
 } from "./action";
 
@@ -18,7 +19,8 @@ const initialUserState = {
   countryData: [],
   language: "en",
   token: "",
-  centerId: ""
+  centerId: "",
+  menuData: "",
 };
 
 const userReducer = (state = initialUserState, action) => {
@@ -28,7 +30,8 @@ const userReducer = (state = initialUserState, action) => {
       AuthLoading: false,
       login: "",
       countryData: [],
-      centerId: ""
+      centerId: "",
+      menuData: ""
     };
   }
   if (action.type === AUTH_LOADING) {
@@ -71,6 +74,12 @@ const userReducer = (state = initialUserState, action) => {
     return {
       ...state,
       centerId: action.payload.centerId
+    };
+  }
+   if (action.type === MAIN_MENU) {
+    return {
+      ...state,
+      menuData: action.payload.menuData
     };
   }
   return state;

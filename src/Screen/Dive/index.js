@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react'
-import { SafeAreaView, View, Text, FlatList, ActivityIndicator, TouchableOpacity } from 'react-native'
+import { SafeAreaView, View, Text, FlatList, ActivityIndicator, TouchableOpacity, Alert } from 'react-native'
 import { styles } from '../../config/styles'
 import FastImage from 'react-native-fast-image'
 import Card from '../../Component/DiveCard'
@@ -18,6 +18,7 @@ import AwesomeAlert from 'react-native-awesome-alerts';
 const Dive = (props) => {
     const language = useSelector((state) => state.user.language);
     const login = useSelector((state) => state.user.login);
+    const menuData = useSelector((state) => state.user.menuData);
     const [isLoading, setIsLoading] = useState(false)
     const [Response, setResponse] = useState('')
     const [imageId, setId] = useState('')
@@ -84,9 +85,16 @@ const Dive = (props) => {
                             />
                         )
                     }}
-                />}
+                />
+            }
             <TouchableOpacity
-                onPress={() => { eraseApis() }}
+                onPress={() => {
+                    if (menuData.logBlock === 'no') {
+                        eraseApis()
+                    } else {
+                        Alert.alert("Permission Denied", "No permission to access this module")
+                    }
+                }}
                 style={styles.roundButton}>
                 <Text style={styles.plusText}>
                     {"+"}

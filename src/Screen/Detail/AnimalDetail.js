@@ -57,26 +57,31 @@ const GenreDetail = (props) => {
                 width: widthPercentageToDP(50),
                 height: heightPercentageToDP(5),
                 marginTop: heightPercentageToDP(1),
-                //flexDirection: "row",
-                //alignItems:"center",
-                //backgroundColor: "red",
                 marginRight: widthPercentageToDP(2),
-                justifyContent: "center"
             }}>
-                <View style={{flexDirection:"row",alignItems:"center"}}>
-                    <FastImage
-                        source={{ uri: item.image }}
-                        resizeMode={FastImage.resizeMode.contain}
-                        style={{
-                            width: widthPercentageToDP(8),
-                            height: heightPercentageToDP(3),
-                            alignSelf: "flex-start",
-                            marginLeft: widthPercentageToDP(7)
-                        }}
-                    />
-                    <Text style={[styles.smallText, { flex: 0, flexWrap: 'wrap', marginLeft: widthPercentageToDP(5), padding: 0 }]}>
-                        {item.text}
-                    </Text>
+                <View style={{ flexDirection: "row", alignItems: "center" }}>
+                    <View style={{ width: "30%", height: "100%", justifyContent: "center", alignItems: "center" }}>
+                        <FastImage
+                            source={{ uri: item.image }}
+                            resizeMode={FastImage.resizeMode.contain}
+                            style={{
+                                width: "60%",
+                                height: "80%"
+                            }}
+                        />
+                    </View>
+                    <View style={{ width: "70%", height: "100%", alignItems: "flex-start", justifyContent: "center" }}>
+                        <Text style={{
+                            fontSize: widthPercentageToDP(2.8),
+                            flex: 0,
+                            flexWrap: 'wrap',
+                            textAlign: "left",
+                            fontFamily: "Montserrat-SemiBold",
+                            padding: 3
+                        }}>
+                            {item.text}
+                        </Text>
+                    </View>
                 </View>
             </View>
         )
@@ -211,7 +216,7 @@ const GenreDetail = (props) => {
             <KeyboardAwareScrollView contentContainerStyle={{ alignItems: "center" }}>
                 <View style={{
                     width: "100%",
-                    height: heightPercentageToDP(35),
+                    height: heightPercentageToDP(39),
                 }}>
                     <Carousel
                         layout={'default'}
@@ -343,7 +348,7 @@ const GenreDetail = (props) => {
                 <Text style={[styles.smallText, {
                     fontFamily: "MontserratAlternates-BoldItalic"
                 }]}>
-                    {data.description}
+                    {data.short}
                 </Text>
                 <View style={{
                     width: data.qualities.length < 2
@@ -384,14 +389,20 @@ const GenreDetail = (props) => {
                 </View>
                 <FastImage
                     source={require('../../Images/line.png')}
-                    style={{ width: widthPercentageToDP(90), height: widthPercentageToDP(0.5), alignSelf: "center", marginTop: 15, marginBottom: 10 }}
+                    style={{
+                        width: widthPercentageToDP(90),
+                        height: widthPercentageToDP(0.5),
+                        alignSelf: "center",
+                        marginTop: heightPercentageToDP(1),
+                        //marginBottom: heightPercentageToDP(1)
+                    }}
                     resizeMode={FastImage.resizeMode.stretch}
                 />
                 <FlatList
                     key={'h'}
                     data={data.icons}
                     numColumns={2}
-                    style={{ width: widthPercentageToDP(100), }}
+                    style={{ width: widthPercentageToDP(100),}}
                     showsVerticalScrollIndicator={false}
                     keyExtractor={(item, index) => "unique" + index}
                     renderItem={_renderItem}

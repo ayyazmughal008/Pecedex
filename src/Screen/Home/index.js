@@ -1,5 +1,5 @@
 import React, { useEffect, useState, useRef } from 'react'
-import { SafeAreaView, View, Text, TouchableOpacity, TextInput, FlatList, ActivityIndicator, DeviceEventEmitter } from 'react-native'
+import { SafeAreaView, View, Text, TouchableOpacity, TextInput, FlatList, ActivityIndicator, DeviceEventEmitter, Alert } from 'react-native'
 import { styles } from '../../config/styles'
 import FastImage from 'react-native-fast-image'
 import Strings from '../../Translation'
@@ -18,9 +18,12 @@ import { Events } from '../../AdsServices/utils'
 
 let viewableItemsChanged = null;
 const Home = (props) => {
+    const dispatch = useDispatch()
     const language = useSelector((state) => state.user.language);
     const token = useSelector((state) => state.user.token);
     const login = useSelector((state) => state.user.login);
+    const menuData = useSelector((state) => state.user.menuData);
+    const AuthLoading = useSelector((state) => state.user.AuthLoading);
     const [isLoading, setIsLoading] = useState(false)
     const [menuResponse, setResponse] = useState('')
     const nativeAdViewRef = useRef();
@@ -57,20 +60,14 @@ const Home = (props) => {
         }
     }, [language])
     useEffect(() => {
-        console.log("My save token is", login)
         postTokenApi()
     }, [])
 
-    const getApis = async () => {
-        setIsLoading(true)
-        let menuData = await getMainMenu()
-        await setResponse(menuData)
-        await setIsLoading(false)
-    }
     const postTokenApi = async () => {
         setIsLoading(true)
         await submitFcmToken(token, login.data.id)
         await setIsLoading(false)
+        dispatch(getMainMenu(login.data.id))
     }
 
     const onScrollEnd = React.useCallback(() => {
@@ -98,9 +95,18 @@ const Home = (props) => {
                     animalImg={item.animalImg}
                     clickHandler={() => {
                         if (index == 0) {
-                            props.navigation.navigate('Pecios')
+                            if (menuData.wreckBlock === 'no') {
+                                props.navigation.navigate('Pecios')
+                            } else {
+                                Alert.alert("Permission Denied", "No permission to access this module")
+                            }
                         } else if (index == 1) {
-                            props.navigation.navigate('Animal')
+                            if (menuData.animalBlock === 'no') {
+                                props.navigation.navigate('Animal')
+                            } else {
+                                Alert.alert("Permission Denied", "No permission to access this module")
+                            }
+
                         } else if (index == 3) {
                             //props.navigation.navigate('NewScreen')
                             props.navigation.navigate('Dive')
@@ -178,17 +184,21 @@ const Home = (props) => {
                     mapClick={() => props.navigation.dispatch(mapAction)}
                     notiClick={() => props.navigation.dispatch(notificationAction)}
                 />
+                {isLoading &&
+                    <ActivityIndicator
+                        size="large"
+                        color={black}
+                        style={styles.loading}
+                    />
+                }
+                {AuthLoading &&
+                    <ActivityIndicator
+                        size="large"
+                        color={black}
+                        style={styles.loading}
+                    />
+                }
             </FastImage>
-
-
-
-            {isLoading &&
-                <ActivityIndicator
-                    size="large"
-                    color={black}
-                    style={styles.loading}
-                />
-            }
         </SafeAreaView>
     )
 }
