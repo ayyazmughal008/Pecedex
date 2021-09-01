@@ -20,7 +20,7 @@ const Map = (props) => {
     const [Response, setResponse] = useState('')
     useEffect(() => {
         if (!language) {
-            Strings.setLanguage('en')
+            Strings.setLanguage('es')
         } else {
             Strings.setLanguage(language)
         }

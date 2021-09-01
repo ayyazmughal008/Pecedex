@@ -17,7 +17,7 @@ const initialUserState = {
   isLogin: false,
   login: "",
   countryData: [],
-  language: "en",
+  language: "es",
   token: "",
   centerId: "",
   menuData: "",

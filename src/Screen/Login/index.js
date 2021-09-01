@@ -9,6 +9,7 @@ import { black, green, white } from '../../config/color'
 import Icon from 'react-native-vector-icons/FontAwesome'
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view'
 import { widthPercentageToDP } from '../../Component/MakeMeResponsive'
+import RNRestart from 'react-native-restart';
 
 const Login = (props) => {
     const dispatch = useDispatch();
@@ -21,12 +22,11 @@ const Login = (props) => {
         setPassVisible(!passVisible)
     }
     useEffect(() => {
-        if (!language) {
-            Strings.setLanguage('en')
-        } else {
-            Strings.setLanguage(language)
+        if (Strings.getInterfaceLanguage() === "en-US") {
+            Strings.setLanguage("es")
+            //RNRestart.Restart();
         }
-    }, [language])
+    }, [Strings.getInterfaceLanguage()])
 
     const _onSubmit = () => {
         const validate = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;

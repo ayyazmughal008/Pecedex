@@ -23,7 +23,7 @@ const Map = (props) => {
     const language = useSelector((state) => state.user.language);
     useEffect(() => {
         if (!language) {
-            Strings.setLanguage('en')
+            Strings.setLanguage('es')
         } else {
             Strings.setLanguage(language)
         }

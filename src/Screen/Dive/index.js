@@ -25,7 +25,7 @@ const Dive = (props) => {
     const [showAlert, setAlert] = useState(false)
     useEffect(() => {
         if (!language) {
-            Strings.setLanguage('en')
+            Strings.setLanguage('es')
         } else {
             Strings.setLanguage(language)
         }

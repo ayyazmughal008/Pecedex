@@ -125,8 +125,9 @@ export const userLogin = (username, password) => {
             .then(res => res.json())
             .then(json => {
                 dispatch({ type: AUTH_LOADING, payload: false });
-                console.log(json)
+                //console.log(json)
                 if (json.status == 200) {
+                    dispatch(getMainMenu(json.data.id))
                     dispatch({
                         type: USER_LOGIN,
                         payload: {
@@ -199,7 +200,7 @@ export const getMainMenu = (userId) => {
             .then(res => res.json())
             .then(json => {
                 dispatch({ type: AUTH_LOADING, payload: false });
-                console.log(json)
+                //console.log(json)
                 if (json.status == 200) {
                     dispatch({
                         type: MAIN_MENU,
@@ -459,8 +460,12 @@ export const postGenerSeen = async (genreId, userId, isFirst) => {
                     } else {
                         return json
                     }
-                } else {
-                    Alert.alert("", json.message)
+                } else if (json.status == 401) {
+                    if (isFirst === "yes") {
+                        console.log(json)
+                    } else {
+                        Alert.alert("", json.message)
+                    }
                 }
                 return json
             })
@@ -1648,9 +1653,10 @@ export const sendUserLanguage = async (userId, lang) => {
         })
             .then(res => res.json())
             .then(json => {
+                console.log(json)
                 if (json.status == 200) {
                     console.log(json)
-                    Alert.alert("", json.message)
+                    //Alert.alert("", json.message)
                 } else {
                     Alert.alert("", json.message)
                 }
@@ -1857,7 +1863,7 @@ export const eraseData = async (userId) => {
     }
     return api
 }
-export const deleteUploadImage = async (userId,uploadId) => {
+export const deleteUploadImage = async (userId, uploadId) => {
     let api
     try {
         api = await fetch(baseUrl + deleteUpload, {
@@ -1888,7 +1894,7 @@ export const deleteUploadImage = async (userId,uploadId) => {
     }
     return api
 }
-export const deleteUserDives = async (userId,diveId) => {
+export const deleteUserDives = async (userId, diveId) => {
     console.log("my dive is is", diveId)
     let api
     try {

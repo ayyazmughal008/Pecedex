@@ -1,9 +1,9 @@
 import React, { useEffect, useState, useRef } from 'react'
-import { SafeAreaView, View, Text, TouchableOpacity, TextInput, FlatList, ActivityIndicator, DeviceEventEmitter, Alert } from 'react-native'
+import { SafeAreaView, View, Text, TouchableOpacity, TextInput, FlatList, ActivityIndicator, DeviceEventEmitter, Alert, Platform, PermissionsAndroid } from 'react-native'
 import { styles } from '../../config/styles'
 import FastImage from 'react-native-fast-image'
 import Strings from '../../Translation'
-import { getMainMenu, submitFcmToken } from '../../Redux/action'
+import { getMainMenu, submitFcmToken, sendUserLanguage } from '../../Redux/action'
 import Icon from 'react-native-vector-icons/EvilIcons'
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view'
 import { widthPercentageToDP, heightPercentageToDP } from '../../Component/MakeMeResponsive'
@@ -54,7 +54,7 @@ const Home = (props) => {
     }, []);
     useEffect(() => {
         if (!language) {
-            Strings.setLanguage('en')
+            Strings.setLanguage('es')
         } else {
             Strings.setLanguage(language)
         }
@@ -63,9 +63,45 @@ const Home = (props) => {
         postTokenApi()
     }, [])
 
+    useEffect(() => {
+        if (menuData) {
+            console.log("menu data successfuly loaded ==>", menuData)
+        } else {
+            console.log("menu data not loaded loaded ==>",)
+        }
+        checkPermission();
+    }, [menuData])
+
+    const checkPermission = async () => {
+        if (Platform.OS === 'android') {
+            await PermissionsAndroid.requestMultiple(
+                [PermissionsAndroid.PERMISSIONS.CAMERA,
+                PermissionsAndroid.PERMISSIONS.ACCESS_FINE_LOCATION,
+                PermissionsAndroid.PERMISSIONS.ACCESS_COARSE_LOCATION,
+                PermissionsAndroid.PERMISSIONS.READ_EXTERNAL_STORAGE,
+                PermissionsAndroid.PERMISSIONS.WRITE_EXTERNAL_STORAGE]
+            ).then((result) => {
+                if (result['android.permission.ACCESS_COARSE_LOCATION']
+                    && result['android.permission.CAMERA']
+                    && result['android.permission.ACCESS_FINE_LOCATION']
+                    && result['android.permission.READ_EXTERNAL_STORAGE']
+                    && result['android.permission.WRITE_EXTERNAL_STORAGE'] === 'granted') {
+                    console.log('permission granted')
+                } else if (result['android.permission.ACCESS_COARSE_LOCATION']
+                    || result['android.permission.CAMERA']
+                    || result['android.permission.ACCESS_FINE_LOCATION']
+                    || result['android.permission.READ_EXTERNAL_STORAGE']
+                    || result['android.permission.WRITE_EXTERNAL_STORAGE'] === 'never_ask_again') {
+                    Alert.alert('Check Permission', 'Please Go into Settings -> Applications -> APP_NAME -> Permissions and Allow permissions to continue')
+                }
+            });
+        }
+    }
+
     const postTokenApi = async () => {
         setIsLoading(true)
         await submitFcmToken(token, login.data.id)
+        await sendUserLanguage(login.data.id, language)
         await setIsLoading(false)
         dispatch(getMainMenu(login.data.id))
     }
@@ -114,7 +150,7 @@ const Home = (props) => {
                     }}
                 />
             ),
-        [],
+        [menuData],
     );
 
     return (

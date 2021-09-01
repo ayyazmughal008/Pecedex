@@ -19,6 +19,7 @@ import Carousel, { Pagination } from 'react-native-snap-carousel';
 const SLIDER_WIDTH = Dimensions.get('window').width;
 const { width } = Dimensions.get('window');
 import Video from 'react-native-video'
+import RNFetchBlob from "rn-fetch-blob";
 
 
 const GenreDetail = (props) => {
@@ -31,20 +32,45 @@ const GenreDetail = (props) => {
     const [isLoading, setIsLoading] = useState(false)
     const [Response, setResponse] = useState(false)
     const [isStart, setSTart] = useState(false)
+    const [imagePath, setImagePath] = useState(null)
     const [activeSlid, setActiveSlid] = useState(0);
     useEffect(() => {
         console.log("My Activie Slide", data.qualities.length)
     }, [activeSlid])
     useEffect(() => {
         if (!language) {
-            Strings.setLanguage('en')
+            Strings.setLanguage('es')
         } else {
             Strings.setLanguage(language)
         }
     }, [language])
     useEffect(() => {
         getApis("yes")
+        convertImageToBase64()
     }, [])
+    const convertImageToBase64 = async () => {
+        setIsLoading(true)
+        const fs = RNFetchBlob.fs;
+        let Path = null;
+        await RNFetchBlob.config({
+            fileCache: true
+        })
+            .fetch("GET", "http://199.247.13.90/" + data.share.image)
+            // the image is now dowloaded to device's storage
+            .then(resp => {
+                // the image path you can use it directly with Image component
+                Path = resp.path();
+                return resp.readFile("base64");
+            })
+            .then(base64Data => {
+                setIsLoading(false)
+                // here's base64 encoded image
+                setImagePath(base64Data);
+                //console.log(base64Data);
+                // remove the file from storage
+                return fs.unlink(Path);
+            });
+    }
     const getApis = async (value) => {
         setIsLoading(true)
         let seenData = await postGenerSeen(data.id, login.data.id, value)
@@ -54,12 +80,13 @@ const GenreDetail = (props) => {
     const _renderItem = (({ item, index }) => {
         return (
             <View style={{
-                width: widthPercentageToDP(50),
+                width: widthPercentageToDP(48),
                 height: heightPercentageToDP(5),
                 marginTop: heightPercentageToDP(1),
                 marginRight: widthPercentageToDP(2),
+                //backgroundColor:"red"
             }}>
-                <View style={{ flexDirection: "row", alignItems: "center" }}>
+                <View style={{ flexDirection: "row", alignItems: "center", justifyContent: "space-around" }}>
                     <View style={{ width: "30%", height: "100%", justifyContent: "center", alignItems: "center" }}>
                         <FastImage
                             source={{ uri: item.image }}
@@ -70,7 +97,7 @@ const GenreDetail = (props) => {
                             }}
                         />
                     </View>
-                    <View style={{ width: "70%", height: "100%", alignItems: "flex-start", justifyContent: "center" }}>
+                    <View style={{ width: "70%", height: "100%", alignItems: "flex-start", justifyContent: "center", }}>
                         <Text style={{
                             fontSize: widthPercentageToDP(2.8),
                             flex: 0,
@@ -89,11 +116,10 @@ const GenreDetail = (props) => {
     const shareImage = async () => {
         const shareOptions = {
             title: 'PECEDEX',
-            message: data.share.info,
+            message: 'PECEDEX ' + data.share.info,
+            url: `data:image/png;base64,${imagePath}`,
             failOnCancel: false,
-            url: "http://199.247.13.90/" + data.share.image,
         };
-
         try {
             const ShareResponse = await Share.open(shareOptions);
             console.log(ShareResponse)
@@ -244,9 +270,9 @@ const GenreDetail = (props) => {
                         <Pagination
                             containerStyle={[styles.tabsContainer, {
                                 width: data.media.length < 4 ?
-                                    widthPercentageToDP(20)
+                                    widthPercentageToDP(25)
                                     : data.media.length < 10 ?
-                                        widthPercentageToDP(40)
+                                        widthPercentageToDP(30)
                                         : widthPercentageToDP(60)
                             }]}
                             renderDots={activeIndex => (
@@ -256,9 +282,9 @@ const GenreDetail = (props) => {
                                         key={i}>
                                         <View
                                             style={{
-                                                width: widthPercentageToDP(3),
-                                                height: widthPercentageToDP(3),
-                                                borderRadius: widthPercentageToDP(3) / 2,
+                                                width: widthPercentageToDP(2),
+                                                height: widthPercentageToDP(2),
+                                                borderRadius: widthPercentageToDP(2) / 2,
                                                 backgroundColor: activeIndex === i ? blue : white,
                                                 marginHorizontal: widthPercentageToDP(-4)
                                             }}
@@ -363,6 +389,7 @@ const GenreDetail = (props) => {
                 }}>
                     <ScrollView
                         horizontal
+                        showsHorizontalScrollIndicator={false}
                         contentContainerStyle={{ flexGrow: 1, alignItems: "center" }}>
                         {data.qualities.map((item, index) => {
                             return (
@@ -402,7 +429,7 @@ const GenreDetail = (props) => {
                     key={'h'}
                     data={data.icons}
                     numColumns={2}
-                    style={{ width: widthPercentageToDP(100),}}
+                    style={{ width: widthPercentageToDP(100), }}
                     showsVerticalScrollIndicator={false}
                     keyExtractor={(item, index) => "unique" + index}
                     renderItem={_renderItem}

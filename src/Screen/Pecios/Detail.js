@@ -17,6 +17,7 @@ import Carousel, { Pagination } from 'react-native-snap-carousel';
 const SLIDER_WIDTH = Dimensions.get('window').width;
 const { width } = Dimensions.get('window');
 import Video from 'react-native-video'
+import RNFetchBlob from "rn-fetch-blob";
 
 
 const PeciosDetail = (props) => {
@@ -29,20 +30,45 @@ const PeciosDetail = (props) => {
     const language = useSelector((state) => state.user.language);
     const [isStart, setSTart] = useState(false)
     const [Response, setResponse] = useState(false)
+    const [imagePath, setImagePath] = useState(null)
     const [activeSlid, setActiveSlid] = useState(0);
     useEffect(() => {
         console.log("My Activie Slide", activeSlid)
     }, [activeSlid])
     useEffect(() => {
         if (!language) {
-            Strings.setLanguage('en')
+            Strings.setLanguage('es')
         } else {
             Strings.setLanguage(language)
         }
     }, [language])
     useEffect(() => {
         getApis("yes")
+        convertImageToBase64()
     }, [])
+    const convertImageToBase64 = async () => {
+        setIsLoading(true)
+        const fs = RNFetchBlob.fs;
+        let Path = null;
+        await RNFetchBlob.config({
+            fileCache: true
+        })
+            .fetch("GET", "http://199.247.13.90/" + data.share.image)
+            // the image is now dowloaded to device's storage
+            .then(resp => {
+                // the image path you can use it directly with Image component
+                Path = resp.path();
+                return resp.readFile("base64");
+            })
+            .then(base64Data => {
+                setIsLoading(false)
+                // here's base64 encoded image
+                setImagePath(base64Data);
+                //console.log(base64Data);
+                // remove the file from storage
+                return fs.unlink(Path);
+            });
+    }
     const _renderItem = (({ item, index }) => {
         return (
             <View style={{
@@ -81,9 +107,9 @@ const PeciosDetail = (props) => {
     const shareImage = async () => {
         const shareOptions = {
             title: 'PECEDEX',
-            message: data.share.info,
-            failOnCancel: false,
-            url: "http://199.247.13.90/" + data.share.image,
+            message: 'PECEDEX ' + data.share.info,
+            url: `data:image/png;base64,${imagePath}`,
+            failOnCancel: false
         };
 
         try {
@@ -345,18 +371,18 @@ const PeciosDetail = (props) => {
             </Text>
             <Text style={[styles.smallText, {
                 fontFamily: "MontserratAlternates-BoldItalic",
-                marginTop:heightPercentageToDP(-0.2)
+                marginTop: heightPercentageToDP(-0.2)
             }]}>
                 {data.description}
             </Text>
             <FastImage
                 source={require('../../Images/line.png')}
-                style={{ 
-                    width: widthPercentageToDP(90), 
-                    height: widthPercentageToDP(0.5), 
+                style={{
+                    width: widthPercentageToDP(90),
+                    height: widthPercentageToDP(0.5),
                     alignSelf: "center",
-                    marginTop:heightPercentageToDP(1) 
-                    }}
+                    marginTop: heightPercentageToDP(1)
+                }}
                 resizeMode={FastImage.resizeMode.stretch}
             />
             <FlatList

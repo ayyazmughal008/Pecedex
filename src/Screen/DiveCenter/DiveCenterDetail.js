@@ -24,7 +24,7 @@ const DiveCenter = (props) => {
     const [myId, setMyId] = useState("")
     useEffect(() => {
         if (!language) {
-            Strings.setLanguage('en')
+            Strings.setLanguage('es')
         } else {
             Strings.setLanguage(language)
         }

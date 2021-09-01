@@ -25,7 +25,7 @@ const Map = (props) => {
     }, [])
     useEffect(() => {
         if (!language) {
-            Strings.setLanguage('en')
+            Strings.setLanguage('es')
         } else {
             Strings.setLanguage(language)
         }
