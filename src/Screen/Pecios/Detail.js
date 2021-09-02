@@ -31,9 +31,10 @@ const PeciosDetail = (props) => {
     const [isStart, setSTart] = useState(false)
     const [Response, setResponse] = useState(false)
     const [imagePath, setImagePath] = useState(null)
+    const [imageUrl, setImageUrl] = useState(null)
     const [activeSlid, setActiveSlid] = useState(0);
     useEffect(() => {
-        console.log("My Activie Slide", activeSlid)
+        getCurrentImage()
     }, [activeSlid])
     useEffect(() => {
         if (!language) {
@@ -44,16 +45,20 @@ const PeciosDetail = (props) => {
     }, [language])
     useEffect(() => {
         getApis("yes")
-        convertImageToBase64()
+        //convertImageToBase64()
     }, [])
-    const convertImageToBase64 = async () => {
+    // useEffect(() => {
+    //     convertImageToBase64(imageUrl)
+    // }, [imageUrl])
+    const convertImageToBase64 = async (url) => {
+        console.log(url)
         setIsLoading(true)
         const fs = RNFetchBlob.fs;
         let Path = null;
         await RNFetchBlob.config({
             fileCache: true
         })
-            .fetch("GET", "http://199.247.13.90/" + data.share.image)
+            .fetch("GET", url)
             // the image is now dowloaded to device's storage
             .then(resp => {
                 // the image path you can use it directly with Image component
@@ -63,11 +68,14 @@ const PeciosDetail = (props) => {
             .then(base64Data => {
                 setIsLoading(false)
                 // here's base64 encoded image
-                setImagePath(base64Data);
-                //console.log(base64Data);
+                shareImage(base64Data)
+                //setImagePath(base64Data);
                 // remove the file from storage
                 return fs.unlink(Path);
-            });
+            })
+            .catch(error => {
+                console.log(error)
+            })
     }
     const _renderItem = (({ item, index }) => {
         return (
@@ -104,11 +112,11 @@ const PeciosDetail = (props) => {
             </View>
         )
     })
-    const shareImage = async () => {
+    const shareImage = async (base64) => {
         const shareOptions = {
             title: 'PECEDEX',
             message: 'PECEDEX ' + data.share.info,
-            url: `data:image/png;base64,${imagePath}`,
+            url: `data:image/png;base64,${base64}`,
             failOnCancel: false
         };
 
@@ -235,6 +243,15 @@ const PeciosDetail = (props) => {
         }
 
     })
+    const getCurrentImage = async () => {
+        await data.media.forEach((item, index) => {
+            if (index == activeSlid) {
+                if (item.mediaType === "image") {
+                    setImageUrl(item.url)
+                }
+            }
+        });
+    }
     return (
         <SafeAreaView style={[styles.container, { alignItems: "center" }]}>
             <View style={{
@@ -352,7 +369,7 @@ const PeciosDetail = (props) => {
                     </TouchableOpacity>
                     <TouchableOpacity
                         onPress={() => {
-                            shareImage()
+                            convertImageToBase64(imageUrl)
                         }}
                         style={[styles.shareButton, { marginRight: 5 }]}>
                         <FastImage

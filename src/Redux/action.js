@@ -478,6 +478,7 @@ export const postGenerSeen = async (genreId, userId, isFirst) => {
     return api
 }
 export const postPecioSeen = async (pecioId, userId, isFirst) => {
+    console.log(pecioId, " ", userId, isFirst)
     let api
     try {
         api = await fetch(baseUrl + seenPecio, {
@@ -502,8 +503,12 @@ export const postPecioSeen = async (pecioId, userId, isFirst) => {
                     } else {
                         return json
                     }
-                } else {
-                    Alert.alert("", json.message)
+                } else if (json.status == 401) {
+                    if (isFirst === "yes") {
+                        console.log(json)
+                    } else {
+                        Alert.alert("", json.message)
+                    }
                 }
                 return json
             })

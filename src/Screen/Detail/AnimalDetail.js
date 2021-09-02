@@ -33,9 +33,10 @@ const GenreDetail = (props) => {
     const [Response, setResponse] = useState(false)
     const [isStart, setSTart] = useState(false)
     const [imagePath, setImagePath] = useState(null)
+    const [imageUrl, setImageUrl] = useState(null)
     const [activeSlid, setActiveSlid] = useState(0);
     useEffect(() => {
-        console.log("My Activie Slide", data.qualities.length)
+        getCurrentImage()
     }, [activeSlid])
     useEffect(() => {
         if (!language) {
@@ -46,16 +47,19 @@ const GenreDetail = (props) => {
     }, [language])
     useEffect(() => {
         getApis("yes")
-        convertImageToBase64()
     }, [])
-    const convertImageToBase64 = async () => {
+    // useEffect(() => {
+    //     convertImageToBase64(imageUrl)
+    // }, [imageUrl])
+    const convertImageToBase64 = async (url) => {
+        console.log(url)
         setIsLoading(true)
         const fs = RNFetchBlob.fs;
         let Path = null;
         await RNFetchBlob.config({
             fileCache: true
         })
-            .fetch("GET", "http://199.247.13.90/" + data.share.image)
+            .fetch("GET", url)
             // the image is now dowloaded to device's storage
             .then(resp => {
                 // the image path you can use it directly with Image component
@@ -65,7 +69,8 @@ const GenreDetail = (props) => {
             .then(base64Data => {
                 setIsLoading(false)
                 // here's base64 encoded image
-                setImagePath(base64Data);
+                shareImage(base64Data)
+                //console.log("Image converted to base64");
                 //console.log(base64Data);
                 // remove the file from storage
                 return fs.unlink(Path);
@@ -113,11 +118,11 @@ const GenreDetail = (props) => {
             </View>
         )
     })
-    const shareImage = async () => {
+    const shareImage = async (base64) => {
         const shareOptions = {
             title: 'PECEDEX',
             message: 'PECEDEX ' + data.share.info,
-            url: `data:image/png;base64,${imagePath}`,
+            url: `data:image/png;base64,${base64}`,
             failOnCancel: false,
         };
         try {
@@ -237,6 +242,15 @@ const GenreDetail = (props) => {
         }
 
     })
+    const getCurrentImage = async () => {
+        await data.media.forEach((item, index) => {
+            if (index == activeSlid) {
+                if (item.mediaType === "image") {
+                    setImageUrl(item.url)
+                }
+            }
+        });
+    }
     return (
         <SafeAreaView style={styles.container}>
             <KeyboardAwareScrollView contentContainerStyle={{ alignItems: "center" }}>
@@ -354,7 +368,7 @@ const GenreDetail = (props) => {
                         </TouchableOpacity>
                         <TouchableOpacity
                             onPress={() => {
-                                shareImage()
+                                convertImageToBase64(imageUrl)
                             }}
                             style={[styles.shareButton, { marginRight: 5 }]}>
                             <FastImage
