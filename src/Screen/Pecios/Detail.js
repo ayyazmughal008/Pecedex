@@ -80,12 +80,13 @@ const PeciosDetail = (props) => {
     const _renderItem = (({ item, index }) => {
         return (
             <View style={{
-                width: widthPercentageToDP(50),
+                width: widthPercentageToDP(48),
                 height: heightPercentageToDP(5),
                 marginTop: heightPercentageToDP(1),
                 marginRight: widthPercentageToDP(2),
+                //backgroundColor:"red"
             }}>
-                <View style={{ flexDirection: "row", alignItems: "center" }}>
+                <View style={{ flexDirection: "row", alignItems: "center", justifyContent: "space-around" }}>
                     <View style={{ width: "30%", height: "100%", justifyContent: "center", alignItems: "center" }}>
                         <FastImage
                             source={{ uri: item.image }}
@@ -96,7 +97,7 @@ const PeciosDetail = (props) => {
                             }}
                         />
                     </View>
-                    <View style={{ width: "70%", height: "100%", alignItems: "flex-start", justifyContent: "center" }}>
+                    <View style={{ width: "70%", height: "100%", alignItems: "flex-start", justifyContent: "center", }}>
                         <Text style={{
                             fontSize: widthPercentageToDP(2.8),
                             flex: 0,
@@ -284,7 +285,7 @@ const PeciosDetail = (props) => {
                     <Pagination
                         containerStyle={[styles.tabsContainer, {
                             width: data.media.length < 4 ?
-                                widthPercentageToDP(20)
+                                widthPercentageToDP(25)
                                 : data.media.length < 10 ?
                                     widthPercentageToDP(30)
                                     : widthPercentageToDP(60)
@@ -296,9 +297,9 @@ const PeciosDetail = (props) => {
                                     key={i}>
                                     <View
                                         style={{
-                                            width: widthPercentageToDP(3),
-                                            height: widthPercentageToDP(3),
-                                            borderRadius: widthPercentageToDP(3) / 2,
+                                            width: widthPercentageToDP(2),
+                                            height: widthPercentageToDP(2),
+                                            borderRadius: widthPercentageToDP(2) / 2,
                                             backgroundColor: activeIndex === i ? blue : white,
                                             marginHorizontal: widthPercentageToDP(-4)
                                         }}
@@ -345,7 +346,11 @@ const PeciosDetail = (props) => {
                 <View style={{ width: "48%", height: "100%", alignItems: "center", justifyContent: "space-between", flexDirection: "row" }}>
                     <TouchableOpacity
                         onPress={() => {
-                            Linking.openURL(data.videoLink);
+                            if (!data.videoLink) {
+                                console.log(data.videoLink)
+                            } else {
+                                Linking.openURL(data.videoLink);
+                            }
                         }}
                         style={styles.shareButton}>
                         <FastImage
@@ -357,7 +362,15 @@ const PeciosDetail = (props) => {
                             }}
                         />
                     </TouchableOpacity>
-                    <TouchableOpacity style={styles.shareButton}>
+                    <TouchableOpacity
+                        onPress={() => {
+                            if (!data.wlink) {
+                                console.log(data.wlink)
+                            } else {
+                                Linking.openURL(data.wlink);
+                            }
+                        }}
+                        style={styles.shareButton}>
                         <FastImage
                             source={require('../../Images/87.png')}
                             resizeMode={FastImage.resizeMode.contain}
@@ -405,7 +418,7 @@ const PeciosDetail = (props) => {
             <FlatList
                 data={data.icons}
                 numColumns={2}
-                style={{ width: widthPercentageToDP(80) }}
+                style={{ width: widthPercentageToDP(100) }}
                 showsVerticalScrollIndicator={false}
                 keyExtractor={(item, index) => "unique" + index}
                 renderItem={_renderItem}

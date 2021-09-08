@@ -282,7 +282,7 @@ export const styles = StyleSheet.create({
     modalView2: {
         flex: 1,
         alignItems: 'center',
-        marginTop:heightPercentageToDP(5)
+        //marginTop:heightPercentageToDP(5)
         //justifyContent: "center",
         //flexDirection: "column"
     },

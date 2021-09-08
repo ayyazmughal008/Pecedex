@@ -14,6 +14,8 @@ export const MAIN_MENU = "MAIN_MENU";
 
 const baseUrl = "http://199.247.13.90/api/",
     login = 'login',
+    user = 'user',
+    cancelSubscription = 'cancel-subscription',
     getMenu = 'get-menu',
     getFiles = 'get-files',
     getClasses = 'get-classes',
@@ -134,6 +136,83 @@ export const userLogin = (username, password) => {
                             login: json
                         }
                     })
+                } else if (json.status == 401) {
+                    Alert.alert("", json.message)
+                } else {
+                    Alert.alert("", json.message)
+                }
+
+            })
+            .catch(error => {
+                dispatch({ type: AUTH_LOADING, payload: false });
+                console.log(error)
+            })
+    };
+}
+export const getUpdateUser = (userID) => {
+    return dispatch => {
+        dispatch({ type: AUTH_LOADING, payload: true });
+        fetch(baseUrl + user, {
+            method: 'POST',
+            headers: {
+                'Accept': 'application/json',
+                "Content-type": "application/json",
+            },
+            body: JSON.stringify({
+                userId: userID,
+            })
+        })
+            .then(res => res.json())
+            .then(json => {
+                dispatch({ type: AUTH_LOADING, payload: false });
+                console.log(json)
+                if (json.status == 200) {
+                    dispatch(getMainMenu(json.data.id))
+                    dispatch({
+                        type: USER_LOGIN,
+                        payload: {
+                            login: json
+                        }
+                    })
+                } else if (json.status == 401) {
+                    Alert.alert("", json.message)
+                } else {
+                    Alert.alert("", json.message)
+                }
+
+            })
+            .catch(error => {
+                dispatch({ type: AUTH_LOADING, payload: false });
+                console.log(error)
+            })
+    };
+}
+export const cancelUserSubscription = (userID) => {
+    return dispatch => {
+        dispatch({ type: AUTH_LOADING, payload: true });
+        fetch(baseUrl + cancelSubscription, {
+            method: 'POST',
+            headers: {
+                'Accept': 'application/json',
+                "Content-type": "application/json",
+            },
+            body: JSON.stringify({
+                userId: userID,
+            })
+        })
+            .then(res => res.json())
+            .then(json => {
+                dispatch({ type: AUTH_LOADING, payload: false });
+                console.log(json)
+                if (json.status == 200) {
+                    dispatch(getUpdateUser(userID))
+                    // dispatch(getMainMenu(json.data.id))
+                    // dispatch({
+                    //     type: USER_LOGIN,
+                    //     payload: {
+                    //         login: json
+                    //     }
+                    // })
                 } else if (json.status == 401) {
                     Alert.alert("", json.message)
                 } else {
@@ -464,7 +543,7 @@ export const postGenerSeen = async (genreId, userId, isFirst) => {
                     if (isFirst === "yes") {
                         console.log(json)
                     } else {
-                        Alert.alert("", json.message)
+                        NavigationService.navigate('Subscription')
                     }
                 }
                 return json
@@ -507,7 +586,7 @@ export const postPecioSeen = async (pecioId, userId, isFirst) => {
                     if (isFirst === "yes") {
                         console.log(json)
                     } else {
-                        Alert.alert("", json.message)
+                        NavigationService.navigate('Subscription')
                     }
                 }
                 return json
@@ -607,7 +686,7 @@ export const getAnimalSeenList = async (userId) => {
                     console.log(json)
                     return json
                 } else {
-                    Alert.alert("", json.message)
+                    console.log(json)
                 }
             })
             .catch(error => {
@@ -637,7 +716,8 @@ export const getPeciosSeenList = async (userId) => {
                     console.log(json)
                     return json
                 } else {
-                    Alert.alert("", json.message)
+                    console.log(json)
+                    //Alert.alert("", json.message)
                 }
             })
             .catch(error => {
@@ -702,7 +782,7 @@ export const postPeciosImg = (userId, pecioId, image) => {
                 if (json.status == 200) {
                     Alert.alert("", json.message)
                 } else if (json.status == 401) {
-                    Alert.alert("", json.message)
+                    NavigationService.navigate('Subscription')
                 } else {
                     Alert.alert("", json.message)
                 }
@@ -736,7 +816,7 @@ export const postGenerImg = (userId, genreId, image) => {
                 if (json.status == 200) {
                     Alert.alert("", json.message)
                 } else if (json.status == 401) {
-                    Alert.alert("", json.message)
+                    NavigationService.navigate('Subscription')
                 } else {
                     Alert.alert("", json.message)
                 }
@@ -1414,12 +1494,13 @@ export const submitLogbookData = async (
             .then(res => res.json())
             .then(json => {
                 if (json.status == 200) {
-                    //console.log(json)
                     NavigationService.navigate("Home")
                     Alert.alert("", json.message)
                     return
+                } else if (json.status == 401) {
+                    NavigationService.navigate('Subscription')
                 } else {
-                    console.log(json)
+                    Alert.alert("", json.message)
                 }
             })
             .catch(error => {

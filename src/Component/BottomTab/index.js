@@ -17,7 +17,9 @@ const Card = (props) => {
         <View style={styles.container}>
             <View style={styles.midView}>
                 <TouchableOpacity
-                    style={styles.itemView}
+                    style={[styles.itemView, {
+                        //backgroundColor: "red"
+                    }]}
                     onPress={props.profileClick}
                 >
                     <Icon4 name="user" color={white} size={25} />
@@ -27,7 +29,10 @@ const Card = (props) => {
                 </TouchableOpacity>
                 <TouchableOpacity
                     onPress={props.homeClick}
-                    style={styles.itemView}>
+                    style={[styles.itemView, {
+                        //backgroundColor: "pink"
+                    }]}
+                >
                     <Icon4 name="home" color={white} size={25} />
                     <Text style={styles.smallText}>
                         {Strings.home}
@@ -35,7 +40,11 @@ const Card = (props) => {
                 </TouchableOpacity>
                 <TouchableOpacity
                     onPress={props.settingClick}
-                    style={styles.itemView}>
+                    style={[styles.itemView, {
+                        //backgroundColor: "green",
+                        width:"23%"
+                    }]}
+                >
                     <Feather name="settings" color={white} size={25} />
                     <Text style={styles.smallText}>
                         {Strings.setting}
@@ -43,7 +52,10 @@ const Card = (props) => {
                 </TouchableOpacity>
                 <TouchableOpacity
                     onPress={props.mapClick}
-                    style={styles.itemView}>
+                    style={[styles.itemView, {
+                        //backgroundColor: "blue"
+                    }]}
+                >
                     <Icon name="map-marker-alt" color={white} size={25} />
                     <Text style={styles.smallText}>
                         {Strings.map}
@@ -51,7 +63,11 @@ const Card = (props) => {
                 </TouchableOpacity>
                 <TouchableOpacity
                     onPress={props.notiClick}
-                    style={styles.itemView}>
+                    style={[styles.itemView, {
+                        width:"23%"
+                        //backgroundColor: "yellow"
+                    }]}
+                >
                     <Icon2 name="notifications" color={white} size={25} />
                     <Text style={styles.smallText}>
                         {Strings.notification}
@@ -69,21 +85,23 @@ const styles = StyleSheet.create({
         position: "absolute",
         bottom: "0%",
         justifyContent: "center",
-        backgroundColor: blue
+        backgroundColor: blue,
+        alignItems:"center"
         //backgroundColor: blue
     },
     midView: {
-        // width: "100%",
-        // height: "100%",
+        width: "100%",
+        height: "100%",
         alignItems: "center",
         flexDirection: "row",
         //backgroundColor:"red",
-        justifyContent: "space-around",
+        justifyContent: 'center',
     },
     itemView: {
-        width: "25%",
+        width: "18%",
         height: "100%",
-        alignItems: "center"
+        alignItems: "center",
+        justifyContent:"center"
     },
     smallText: {
         color: white,

@@ -14,7 +14,7 @@ import RNPickerSelect from 'react-native-picker-select';
 import EvilIcons from 'react-native-vector-icons/EvilIcons'
 import MapView, { PROVIDER_GOOGLE, Marker } from 'react-native-maps';
 import { SearchBar } from 'react-native-elements'
-import { getCountryName, getAllList, postPeciosList, postGenreList, postFriendList, postLogbookImg, updateLogbookData } from '../../Redux/action'
+import { getCountryName, getAllList, postPeciosList, postGenreList, postFriendList, postLogbookImg, updateLogbookData, getDiveCenterDetail } from '../../Redux/action'
 import { useDispatch, useSelector } from 'react-redux';
 import Strings from '../../Translation'
 import Fontisto from 'react-native-vector-icons/Fontisto'
@@ -168,6 +168,11 @@ const LogBook = (props) => {
         // console.log("Teams", response.users)
     }
     // Api response save functions
+    const getCenterDetailApi = async (id) => {
+        setIsLoading(true)
+        await getDiveCenterDetail(id, login.data.id)
+        await setIsLoading(false)
+    }
     const postLogbookApi = async () => {
         setIsLoading(true)
         await updateLogbookData(
@@ -1052,11 +1057,11 @@ const LogBook = (props) => {
                             </Text>
                         </View>
                         <View style={[styles.logView2, {
-                            height: heightPercentageToDP(40),
+                            height: heightPercentageToDP(42),
                             marginTop: heightPercentageToDP(2),
                             backgroundColor: blue
                         }]}>
-                            <View style={{ marginTop: heightPercentageToDP(1), flexDirection: "row", alignItems: "center" }}>
+                            <View style={{ marginTop: heightPercentageToDP(1), flexDirection: "row", alignItems: "center", width: "90%" }}>
                                 <TouchableOpacity
                                     onPress={() => _onWeatherSelection(1)}
                                     style={[styles.weatherBtn, {
@@ -1109,7 +1114,7 @@ const LogBook = (props) => {
                                     />
                                 </TouchableOpacity>
                             </View>
-                            <View style={{ marginTop: heightPercentageToDP(1), flexDirection: "row", alignItems: "center" }}>
+                            <View style={{ marginTop: heightPercentageToDP(1), flexDirection: "row", alignItems: "center", width: "90%" }}>
                                 <TouchableOpacity
                                     onPress={() => _onWeatherSelection(5)}
                                     style={[styles.weatherBtn, {
@@ -1163,7 +1168,7 @@ const LogBook = (props) => {
                                     />
                                 </TouchableOpacity>
                             </View>
-                            <View style={{ width: "70%", flexDirection: "row", alignItems: "center", }}>
+                            <View style={{ width: "100%", flexDirection: "row", alignItems: "center", marginTop: heightPercentageToDP(1) }}>
                                 <Text style={[styles.smallTxt, { color: black, marginLeft: 15, }]}>
                                     {Strings.Water_temperature}{" : "}
                                 </Text>
@@ -1180,7 +1185,7 @@ const LogBook = (props) => {
                                     {"*C"}
                                 </Text>
                             </View>
-                            <View style={{ width: "70%", flexDirection: "row", alignItems: "center", }}>
+                            <View style={{ width: "100%", flexDirection: "row", alignItems: "center", marginTop: heightPercentageToDP(1) }}>
                                 <Text style={[styles.smallTxt, { color: black, marginLeft: 15, }]}>
                                     {Strings.Visibility}{" : "}
                                 </Text>
@@ -1197,13 +1202,13 @@ const LogBook = (props) => {
                                     {Strings.meters}
                                 </Text>
                             </View>
-                            <View style={{ width: "70%", flexDirection: "row", alignItems: "center", }}>
+                            <View style={{ width: "100%", flexDirection: "row", alignItems: "center", }}>
                                 <Text onPress={() => {
                                     setSweetWater(true)
                                     setSaltWater(false)
                                     setWaterType("sweet water")
                                 }}
-                                    style={[styles.smallTxt, { color: sweetWater ? white : black, marginLeft: widthPercentageToDP(4) }]}>
+                                    style={[styles.smallTxt, { color: sweetWater ? white : black, marginLeft: widthPercentageToDP(4), marginTop: heightPercentageToDP(1), marginBottom: heightPercentageToDP(1) }]}>
                                     {Strings.sweet_water}{" / "}
                                     <Text
                                         onPress={() => {
@@ -1216,11 +1221,11 @@ const LogBook = (props) => {
                                     </Text>
                                 </Text>
                             </View>
-                            <View style={{ flexDirection: "row", alignItems: "center", alignSelf: "center", height: "10%", marginLeft: widthPercentageToDP(4) }}>
+                            <View style={{ flexDirection: "row", alignItems: "center", alignSelf: "center", height: "12%", marginLeft: widthPercentageToDP(4), }}>
                                 <Text style={[styles.smallTxt, { color: black }]}>
                                     {Strings.type}{" :"}
                                 </Text>
-                                <View style={{ width: language === 'es' ? "40%" : "56%", height: "100%", justifyContent: "center" }}>
+                                <View style={{ width: language === 'es' ? "67%" : "87%", height: "100%", justifyContent: "center" }}>
                                     <RNPickerSelect
                                         placeholder={{
                                             label: Strings.type,
@@ -1236,11 +1241,11 @@ const LogBook = (props) => {
                                     />
                                 </View>
                             </View>
-                            <View style={{ flexDirection: "row", alignItems: "center", alignSelf: "center", height: "9%", marginLeft: widthPercentageToDP(8), marginTop: -5 }}>
+                            <View style={{ flexDirection: "row", alignItems: "center", alignSelf: "center", height: "12%", marginLeft: widthPercentageToDP(8), marginTop: -5 }}>
                                 <Text style={[styles.smallTxt, { color: black }]}>
                                     {Strings.currents}{" :"}
                                 </Text>
-                                <View style={{ width: language === 'es' ? "50%" : "54%", height: "100%", justifyContent: "center", }}>
+                                <View style={{ width: language === 'es' ? "83%" : "86%", height: "100%", justifyContent: "center" }}>
                                     <RNPickerSelect
                                         placeholder={{
                                             label: Strings.currents,
@@ -1356,7 +1361,7 @@ const LogBook = (props) => {
                                     </View>
                                 </View>
                             </View>
-                            <View style={{ flexDirection: "row", alignItems: "center", width: "97%", }}>
+                            <View style={{ flexDirection: "row", alignItems: "center", width: "97%", marginTop: heightPercentageToDP(1) }}>
                                 <Text style={[styles.smallTxt, { color: black, marginLeft: 15 }]}>
                                     {Strings.max_deep}{" : "}
                                 </Text>
@@ -1376,7 +1381,7 @@ const LogBook = (props) => {
                                 <Text style={[styles.smallTxt, { color: black }]}>
                                     {Strings.type_of_dives}{" :"}
                                 </Text>
-                                <View style={{ width: "50%", height: "100%", justifyContent: "center" }}>
+                                <View style={{ width: language === 'es' ? "65%" : "70%", height: "100%", justifyContent: "center", }}>
                                     <RNPickerSelect
                                         placeholder={{
                                             label: Strings.type_of_dives,
@@ -1550,7 +1555,7 @@ const LogBook = (props) => {
                                     setScuba(true)
                                     setRebreader(false)
                                 }}
-                                style={[styles.smallTxt, { color: isScuba ? white : black, marginLeft: 15, marginTop: 10 }]}>
+                                style={[styles.smallTxt, { color: isScuba ? white : black, marginTop: 10 }]}>
                                 {Strings.scuba}{" / "}
                                 <Text
                                     onPress={() => {
@@ -1563,7 +1568,7 @@ const LogBook = (props) => {
                             </Text>
                             {isScuba &&
                                 <View style={{ flexDirection: "row", alignItems: "center", alignSelf: "center" }}>
-                                    <Text style={[styles.smallTxt, { color: black, marginLeft: 15 }]}>
+                                    <Text style={[styles.smallTxt, { color: black, marginLeft: 6 }]}>
                                         {Strings.ballast}{" : "}
                                     </Text>
                                     <TextInput
@@ -1588,7 +1593,7 @@ const LogBook = (props) => {
                                     />
                                     <View style={{ width: "80%", height: "100%", marginLeft: widthPercentageToDP(4) }}>
                                         <View style={{ flexDirection: "row", alignItems: "center", marginTop: 5 }}>
-                                            <Text style={[styles.smallTxt, { color: black, marginLeft: 15 }]}>
+                                            <Text style={[styles.smallTxt, { color: black, }]}>
                                                 {Strings.bottle}{" : "}
                                             </Text>
                                             <TextInput
@@ -1607,7 +1612,7 @@ const LogBook = (props) => {
                                             <Text style={[styles.smallTxt, { color: black }]}>
                                                 {Strings.material}{" :"}
                                             </Text>
-                                            <View style={{ width: "60%", height: "100%", justifyContent: "center" }}>
+                                            <View style={{ width: "70%", height: "100%", justifyContent: "center" }}>
                                                 <RNPickerSelect
                                                     placeholder={{
                                                         label: Strings.material,
@@ -1627,7 +1632,7 @@ const LogBook = (props) => {
                                             <Text style={[styles.smallTxt, { color: black }]}>
                                                 {Strings.mix}{" :"}
                                             </Text>
-                                            <View style={{ width: "60%", height: "100%", justifyContent: "center" }}>
+                                            <View style={{ width: language === 'es' ? "74%" : "85%", height: "100%", justifyContent: "center" }}>
                                                 <RNPickerSelect
                                                     placeholder={{
                                                         label: Strings.mix,
@@ -1958,7 +1963,7 @@ const LogBook = (props) => {
                                         resizeMode={FastImage.resizeMode.cover}
                                     />
                                     : <FastImage
-                                        source={{ uri: "http://199.247.13.90/" + center.image }}
+                                        source={{ uri: "http://199.247.13.90/" + center.logo }}
                                         style={styles.imgModel}
                                         resizeMode={FastImage.resizeMode.cover}
                                     />
@@ -1968,15 +1973,19 @@ const LogBook = (props) => {
                                 </Text>
                             </View>
                             {center ?
-                                <View style={[styles.centerView, {
-                                    marginLeft: center ? widthPercentageToDP(10) : 0
-                                }]}>
+                                <TouchableOpacity
+                                    onPress={() => {
+                                        getCenterDetailApi(center.id)
+                                    }}
+                                    style={[styles.centerView, {
+                                        marginLeft: center ? widthPercentageToDP(10) : 0
+                                    }]}>
                                     <FastImage
-                                        source={{ uri: "http://199.247.13.90/" + center.logo }}
+                                        source={{ uri: "http://199.247.13.90/" + center.stamp }}
                                         style={{ width: "90%", height: "90%" }}
                                         resizeMode={FastImage.resizeMode.cover}
                                     />
-                                </View>
+                                </TouchableOpacity>
                                 : <TextInput
                                     style={styles.input}
                                     placeholder="Sello"
@@ -2019,62 +2028,64 @@ const LogBook = (props) => {
                     notiClick={() => props.navigation.dispatch(notificationAction)}
                 />
                 {mapModal &&
-                    <Modal
-                        animationType={"fade"}
-                        transparent={true}
-                        visible={mapModal}
-                        onRequestClose={() => { console.log("Modal has been closed.") }}
-                    >
-                        <View style={styles.modalView}>
-                            <View style={styles.map}>
-                                <MapView
-                                    provider={PROVIDER_GOOGLE} // remove if not using Google Maps
-                                    style={styles.map2}
-                                    region={{
-                                        // latitude: parseFloat(this.state.lat),
-                                        // longitude: parseFloat(this.state.long),
-                                        // latitudeDelta: 0.0043,
-                                        // longitudeDelta: 0.0034
-                                        latitude: 40.416775,
-                                        longitude: -3.703790,
-                                        latitudeDelta: 0.0922,
-                                        longitudeDelta: 0.0421,
-                                    }}
-                                    onPress={(e) => setLocation(e.nativeEvent.coordinate)}
-                                >
-                                    {!location ?
-                                        <View />
-                                        : <Marker
-                                            coordinate={{
-                                                latitude: parseFloat(location.latitude),
-                                                longitude: parseFloat(location.longitude),
-                                            }}
+                    <SafeAreaView style={styles.container}>
+                        <Modal
+                            animationType={"fade"}
+                            transparent={true}
+                            visible={mapModal}
+                            onRequestClose={() => { console.log("Modal has been closed.") }}
+                        >
+                            <View style={styles.modalView}>
+                                <View style={styles.map}>
+                                    <MapView
+                                        provider={PROVIDER_GOOGLE} // remove if not using Google Maps
+                                        style={styles.map2}
+                                        region={{
+                                            // latitude: parseFloat(this.state.lat),
+                                            // longitude: parseFloat(this.state.long),
+                                            // latitudeDelta: 0.0043,
+                                            // longitudeDelta: 0.0034
+                                            latitude: 40.416775,
+                                            longitude: -3.703790,
+                                            latitudeDelta: 0.0922,
+                                            longitudeDelta: 0.0421,
+                                        }}
+                                        onPress={(e) => setLocation(e.nativeEvent.coordinate)}
+                                    >
+                                        {!location ?
+                                            <View />
+                                            : <Marker
+                                                coordinate={{
+                                                    latitude: parseFloat(location.latitude),
+                                                    longitude: parseFloat(location.longitude),
+                                                }}
+                                            />
+                                        }
+                                    </MapView>
+                                    <TouchableOpacity
+                                        style={styles.mapCloseBtn}
+                                        onPress={() => toggleMap()}
+                                    >
+                                        <EvilIcons
+                                            name="close"
+                                            color="#fff"
+                                            size={20}
                                         />
-                                    }
-                                </MapView>
-                                <TouchableOpacity
-                                    style={styles.mapCloseBtn}
-                                    onPress={() => toggleMap()}
-                                >
-                                    <EvilIcons
-                                        name="close"
-                                        color="#fff"
-                                        size={20}
-                                    />
-                                </TouchableOpacity>
+                                    </TouchableOpacity>
+                                </View>
                             </View>
-                        </View>
-                    </Modal>
+                        </Modal>
+                    </SafeAreaView>
                 }
                 {searchModal &&
-                    <Modal
-                        animationType={"fade"}
-                        transparent={false}
-                        visible={searchModal}
-                        onRequestClose={() => { console.log("Modal has been closed.") }}
-                    >
-                        <View style={styles.modalView2}>
-                            <View style={stylesProps.container}>
+                    <SafeAreaView style={styles.container}>
+                        <Modal
+                            animationType={"fade"}
+                            transparent={false}
+                            visible={searchModal}
+                            onRequestClose={() => { console.log("Modal has been closed.") }}
+                        >
+                            <View style={styles.modalView2}>
                                 <SearchBar
                                     placeholder="Search country..."
                                     lightTheme
@@ -2082,31 +2093,31 @@ const LogBook = (props) => {
                                     value={text}
                                     onChangeText={text => searchFilterFunction(text)}
                                     autoCorrect={false}
-                                    containerStyle={{ width: widthPercentageToDP(95) }}
+                                    containerStyle={{ width: widthPercentageToDP(95), backgroundColor: white }}
                                 //style={{}}
                                 />
                                 {!countryList || !countryList.length ?
                                     <View />
                                     : <FlatList
                                         data={!text ? countryList : countryList2}
-                                        contentContainerStyle={{ alignItems: "center", marginBottom: heightPercentageToDP(5) }}
+                                        contentContainerStyle={{ marginBottom: heightPercentageToDP(5), flexGrow: 1 }}
                                         keyExtractor={(item, index) => "Unique" + index}
                                         ItemSeparatorComponent={renderSeparator}
                                         renderItem={renderItem}
                                     />}
                             </View>
-                        </View>
-                    </Modal>
+                        </Modal>
+                    </SafeAreaView>
                 }
                 {cityModal &&
-                    <Modal
-                        animationType={"fade"}
-                        transparent={false}
-                        visible={cityModal}
-                        onRequestClose={() => { console.log("Modal has been closed.") }}
-                    >
-                        <View style={styles.modalView2}>
-                            <View style={stylesProps.container}>
+                    <SafeAreaView style={styles.container}>
+                        <Modal
+                            animationType={"fade"}
+                            transparent={false}
+                            visible={cityModal}
+                            onRequestClose={() => { console.log("Modal has been closed.") }}
+                        >
+                            <View style={styles.modalView2}>
                                 <SearchBar
                                     placeholder="Search city..."
                                     lightTheme
@@ -2114,40 +2125,40 @@ const LogBook = (props) => {
                                     value={text2}
                                     onChangeText={text => cityFilterFunction(text)}
                                     autoCorrect={false}
-                                    containerStyle={{ width: widthPercentageToDP(95) }}
+                                    containerStyle={{ width: widthPercentageToDP(95), backgroundColor: white }}
                                 //style={{}}
                                 />
                                 {!cityList || !cityList.length ?
                                     <View />
                                     : <FlatList
                                         data={!text2 ? cityList : cityList2}
-                                        contentContainerStyle={{ alignItems: "center", marginBottom: heightPercentageToDP(5) }}
+                                        contentContainerStyle={{ marginBottom: heightPercentageToDP(5), flexGrow: 1 }}
                                         keyExtractor={(item, index) => "Unique" + index}
                                         ItemSeparatorComponent={renderSeparator}
                                         renderItem={renderItem2}
                                     />}
                             </View>
-                        </View>
-                    </Modal>
+                        </Modal>
+                    </SafeAreaView>
                 }
                 {peciosModal &&
-                    <Modal
-                        animationType={"fade"}
-                        transparent={false}
-                        visible={peciosModal}
-                        onRequestClose={() => { console.log("Modal has been closed.") }}
-                    >
-                        <View style={styles.modalView2}>
-                            <View style={stylesProps.container}>
+                    <SafeAreaView style={styles.container}>
+                        <Modal
+                            animationType={"fade"}
+                            transparent={false}
+                            visible={peciosModal}
+                            onRequestClose={() => { console.log("Modal has been closed.") }}
+                        >
+                            <View style={styles.modalView2}>
                                 <View style={styles.row}>
                                     <SearchBar
-                                        placeholder="Search city..."
+                                        placeholder={Strings.select_pecios}
                                         lightTheme
                                         round
                                         value={peciosText}
                                         onChangeText={text => searchPeciosFilterFunction(text)}
                                         autoCorrect={false}
-                                        containerStyle={{ width: widthPercentageToDP(80) }}
+                                        containerStyle={{ width: widthPercentageToDP(80), backgroundColor: white }}
                                     />
                                     <TouchableOpacity
                                         onPress={() => togglePecios()}
@@ -2157,45 +2168,44 @@ const LogBook = (props) => {
                                         </Text>
                                     </TouchableOpacity>
                                 </View>
-
                                 {!response || !response.pecios.length ?
                                     <View />
                                     : <FlatList
                                         data={!peciosText ? response.pecios : tempPecios}
-                                        contentContainerStyle={{ alignItems: "center", marginBottom: heightPercentageToDP(5) }}
+                                        contentContainerStyle={{ marginBottom: heightPercentageToDP(5), flexGrow: 1 }}
                                         keyExtractor={(item, index) => "Unique" + index}
                                         ItemSeparatorComponent={renderSeparator}
                                         renderItem={renderSelection}
                                     />}
+                                {isLoading &&
+                                    <ActivityIndicator
+                                        size="large"
+                                        color={black}
+                                        style={styles.loading}
+                                    />
+                                }
                             </View>
-                            {isLoading &&
-                                <ActivityIndicator
-                                    size="large"
-                                    color={black}
-                                    style={styles.loading}
-                                />
-                            }
-                        </View>
-                    </Modal>
+                        </Modal>
+                    </SafeAreaView>
                 }
                 {animalModal &&
-                    <Modal
-                        animationType={"fade"}
-                        transparent={false}
-                        visible={animalModal}
-                        onRequestClose={() => { console.log("Modal has been closed.") }}
-                    >
-                        <View style={styles.modalView2}>
-                            <View style={stylesProps.container}>
+                    <SafeAreaView style={styles.container}>
+                        <Modal
+                            animationType={"fade"}
+                            transparent={false}
+                            visible={animalModal}
+                            onRequestClose={() => { console.log("Modal has been closed.") }}
+                        >
+                            <View style={styles.modalView2}>
                                 <View style={styles.row}>
                                     <SearchBar
-                                        placeholder="Search city..."
+                                        placeholder={Strings.select_animal}
                                         lightTheme
                                         round
                                         value={animalText}
                                         onChangeText={text => searchAnimalFilterFunction(text)}
                                         autoCorrect={false}
-                                        containerStyle={{ width: widthPercentageToDP(80) }}
+                                        containerStyle={{ width: widthPercentageToDP(80), backgroundColor: white }}
                                     />
                                     <TouchableOpacity
                                         onPress={() => toggleAnimal()}
@@ -2205,45 +2215,45 @@ const LogBook = (props) => {
                                         </Text>
                                     </TouchableOpacity>
                                 </View>
-
                                 {!response || !response.genres.length ?
                                     <View />
                                     : <FlatList
                                         data={!animalText ? response.genres : tempGenre}
-                                        contentContainerStyle={{ alignItems: "center", marginBottom: heightPercentageToDP(5) }}
+                                        contentContainerStyle={{ marginBottom: heightPercentageToDP(5), flexGrow: 1 }}
                                         keyExtractor={(item, index) => "Unique" + index}
                                         ItemSeparatorComponent={renderSeparator}
                                         renderItem={renderAnimalSelection}
-                                    />}
+                                    />
+                                }
+                                {isLoading &&
+                                    <ActivityIndicator
+                                        size="large"
+                                        color={black}
+                                        style={styles.loading}
+                                    />
+                                }
                             </View>
-                            {isLoading &&
-                                <ActivityIndicator
-                                    size="large"
-                                    color={black}
-                                    style={styles.loading}
-                                />
-                            }
-                        </View>
-                    </Modal>
+                        </Modal>
+                    </SafeAreaView>
                 }
                 {teamModal &&
-                    <Modal
-                        animationType={"fade"}
-                        transparent={false}
-                        visible={teamModal}
-                        onRequestClose={() => { console.log("Modal has been closed.") }}
-                    >
-                        <View style={styles.modalView2}>
-                            <View style={stylesProps.container}>
+                    <SafeAreaView style={styles.container}>
+                        <Modal
+                            animationType={"fade"}
+                            transparent={false}
+                            visible={teamModal}
+                            onRequestClose={() => { console.log("Modal has been closed.") }}
+                        >
+                            <View style={styles.modalView2}>
                                 <View style={styles.row}>
                                     <SearchBar
-                                        placeholder="Search city..."
+                                        placeholder={Strings.select_team}
                                         lightTheme
                                         round
                                         value={teamText}
                                         onChangeText={text => searchTeamFilterFunction(text)}
                                         autoCorrect={false}
-                                        containerStyle={{ width: widthPercentageToDP(80) }}
+                                        containerStyle={{ width: widthPercentageToDP(80), backgroundColor: white }}
                                     />
                                     <TouchableOpacity
                                         onPress={() => toggleTeam()}
@@ -2258,7 +2268,7 @@ const LogBook = (props) => {
                                     <View />
                                     : <FlatList
                                         data={!teamText ? response.users : tempTeam}
-                                        contentContainerStyle={{ alignItems: "center", marginBottom: heightPercentageToDP(5) }}
+                                        contentContainerStyle={{ marginBottom: heightPercentageToDP(5), flexGrow: 1 }}
                                         keyExtractor={(item, index) => "Unique" + index}
                                         ItemSeparatorComponent={renderSeparator}
                                         renderItem={renderTeamSelection}
@@ -2271,27 +2281,27 @@ const LogBook = (props) => {
                                     style={styles.loading}
                                 />
                             }
-                        </View>
-                    </Modal>
+                        </Modal>
+                    </SafeAreaView>
                 }
                 {centerModal &&
-                    <Modal
-                        animationType={"fade"}
-                        transparent={false}
-                        visible={centerModal}
-                        onRequestClose={() => { console.log("Modal has been closed.") }}
-                    >
-                        <View style={styles.modalView2}>
-                            <View style={stylesProps.container}>
+                    <SafeAreaView style={styles.container}>
+                        <Modal
+                            animationType={"fade"}
+                            transparent={false}
+                            visible={centerModal}
+                            onRequestClose={() => { console.log("Modal has been closed.") }}
+                        >
+                            <View style={styles.modalView2}>
                                 <View style={styles.row}>
                                     <SearchBar
-                                        placeholder="Search city..."
+                                        placeholder={Strings.select_center}
                                         lightTheme
                                         round
                                         value={centerText}
                                         onChangeText={text => searchCenterFilterFunction(text)}
                                         autoCorrect={false}
-                                        containerStyle={{ width: widthPercentageToDP(80) }}
+                                        containerStyle={{ width: widthPercentageToDP(80), backgroundColor: white }}
                                     />
                                     <TouchableOpacity
                                         onPress={() => toggleCenter()}
@@ -2301,12 +2311,11 @@ const LogBook = (props) => {
                                         </Text>
                                     </TouchableOpacity>
                                 </View>
-
                                 {!response || !response.centers.length ?
                                     <View />
                                     : <FlatList
                                         data={!centerText ? response.centers : tempCenter}
-                                        contentContainerStyle={{ alignItems: "center", marginBottom: heightPercentageToDP(5) }}
+                                        contentContainerStyle={{ marginBottom: heightPercentageToDP(5), flexGrow: 1 }}
                                         keyExtractor={(item, index) => "Unique" + index}
                                         ItemSeparatorComponent={renderSeparator}
                                         renderItem={renderCenterItem}
@@ -2320,8 +2329,8 @@ const LogBook = (props) => {
                                     style={styles.loading}
                                 />
                             }
-                        </View>
-                    </Modal>
+                        </Modal>
+                    </SafeAreaView>
                 }
                 {pickerOption &&
                     <Picker

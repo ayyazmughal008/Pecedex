@@ -93,7 +93,7 @@ export const styles = StyleSheet.create({
     },
     input3: {
         width: widthPercentageToDP(60),
-        height: heightPercentageToDP(5),
+        height: heightPercentageToDP(6),
         fontSize: widthPercentageToDP(3.5),
         fontFamily: "Montserrat-Regular",
         paddingLeft: widthPercentageToDP(5),
@@ -482,5 +482,95 @@ export const styles = StyleSheet.create({
         fontSize: widthPercentageToDP(4),
         color: black,
         fontFamily: "Montserrat-Regular"
+    },
+    banner: {
+        width: widthPercentageToDP(98),
+        height: heightPercentageToDP(20),
+        borderBottomLeftRadius: widthPercentageToDP(5),
+        borderBottomRightRadius: widthPercentageToDP(5),
+        alignSelf: "center"
+    },
+    cardBanner: {
+        borderRadius: widthPercentageToDP(3),
+        width: widthPercentageToDP(90),
+        height: heightPercentageToDP(45),
+        alignSelf: "center",
+        padding: 0
+    },
+    cardBanner2: {
+        borderRadius: widthPercentageToDP(3),
+        width: widthPercentageToDP(90),
+        height: heightPercentageToDP(30),
+        alignSelf: "center",
+        //backgroundColor:"red",
+        padding: 0
+    },
+    bannerTop: {
+        width: widthPercentageToDP(90),
+        height: heightPercentageToDP(7),
+        alignSelf: "center",
+        padding: 0,
+        justifyContent: "center"
+    },
+    innerBanner: {
+        width: widthPercentageToDP(82),
+        height: heightPercentageToDP(31),
+        alignSelf: "center",
+        //backgroundColor: "red",
+        // borderBottomLeftRadius: widthPercentageToDP(5),
+        // borderBottomRightRadius: widthPercentageToDP(5),
+        //marginTop: heightPercentageToDP(2)
+    },
+    centerLine: {
+        width: widthPercentageToDP(80),
+        height: widthPercentageToDP(0.1),
+        alignSelf: "center",
+        backgroundColor: black,
+        marginTop: heightPercentageToDP(2)
+    },
+    bannerTypeText: {
+        fontSize: widthPercentageToDP(2.8),
+        color: black,
+        fontFamily: "Montserrat-Regular",
+        marginRight: widthPercentageToDP(6)
+    },
+    subTypeText: {
+        fontSize: widthPercentageToDP(3.1),
+        color: black,
+        fontFamily: "Montserrat-Regular",
+    },
+    leftBanner: {
+        width: "10%",
+        height: "100%",
+        justifyContent: "center",
+        alignItems: "center"
+    },
+    rightBanner: {
+        width: "22%",
+        height: "100%",
+        justifyContent: "center",
+        alignItems: "center"
+    },
+    bannerTitleView: {
+        width: "67%",
+        height: "100%",
+        justifyContent: "center"
+    },
+    amountTxt: {
+        paddingTop: heightPercentageToDP(3),
+        paddingLeft: widthPercentageToDP(4),
+        fontFamily: "Montserrat-SemiBold",
+        fontSize: widthPercentageToDP(10),
+        color: blue
+    },
+    payBtn: {
+        width: widthPercentageToDP(40),
+        height: heightPercentageToDP(5),
+        borderRadius: widthPercentageToDP(6),
+        alignSelf:"center",
+        marginTop:heightPercentageToDP(1),
+        backgroundColor: blue,
+        justifyContent: "center",
+        alignItems: "center"
     }
 })

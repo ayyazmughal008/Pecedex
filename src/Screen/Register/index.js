@@ -77,6 +77,7 @@ const Register = (props) => {
         await setIsLoading(false)
     }
     const getDegreeApi = async (id) => {
+        //console.log("come", id)
         setIsLoading(true)
         let menuData = await getUserDegree(id)
         await setDegreeResponse(menuData)
@@ -110,19 +111,7 @@ const Register = (props) => {
                             </View>
                             <View style={styles.inputDropdownView}>
                                 {!Response || !Response.data.length ?
-                                    <RNPickerSelect
-                                        placeholder={{
-                                            label: Strings.certificate,
-                                            value: null,
-                                            color: "#000"
-                                        }}
-                                        value={certificate}
-                                        style={pickerStyle}
-                                        onValueChange={value => {
-                                            setCertificate(value)
-                                        }}
-                                        items={[{ label: "value", value: "value" }]}
-                                    />
+                                    <View />
                                     : <RNPickerSelect
                                         placeholder={{
                                             label: Strings.certificate,
@@ -131,12 +120,15 @@ const Register = (props) => {
                                         }}
                                         value={certificate}
                                         style={pickerStyle}
-                                        onValueChange={(value, id) => {
-                                            setCertificate(value);
-                                            getDegreeApi(id);
+                                        onValueChange={(value, index) => {
+                                            if (index !== 0) {
+                                                setCertificate(value),
+                                                    getDegreeApi(Response.data[index - 1].id)
+                                            }
                                         }}
                                         items={Response.data}
-                                    />}
+                                    />
+                                }
                             </View>
                             {!certificate ?
                                 <View />
@@ -153,19 +145,7 @@ const Register = (props) => {
                                     </View>
                                     : <View style={styles.inputDropdownView}>
                                         {!DegreeResponse || !DegreeResponse.data.length ?
-                                            <RNPickerSelect
-                                                placeholder={{
-                                                    label: "Degree",
-                                                    value: null,
-                                                    color: "#000"
-                                                }}
-                                                value={degree}
-                                                style={pickerStyle}
-                                                onValueChange={value => {
-                                                    setDegree(value)
-                                                }}
-                                                items={[{ label: "value", value: "value" }]}
-                                            />
+                                            <View />
                                             : <RNPickerSelect
                                                 placeholder={{
                                                     label: "Degree",

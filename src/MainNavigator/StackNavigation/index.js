@@ -25,6 +25,8 @@ import SearchScreen from "../../Screen/Search";
 import SubmitReview from "../../Screen/DiveCenter/SubmitReview";
 import NotificationScreen from "../../Screen/Notification";
 import ForgetPWD from '../../Screen/ForgetPasword'
+import Subscription from '../../Screen/Subscription'
+import Payment from '../../Screen/Payment'
 
 export default createStackNavigator(
   {
@@ -106,6 +108,12 @@ export default createStackNavigator(
     },
     ForgetPWD: {
       screen: ForgetPWD
+    },
+    Subscription: {
+      screen: Subscription
+    },
+    Payment: {
+      screen: Payment
     },
   },
   {

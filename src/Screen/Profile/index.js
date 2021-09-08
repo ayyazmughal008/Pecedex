@@ -374,9 +374,13 @@ const Profile = (props) => {
                     closeBox2={() => toggleCertificate()}
                     certificateResponse={certificateResponse}
                     certificate={certificate}
-                    setCertificate={(value, id) => {
-                        setCertificate(value);
-                        getDegreeApi(id);
+                    setCertificate={(value, index) => {
+                        // setCertificate(value);
+                        // getDegreeApi(id);
+                        if (index !== 0) {
+                            setCertificate(value),
+                                getDegreeApi(certificateResponse.data[index - 1].id)
+                        }
                     }}
                     DegreeResponse={DegreeResponse}
                     degree={degree}
@@ -405,8 +409,8 @@ const Profile = (props) => {
                     showConfirmButton={true}
                     cancelText="No"
                     confirmText="Yes, delete it"
-                    confirmButtonColor= {blue}
-                    cancelButtonColor = {blue2}
+                    confirmButtonColor={blue}
+                    cancelButtonColor={blue2}
                     onCancelPressed={() => {
                         setAlert(false);
                     }}

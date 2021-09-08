@@ -258,59 +258,63 @@ const DiveCenter = (props) => {
                 <Text style={[styles.profileName, { alignSelf: "flex-start", color: blue, marginLeft: widthPercentageToDP(5), marginTop: heightPercentageToDP(4) }]}>
                     {Strings.ACTIVITIES}
                 </Text>
-                <HTML
-                    source={{ html: info.data.activities }}
-                    containerStyle={{
-                        marginLeft: widthPercentageToDP(8),
-                        //backgroundColor: "red",
-                    }}
-                    tagsStyles={{
-                        p: {
-                            fontSize: widthPercentageToDP(4.5),
-                            color: black,
-                            fontFamily: "Montserrat-SemiBold",
-                            marginTop: heightPercentageToDP(1)
-                        }
-                    }}
-                />
+                {info.data.activities &&
+                    <HTML
+                        source={{ html: info.data.activities }}
+                        containerStyle={{
+                            marginLeft: widthPercentageToDP(8),
+                            //backgroundColor: "red",
+                        }}
+                        tagsStyles={{
+                            p: {
+                                fontSize: widthPercentageToDP(4.5),
+                                color: black,
+                                fontFamily: "Montserrat-SemiBold",
+                                marginTop: heightPercentageToDP(1)
+                            }
+                        }}
+                    />}
                 {/* new liness  */}
                 <Text style={[styles.profileName, { alignSelf: "flex-start", color: blue, marginLeft: widthPercentageToDP(5) }]}>
                     {Strings.DIVING_COURSES}
                 </Text>
-                <HTML
-                    source={{ html: info.data.courses }}
-                    containerStyle={{
-                        marginLeft: widthPercentageToDP(8),
-                        //backgroundColor: "red",
-                    }}
-                    tagsStyles={{
-                        p: {
-                            fontSize: widthPercentageToDP(4.5),
-                            color: black,
-                            fontFamily: "Montserrat-SemiBold",
-                            marginTop: heightPercentageToDP(1)
-                        }
-                    }}
-                />
+                {info.data.courses &&
+                    <HTML
+                        source={{ html: info.data.courses }}
+                        containerStyle={{
+                            marginLeft: widthPercentageToDP(8),
+                            //backgroundColor: "red",
+                        }}
+                        tagsStyles={{
+                            p: {
+                                fontSize: widthPercentageToDP(4.5),
+                                color: black,
+                                fontFamily: "Montserrat-SemiBold",
+                                marginTop: heightPercentageToDP(1)
+                            }
+                        }}
+                    />}
                 {/* new liness  */}
                 <Text style={[styles.profileName, { alignSelf: "flex-start", color: blue, marginLeft: widthPercentageToDP(5) }]}>
                     {Strings.OTHER_SERVICES}
                 </Text>
-                <HTML
-                    source={{ html: info.data.services }}
-                    containerStyle={{
-                        marginLeft: widthPercentageToDP(8),
-                        //backgroundColor: "red",
-                    }}
-                    tagsStyles={{
-                        p: {
-                            fontSize: widthPercentageToDP(4.5),
-                            color: black,
-                            fontFamily: "Montserrat-SemiBold",
-                            marginTop: heightPercentageToDP(1)
-                        }
-                    }}
-                />
+                {info.data.services &&
+                    <HTML
+                        source={{ html: info.data.services }}
+                        containerStyle={{
+                            marginLeft: widthPercentageToDP(8),
+                            //backgroundColor: "red",
+                        }}
+                        tagsStyles={{
+                            p: {
+                                fontSize: widthPercentageToDP(4.5),
+                                color: black,
+                                fontFamily: "Montserrat-SemiBold",
+                                marginTop: heightPercentageToDP(1)
+                            }
+                        }}
+                    />
+                }
                 <View style={{ marginTop: 10 }} />
             </KeyboardAwareScrollView>
             <View style={{ height: heightPercentageToDP(7) }} />

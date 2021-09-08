@@ -344,7 +344,11 @@ const GenreDetail = (props) => {
                     <View style={{ width: "48%", height: "100%", alignItems: "center", justifyContent: "space-between", flexDirection: "row" }}>
                         <TouchableOpacity
                             onPress={() => {
-                                Linking.openURL(data.videoLink);
+                                if (!data.videoLink) {
+                                    console.log(data.videoLink)
+                                } else {
+                                    Linking.openURL(data.videoLink);
+                                }
                             }}
                             style={styles.shareButton}>
                             <FastImage
@@ -356,7 +360,15 @@ const GenreDetail = (props) => {
                                 }}
                             />
                         </TouchableOpacity>
-                        <TouchableOpacity style={styles.shareButton}>
+                        <TouchableOpacity
+                            onPress={() => {
+                                if (!data.wlink) {
+                                    console.log(data.wlink)
+                                } else {
+                                    Linking.openURL(data.wlink);
+                                }
+                            }}
+                            style={styles.shareButton}>
                             <FastImage
                                 source={require('../../Images/87.png')}
                                 resizeMode={FastImage.resizeMode.contain}

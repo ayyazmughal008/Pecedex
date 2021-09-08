@@ -49,6 +49,24 @@ const Home = (props) => {
         },
 
     ]
+    const data2 = [
+        {
+            id: 1,
+            title: Strings.pecios,
+            animalImg: require('../../Images/8.png')
+        },
+        {
+            id: 1,
+            title: Strings.animals,
+            animalImg: require('../../Images/108.png')
+        },
+        {
+            id: 1,
+            title: Strings.logbook,
+            animalImg: require('../../Images/109.png')
+        },
+
+    ]
     React.useEffect(() => {
         nativeAdViewRef.current?.loadAd();
     }, []);
@@ -142,8 +160,15 @@ const Home = (props) => {
                             } else {
                                 Alert.alert("Permission Denied", "No permission to access this module")
                             }
-
-                        } else if (index == 3) {
+                        }
+                        else if (index == 2) {
+                            if (item.ad) {
+                                return
+                            } else {
+                                props.navigation.navigate('Dive')
+                            }
+                        }
+                        else if (index == 3) {
                             //props.navigation.navigate('NewScreen')
                             props.navigation.navigate('Dive')
                         }
@@ -195,7 +220,7 @@ const Home = (props) => {
                 </TouchableOpacity>
 
                 <FlatList
-                    data={data}
+                    data={!login.data.paid ? data : data2}
                     showsVerticalScrollIndicator={false}
                     contentContainerStyle={{
                         justifyContent: 'center',

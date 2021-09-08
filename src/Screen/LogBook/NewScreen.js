@@ -7,7 +7,7 @@ import { black, blue, blue2, white, } from '../../config/color'
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view'
 import Tab from '../../Component/BottomTab'
 import { HomeAction, profileAction, settingAction, mapAction, notificationAction } from '../../Component/BottomTab/actions'
-import { getCountryName } from '../../Redux/action'
+import { getGenreDetails } from '../../Redux/action'
 import { useDispatch, useSelector } from 'react-redux';
 //import { data } from './data'
 import { SliderBox } from "react-native-image-slider-box";
@@ -16,10 +16,21 @@ import Strings from '../../Translation'
 
 const NewScreen = (props) => {
     const dispatch = useDispatch();
-    const AuthLoading = useSelector((state) => state.user.AuthLoading);
+    const login = useSelector((state) => state.user.login);
     const [isLoading, setIsLoading] = useState(false)
+    const [genreId, setId] = useState('')
     const data = props.navigation.getParam('data', '123')
+    useEffect(() => {
+        if (genreId) {
+            getGenreApi()
+        }
+    }, [genreId])
 
+    const getGenreApi = async () => {
+        setIsLoading(true)
+        await getGenreDetails(genreId, login.data.id)
+        await setIsLoading(false)
+    }
 
     return (
         <View style={[styles.container, { alignItems: "center" }]}>
@@ -139,6 +150,7 @@ const NewScreen = (props) => {
                     aireTemp={data.airTemperatureSummer + " 'C"}
                     orrientes={data.currentSummer}
                     animalArray={data.imagesSummer}
+                    genreId={genreId => setId(genreId)}
                 //roundImage={require('../../Images/108.png')}
                 />
                 <Card
@@ -148,6 +160,7 @@ const NewScreen = (props) => {
                     aireTemp={data.airTemperatureWinter + " 'C"}
                     orrientes={data.currentWinter}
                     animalArray={data.imagesWinter}
+                    genreId={genreId => setId(genreId)}
                 />
             </KeyboardAwareScrollView>
             <View style={{ height: heightPercentageToDP(7) }} />

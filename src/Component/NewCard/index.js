@@ -50,11 +50,16 @@ const Card = (props) => {
                             < View />
                             : props.animalArray.map((item, index) => {
                                 return (
-                                    <FastImage
-                                        source={{ uri: item }}
-                                        resizeMode={FastImage.resizeMode.cover}
-                                        style={styles.roundImg}
-                                    />
+                                    <TouchableOpacity
+                                        key={"unique" + index}
+                                        onPress={() => props.genreId(item.id)}
+                                    >
+                                        <FastImage
+                                            source={{ uri: item.image }}
+                                            resizeMode={FastImage.resizeMode.cover}
+                                            style={styles.roundImg}
+                                        />
+                                    </TouchableOpacity>
                                 )
                             })
                         }

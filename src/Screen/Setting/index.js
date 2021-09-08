@@ -5,17 +5,22 @@ import { HomeAction, profileAction, settingAction, mapAction, notificationAction
 import Tab from '../../Component/BottomTab'
 import { heightPercentageToDP, widthPercentageToDP } from '../../Component/MakeMeResponsive'
 import FastImage from 'react-native-fast-image'
-import { black, green, lightRed } from '../../config/color'
+import { black, blue, blue2, green, lightRed } from '../../config/color'
 import { useSelector, useDispatch } from 'react-redux';
 import Strings from '../../Translation'
-import { logOut, setLanguage, logoutUser, sendUserLanguage } from '../../Redux/action'
+import { logOut, setLanguage, logoutUser, sendUserLanguage, getUpdateUser, cancelUserSubscription } from '../../Redux/action'
 import RNRestart from 'react-native-restart';
 import { GooglePay } from 'react-native-google-pay';
+import { NavigationEvents } from 'react-navigation';
+import AwesomeAlert from 'react-native-awesome-alerts';
 
 const Setting = (props) => {
     const dispatch = useDispatch();
     const language = useSelector((state) => state.user.language);
+    const AuthLoading = useSelector((state) => state.user.AuthLoading);
     const login = useSelector((state) => state.user.login);
+    const [showAlert, setAlert] = useState(false)
+    const paymentSuccess = props.navigation.getParam('paymentSuccess', "false")
     const [isLoading, setIsLoading] = useState(false)
     const allowedCardNetworks = ['VISA', 'MASTERCARD'];
     const allowedCardAuthMethods = ['PAN_ONLY', 'CRYPTOGRAM_3DS'];
@@ -27,6 +32,9 @@ const Setting = (props) => {
             Strings.setLanguage(language)
         }
     }, [language])
+    useEffect(() => {
+        dispatch(getUpdateUser(login.data.id))
+    }, [])
     const logoutApi = async () => {
         setIsLoading(true)
         await logoutUser(login.data.id)
@@ -85,6 +93,7 @@ const Setting = (props) => {
 
     return (
         <SafeAreaView style={styles.container}>
+            <NavigationEvents onDidFocus={() => dispatch(getUpdateUser(login.data.id))} />
             <FastImage
                 source={require('../../Images/top.png')}
                 style={styles.top}
@@ -181,36 +190,40 @@ const Setting = (props) => {
                 </Text>
             </View>
             <Text style={[styles.titleTxt, { alignSelf: "center" }]}>
-                {Strings.membership}
+                {!login.data.paid ?
+                    Strings.membership
+                    : Strings.membership + ":  " + login.plan
+                }
             </Text>
-            <TouchableOpacity
-                style={[styles.logoutBtn, {
-                    borderColor: green,
-                    alignSelf: "center",
-                    marginTop: heightPercentageToDP(1)
-                }]}
-                onPress={() => {
-                    if (Platform.OS === "android") {
-                        _onMonthlyClick()
-                    }
-                }}
-            >
-                <Text style={styles.logoutBtnTxt}>
-                    {"$ 20.00 / PER MONTHLY"}
-                </Text>
-            </TouchableOpacity>
-            <TouchableOpacity
-                style={[styles.logoutBtn, {
-                    borderColor: "#FFD700",
-                    alignSelf: "center",
-                    marginTop: heightPercentageToDP(1)
-                }]}
-                onPress={() => { logoutApi() }}
-            >
-                <Text style={styles.logoutBtnTxt}>
-                    {"$ 100.00 / PER YEARLY"}
-                </Text>
-            </TouchableOpacity>
+            {!login.data.paid ?
+                <TouchableOpacity
+                    style={[styles.logoutBtn, {
+                        borderColor: green,
+                        alignSelf: "center",
+                        marginTop: heightPercentageToDP(1)
+                    }]}
+                    onPress={() => {
+                        props.navigation.navigate('Subscription')
+                    }}>
+                    <Text style={styles.logoutBtnTxt}>
+                        {Strings.upgrade}
+                    </Text>
+                </TouchableOpacity>
+                : <TouchableOpacity
+                    style={[styles.logoutBtn, {
+                        borderColor: green,
+                        alignSelf: "center",
+                        marginTop: heightPercentageToDP(1)
+                    }]}
+                    onPress={() => {
+                        setAlert(true);
+                    }}>
+                    <Text style={styles.logoutBtnTxt}>
+                        {Strings.cancel_sub}
+                    </Text>
+                </TouchableOpacity>
+            }
+
             <TouchableOpacity
                 style={[styles.logoutBtn, {
                     position: "absolute",
@@ -237,6 +250,37 @@ const Setting = (props) => {
                     style={styles.loading}
                 />
             }
+            {AuthLoading &&
+                <ActivityIndicator
+                    size="large"
+                    color={black}
+                    style={styles.loading}
+                />
+            }
+            {showAlert &&
+                <AwesomeAlert
+                    show={showAlert}
+                    showProgress={false}
+                    //title="Alert"
+                    message={Strings.unsubscribe}
+                    closeOnTouchOutside={false}
+                    closeOnHardwareBackPress={false}
+                    showCancelButton={true}
+                    showConfirmButton={true}
+                    cancelText={Strings.no}
+                    confirmText={Strings.yes}
+                    confirmButtonColor={blue}
+                    cancelButtonColor={blue2}
+                    onCancelPressed={() => {
+                        setAlert(false);
+                    }}
+                    onConfirmPressed={() => {
+                        setAlert(false),
+                            dispatch(cancelUserSubscription(login.data.id))
+                    }}
+                />
+            }
+
         </SafeAreaView>
     )
 }
