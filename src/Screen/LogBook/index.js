@@ -1679,7 +1679,7 @@ const LogBook = (props) => {
                             }
                             <View style={[styles.innerLogView, { height: heightPercentageToDP(8), marginTop: 10, justifyContent: "space-between", width: widthPercentageToDP(80) }]}>
                                 <TouchableOpacity
-                                    style={{ width: "16%", height: "90%" }}
+                                    style={{ width: "17%", height: "90%" }}
                                     onPress={() => {
                                         if (diveItem1) {
                                             setDiveItem1(false)
@@ -1737,7 +1737,7 @@ const LogBook = (props) => {
                                     </Text>
                                 </TouchableOpacity>
                                 <TouchableOpacity
-                                    style={{ width: "15%", height: "90%" }}
+                                    style={{ width: "17%", height: "90%" }}
                                     onPress={() => {
                                         if (diveItem4) {
                                             setDiveItem4(false)

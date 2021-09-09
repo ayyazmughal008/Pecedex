@@ -267,7 +267,13 @@ const GenreDetail = (props) => {
                         onSnapToItem={(index) => setActiveSlid(index)}
                     />
                     <TouchableOpacity
-                        onPress={() => toggleOption()}
+                        onPress={() => {
+                            if (!login.data.paid) {
+                                props.navigation.navigate('Subscription')
+                            } else {
+                                toggleOption()
+                            }
+                        }}
                         style={{
                             position: "absolute",
                             bottom: "4%",

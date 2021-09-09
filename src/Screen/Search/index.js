@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react'
-import { SafeAreaView, View, Text, FlatList, ActivityIndicator, TextInput, TouchableOpacity } from 'react-native'
+import { SafeAreaView, View, Text, FlatList, ActivityIndicator, TextInput, TouchableOpacity, DeviceEventEmitter } from 'react-native'
 import { styles } from '../../config/styles'
 import FastImage from 'react-native-fast-image'
 import Card from '../../Component/AnimalCard'
@@ -12,6 +12,9 @@ import { HomeAction, profileAction, settingAction, mapAction, notificationAction
 import { black } from '../../config/color'
 import { useDispatch, useSelector } from 'react-redux';
 import Icon from 'react-native-vector-icons/EvilIcons'
+import { AdView } from '../../AdsServices/AdView'
+import { Events } from '../../AdsServices/utils'
+let viewableItemsChanged = null;
 
 const Map = (props) => {
     const language = useSelector((state) => state.user.language);
@@ -37,6 +40,73 @@ const Map = (props) => {
         await setResponse(menuData)
         await setIsLoading(false)
     }
+
+    const onScrollEnd = React.useCallback(() => {
+        DeviceEventEmitter.emit(
+            Events.onViewableItemsChanged,
+            viewableItemsChanged,
+        );
+    }, []);
+
+    /**
+     * [STEP I] When viewable items change in the list
+     * we want to know what items are visible and store them
+     * in a variable for later us.
+     */
+    const onViewableItemsChanged = React.useCallback((e) => {
+        viewableItemsChanged = e;
+    }, []);
+
+    const renderItem = React.useCallback(
+        ({ item, index }) =>
+            item.ad ? (
+                /**
+                 * loadOnMount -> We are telling the AdView to not load the ad when
+                 * it is mounted.
+                 */
+                <AdView loadOnMount={true} index={index} type="image" media={false} />
+            ) : (
+                <Card
+                    title={item.title}
+                    animalImg={item.image}
+                    clickHandler={() => {
+                        if (item.goto === "pecios-sheet") {
+                            props.navigation.navigate("PeciosDetail", {
+                                data: item.sheet
+                            })
+                        } else if (item.goto === "families") {
+                            props.navigation.navigate('Family', {
+                                id: item.id
+                            })
+                        } else if (item.goto === "categories") {
+                            props.navigation.navigate('Category', {
+                                id: item.id
+                            })
+                        } else if (item.goto === "classes") {
+                            props.navigation.navigate('Classes', {
+                                id: item.id
+                            })
+                        } else if (item.goto === "orders") {
+                            props.navigation.navigate('Order', {
+                                id: item.id
+                            })
+                        } else if (item.goto === "genres") {
+                            props.navigation.navigate('Genre', {
+                                id: item.id
+                            })
+                        } else if (item.goto === "genres-sheet") {
+                            props.navigation.navigate('Detail', {
+                                data: item.sheet
+                            })
+                        }
+                        else {
+                            alert("No route found")
+                        }
+                    }}
+                />
+            ),
+        [],
+    );
 
 
     return (
@@ -82,49 +152,13 @@ const Map = (props) => {
                     showsVerticalScrollIndicator={false}
                     style={{ alignSelf: "center" }}
                     keyExtractor={(item, index) => "unique" + index}
-                    renderItem={({ item, index }) => {
-                        return (
-                            <Card
-                                title={item.title}
-                                animalImg={item.image}
-                                clickHandler={() => {
-                                    if (item.goto === "pecios-sheet") {
-                                        props.navigation.navigate("PeciosDetail", {
-                                            data: item.sheet
-                                        })
-                                    } else if (item.goto === "families") {
-                                        props.navigation.navigate('Family', {
-                                            id: item.id
-                                        })
-                                    } else if (item.goto === "categories") {
-                                        props.navigation.navigate('Category', {
-                                            id: item.id
-                                        })
-                                    } else if (item.goto === "classes") {
-                                        props.navigation.navigate('Classes', {
-                                            id: item.id
-                                        })
-                                    } else if (item.goto === "orders") {
-                                        props.navigation.navigate('Order', {
-                                            id: item.id
-                                        })
-                                    } else if (item.goto === "genres") {
-                                        props.navigation.navigate('Genre', {
-                                            id: item.id
-                                        })
-                                    } else if (item.goto === "genres-sheet") {
-                                        props.navigation.navigate('Detail', {
-                                            data: item.sheet
-                                        })
-                                    }
-                                    else {
-                                        alert("No route found")
-                                    }
-                                }}
-                            />
-                        )
-                    }}
-                />}
+                    onScrollAnimationEnd={onScrollEnd}
+                    onMomentumScrollEnd={onScrollEnd}
+                    onScrollEndDrag={onScrollEnd}
+                    onViewableItemsChanged={onViewableItemsChanged}
+                    renderItem={renderItem}
+                />
+            }
             <View style={{ height: heightPercentageToDP(5) }} />
             <Tab
                 homeClick={() => props.navigation.dispatch(HomeAction)}
