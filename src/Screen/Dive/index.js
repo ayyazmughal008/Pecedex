@@ -119,14 +119,14 @@ const Dive = (props) => {
                 <AwesomeAlert
                     show={showAlert}
                     showProgress={false}
-                    title="Alert"
-                    message="Do you really want to delete the dive?"
+                    title={Strings.Alert}
+                    message={Strings.delete_dive}
                     closeOnTouchOutside={false}
                     closeOnHardwareBackPress={false}
                     showCancelButton={true}
                     showConfirmButton={true}
-                    cancelText="No"
-                    confirmText="Yes, delete it"
+                    cancelText={Strings.no}
+                    confirmText={Strings.Yes_delete_it}
                     confirmButtonColor={blue}
                     cancelButtonColor={blue2}
                     onCancelPressed={() => {

@@ -36,33 +36,33 @@ const Map = (props) => {
     }
     const getApis = async () => {
         setIsLoading(true)
-        let menuData = await getDiveCenters(login.data.id, "yes", "yes", "yes", "yes", "yes", "yes", "yes")
+        let menuData = await getDiveCenters(login.data.id, "yes", "yes", "yes", null, null, "yes", "yes")
         await setResponse(menuData)
         await setIsLoading(false)
     }
     const getCenterDetailApi = async (id) => {
         setIsLoading(true)
-        await getDiveCenterDetail(id,login.data.id)
+        await getDiveCenterDetail(id, login.data.id)
         await setIsLoading(false)
     }
     const getGenreDetailApi = async (id) => {
         setIsLoading(true)
-        await getGenreDetails(id,login.data.id)
+        await getGenreDetails(id, login.data.id)
         await setIsLoading(false)
     }
     const getPeciosDetailApi = async (id) => {
         setIsLoading(true)
-        await getPecioDetails(id,login.data.id)
+        await getPecioDetails(id, login.data.id)
         await setIsLoading(false)
     }
     const getPointsDetailApi = async (id) => {
         setIsLoading(true)
-        await getPointsDetails(id,login.data.id)
+        await getPointsDetails(id, login.data.id)
         await setIsLoading(false)
     }
     const getDiveDetailApi = async (id) => {
         setIsLoading(true)
-        await getDivesDetails(id,login.data.id)
+        await getDivesDetails(id, login.data.id)
         await setIsLoading(false)
     }
     const actions = [
@@ -96,18 +96,18 @@ const Map = (props) => {
             position: 5,
             color: '#d0fc34'
         },
-        {
-            text: Strings.genre_medium,
-            name: "genre_medium",
-            position: 6,
-            color: '#fff434'
-        },
-        {
-            text: Strings.genre_dificult,
-            name: "genre_difficult",
-            position: 7,
-            color: '#ffa42c'
-        },
+        // {
+        //     text: Strings.genre_medium,
+        //     name: "genre_medium",
+        //     position: 6,
+        //     color: '#d0fc34'
+        // },
+        // {
+        //     text: Strings.genre_dificult,
+        //     name: "genre_difficult",
+        //     position: 7,
+        //     color: '#d0fc34'
+        // },
         {
             text: Strings.show_all,
             name: "show_all",
@@ -203,6 +203,7 @@ const Map = (props) => {
                             )
                         })
                     }
+                    {/* Animales marker start */}
                     {!Response || !Response.genreEasy.length ?
                         <View />
                         : Response.genreEasy.map((item, index) => {
@@ -236,7 +237,7 @@ const Map = (props) => {
                                         latitude: parseFloat(item.lat),
                                         longitude: parseFloat(item.lng),
                                     }}
-                                    image={require('../../Images/158.png')}
+                                    image={require('../../Images/156.png')}
                                     onPress={() => {
                                         getGenreDetailApi(item.genreId)
                                     }}
@@ -259,7 +260,7 @@ const Map = (props) => {
                                         latitude: parseFloat(item.lat),
                                         longitude: parseFloat(item.lng),
                                     }}
-                                    image={require('../../Images/157.png')}
+                                    image={require('../../Images/156.png')}
                                     onPress={() => {
                                         getGenreDetailApi(item.genreId)
                                     }}
@@ -272,6 +273,7 @@ const Map = (props) => {
                             )
                         })
                     }
+                    {/* Animales marker start */}
                     {!Response || !Response.points.length ?
                         <View />
                         : Response.points.map((item, index) => {
@@ -318,7 +320,7 @@ const Map = (props) => {
                             } else if (name === "genre_difficult") {
                                 postPointApis(null, null, null, null, "yes", null, null)
                             } else if (name === "show_all") {
-                                postPointApis("yes", "yes", "yes", "yes", "yes", "yes", "yes")
+                                postPointApis("yes", "yes", "yes", null, null, "yes", "yes")
                             }
                         }}
                         overlayColor={'rgba(255, 255, 255, 0)'}

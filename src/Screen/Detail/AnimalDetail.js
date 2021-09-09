@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react'
-import { SafeAreaView, View, Text, FlatList, TouchableOpacity, Linking, ActivityIndicator, PermissionsAndroid, Dimensions, ScrollView, Alert } from 'react-native'
+import { SafeAreaView, View, Text, FlatList, TouchableOpacity, Linking, ActivityIndicator, PermissionsAndroid, Dimensions, ScrollView, Alert, Platform } from 'react-native'
 import { styles } from '../../config/styles'
 import FastImage from 'react-native-fast-image'
 import { widthPercentageToDP, heightPercentageToDP } from '../../Component/MakeMeResponsive'
@@ -52,14 +52,15 @@ const GenreDetail = (props) => {
     //     convertImageToBase64(imageUrl)
     // }, [imageUrl])
     const convertImageToBase64 = async (url) => {
-        console.log(url)
+        let URL = encodeURI(url)
+        console.log('==>', URL)
         setIsLoading(true)
         const fs = RNFetchBlob.fs;
         let Path = null;
         await RNFetchBlob.config({
             fileCache: true
         })
-            .fetch("GET", url)
+            .fetch("GET", URL)
             // the image is now dowloaded to device's storage
             .then(resp => {
                 // the image path you can use it directly with Image component
@@ -169,7 +170,8 @@ const GenreDetail = (props) => {
                 'type': response.mime,
                 'name': Date.now() + '_Pecedex.png',
             }
-            dispatch(postGenerImg(login.data.id, data.id, data2))
+            dispatch(postGenerImg(login.data.id, data.id, data2));
+            setOption(false);
         })
             .catch(err => {
                 console.log(err);
@@ -188,7 +190,8 @@ const GenreDetail = (props) => {
                 'type': image.mime,
                 'name': Date.now() + '_Pecedex.png',
             }
-            dispatch(postGenerImg(login.data.id, data.id, data2))
+            dispatch(postGenerImg(login.data.id, data.id, data2));
+            setOption(false);
         }).catch(error => {
             console.log(error);
         })
@@ -494,14 +497,26 @@ const GenreDetail = (props) => {
                 <Picker
                     isDialogOpen={pickerOption}
                     cancelClick={() => {
-                        toggleOption()
-                        requestCameraPermission()
+                        if (Platform.OS === 'ios') {
+                            _onLunchCamera();
+                            //toggleOption()
+
+                        } else {
+                            toggleOption(),
+                                requestCameraPermission()
+                        }
                     }}
                     okClick={() => {
-                        toggleOption()
-                        _onLunchGallery()
+                        if (Platform.OS === 'ios') {
+                            _onLunchGallery();
+                            //toggleOption()
+
+                        } else {
+                            toggleOption(),
+                                _onLunchGallery()
+                        }
                     }}
-                    title="Seleccione la opción para la foto de perfil"
+                    title={Strings.popup_animales}
                     closeBox={() => toggleOption()}
                 />
             }

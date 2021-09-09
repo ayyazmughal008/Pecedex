@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { View, Modal, ScrollView, Text, TextInput, StyleSheet, TouchableOpacity } from 'react-native'
 import { widthPercentageToDP, heightPercentageToDP } from '../../Component/MakeMeResponsive'
 import { blue, white } from '../../config/color'
+import Strings from '../../Translation'
 
 const DialogBox = (props) => {
     return (
@@ -34,7 +35,7 @@ const DialogBox = (props) => {
                             }}
                         >
                             <Text style={styles.btnText}>
-                                {"Camera"}
+                                {Strings.Camera}
                             </Text>
                         </TouchableOpacity>
                         <TouchableOpacity
@@ -47,7 +48,7 @@ const DialogBox = (props) => {
                             }}
                         >
                             <Text style={styles.btnText}>
-                                {"Gallery"}
+                                {Strings.Gallery}
                             </Text>
                         </TouchableOpacity>
 

@@ -1,4 +1,4 @@
-import { StyleSheet } from 'react-native'
+import { StyleSheet, Platform } from 'react-native'
 import { widthPercentageToDP, heightPercentageToDP } from '../../Component/MakeMeResponsive'
 import { blue, lightRed, green, white, black, blue2 } from '../../config/color'
 
@@ -25,7 +25,7 @@ export const styles = StyleSheet.create({
     },
     top: {
         width: widthPercentageToDP(100),
-        height: heightPercentageToDP(14),
+        height: Platform.OS === 'android' ? heightPercentageToDP(14) : heightPercentageToDP(16),
         //justifyContent: "center",
         alignItems: "center"
     },
@@ -87,7 +87,7 @@ export const styles = StyleSheet.create({
         borderRadius: widthPercentageToDP(6),
         flexDirection: "row",
         alignItems: "center",
-        justifyContent:"space-between"
+        justifyContent: "space-between"
     },
     right2: {
         //width: "50%",

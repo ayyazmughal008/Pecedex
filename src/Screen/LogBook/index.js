@@ -1,5 +1,5 @@
 import React, { useEffect, useState, useRef } from 'react'
-import { SafeAreaView, View, Text, TouchableOpacity, FlatList, TextInput, Modal, StyleSheet, ActivityIndicator, Alert, PermissionsAndroid } from 'react-native'
+import { SafeAreaView, View, Text, TouchableOpacity, FlatList, TextInput, Modal, StyleSheet, ActivityIndicator, Alert, PermissionsAndroid, Platform } from 'react-native'
 import { styles } from './styles'
 import FastImage from 'react-native-fast-image'
 import { heightPercentageToDP, widthPercentageToDP } from '../../Component/MakeMeResponsive'
@@ -14,7 +14,7 @@ import RNPickerSelect from 'react-native-picker-select';
 import EvilIcons from 'react-native-vector-icons/EvilIcons'
 import MapView, { PROVIDER_GOOGLE, Marker } from 'react-native-maps';
 import { SearchBar } from 'react-native-elements'
-import { getCountryName, getAllList, postPeciosList, postGenreList, postFriendList, postLogbookImg, submitLogbookData,getDiveCenterDetail } from '../../Redux/action'
+import { getCountryName, getAllList, postPeciosList, postGenreList, postFriendList, postLogbookImg, submitLogbookData, getDiveCenterDetail } from '../../Redux/action'
 import { useDispatch, useSelector } from 'react-redux';
 import Strings from '../../Translation'
 import Fontisto from 'react-native-vector-icons/Fontisto'
@@ -157,7 +157,7 @@ const LogBook = (props) => {
     // Api response save functions
     const getCenterDetailApi = async (id) => {
         setIsLoading(true)
-        await getDiveCenterDetail(id,login.data.id)
+        await getDiveCenterDetail(id, login.data.id)
         await setIsLoading(false)
     }
     const postLogbookApi = async () => {
@@ -756,7 +756,8 @@ const LogBook = (props) => {
                 'type': response.mime,
                 'name': Date.now() + '_Pecedex.png',
             }
-            postImageApi(data)
+            postImageApi(data);
+            setOption(false);
             //console.log(data)
         })
             .catch(err => {
@@ -776,7 +777,8 @@ const LogBook = (props) => {
                 'type': image.mime,
                 'name': Date.now() + '_Pecedex.png',
             }
-            postImageApi(data)
+            postImageApi(data);
+            setOption(false);
             //console.log(data)
         }).catch(error => {
             console.log(error);
@@ -2071,7 +2073,9 @@ const LogBook = (props) => {
                             visible={searchModal}
                             onRequestClose={() => { console.log("Modal has been closed.") }}
                         >
-                            <View style={styles.modalView2}>
+                            <View style={[styles.modalView2, {
+                                marginTop: Platform.OS === 'ios' ? heightPercentageToDP(3.5) : 0
+                            }]}>
                                 <SearchBar
                                     placeholder="Search country..."
                                     lightTheme
@@ -2103,7 +2107,9 @@ const LogBook = (props) => {
                             visible={cityModal}
                             onRequestClose={() => { console.log("Modal has been closed.") }}
                         >
-                            <View style={styles.modalView2}>
+                            <View style={[styles.modalView2, {
+                                marginTop: Platform.OS === 'ios' ? heightPercentageToDP(3.5) : 0
+                            }]}>
                                 <SearchBar
                                     placeholder="Search city..."
                                     lightTheme
@@ -2135,7 +2141,9 @@ const LogBook = (props) => {
                             visible={peciosModal}
                             onRequestClose={() => { console.log("Modal has been closed.") }}
                         >
-                            <View style={styles.modalView2}>
+                            <View style={[styles.modalView2, {
+                                marginTop: Platform.OS === 'ios' ? heightPercentageToDP(3.5) : 0
+                            }]}>
                                 <View style={styles.row}>
                                     <SearchBar
                                         placeholder={Strings.select_pecios}
@@ -2182,7 +2190,9 @@ const LogBook = (props) => {
                             visible={animalModal}
                             onRequestClose={() => { console.log("Modal has been closed.") }}
                         >
-                            <View style={styles.modalView2}>
+                            <View style={[styles.modalView2, {
+                                marginTop: Platform.OS === 'ios' ? heightPercentageToDP(3.5) : 0
+                            }]}>
                                 <View style={styles.row}>
                                     <SearchBar
                                         placeholder={Strings.select_animal}
@@ -2230,7 +2240,9 @@ const LogBook = (props) => {
                             visible={teamModal}
                             onRequestClose={() => { console.log("Modal has been closed.") }}
                         >
-                            <View style={styles.modalView2}>
+                            <View style={[styles.modalView2, {
+                                marginTop: Platform.OS === 'ios' ? heightPercentageToDP(3.5) : 0
+                            }]}>
                                 <View style={styles.row}>
                                     <SearchBar
                                         placeholder={Strings.select_team}
@@ -2278,7 +2290,9 @@ const LogBook = (props) => {
                             visible={centerModal}
                             onRequestClose={() => { console.log("Modal has been closed.") }}
                         >
-                            <View style={styles.modalView2}>
+                            <View style={[styles.modalView2, {
+                                marginTop: Platform.OS === 'ios' ? heightPercentageToDP(3.5) : 0
+                            }]}>
                                 <View style={styles.row}>
                                     <SearchBar
                                         placeholder={Strings.select_center}
@@ -2322,14 +2336,26 @@ const LogBook = (props) => {
                     <Picker
                         isDialogOpen={pickerOption}
                         cancelClick={() => {
-                            toggleOption()
-                            requestCameraPermission()
+                            if (Platform.OS === 'ios') {
+                                _onLunchCamera();
+                                //toggleOption()
+
+                            } else {
+                                toggleOption(),
+                                    requestCameraPermission()
+                            }
                         }}
                         okClick={() => {
-                            toggleOption()
-                            _onLunchGallery()
+                            if (Platform.OS === 'ios') {
+                                _onLunchGallery();
+                                //toggleOption()
+
+                            } else {
+                                toggleOption(),
+                                    _onLunchGallery()
+                            }
                         }}
-                        title="Seleccione la opción para la foto de perfil"
+                        title={Strings.popup_logbook}
                         closeBox={() => toggleOption()}
                     />
                 }

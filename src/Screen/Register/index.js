@@ -39,23 +39,23 @@ const Register = (props) => {
     const _onRegister = () => {
         const validate = /^(([^<>()[\]\.,;:\s@\"]+(\.[^<>()[\]\.,;:\s@\"]+)*)|(\".+\"))@(([^<>()[\]\.,;:\s@\"]+\.)+[^<>()[\]\.,;:\s@\"]{2,})$/i;
         if (!name) {
-            Alert.alert("", "Por favor ingrese un nombre valido")
+            Alert.alert("", Strings.reg1)
             return
         }
         if (!certificate) {
-            Alert.alert("", "Por favor ingrese un certificado válido")
+            Alert.alert("", Strings.reg2)
             return
         }
         if (!degree) {
-            Alert.alert("", "Seleccione cualquier título")
+            Alert.alert("", Strings.reg3)
             return
         }
         if (!validate.test(email)) {
-            Alert.alert("", "Por favor, introduce una dirección de correo electrónico válida")
+            Alert.alert("", Strings.reg4)
             return
         }
         if (password.length < 7) {
-            Alert.alert("", "La contraseña debe tener 8 caracteres")
+            Alert.alert("", Strings.reg5)
             return
         }
 

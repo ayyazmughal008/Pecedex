@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react'
-import { SafeAreaView, View, Text, FlatList, TouchableOpacity, ActivityIndicator, PermissionsAndroid, Alert } from 'react-native'
+import { SafeAreaView, View, Text, FlatList, TouchableOpacity, ActivityIndicator, PermissionsAndroid, Alert, Platform } from 'react-native'
 import { styles } from '../../config/styles'
 import FastImage from 'react-native-fast-image'
 import { black, blue, blue2, white } from '../../config/color'
@@ -11,7 +11,7 @@ import UpdateCert from './UpdateCertificate'
 import { useSelector, useDispatch } from 'react-redux';
 import Feather from 'react-native-vector-icons/Feather'
 import ImagePicker from 'react-native-image-crop-picker';
-import { postProfileImg, getSeenCount, getUserCertificate, getUserDegree, updateDegrees, deleteUploadImage } from '../../Redux/action'
+import { postProfileImg, getSeenCount, getUserCertificate, getUserDegree, updateDegrees, deleteUploadImage, } from '../../Redux/action'
 import Picker from './Picker'
 import Strings from '../../Translation'
 import AwesomeAlert from 'react-native-awesome-alerts';
@@ -73,7 +73,8 @@ const Profile = (props) => {
                 'type': response.mime,
                 'name': Date.now() + '_Pecedex.png',
             }
-            dispatch(postProfileImg(login.data.id, data))
+            dispatch(postProfileImg(login.data.id, data));
+            setOption(false);
         })
             .catch(err => {
                 console.log(err);
@@ -92,7 +93,8 @@ const Profile = (props) => {
                 'type': image.mime,
                 'name': Date.now() + '_Pecedex.png',
             }
-            dispatch(postProfileImg(login.data.id, data))
+            dispatch(postProfileImg(login.data.id, data));
+            setOption(false);
         }).catch(error => {
             console.log(error);
         })
@@ -357,14 +359,26 @@ const Profile = (props) => {
                 <Picker
                     isDialogOpen={pickerOption}
                     cancelClick={() => {
-                        toggleOption()
-                        requestCameraPermission()
+                        if (Platform.OS === 'ios') {
+                            _onLunchCamera();
+                            //toggleOption()
+
+                        } else {
+                            toggleOption(),
+                                requestCameraPermission()
+                        }
                     }}
                     okClick={() => {
-                        toggleOption()
-                        _onLunchGallery()
+                        if (Platform.OS === 'ios') {
+                            _onLunchGallery();
+                            //toggleOption()
+
+                        } else {
+                            toggleOption(),
+                                _onLunchGallery()
+                        }
                     }}
-                    title="Seleccione la opción para la foto de perfil"
+                    title={Strings.open_popup}
                     closeBox={() => toggleOption()}
                 />
             }
@@ -401,14 +415,14 @@ const Profile = (props) => {
                 <AwesomeAlert
                     show={showAlert}
                     showProgress={false}
-                    title="Alert"
-                    message="Do you really want to delete the image?"
+                    title={Strings.Alert}
+                    message={Strings.Do_you_really_want_to_delete_the_image}
                     closeOnTouchOutside={false}
                     closeOnHardwareBackPress={false}
                     showCancelButton={true}
                     showConfirmButton={true}
-                    cancelText="No"
-                    confirmText="Yes, delete it"
+                    cancelText={Strings.no}
+                    confirmText={Strings.Yes_delete_it}
                     confirmButtonColor={blue}
                     cancelButtonColor={blue2}
                     onCancelPressed={() => {

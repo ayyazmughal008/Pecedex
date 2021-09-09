@@ -50,7 +50,7 @@ const DiveCenter = (props) => {
             return
         }
         if (!rankingValue) {
-            Alert.alert("", "Please choose at least one star")
+            Alert.alert("", Strings.chooseStar)
             return
         }
         if (!text) {

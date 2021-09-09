@@ -769,7 +769,8 @@ const LogBook = (props) => {
                 'type': response.mime,
                 'name': Date.now() + '_Pecedex.png',
             }
-            postImageApi(data)
+            postImageApi(data);
+            setOption(false);
             //console.log(data)
         })
             .catch(err => {
@@ -789,7 +790,8 @@ const LogBook = (props) => {
                 'type': image.mime,
                 'name': Date.now() + '_Pecedex.png',
             }
-            postImageApi(data)
+            postImageApi(data);
+            setOption(false);
             //console.log(data)
         }).catch(error => {
             console.log(error);
@@ -2085,7 +2087,9 @@ const LogBook = (props) => {
                             visible={searchModal}
                             onRequestClose={() => { console.log("Modal has been closed.") }}
                         >
-                            <View style={styles.modalView2}>
+                            <View style={[styles.modalView2, {
+                                marginTop: Platform.OS === 'ios' ? heightPercentageToDP(3.5) : 0
+                            }]}>
                                 <SearchBar
                                     placeholder="Search country..."
                                     lightTheme
@@ -2117,7 +2121,9 @@ const LogBook = (props) => {
                             visible={cityModal}
                             onRequestClose={() => { console.log("Modal has been closed.") }}
                         >
-                            <View style={styles.modalView2}>
+                            <View style={[styles.modalView2, {
+                                marginTop: Platform.OS === 'ios' ? heightPercentageToDP(3.5) : 0
+                            }]}>
                                 <SearchBar
                                     placeholder="Search city..."
                                     lightTheme
@@ -2149,7 +2155,9 @@ const LogBook = (props) => {
                             visible={peciosModal}
                             onRequestClose={() => { console.log("Modal has been closed.") }}
                         >
-                            <View style={styles.modalView2}>
+                            <View style={[styles.modalView2, {
+                                marginTop: Platform.OS === 'ios' ? heightPercentageToDP(3.5) : 0
+                            }]}>
                                 <View style={styles.row}>
                                     <SearchBar
                                         placeholder={Strings.select_pecios}
@@ -2196,7 +2204,9 @@ const LogBook = (props) => {
                             visible={animalModal}
                             onRequestClose={() => { console.log("Modal has been closed.") }}
                         >
-                            <View style={styles.modalView2}>
+                            <View style={[styles.modalView2, {
+                                marginTop: Platform.OS === 'ios' ? heightPercentageToDP(3.5) : 0
+                            }]}>
                                 <View style={styles.row}>
                                     <SearchBar
                                         placeholder={Strings.select_animal}
@@ -2244,7 +2254,9 @@ const LogBook = (props) => {
                             visible={teamModal}
                             onRequestClose={() => { console.log("Modal has been closed.") }}
                         >
-                            <View style={styles.modalView2}>
+                            <View style={[styles.modalView2, {
+                                marginTop: Platform.OS === 'ios' ? heightPercentageToDP(3.5) : 0
+                            }]}>
                                 <View style={styles.row}>
                                     <SearchBar
                                         placeholder={Strings.select_team}
@@ -2292,7 +2304,9 @@ const LogBook = (props) => {
                             visible={centerModal}
                             onRequestClose={() => { console.log("Modal has been closed.") }}
                         >
-                            <View style={styles.modalView2}>
+                            <View style={[styles.modalView2, {
+                                marginTop: Platform.OS === 'ios' ? heightPercentageToDP(3.5) : 0
+                            }]}>
                                 <View style={styles.row}>
                                     <SearchBar
                                         placeholder={Strings.select_center}
@@ -2336,14 +2350,26 @@ const LogBook = (props) => {
                     <Picker
                         isDialogOpen={pickerOption}
                         cancelClick={() => {
-                            toggleOption()
-                            requestCameraPermission()
+                            if (Platform.OS === 'ios') {
+                                _onLunchCamera();
+                                //toggleOption()
+
+                            } else {
+                                toggleOption(),
+                                    requestCameraPermission()
+                            }
                         }}
                         okClick={() => {
-                            toggleOption()
-                            _onLunchGallery()
+                            if (Platform.OS === 'ios') {
+                                _onLunchGallery();
+                                //toggleOption()
+
+                            } else {
+                                toggleOption(),
+                                    _onLunchGallery()
+                            }
                         }}
-                        title="Seleccione la opción para la foto de perfil"
+                        title={Strings.popup_logbook}
                         closeBox={() => toggleOption()}
                     />
                 }
