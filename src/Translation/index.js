@@ -185,7 +185,8 @@ const Strings = new LocalizedStrings({
         reg5: "Password must be 8 characters",
         popup_wrecks: "Please upload any image in wrecks",
         popup_animales: "Please upload any image in animals",
-        chooseStar: "Please choose at least one star"
+        chooseStar: "Please choose at least one star",
+        write_anything:"write anything.."
     },
     es: {
         signin: "INICIAR SESIÓN",
@@ -277,7 +278,7 @@ const Strings = new LocalizedStrings({
         air: "Aire",
         nitrox: "Nitrox",
         oxygen: "oxígeno",
-        dive_computer: "Ordenador de buceo",
+        dive_computer: "PC de buceo",
         compass: "Brújula",
         torch: "Linterna",
         dive_hood: "Capucha de buceo",
@@ -371,7 +372,8 @@ const Strings = new LocalizedStrings({
         reg5: "La contraseña debe tener 8 caracteres",
         popup_wrecks: "Sube cualquier imagen en pecios",
         popup_animales: "Sube cualquier imagen en animales.",
-        chooseStar: "Elija al menos una estrella"
+        chooseStar: "Elija al menos una estrella",
+        write_anything:"escribe cualquier cosa.."
     },
 });
 

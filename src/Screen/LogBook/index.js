@@ -1817,7 +1817,7 @@ const LogBook = (props) => {
                                     </Text>
                                 </TouchableOpacity>
                                 <TouchableOpacity
-                                    style={{ width: "17%", height: "90%" }}
+                                    style={{ width: "19%", height: "90%" }}
                                     onPress={() => {
                                         if (diveItem8) {
                                             setDiveItem8(false)
@@ -1989,7 +1989,7 @@ const LogBook = (props) => {
                             </Text>
                             <TextInput
                                 style={[styles.input2, { color: white }]}
-                                placeholder={"write anything.. "}
+                                placeholder={Strings.write_anything}
                                 placeholderTextColor={"#cccc"}
                                 value={opinion}
                                 textAlign="center"
