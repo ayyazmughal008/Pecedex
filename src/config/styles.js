@@ -63,7 +63,7 @@ export const styles = StyleSheet.create({
         fontSize: widthPercentageToDP(4.5),
         color: lightRed,
         fontFamily: "Montserrat-Regular",
-        marginTop: heightPercentageToDP(2),
+        //marginTop: heightPercentageToDP(2),
         alignSelf: "center"
     },
     forgetView1:{

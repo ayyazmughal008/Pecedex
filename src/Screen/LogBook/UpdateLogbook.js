@@ -20,7 +20,7 @@ import Strings from '../../Translation'
 import Fontisto from 'react-native-vector-icons/Fontisto'
 import ImagePicker from 'react-native-image-crop-picker';
 import Picker from '../Profile/Picker'
-
+import Geolocation from '@react-native-community/geolocation';
 
 
 const LogBook = (props) => {
@@ -910,6 +910,48 @@ const LogBook = (props) => {
         },
     ]
 
+    useEffect(() => {
+        updateLocation()
+    }, [])
+    const updateLocation = async () => {
+        if (Platform.OS === 'ios') {
+            setIsLoading(true)
+            await Geolocation.requestAuthorization();
+            await Geolocation.getCurrentPosition(info => {
+                console.log(info);
+                setLocation(info.coords);
+                setIsLoading(false);
+            })
+        } else {
+            try {
+                //this.updateTimer()
+                const granted = await PermissionsAndroid.request(
+                    PermissionsAndroid.PERMISSIONS.ACCESS_FINE_LOCATION,
+                    {
+                        title: 'Pecedex',
+                        message: 'Pecedex App access to your location ',
+                        buttonNegative: 'Cancel',
+                        buttonPositive: 'OK',
+                    }
+                )
+                if (granted === PermissionsAndroid.RESULTS.GRANTED) {
+                    setIsLoading(true)
+                    await Geolocation.requestAuthorization();
+                    await Geolocation.getCurrentPosition(info => {
+                        console.log(info);
+                        setLocation(info.coords);
+                        setIsLoading(false);
+                    })
+                } else {
+                    console.log("location permission denied")
+                }
+            } catch (err) {
+                setIsLoading(false)
+                console.log(error)
+            }
+        }
+    }
+
     return (
         <View style={[styles.container, { alignItems: "center" }]}>
             {!imagePath ?
@@ -1170,7 +1212,7 @@ const LogBook = (props) => {
                                     />
                                 </TouchableOpacity>
                             </View>
-                            <View style={{ width: "100%", flexDirection: "row", alignItems: "center", marginTop: heightPercentageToDP(1) }}>
+                            <View style={{ width: "100%", flexDirection: "row", alignItems: "center", marginTop: heightPercentageToDP(1.7) }}>
                                 <Text style={[styles.smallTxt, { color: black, marginLeft: 15, }]}>
                                     {Strings.Water_temperature}{" : "}
                                 </Text>
@@ -1187,7 +1229,7 @@ const LogBook = (props) => {
                                     {"*C"}
                                 </Text>
                             </View>
-                            <View style={{ width: "100%", flexDirection: "row", alignItems: "center", marginTop: heightPercentageToDP(1) }}>
+                            <View style={{ width: "100%", flexDirection: "row", alignItems: "center", marginTop: heightPercentageToDP(2) }}>
                                 <Text style={[styles.smallTxt, { color: black, marginLeft: 15, }]}>
                                     {Strings.Visibility}{" : "}
                                 </Text>
@@ -1204,7 +1246,7 @@ const LogBook = (props) => {
                                     {Strings.meters}
                                 </Text>
                             </View>
-                            <View style={{ width: "100%", flexDirection: "row", alignItems: "center", }}>
+                            <View style={{ width: "100%", flexDirection: "row", alignItems: "center",marginTop: heightPercentageToDP(1.7) }}>
                                 <Text onPress={() => {
                                     setSweetWater(true)
                                     setSaltWater(false)
@@ -1227,7 +1269,7 @@ const LogBook = (props) => {
                                 <Text style={[styles.smallTxt, { color: black }]}>
                                     {Strings.type}{" :"}
                                 </Text>
-                                <View style={{ width: language === 'es' ? "67%" : "87%", height: "100%", justifyContent: "center" }}>
+                                <View style={{ width: language === 'es' ? "68%" : "87%", height: "100%", justifyContent: "center" }}>
                                     <RNPickerSelect
                                         placeholder={{
                                             label: Strings.type,
@@ -1247,7 +1289,7 @@ const LogBook = (props) => {
                                 <Text style={[styles.smallTxt, { color: black }]}>
                                     {Strings.currents}{" :"}
                                 </Text>
-                                <View style={{ width: language === 'es' ? "83%" : "86%", height: "100%", justifyContent: "center" }}>
+                                <View style={{ width: language === 'es' ? "84%" : "86%", height: "100%", justifyContent: "center" }}>
                                     <RNPickerSelect
                                         placeholder={{
                                             label: Strings.currents,
@@ -1426,12 +1468,12 @@ const LogBook = (props) => {
                             </Text>
                         </View>
                         <View style={[styles.logView, {
-                            height: !isScuba ? heightPercentageToDP(60) : heightPercentageToDP(78),
+                            height:  heightPercentageToDP(74),
                             marginTop: heightPercentageToDP(2),
                             backgroundColor: blue
                         }]}>
                             <View style={styles.scubaView}>
-                                <View style={{ width: "25%", height: "90%", alignItems: "center", }}>
+                                <View style={styles.suitView}>
                                     <TouchableOpacity
                                         style={{ width: "100%", height: "65%", }}
                                         onPress={() => {
@@ -1455,7 +1497,7 @@ const LogBook = (props) => {
                                         {Strings.short}
                                     </Text>
                                 </View>
-                                <View style={{ width: "25%", height: "90%", alignItems: "center", }}>
+                                <View style={styles.suitView}>
                                     <TouchableOpacity
                                         style={{ width: "100%", height: "65%", }}
                                         onPress={() => {
@@ -1498,12 +1540,11 @@ const LogBook = (props) => {
                                             placeholderTextColor={white}
                                             textAlign="center"
                                             keyboardType="number-pad"
-                                            value={suitCode78}
                                             onChangeText={text => setSuitCode78(text)}
                                         />
                                     }
                                 </View>
-                                <View style={{ width: "25%", height: "90%", alignItems: "center", }}>
+                                <View style={styles.suitView}>
                                     <TouchableOpacity
                                         style={{ width: "100%", height: "65%", }}
                                         onPress={() => {
@@ -1527,7 +1568,7 @@ const LogBook = (props) => {
                                         {Strings.semi_dry}
                                     </Text>
                                 </View>
-                                <View style={{ width: "25%", height: "90%", alignItems: "center", }}>
+                                <View style={styles.suitView}>
                                     <TouchableOpacity
                                         style={{ width: "100%", height: "65%", }}
                                         onPress={() => {
@@ -1557,7 +1598,7 @@ const LogBook = (props) => {
                                     setScuba(true)
                                     setRebreader(false)
                                 }}
-                                style={[styles.smallTxt, { color: isScuba ? white : black, marginTop: 10 }]}>
+                                style={[styles.smallTxt, { color: isScuba ? white : black,  }]}>
                                 {Strings.scuba}{" / "}
                                 <Text
                                     onPress={() => {
@@ -1569,8 +1610,13 @@ const LogBook = (props) => {
                                 </Text>
                             </Text>
                             {isScuba &&
-                                <View style={{ flexDirection: "row", alignItems: "center", alignSelf: "center" }}>
-                                    <Text style={[styles.smallTxt, { color: black, marginLeft: 6 }]}>
+                                <View style={{
+                                    flexDirection: "row",
+                                    alignItems: "center",
+                                    alignSelf: "center",
+                                    marginBottom: heightPercentageToDP(1)
+                                }}>
+                                    <Text style={[styles.smallTxt, { color: black, marginRight: 6 }]}>
                                         {Strings.ballast}{" : "}
                                     </Text>
                                     <TextInput
@@ -1586,115 +1632,115 @@ const LogBook = (props) => {
                                     </Text>
                                 </View>
                             }
-                            {isScuba &&
-                                <View style={styles.innerLogView3}>
-                                    <FastImage
-                                        source={require('../../Images/oxygen.png')}
-                                        resizeMode={FastImage.resizeMode.stretch}
-                                        style={{ width: "12%", height: "70%", marginLeft: 8 }}
-                                    />
-                                    <View style={{ width: "80%", height: "100%", marginLeft: widthPercentageToDP(4) }}>
-                                        <View style={{ flexDirection: "row", alignItems: "center", marginTop: 5 }}>
-                                            <Text style={[styles.smallTxt, { color: black, }]}>
-                                                {Strings.bottle}{" : "}
+                            {/* {isScuba && */}
+                            <View style={styles.innerLogView3}>
+                                <FastImage
+                                    source={require('../../Images/oxygen.png')}
+                                    resizeMode={FastImage.resizeMode.stretch}
+                                    style={{ width: "10%", height: "70%", marginLeft: 8 }}
+                                />
+                                <View style={{ width: "80%", height: "100%", marginLeft: widthPercentageToDP(4) }}>
+                                    <View style={{ flexDirection: "row", alignItems: "center", marginTop: 5, }}>
+                                        <Text style={[styles.smallTxt, { color: black, }]}>
+                                            {Strings.bottle}{" : "}
+                                        </Text>
+                                        <TextInput
+                                            style={styles.tinyInput2}
+                                            placeholder={"7"}
+                                            value={bottles}
+                                            placeholderTextColor={white}
+                                            keyboardType="number-pad"
+                                            onChangeText={text => setBottles(text)}
+                                        />
+                                        <Text style={[styles.smallTxt, { color: black, }]}>
+                                            {Strings.liter}
+                                        </Text>
+                                    </View>
+                                    <View style={styles.sampleViews2}>
+                                        <Text style={[styles.smallTxt, { color: black }]}>
+                                            {Strings.material}{" :"}
+                                        </Text>
+                                        <View style={{ width: "70%", height: "100%", justifyContent: "center" }}>
+                                            <RNPickerSelect
+                                                placeholder={{
+                                                    label: Strings.material,
+                                                    value: null,
+                                                    color: "#000"
+                                                }}
+                                                value={material}
+                                                style={pickerStyle}
+                                                onValueChange={value => {
+                                                    setMaterial(value)
+                                                }}
+                                                items={Material}
+                                            />
+                                        </View>
+                                    </View>
+                                    <View style={styles.sampleViews2}>
+                                        <Text style={[styles.smallTxt, { color: black }]}>
+                                            {Strings.mix}{" :"}
+                                        </Text>
+                                        <View style={{ width: language === 'es' ? "74%" : "85%", height: "100%", justifyContent: "center" }}>
+                                            <RNPickerSelect
+                                                placeholder={{
+                                                    label: Strings.mix,
+                                                    value: null,
+                                                    color: "#000"
+                                                }}
+                                                value={mix}
+                                                style={pickerStyle}
+                                                onValueChange={value => {
+                                                    setMix(value)
+                                                }}
+                                                items={Mix}
+                                            />
+                                        </View>
+                                    </View>
+                                    {mix === "Nitrox" &&
+                                        <View style={styles.sampleViews}>
+                                            <Text style={[styles.smallTxt, { color: black }]}>
+                                                {"% 02"}
                                             </Text>
                                             <TextInput
-                                                style={styles.tinyInput2}
-                                                placeholder={"7"}
-                                                value={bottles}
+                                                style={[styles.tinyInput2, { height: "100%", marginLeft: widthPercentageToDP(3), color: white, width: "30%" }]}
+                                                placeholder="xxx"
+                                                value={oxygen}
                                                 placeholderTextColor={white}
                                                 keyboardType="number-pad"
-                                                onChangeText={text => setBottles(text)}
+                                                onChangeText={text => setOxygen(text)}
                                             />
-                                            <Text style={[styles.smallTxt, { color: black, }]}>
-                                                {"Liter"}
-                                            </Text>
-                                        </View>
-                                        <View style={styles.sampleViews2}>
                                             <Text style={[styles.smallTxt, { color: black }]}>
-                                                {Strings.material}{" :"}
+                                                {Strings.oxygen}
                                             </Text>
-                                            <View style={{ width: "70%", height: "100%", justifyContent: "center" }}>
-                                                <RNPickerSelect
-                                                    placeholder={{
-                                                        label: Strings.material,
-                                                        value: null,
-                                                        color: "#000"
-                                                    }}
-                                                    value={material}
-                                                    style={pickerStyle}
-                                                    onValueChange={value => {
-                                                        setMaterial(value)
-                                                    }}
-                                                    items={Material}
-                                                />
-                                            </View>
                                         </View>
-                                        <View style={styles.sampleViews2}>
+                                    }
+                                    {mix === "Trimix Mix" &&
+                                        <View style={styles.sampleViews}>
+                                            <TextInput
+                                                style={[styles.tinyInput2, { height: "100%", marginLeft: widthPercentageToDP(3), color: white, width: "15%" }]}
+                                                placeholder="xx"
+                                                placeholderTextColor={white}
+                                                value={trimMix1}
+                                                keyboardType="number-pad"
+                                                onChangeText={text => setTrimMix1(text)}
+                                            />
                                             <Text style={[styles.smallTxt, { color: black }]}>
-                                                {Strings.mix}{" :"}
+                                                {"/"}
                                             </Text>
-                                            <View style={{ width: language === 'es' ? "74%" : "85%", height: "100%", justifyContent: "center" }}>
-                                                <RNPickerSelect
-                                                    placeholder={{
-                                                        label: Strings.mix,
-                                                        value: null,
-                                                        color: "#000"
-                                                    }}
-                                                    value={mix}
-                                                    style={pickerStyle}
-                                                    onValueChange={value => {
-                                                        setMix(value)
-                                                    }}
-                                                    items={Mix}
-                                                />
-                                            </View>
+                                            <TextInput
+                                                style={[styles.tinyInput2, { height: "100%", marginLeft: widthPercentageToDP(3), color: white, width: "30%" }]}
+                                                placeholder="xx"
+                                                value={trimMix2}
+                                                placeholderTextColor={white}
+                                                keyboardType="number-pad"
+                                                onChangeText={text => setTrimMix2(text)}
+                                            />
                                         </View>
-                                        {mix === "Nitrox" &&
-                                            <View style={styles.sampleViews}>
-                                                <Text style={[styles.smallTxt, { color: black }]}>
-                                                    {"% 02"}
-                                                </Text>
-                                                <TextInput
-                                                    style={[styles.tinyInput2, { height: "100%", marginLeft: widthPercentageToDP(3), color: white, width: "30%" }]}
-                                                    placeholder="xxx"
-                                                    value={oxygen}
-                                                    placeholderTextColor={white}
-                                                    keyboardType="number-pad"
-                                                    onChangeText={text => setOxygen(text)}
-                                                />
-                                                <Text style={[styles.smallTxt, { color: black }]}>
-                                                    {Strings.oxygen}
-                                                </Text>
-                                            </View>
-                                        }
-                                        {mix === "Trimix Mix" &&
-                                            <View style={styles.sampleViews}>
-                                                <TextInput
-                                                    style={[styles.tinyInput2, { height: "100%", marginLeft: widthPercentageToDP(3), color: white, width: "15%" }]}
-                                                    placeholder="xx"
-                                                    placeholderTextColor={white}
-                                                    value={trimMix1}
-                                                    keyboardType="number-pad"
-                                                    onChangeText={text => setTrimMix1(text)}
-                                                />
-                                                <Text style={[styles.smallTxt, { color: black }]}>
-                                                    {"/"}
-                                                </Text>
-                                                <TextInput
-                                                    style={[styles.tinyInput2, { height: "100%", marginLeft: widthPercentageToDP(3), color: white, width: "30%" }]}
-                                                    placeholder="xx"
-                                                    value={trimMix2}
-                                                    placeholderTextColor={white}
-                                                    keyboardType="number-pad"
-                                                    onChangeText={text => setTrimMix2(text)}
-                                                />
-                                            </View>
-                                        }
-                                    </View>
+                                    }
                                 </View>
-                            }
-                            <View style={[styles.innerLogView, { height: heightPercentageToDP(8), marginTop: 10, justifyContent: "space-between", width: widthPercentageToDP(80) }]}>
+                            </View>
+                            {/* } */}
+                            <View style={[styles.innerLogView, { height: heightPercentageToDP(8), marginTop: heightPercentageToDP(3), justifyContent: "space-between", width: widthPercentageToDP(80) }]}>
                                 <TouchableOpacity
                                     style={{ width: "17%", height: "90%" }}
                                     onPress={() => {
@@ -1773,7 +1819,7 @@ const LogBook = (props) => {
                                     </Text>
                                 </TouchableOpacity>
                             </View>
-                            <View style={[styles.innerLogView, { height: heightPercentageToDP(8), marginTop: heightPercentageToDP(8), justifyContent: "space-between", width: widthPercentageToDP(80) }]}>
+                            <View style={[styles.innerLogView, { height: heightPercentageToDP(8), marginTop: heightPercentageToDP(7), justifyContent: "space-between", width: widthPercentageToDP(80) }]}>
                                 <TouchableOpacity
                                     style={{ width: "15%", height: "90%" }}
                                     onPress={() => {
@@ -1813,7 +1859,7 @@ const LogBook = (props) => {
                                     </Text>
                                 </TouchableOpacity>
                                 <TouchableOpacity
-                                    style={{ width: "20%", height: "90%" }}
+                                    style={{ width: "23%", height: "90%" }}
                                     onPress={() => {
                                         if (diveItem7) {
                                             setDiveItem7(false)

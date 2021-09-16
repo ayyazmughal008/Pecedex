@@ -20,6 +20,7 @@ import Strings from '../../Translation'
 import Fontisto from 'react-native-vector-icons/Fontisto'
 import ImagePicker from 'react-native-image-crop-picker';
 import Picker from '../Profile/Picker'
+import Geolocation from '@react-native-community/geolocation';
 
 
 
@@ -896,6 +897,51 @@ const LogBook = (props) => {
             value: Strings.Trimix_Mix
         },
     ]
+    useEffect(() => {
+        updateLocation()
+    }, [])
+    const updateLocation = async () => {
+        if (Platform.OS === 'ios') {
+            setIsLoading(true)
+            await Geolocation.requestAuthorization();
+            await Geolocation.getCurrentPosition(info => {
+                console.log(info);
+                setLocation(info.coords);
+                setIsLoading(false);
+            })
+        } else {
+            try {
+                //this.updateTimer()
+                const granted = await PermissionsAndroid.request(
+                    PermissionsAndroid.PERMISSIONS.ACCESS_FINE_LOCATION,
+                    {
+                        title: 'Pecedex',
+                        message: 'Pecedex App access to your location ',
+                        buttonNegative: 'Cancel',
+                        buttonPositive: 'OK',
+                    }
+                )
+                if (granted === PermissionsAndroid.RESULTS.GRANTED) {
+                    setIsLoading(true)
+                    await Geolocation.requestAuthorization();
+                    await Geolocation.getCurrentPosition(info => {
+                        console.log(info);
+                        setLocation(info.coords);
+                        setIsLoading(false);
+                    })
+                } else {
+                    console.log("location permission denied")
+                }
+            } catch (err) {
+                setIsLoading(false)
+                console.log(error)
+            }
+        }
+    }
+
+
+
+
     return (
         <View style={[styles.container, { alignItems: "center" }]}>
             {!imagePath ?
@@ -1156,7 +1202,7 @@ const LogBook = (props) => {
                                     />
                                 </TouchableOpacity>
                             </View>
-                            <View style={{ width: "100%", flexDirection: "row", alignItems: "center", marginTop: heightPercentageToDP(1) }}>
+                            <View style={{ width: "100%", flexDirection: "row", alignItems: "center", marginTop: heightPercentageToDP(1.7) }}>
                                 <Text style={[styles.smallTxt, { color: black, marginLeft: 15, }]}>
                                     {Strings.Water_temperature}{" : "}
                                 </Text>
@@ -1173,7 +1219,7 @@ const LogBook = (props) => {
                                     {"*C"}
                                 </Text>
                             </View>
-                            <View style={{ width: "100%", flexDirection: "row", alignItems: "center", marginTop: heightPercentageToDP(1) }}>
+                            <View style={{ width: "100%", flexDirection: "row", alignItems: "center", marginTop: heightPercentageToDP(2) }}>
                                 <Text style={[styles.smallTxt, { color: black, marginLeft: 15, }]}>
                                     {Strings.Visibility}{" : "}
                                 </Text>
@@ -1190,7 +1236,7 @@ const LogBook = (props) => {
                                     {Strings.meters}
                                 </Text>
                             </View>
-                            <View style={{ width: "100%", flexDirection: "row", alignItems: "center", }}>
+                            <View style={{ width: "100%", flexDirection: "row", alignItems: "center",marginTop: heightPercentageToDP(1.7) }}>
                                 <Text onPress={() => {
                                     setSweetWater(true)
                                     setSaltWater(false)
@@ -1213,7 +1259,7 @@ const LogBook = (props) => {
                                 <Text style={[styles.smallTxt, { color: black }]}>
                                     {Strings.type}{" :"}
                                 </Text>
-                                <View style={{ width: language === 'es' ? "67%" : "87%", height: "100%", justifyContent: "center" }}>
+                                <View style={{ width: language === 'es' ? "68%" : "87%", height: "100%", justifyContent: "center" }}>
                                     <RNPickerSelect
                                         placeholder={{
                                             label: Strings.type,
@@ -1233,7 +1279,7 @@ const LogBook = (props) => {
                                 <Text style={[styles.smallTxt, { color: black }]}>
                                     {Strings.currents}{" :"}
                                 </Text>
-                                <View style={{ width: language === 'es' ? "83%" : "86%", height: "100%", justifyContent: "center" }}>
+                                <View style={{ width: language === 'es' ? "84%" : "86%", height: "100%", justifyContent: "center" }}>
                                     <RNPickerSelect
                                         placeholder={{
                                             label: Strings.currents,
@@ -1412,12 +1458,12 @@ const LogBook = (props) => {
                             </Text>
                         </View>
                         <View style={[styles.logView, {
-                            height: heightPercentageToDP(78),
+                            height: heightPercentageToDP(74),
                             marginTop: heightPercentageToDP(2),
                             backgroundColor: blue
                         }]}>
                             <View style={styles.scubaView}>
-                                <View style={{ width: "25%", height: "90%", alignItems: "center", }}>
+                                <View style={styles.suitView}>
                                     <TouchableOpacity
                                         style={{ width: "100%", height: "65%", }}
                                         onPress={() => {
@@ -1441,7 +1487,7 @@ const LogBook = (props) => {
                                         {Strings.short}
                                     </Text>
                                 </View>
-                                <View style={{ width: "25%", height: "90%", alignItems: "center", }}>
+                                <View style={styles.suitView}>
                                     <TouchableOpacity
                                         style={{ width: "100%", height: "65%", }}
                                         onPress={() => {
@@ -1488,7 +1534,7 @@ const LogBook = (props) => {
                                         />
                                     }
                                 </View>
-                                <View style={{ width: "25%", height: "90%", alignItems: "center", }}>
+                                <View style={styles.suitView}>
                                     <TouchableOpacity
                                         style={{ width: "100%", height: "65%", }}
                                         onPress={() => {
@@ -1512,7 +1558,7 @@ const LogBook = (props) => {
                                         {Strings.semi_dry}
                                     </Text>
                                 </View>
-                                <View style={{ width: "25%", height: "90%", alignItems: "center", }}>
+                                <View style={styles.suitView}>
                                     <TouchableOpacity
                                         style={{ width: "100%", height: "65%", }}
                                         onPress={() => {
@@ -1542,7 +1588,7 @@ const LogBook = (props) => {
                                     setScuba(true)
                                     setRebreader(false)
                                 }}
-                                style={[styles.smallTxt, { color: isScuba ? white : black, marginTop: 10 }]}>
+                                style={[styles.smallTxt, { color: isScuba ? white : black,  }]}>
                                 {Strings.scuba}{" / "}
                                 <Text
                                     onPress={() => {
@@ -1558,7 +1604,7 @@ const LogBook = (props) => {
                                     flexDirection: "row",
                                     alignItems: "center",
                                     alignSelf: "center",
-                                    marginBottom: heightPercentageToDP(2)
+                                    marginBottom: heightPercentageToDP(1)
                                 }}>
                                     <Text style={[styles.smallTxt, { color: black, marginRight: 6 }]}>
                                         {Strings.ballast}{" : "}
@@ -1684,7 +1730,7 @@ const LogBook = (props) => {
                                 </View>
                             </View>
                             {/* } */}
-                            <View style={[styles.innerLogView, { height: heightPercentageToDP(8), marginTop: heightPercentageToDP(4), justifyContent: "space-between", width: widthPercentageToDP(80) }]}>
+                            <View style={[styles.innerLogView, { height: heightPercentageToDP(8), marginTop: heightPercentageToDP(3), justifyContent: "space-between", width: widthPercentageToDP(80) }]}>
                                 <TouchableOpacity
                                     style={{ width: "17%", height: "90%" }}
                                     onPress={() => {
@@ -1763,7 +1809,7 @@ const LogBook = (props) => {
                                     </Text>
                                 </TouchableOpacity>
                             </View>
-                            <View style={[styles.innerLogView, { height: heightPercentageToDP(8), marginTop: heightPercentageToDP(8), justifyContent: "space-between", width: widthPercentageToDP(80) }]}>
+                            <View style={[styles.innerLogView, { height: heightPercentageToDP(8), marginTop: heightPercentageToDP(7), justifyContent: "space-between", width: widthPercentageToDP(80) }]}>
                                 <TouchableOpacity
                                     style={{ width: "15%", height: "90%" }}
                                     onPress={() => {
@@ -2038,8 +2084,8 @@ const LogBook = (props) => {
                                             // longitude: parseFloat(this.state.long),
                                             // latitudeDelta: 0.0043,
                                             // longitudeDelta: 0.0034
-                                            latitude: 40.416775,
-                                            longitude: -3.703790,
+                                            latitude: parseFloat(location.latitude),
+                                            longitude: parseFloat(location.longitude),
                                             latitudeDelta: 0.0922,
                                             longitudeDelta: 0.0421,
                                         }}

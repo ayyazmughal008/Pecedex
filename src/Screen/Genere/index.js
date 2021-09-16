@@ -68,15 +68,34 @@ const Order = (props) => {
                     shortText={item.short}
                     seen={item.seen}
                     clickHandler={() => {
-                        props.navigation.navigate('Detail', {
-                            data: Response.data
-                        })
-                        //console.log(Response.data)
+                        if (!login.data.paid) {
+                            updateRow()
+                        } else {
+                            props.navigation.navigate("Detail", {
+                                data: Response.data
+                            })
+                        }
                     }}
                 />
             ),
         [Response],
     );
+    const updateRow = async () => {
+        setResponse(true)
+        let temArr = [];
+        await Response.data.forEach(item => {
+            if (item.ad) {
+                return
+            } else {
+                temArr.push(item)
+            }
+        });
+        await setResponse(false)
+        props.navigation.navigate("Detail", {
+            data: temArr
+        })
+        //console.log("===>",temArr)
+    }
     const onViewRef = React.useRef((viewableItems) => {
         console.log(viewableItems)
         // Use viewable items in state or as intended

@@ -203,6 +203,12 @@
 	<string/>
 	<key>NSPhotoLibraryUsageDescription</key>
 	<string>upload images for profiles</string>
+	<key>NSLocationAlwaysAndWhenInUseUsageDescription</key>
+	<string>This app need location always</string>
+	<key>NSLocationAlwaysUsageDescription</key>
+	<string>This app need location always background</string>
+	<key>NSLocationWhenInUseUsageDescription</key>
+	<string> Agefred app required this Permission because live location use for tracking employee and their work status.</string>
 	<key>UIAppFonts</key>
 	<array>
 		<string>Montserrat-Regular.otf</string>

@@ -54,36 +54,53 @@ const Map = (props) => {
             viewableItemsChanged,
         );
     }, []);
-
-    /**
-     * [STEP I] When viewable items change in the list
-     * we want to know what items are visible and store them
-     * in a variable for later us.
-     */
     const onViewableItemsChanged = React.useCallback((e) => {
         viewableItemsChanged = e;
     }, []);
     const renderItem = React.useCallback(
         ({ item, index }) =>
             item.ad ? (
-                /**
-                 * loadOnMount -> We are telling the AdView to not load the ad when
-                 * it is mounted.
-                 */
-                <AdView loadOnMount={true} index={index} type="image" media={false} />
+                <AdView
+                    loadOnMount={true}
+                    index={index}
+                    type="image"
+                    media={false} />
             ) : (
                 <Card
                     title={item.title}
                     animalImg={"http://199.247.13.90/" + item.image}
                     shortText={item.short}
                     seen={item.seen}
-                    clickHandler={() => props.navigation.navigate("PeciosDetail", {
-                        data: Response.data
-                    })}
+                    clickHandler={() => {
+                        if (!login.data.paid) {
+                            updateRow()
+                        } else {
+                            props.navigation.navigate("PeciosDetail", {
+                                data: Response.data
+                            })
+                        }
+                    }}
                 />
             ),
         [Response],
     );
+
+    const updateRow = async () => {
+        setResponse(true)
+        let temArr = [];
+        await Response.data.forEach(item => {
+            if (item.ad) {
+                return
+            } else {
+                temArr.push(item)
+            }
+        });
+        await setResponse(false)
+        props.navigation.navigate("PeciosDetail", {
+            data: temArr
+        })
+        //console.log("===>",temArr)
+    }
 
     return (
         <SafeAreaView style={styles.container}>

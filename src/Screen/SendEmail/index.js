@@ -114,7 +114,7 @@ const FOrgotPassword = (param) => {
                             </TouchableOpacity>
                         </View>
                         : <View style={styles.forgetView1}>
-                            <Text style={[styles.loginTitle, { margin: 10, alignSelf: "center", textAlign:"justify" }]}>
+                            <Text style={[styles.loginTitle, { margin: 10, alignSelf: "center", textAlign: 'center' }]}>
                                 {Strings.verification_text}
                             </Text>
                             <CodeField

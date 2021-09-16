@@ -316,7 +316,8 @@ const PeciosDetail = (props) => {
                                                 : item.media.length < 10 ?
                                                     widthPercentageToDP(30)
                                                     : widthPercentageToDP(60)
-                                        }]}
+                                        }
+                                        ]}
                                         renderDots={activeIndex => (
                                             item.media.map((screen, i) => (
                                                 <View
@@ -336,7 +337,8 @@ const PeciosDetail = (props) => {
                                         )}
                                         activeDotIndex={activeSlid}
                                         dotsLength={item.media.length}
-                                    />
+                                        //dotsLength={0}
+                                    />  
                                 </View>
                             </View>
                             <View style={styles.shareView}>

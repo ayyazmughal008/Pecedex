@@ -104,8 +104,8 @@ export const styles = StyleSheet.create({
         fontWeight: "normal"
     },
     weatherBtn: {
-        width: widthPercentageToDP(17),
-        height: heightPercentageToDP(8),
+        width: widthPercentageToDP(16.5),
+        height: widthPercentageToDP(16.5),
         //backgroundColor: "#cccccc",
         borderRadius: widthPercentageToDP(3),
         marginLeft: widthPercentageToDP(2),
@@ -355,11 +355,19 @@ export const styles = StyleSheet.create({
     },
     scubaView: {
         width: "100%",
-        height: heightPercentageToDP(22),
+        height: heightPercentageToDP(20),
         flexDirection: "row",
         alignItems: "center",
         marginTop: heightPercentageToDP(2),
-        justifyContent: "space-between"
+        justifyContent: "space-between",
+
+    },
+    suitView: {
+        width: "25%",
+        height: heightPercentageToDP(20),
+        alignItems: "center",
+        //backgroundColor: "red",
+        justifyContent: "center"
     }
 
 })
