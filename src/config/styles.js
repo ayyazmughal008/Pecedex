@@ -1,6 +1,11 @@
 import { StyleSheet, Platform } from 'react-native'
 import { widthPercentageToDP, heightPercentageToDP } from '../Component/MakeMeResponsive'
 import { blue, lightRed, green, white, black, darkBlue } from '../config/color'
+export const CELL_SIZE = 70;
+export const CELL_BORDER_RADIUS = 8;
+export const DEFAULT_CELL_BG_COLOR = '#fff';
+export const NOT_EMPTY_CELL_BG_COLOR = '#000';
+export const ACTIVE_CELL_BG_COLOR = '#f7fafe';
 
 export const styles = StyleSheet.create({
     container: {
@@ -16,7 +21,7 @@ export const styles = StyleSheet.create({
         position: "absolute",
         zIndex: 1000,
         width: "100%",
-        height: Platform.OS === "ios" ? "96%" : "92%",
+        height: Platform.OS === "ios" ? "95%" : "92%",
         bottom: "0%",
         //backgroundColor:"red"
     },
@@ -35,7 +40,7 @@ export const styles = StyleSheet.create({
     },
     loginView: {
         width: widthPercentageToDP(90),
-        height: heightPercentageToDP(40),
+        height: heightPercentageToDP(45),
         alignSelf: "center",
         position: "absolute",
         bottom: "0%",
@@ -51,8 +56,20 @@ export const styles = StyleSheet.create({
         fontSize: widthPercentageToDP(4.5),
         color: lightRed,
         fontFamily: "Montserrat-Regular",
+        //marginTop: heightPercentageToDP(2),
+        alignSelf: "center"
+    },
+    forgetText: {
+        fontSize: widthPercentageToDP(4.5),
+        color: lightRed,
+        fontFamily: "Montserrat-Regular",
         marginTop: heightPercentageToDP(2),
         alignSelf: "center"
+    },
+    forgetView1:{
+        width:widthPercentageToDP(85),
+        alignSelf:"center",
+        alignItems:"center"
     },
     inputView: {
         width: widthPercentageToDP(90),
@@ -93,7 +110,7 @@ export const styles = StyleSheet.create({
     },
     input3: {
         width: widthPercentageToDP(60),
-        height: heightPercentageToDP(6),
+        height: heightPercentageToDP(6.5),
         fontSize: widthPercentageToDP(3.5),
         fontFamily: "Montserrat-Regular",
         paddingLeft: widthPercentageToDP(5),
@@ -118,7 +135,7 @@ export const styles = StyleSheet.create({
     },
     top: {
         width: widthPercentageToDP(100),
-        height: heightPercentageToDP(11),
+        height: Platform.OS === "ios" ? heightPercentageToDP(13) : heightPercentageToDP(11),
         //justifyContent: "center",
         alignItems: "center"
     },
@@ -135,7 +152,7 @@ export const styles = StyleSheet.create({
         alignSelf: "center",
         justifyContent: "center",
         alignItems: "center",
-        marginTop: heightPercentageToDP(-5),
+        marginTop: Platform.OS === 'android'? heightPercentageToDP(-5): heightPercentageToDP(-10),
         //backgroundColor: "red"
     },
     profileImg: {
@@ -204,7 +221,7 @@ export const styles = StyleSheet.create({
         padding: widthPercentageToDP(2)
     },
     shareView: {
-        width: widthPercentageToDP(100),
+        width: widthPercentageToDP(98),
         height: heightPercentageToDP(6),
         alignItems: "center",
         flexDirection: "row",
@@ -451,6 +468,7 @@ export const styles = StyleSheet.create({
     socialImages: {
         width: widthPercentageToDP(10),
         height: heightPercentageToDP(4),
+        //backgroundColor:"red"
     },
     roundButton: {
         width: widthPercentageToDP(20),
@@ -500,7 +518,7 @@ export const styles = StyleSheet.create({
     cardBanner2: {
         borderRadius: widthPercentageToDP(3),
         width: widthPercentageToDP(90),
-        height: heightPercentageToDP(30),
+        height: Platform.OS === 'android' ? heightPercentageToDP(30) :heightPercentageToDP(33),
         alignSelf: "center",
         //backgroundColor:"red",
         padding: 0
@@ -567,10 +585,41 @@ export const styles = StyleSheet.create({
         width: widthPercentageToDP(40),
         height: heightPercentageToDP(5),
         borderRadius: widthPercentageToDP(6),
-        alignSelf:"center",
-        marginTop:heightPercentageToDP(1),
+        alignSelf: "center",
+        marginTop: heightPercentageToDP(1),
         backgroundColor: blue,
         justifyContent: "center",
         alignItems: "center"
-    }
+    },
+    // ===========================
+    codeFieldRoot: {
+        marginTop: 20
+    },
+    cell: {
+        marginHorizontal: 8,
+        height: CELL_SIZE,
+        width: CELL_SIZE,
+        lineHeight: CELL_SIZE - 5,
+        ...Platform.select({ web: { lineHeight: 65 } }),
+        fontSize: 30,
+        textAlign: 'center',
+        borderRadius: CELL_BORDER_RADIUS,
+        color: '#000',
+        backgroundColor: '#fff',
+
+        // IOS
+        shadowColor: '#000',
+        shadowOffset: {
+            width: 0,
+            height: 1,
+        },
+        shadowOpacity: 0.22,
+        shadowRadius: 2.22,
+
+        // Android
+        elevation: 3,
+    },
+    focusCell: {
+        borderColor: '#000',
+    },
 })

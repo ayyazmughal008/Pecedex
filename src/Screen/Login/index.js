@@ -114,9 +114,13 @@ const Login = (props) => {
                                 {Strings.login}
                             </Text>
                         </TouchableOpacity>
-                        <Text style={styles.notMemberText}>
-                            {Strings.notMember}
-                        </Text>
+                        <TouchableOpacity
+                            onPress={() => props.navigation.navigate('SendEmail')}
+                        >
+                            <Text style={styles.forgetText}>
+                                {Strings.forget_pass1}
+                            </Text>
+                        </TouchableOpacity>
                         <TouchableOpacity
                             style={[styles.inputView, {
                                 backgroundColor: green,
@@ -130,6 +134,10 @@ const Login = (props) => {
                                 {Strings.register}
                             </Text>
                         </TouchableOpacity>
+                        <Text style={styles.notMemberText}>
+                            {Strings.notMember}
+                        </Text>
+
                     </View>
                 </KeyboardAwareScrollView>
             </View>

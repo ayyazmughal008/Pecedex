@@ -1,5 +1,5 @@
 import React from 'react'
-import { View, TouchableOpacity, Text, StyleSheet } from 'react-native'
+import { View, TouchableOpacity, Text, StyleSheet, Platform } from 'react-native'
 import { blue, white } from '../../config/color'
 import { widthPercentageToDP, heightPercentageToDP } from '../MakeMeResponsive'
 import FastImage from 'react-native-fast-image'
@@ -43,15 +43,16 @@ const Card = (props) => {
 const styles = StyleSheet.create({
     container: {
         width: widthPercentageToDP(90),
-        height: heightPercentageToDP(13),
+        //height: heightPercentageToDP(13),
+        flex: 0,
         marginBottom: heightPercentageToDP(3),
-        borderRadius: widthPercentageToDP(7),
+        borderRadius: Platform.OS === 'android' ? widthPercentageToDP(7):widthPercentageToDP(5),
         flexDirection: "row",
         alignItems: "center",
         backgroundColor: blue
     },
     title: {
-        width:widthPercentageToDP(55),
+        width: widthPercentageToDP(55),
         fontSize: widthPercentageToDP(4.5),
         color: white,
         fontFamily: "Montserrat-SemiBold",
@@ -64,16 +65,18 @@ const styles = StyleSheet.create({
         // paddingRight:widthPercentageToDP(5)
     },
     shortTitle: {
+        width: widthPercentageToDP(55),
         fontSize: widthPercentageToDP(4),
         color: white,
         fontFamily: "Montserrat-Regular",
-        marginTop: heightPercentageToDP(1)
+        marginTop: heightPercentageToDP(1),
+        flexWrap: 'wrap',
     },
     img: {
         width: widthPercentageToDP(30),
-        height: heightPercentageToDP(13),
-        borderTopLeftRadius: widthPercentageToDP(7),
-        borderBottomLeftRadius: widthPercentageToDP(7)
+        height: Platform.OS === 'android' ? heightPercentageToDP(13):heightPercentageToDP(15),
+        borderTopLeftRadius: Platform.OS === 'android' ? widthPercentageToDP(7):widthPercentageToDP(5),
+        borderBottomLeftRadius: Platform.OS === 'android' ? widthPercentageToDP(7):widthPercentageToDP(5),
     },
     right: {
         width: "100%",

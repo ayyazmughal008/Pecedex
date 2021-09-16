@@ -18,6 +18,7 @@ const SLIDER_WIDTH = Dimensions.get('window').width;
 const { width } = Dimensions.get('window');
 import Video from 'react-native-video'
 import RNFetchBlob from "rn-fetch-blob";
+import PagerView from 'react-native-pager-view';
 
 
 const PeciosDetail = (props) => {
@@ -33,6 +34,9 @@ const PeciosDetail = (props) => {
     const [imagePath, setImagePath] = useState(null)
     const [imageUrl, setImageUrl] = useState(null)
     const [activeSlid, setActiveSlid] = useState(0);
+    const [itemId, setItemId] = useState('none')
+    const [pageSelected, setPageSelected] = useState(0)
+    const viewPager = React.createRef();
     useEffect(() => {
         getCurrentImage()
     }, [activeSlid])
@@ -44,7 +48,7 @@ const PeciosDetail = (props) => {
         }
     }, [language])
     useEffect(() => {
-        getApis("yes")
+        getApis("yes", data[pageSelected].id)
         //convertImageToBase64()
     }, [])
     // useEffect(() => {
@@ -117,7 +121,7 @@ const PeciosDetail = (props) => {
     const shareImage = async (base64) => {
         const shareOptions = {
             title: 'PECEDEX',
-            message: 'PECEDEX ' + data.share.info,
+            message: 'PECEDEX ' + data[pageSelected].share.info,
             url: `data:image/png;base64,${base64}`,
             failOnCancel: false
         };
@@ -131,9 +135,9 @@ const PeciosDetail = (props) => {
             //setResult('error: '.concat(getErrorString(error)));
         }
     };
-    const getApis = async (value) => {
+    const getApis = async (value, id) => {
         setIsLoading(true)
-        let seenData = await postPecioSeen(data.id, login.data.id, value)
+        let seenData = await postPecioSeen(id, login.data.id, value)
         await setResponse(seenData)
         await setIsLoading(false)
     }
@@ -172,7 +176,7 @@ const PeciosDetail = (props) => {
                 'type': response.mime,
                 'name': Date.now() + '_Pecedex.png',
             }
-            dispatch(postPeciosImg(login.data.id, data.id, data2));
+            dispatch(postPeciosImg(login.data.id, itemId, data2));
             setOption(false)
 
         })
@@ -193,7 +197,7 @@ const PeciosDetail = (props) => {
                 'type': image.mime,
                 'name': Date.now() + '_Pecedex.png',
             }
-            dispatch(postPeciosImg(login.data.id, data.id, data2));
+            dispatch(postPeciosImg(login.data.id, itemId, data2));
             setOption(false)
         }).catch(error => {
             console.log(error);
@@ -249,7 +253,7 @@ const PeciosDetail = (props) => {
 
     })
     const getCurrentImage = async () => {
-        await data.media.forEach((item, index) => {
+        await data[pageSelected].media.forEach((item, index) => {
             if (index == activeSlid) {
                 if (item.mediaType === "image") {
                     setImageUrl(item.url)
@@ -258,181 +262,200 @@ const PeciosDetail = (props) => {
         });
     }
     return (
-        <SafeAreaView style={[styles.container, { alignItems: "center" }]}>
-            <View style={{
-                width: "100%",
-                height: heightPercentageToDP(40)
-            }}>
-                <Carousel
-                    layout={'default'}
-                    data={data.media}
-                    renderItem={_renderSlider}
-                    sliderWidth={(width)}
-                    itemWidth={(width)}
-                    onSnapToItem={(index) => setActiveSlid(index)}
-                />
-                <TouchableOpacity
-                    onPress={() => {
-                        if (!login.data.paid) {
-                            props.navigation.navigate('Subscription')
-                        } else {
-                            toggleOption()
-                        }
-                    }}
-                    style={{
-                        position: "absolute",
-                        bottom: "4%",
-                        right: "4%",
-                        zIndex: 3
-                    }}>
-                    <FastImage
-                        source={require('../../Images/84.png')}
-                        resizeMode={FastImage.resizeMode.contain}
-                        style={{ width: widthPercentageToDP(8), height: widthPercentageToDP(8) }}
-                    />
-                </TouchableOpacity>
-                <View style={styles.tabBar}>
-                    <Pagination
-                        containerStyle={[styles.tabsContainer, {
-                            width: data.media.length < 4 ?
-                                widthPercentageToDP(25)
-                                : data.media.length < 10 ?
-                                    widthPercentageToDP(30)
-                                    : widthPercentageToDP(60)
-                        }]}
-                        renderDots={activeIndex => (
-                            data.media.map((screen, i) => (
-                                <View
-                                    style={{ flex: 1, alignItems: 'center' }}
-                                    key={i}>
-                                    <View
-                                        style={{
-                                            width: widthPercentageToDP(2),
-                                            height: widthPercentageToDP(2),
-                                            borderRadius: widthPercentageToDP(2) / 2,
-                                            backgroundColor: activeIndex === i ? blue : white,
-                                            marginHorizontal: widthPercentageToDP(-4)
-                                        }}
+        <SafeAreaView style={styles.container}>
+            <PagerView
+                initialPage={0}
+                ref={viewPager}
+                onPageSelected={e => setPageSelected(e.nativeEvent.position)}
+                setPage={pageSelected}
+                transitionStyle="curl"
+                style={{ flex: 1 }}>
+                {data.map((item, index) => {
+                    return (
+                        <View key={"unique" + index}
+                            style={{ flexGrow: 1 }}>
+                            <View
+                                style={{
+                                    width: "100%",
+                                    height: heightPercentageToDP(40)
+                                }}>
+                                <Carousel
+                                    layout={'default'}
+                                    data={item.media}
+                                    renderItem={_renderSlider}
+                                    sliderWidth={(width)}
+                                    itemWidth={(width)}
+                                    onSnapToItem={(index) => setActiveSlid(index)}
+                                />
+                                <TouchableOpacity
+                                    onPress={() => {
+                                        if (!login.data.paid) {
+                                            props.navigation.navigate('Subscription')
+                                        } else {
+                                            setItemId(item.id)
+                                            toggleOption()
+                                        }
+                                    }}
+                                    style={{
+                                        position: "absolute",
+                                        bottom: "4%",
+                                        right: "4%",
+                                        zIndex: 3
+                                    }}>
+                                    <FastImage
+                                        source={require('../../Images/84.png')}
+                                        resizeMode={FastImage.resizeMode.contain}
+                                        style={{ width: widthPercentageToDP(8), height: widthPercentageToDP(8) }}
+                                    />
+                                </TouchableOpacity>
+                                <View style={styles.tabBar}>
+                                    <Pagination
+                                        containerStyle={[styles.tabsContainer, {
+                                            width: item.media.length < 4 ?
+                                                widthPercentageToDP(25)
+                                                : item.media.length < 10 ?
+                                                    widthPercentageToDP(30)
+                                                    : widthPercentageToDP(60)
+                                        }]}
+                                        renderDots={activeIndex => (
+                                            item.media.map((screen, i) => (
+                                                <View
+                                                    style={{ flex: 1, alignItems: 'center' }}
+                                                    key={i}>
+                                                    <View
+                                                        style={{
+                                                            width: widthPercentageToDP(2),
+                                                            height: widthPercentageToDP(2),
+                                                            borderRadius: widthPercentageToDP(2) / 2,
+                                                            backgroundColor: activeIndex === i ? blue : white,
+                                                            marginHorizontal: widthPercentageToDP(-4)
+                                                        }}
+                                                    />
+                                                </View>
+                                            ))
+                                        )}
+                                        activeDotIndex={activeSlid}
+                                        dotsLength={item.media.length}
                                     />
                                 </View>
-                            ))
-                        )}
-                        activeDotIndex={activeSlid}
-                        dotsLength={data.media.length}
-                    />
-                </View>
-            </View>
-            <View style={styles.shareView}>
-                <View style={{ width: "45%", height: "100%", flexDirection: "row", alignItems: "center" }}>
-                    {!Response ?
-                        <FastImage
-                            source={require('../../Images/85.png')}
-                            resizeMode={FastImage.resizeMode.stretch}
-                            style={{
-                                width: widthPercentageToDP(14),
-                                height: heightPercentageToDP(5),
-                                marginLeft: widthPercentageToDP(3)
-                            }}
-                        />
-                        : <TouchableOpacity
-                            onPress={() => {
-                                getApis("no")
-                            }}
-                            style={styles.shareButton}>
+                            </View>
+                            <View style={styles.shareView}>
+                                <View style={{ width: "45%", height: "100%", flexDirection: "row", alignItems: "center" }}>
+                                    {!Response ?
+                                        <FastImage
+                                            source={require('../../Images/85.png')}
+                                            resizeMode={FastImage.resizeMode.stretch}
+                                            style={{
+                                                width: Platform.OS === 'android' ? widthPercentageToDP(14) : widthPercentageToDP(10),
+                                                height: heightPercentageToDP(5),
+                                                marginLeft: widthPercentageToDP(3)
+                                            }}
+                                        />
+                                        : <TouchableOpacity
+                                            onPress={() => {
+                                                //setItemId(item.id);
+                                                getApis("no", item.id);
+                                            }}
+                                            style={styles.shareButton}>
+                                            <FastImage
+                                                source={Response.seen === 'yes' ?
+                                                    require('../../Images/85.png')
+                                                    : require('../../Images/camera.png')}
+                                                resizeMode={FastImage.resizeMode.stretch}
+                                                style={{
+                                                    width: Platform.OS === 'android' ? widthPercentageToDP(14) : widthPercentageToDP(10),
+                                                    height: heightPercentageToDP(5),
+                                                    marginLeft: widthPercentageToDP(3)
+                                                }}
+                                            />
+                                        </TouchableOpacity>
+                                    }
+                                </View>
+                                <View style={{ width: "48%", height: "100%", alignItems: "center", justifyContent: "space-between", flexDirection: "row" }}>
+                                    <TouchableOpacity
+                                        onPress={() => {
+                                            if (!item.videoLink) {
+                                                console.log(item.videoLink)
+                                            } else {
+                                                Linking.openURL(item.videoLink);
+                                            }
+                                        }}
+                                        style={styles.shareButton}>
+                                        <FastImage
+                                            source={require('../../Images/86.png')}
+                                            resizeMode={FastImage.resizeMode.contain}
+                                            style={{
+                                                width: widthPercentageToDP(8),
+                                                height: heightPercentageToDP(4),
+                                            }}
+                                        />
+                                    </TouchableOpacity>
+                                    <TouchableOpacity
+                                        onPress={() => {
+                                            if (!item.wlink) {
+                                                console.log(item.wlink)
+                                            } else {
+                                                Linking.openURL(item.wlink);
+                                            }
+                                        }}
+                                        style={styles.shareButton}>
+                                        <FastImage
+                                            source={require('../../Images/87.png')}
+                                            resizeMode={FastImage.resizeMode.contain}
+                                            style={{
+                                                width: widthPercentageToDP(8),
+                                                height: heightPercentageToDP(4),
+                                            }}
+                                        />
+                                    </TouchableOpacity>
+                                    <TouchableOpacity
+                                        onPress={() => {
+                                            convertImageToBase64(imageUrl)
+                                        }}
+                                        style={[styles.shareButton, { marginRight: 5, zIndex: 3 }]}>
+                                        <FastImage
+                                            source={require('../../Images/88.png')}
+                                            resizeMode={FastImage.resizeMode.contain}
+                                            style={{
+                                                width: widthPercentageToDP(8),
+                                                height: heightPercentageToDP(4),
+                                            }}
+                                        />
+                                    </TouchableOpacity>
+                                </View>
+                            </View>
+                            <Text style={styles.proInfoTile2}>
+                                {item.title}
+                            </Text>
+                            <Text style={[styles.smallText, {
+                                fontFamily: "MontserratAlternates-BoldItalic",
+                                marginTop: heightPercentageToDP(-0.2)
+                            }]}>
+                                {item.description}
+                            </Text>
                             <FastImage
-                                source={Response.seen === 'yes' ?
-                                    require('../../Images/85.png')
-                                    : require('../../Images/camera.png')}
-                                resizeMode={FastImage.resizeMode.stretch}
+                                source={require('../../Images/line.png')}
                                 style={{
-                                    width: widthPercentageToDP(14),
-                                    height: heightPercentageToDP(5),
-                                    marginLeft: widthPercentageToDP(3)
+                                    width: widthPercentageToDP(90),
+                                    height: widthPercentageToDP(0.5),
+                                    alignSelf: "center",
+                                    marginTop: heightPercentageToDP(1)
                                 }}
+                                resizeMode={FastImage.resizeMode.stretch}
                             />
-                        </TouchableOpacity>
-                    }
-                </View>
-                <View style={{ width: "48%", height: "100%", alignItems: "center", justifyContent: "space-between", flexDirection: "row" }}>
-                    <TouchableOpacity
-                        onPress={() => {
-                            if (!data.videoLink) {
-                                console.log(data.videoLink)
-                            } else {
-                                Linking.openURL(data.videoLink);
-                            }
-                        }}
-                        style={styles.shareButton}>
-                        <FastImage
-                            source={require('../../Images/86.png')}
-                            resizeMode={FastImage.resizeMode.contain}
-                            style={{
-                                width: widthPercentageToDP(8),
-                                height: heightPercentageToDP(4),
-                            }}
-                        />
-                    </TouchableOpacity>
-                    <TouchableOpacity
-                        onPress={() => {
-                            if (!data.wlink) {
-                                console.log(data.wlink)
-                            } else {
-                                Linking.openURL(data.wlink);
-                            }
-                        }}
-                        style={styles.shareButton}>
-                        <FastImage
-                            source={require('../../Images/87.png')}
-                            resizeMode={FastImage.resizeMode.contain}
-                            style={{
-                                width: widthPercentageToDP(8),
-                                height: heightPercentageToDP(4),
-                            }}
-                        />
-                    </TouchableOpacity>
-                    <TouchableOpacity
-                        onPress={() => {
-                            convertImageToBase64(imageUrl)
-                        }}
-                        style={[styles.shareButton, { marginRight: 5 }]}>
-                        <FastImage
-                            source={require('../../Images/88.png')}
-                            resizeMode={FastImage.resizeMode.contain}
-                            style={{
-                                width: widthPercentageToDP(8),
-                                height: heightPercentageToDP(4),
-                            }}
-                        />
-                    </TouchableOpacity>
-                </View>
-            </View>
-            <Text style={styles.proInfoTile2}>
-                {data.title}
-            </Text>
-            <Text style={[styles.smallText, {
-                fontFamily: "MontserratAlternates-BoldItalic",
-                marginTop: heightPercentageToDP(-0.2)
-            }]}>
-                {data.description}
-            </Text>
-            <FastImage
-                source={require('../../Images/line.png')}
-                style={{
-                    width: widthPercentageToDP(90),
-                    height: widthPercentageToDP(0.5),
-                    alignSelf: "center",
-                    marginTop: heightPercentageToDP(1)
-                }}
-                resizeMode={FastImage.resizeMode.stretch}
-            />
-            <FlatList
-                data={data.icons}
-                numColumns={2}
-                style={{ width: widthPercentageToDP(100) }}
-                showsVerticalScrollIndicator={false}
-                keyExtractor={(item, index) => "unique" + index}
-                renderItem={_renderItem}
-            />
+                            <FlatList
+                                data={item.icons}
+                                numColumns={2}
+                                style={{ width: widthPercentageToDP(100) }}
+                                showsVerticalScrollIndicator={false}
+                                keyExtractor={(item, index) => "unique" + index}
+                                renderItem={_renderItem}
+                            />
+                        </View>
+                    )
+                })
+                }
+            </PagerView>
             <View style={{ height: heightPercentageToDP(7) }} />
             <Tab
                 homeClick={() => props.navigation.dispatch(HomeAction)}

@@ -37,13 +37,19 @@ export default createStackNavigator(
       screen: Pecios
     },
     PeciosDetail: {
-      screen: PeciosDetail
+      screen: PeciosDetail,
+      navigationOptions: {
+        gestureEnabled: false,
+      },
     },
     Animal: {
       screen: Animal
     },
     Detail: {
-      screen: Detail
+      screen: Detail,
+      navigationOptions: {
+        gestureEnabled: false,
+      },
     },
     Classes: {
       screen: Classes

@@ -69,12 +69,13 @@ const Order = (props) => {
                     seen={item.seen}
                     clickHandler={() => {
                         props.navigation.navigate('Detail', {
-                            data: item
+                            data: Response.data
                         })
+                        //console.log(Response.data)
                     }}
                 />
             ),
-        [],
+        [Response],
     );
     const onViewRef = React.useRef((viewableItems) => {
         console.log(viewableItems)

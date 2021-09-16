@@ -20,6 +20,7 @@ const DiveCenter = (props) => {
     const count = props.navigation.getParam('count', '123')
     const average = props.navigation.getParam('average', '123')
     const id = props.navigation.getParam('id', '123')
+    const logo = props.navigation.getParam('logo','dkhj')
     const totalAverage = props.navigation.getParam('totalAverage', '123')
     const [myId, setMyId] = useState("")
     useEffect(() => {
@@ -60,14 +61,13 @@ const DiveCenter = (props) => {
                     />
                     : <FastImage
                         style={styles.profileImg}
-                        source={{ uri: "http://199.247.13.90/" + login.data.image }}
+                        source={{ uri: "http://199.247.13.90/" + logo }}
                         resizeMode={FastImage.resizeMode.cover}
                     />
                 }
             </View>
+            <View style={{ marginTop: heightPercentageToDP(2) }} />
             <KeyboardAwareScrollView contentContainerStyle={{ flexGrow: 1 }}>
-
-                <View style={{ marginTop: heightPercentageToDP(1) }} />
                 <View style={[styles.commentView, {
                     backgroundColor: blue,
                     borderRadius: widthPercentageToDP(5),

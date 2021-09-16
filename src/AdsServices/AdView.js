@@ -147,7 +147,7 @@ export const AdView = React.memo(({index, media, type, loadOnMount = true}) => {
       onAdImpression={onAdImpression}
       onUnifiedNativeAdLoaded={onUnifiedNativeAdLoaded}
       style={{
-        width: '98%',
+        width: '95%',
         alignSelf: 'center',
       }}
       adUnitID={type === 'image' ? adUnitIDs.image : adUnitIDs.video} // REPLACE WITH NATIVE_AD_VIDEO_ID for video ads.

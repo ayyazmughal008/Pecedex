@@ -186,7 +186,11 @@ const Strings = new LocalizedStrings({
         popup_wrecks: "Please upload any image in wrecks",
         popup_animales: "Please upload any image in animals",
         chooseStar: "Please choose at least one star",
-        write_anything:"write anything.."
+        write_anything:"write anything..",
+        forget_pass1:"Forgot password?",
+        enter_code:"Enter code",
+        verification_text:"Please enter the verification code that we have sent to your email",
+        liter:"Liter"
     },
     es: {
         signin: "INICIAR SESIÓN",
@@ -280,8 +284,8 @@ const Strings = new LocalizedStrings({
         oxygen: "oxígeno",
         dive_computer: "PC de buceo",
         compass: "Brújula",
-        torch: "Linterna",
-        dive_hood: "Capucha de buceo",
+        torch: "linterna",
+        dive_hood: "capucha",
         buoy: "Boya",
         knife: "Cuchillo",
         gloves: "Guantes",
@@ -373,7 +377,11 @@ const Strings = new LocalizedStrings({
         popup_wrecks: "Sube cualquier imagen en pecios",
         popup_animales: "Sube cualquier imagen en animales.",
         chooseStar: "Elija al menos una estrella",
-        write_anything:"escribe cualquier cosa.."
+        write_anything:"escribe cualquier cosa..",
+        forget_pass1:"¿Se te olvidó tu contraseña?",
+        enter_code:"Introduzca el código",
+        verification_text:"Ingrese el código de verificación que le enviamos a su correo electrónico",
+        liter:"Litro"
     },
 });
 

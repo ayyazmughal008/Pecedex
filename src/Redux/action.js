@@ -61,6 +61,8 @@ const baseUrl = "http://199.247.13.90/api/",
     erase = 'erase',
     deleteUpload = 'delete-upload',
     deleteDive = 'delete-dive',
+    sendMail = 'sendMail',
+    changePasswordNew = 'change-password-new',
     register = 'register';
 
 const country_url = "https://countriesnow.space/api/v0.1/countries/positions"
@@ -1999,6 +2001,71 @@ export const deleteUserDives = async (userId, diveId) => {
             .then(json => {
                 if (json.status == 200) {
                     console.log(json)
+                    return
+                } else {
+                    console.log(json)
+                }
+            })
+            .catch(error => {
+                console.log("response error ===>", error)
+            })
+    } catch (error) {
+        console.log('my error' + error.message);
+    }
+    return api
+}
+export const sendEmailToUser = async (email) => {
+    console.log("my dive is is", email)
+    let api
+    try {
+        api = await fetch(baseUrl + sendMail, {
+            method: 'POST',
+            headers: {
+                'Accept': 'application/json',
+                "Content-type": "application/json",
+            },
+            body: JSON.stringify({
+                email: email,
+            })
+        })
+            .then(res => res.json())
+            .then(json => {
+                if (json.status == 200) {
+                    console.log(json)
+                    // NavigationService.navigate('UpdatePassword')
+                    return json
+                } else {
+                    console.log(json)
+                }
+            })
+            .catch(error => {
+                console.log("response error ===>", error)
+            })
+    } catch (error) {
+        console.log('my error' + error.message);
+    }
+    return api
+}
+export const updateNewPassword = async (email, password) => {
+    console.log("my dive is is", email)
+    let api
+    try {
+        api = await fetch(baseUrl + changePasswordNew, {
+            method: 'POST',
+            headers: {
+                'Accept': 'application/json',
+                "Content-type": "application/json",
+            },
+            body: JSON.stringify({
+                email: email,
+                password: password
+            })
+        })
+            .then(res => res.json())
+            .then(json => {
+                if (json.status == 200) {
+                    Alert.alert('', json.message)
+                    NavigationService.navigate('Login')
                     return
                 } else {
                     console.log(json)

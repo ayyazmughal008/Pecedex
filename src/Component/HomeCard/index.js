@@ -26,7 +26,7 @@ const Card = (props) => {
 const styles = StyleSheet.create({
     container: {
         width: widthPercentageToDP(90),
-        height: heightPercentageToDP(20),
+        flex: 0,
         marginBottom: heightPercentageToDP(1)
     },
     title: {

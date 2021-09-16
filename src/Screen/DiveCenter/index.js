@@ -86,7 +86,11 @@ const DiveCenter = (props) => {
                     />
                 </FastImage>
 
-                <Text style={[styles.profileName, { alignSelf: "center", color: blue }]}>
+                <Text style={[styles.profileName, {
+                    alignSelf: "center",
+                    color: blue,
+                    fontSize: widthPercentageToDP(7)
+                }]}>
                     {info.data.name}
                 </Text>
                 <View style={styles.infoBox}>
@@ -239,7 +243,8 @@ const DiveCenter = (props) => {
                             count: info.data.commentsCount,
                             id: myId,
                             average: info.averageStars,
-                            totalAverage: info.totalAverage
+                            totalAverage: info.totalAverage,
+                            logo: info.data.logo
                         });
                     }}
                 >

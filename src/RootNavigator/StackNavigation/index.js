@@ -1,6 +1,8 @@
 import { createStackNavigator } from 'react-navigation-stack';
 import Login from '../../Screen/Login'
 import Register from '../../Screen/Register'
+import SendEmail from '../../Screen/SendEmail'
+import UpdatePassword from '../../Screen/SendEmail/UpdatePassword'
 
 export default createStackNavigator(
   {
@@ -9,6 +11,12 @@ export default createStackNavigator(
     },
     Register: {
       screen: Register
+    },
+    SendEmail: {
+      screen: SendEmail
+    },
+    UpdatePassword: {
+      screen: UpdatePassword
     },
   },
   {

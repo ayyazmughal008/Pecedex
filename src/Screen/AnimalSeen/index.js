@@ -68,11 +68,11 @@ const Map = (props) => {
                     shortText={item.short}
                     seen={item.seen}
                     clickHandler={() => props.navigation.navigate("Detail", {
-                        data: item
+                        data: Response.data
                     })}
                 />
             ),
-        [],
+        [Response],
     );
 
 
