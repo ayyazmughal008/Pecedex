@@ -91,7 +91,7 @@ const Map = (props) => {
             color: '#30fcd4'
         },
         {
-            text: Strings.genre_easy,
+            text: Strings.animals,
             name: "genre_easy",
             position: 5,
             color: '#d0fc34'

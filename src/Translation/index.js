@@ -104,7 +104,7 @@ const Strings = new LocalizedStrings({
         select_team: "Select team",
         select_center: "Select center",
         madrid_diving: "Madrid Diving",
-        observations: "observations",
+        observations: "Observations",
         // logbook dive types
         Baptism: "Baptism",
         Diving_Course: "Diving Course",
@@ -284,8 +284,8 @@ const Strings = new LocalizedStrings({
         oxygen: "oxígeno",
         dive_computer: "PC de buceo",
         compass: "Brújula",
-        torch: "linterna",
-        dive_hood: "capucha",
+        torch: "Linterna",
+        dive_hood: "Capucha",
         buoy: "Boya",
         knife: "Cuchillo",
         gloves: "Guantes",
@@ -295,7 +295,7 @@ const Strings = new LocalizedStrings({
         select_team: "Seleccione un equipo",
         select_center: "Seleccione centro",
         madrid_diving: "Madrid Buceo",
-        observations: "observaciones",
+        observations: "Observaciones",
         // logbook dive types
         Baptism: "Bautismo",
         Diving_Course: "Curso de buceo",

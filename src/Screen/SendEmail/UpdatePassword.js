@@ -19,7 +19,8 @@ const ForgetPWD = (props) => {
     const [oldPass, setOldPass] = useState("")
     const [newPass, setNewPass] = useState("")
     const [newConfPass, setNewConfPass] = useState("")
-    const [email, setEmail] = useState("")
+    //const [email, setEmail] = useState("")
+    const email = props.navigation.getParam('email', 'fhfhg')
 
     const [passVisible, setPassVisible] = useState(true)
     const [passVisible2, setPassVisible2] = useState(true)
@@ -43,15 +44,15 @@ const ForgetPWD = (props) => {
     }, [language])
     const updateApi = async () => {
         setIsLoading(true)
-        await updateNewPassword(email,newConfPass)
+        await updateNewPassword(email, newConfPass)
         await setIsLoading(false)
     }
     const _onSubmit = () => {
-        const validate = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
-        if (!validate.test(email)) {
-            Alert.alert("", Strings.reg4)
-            return
-        }
+        // const validate = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+        // if (!validate.test(email)) {
+        //     Alert.alert("", Strings.reg4)
+        //     return
+        // }
         if (newPass.length < 7) {
             Alert.alert("", "new password should be 8 character long")
             return
@@ -80,7 +81,7 @@ const ForgetPWD = (props) => {
                         <Text style={[styles.loginTitle, { margin: 10, alignSelf: "center" }]}>
                             {Strings.forget_pass1}
                         </Text>
-                        <View style={[styles.inputView, {
+                        {/* <View style={[styles.inputView, {
                             flexDirection: "row",
                             alignItems: "center",
                             justifyContent: "space-between"
@@ -95,7 +96,7 @@ const ForgetPWD = (props) => {
                                 keyboardType="email-address"
                                 autoCapitalize="none"
                             />
-                        </View>
+                        </View> */}
                         <View style={[styles.inputView, {
                             flexDirection: "row",
                             alignItems: "center",

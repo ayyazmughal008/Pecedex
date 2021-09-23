@@ -743,7 +743,7 @@ export const getCountryName = () => {
             .then(res => res.json())
             .then(json => {
                 dispatch({ type: AUTH_LOADING, payload: false });
-                console.log(json)
+                //console.log(json)
                 if (json.error == false) {
                     dispatch({
                         type: COUNTRY_NAME,
@@ -1099,7 +1099,7 @@ export const getAllList = async (userId) => {
             .then(res => res.json())
             .then(json => {
                 if (json.status == 200) {
-                    console.log(json)
+                    //console.log(json)
                     return json
                 } else {
                     Alert.alert("", json.message)

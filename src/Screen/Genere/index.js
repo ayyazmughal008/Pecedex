@@ -13,6 +13,7 @@ import Strings from '../../Translation'
 import { useSelector, useDispatch } from 'react-redux';
 import { AdView } from '../../AdsServices/AdView'
 import { Events } from '../../AdsServices/utils'
+import { NavigationEvents } from 'react-navigation';
 let viewableItemsChanged = null;
 
 const Order = (props) => {
@@ -125,11 +126,11 @@ const Order = (props) => {
                 </FastImage>
 
             }
+            <NavigationEvents onDidFocus={() => getApis()} />
             <FastImage
                 source={require('../../Images/BG.png')}
                 resizeMode={FastImage.resizeMode.stretch}
-                style={styles.bgImg2}
-            >
+                style={styles.bgImg2}>
                 <View style={styles.shortcutView}>
                     {!Response || !Response.summary ?
                         <View />
@@ -178,6 +179,7 @@ const Order = (props) => {
                         contentContainerStyle={{
                             justifyContent: 'center',
                             alignItems: 'center',
+                            flexGrow:1
                         }}
                         style={{
                             height: '100%',
@@ -191,7 +193,7 @@ const Order = (props) => {
                         keyExtractor={(item, index) => "unique" + index}
                         renderItem={renderItem}
                     />}
-                <View style={{ height: heightPercentageToDP(7) }} />
+                <View style={{ height: heightPercentageToDP(8) }} />
                 <Tab
                     homeClick={() => props.navigation.dispatch(HomeAction)}
                     profileClick={() => props.navigation.dispatch(profileAction)}

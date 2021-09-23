@@ -696,6 +696,8 @@ const LogBook = (props) => {
     };
     const imageModel = (({ item, index }) => {
         if (item.isSelected === 'yes') {
+            let temArr = [];
+            temArr.push(item)
             return (
                 <TouchableOpacity
                     onPress={() => {
@@ -705,13 +707,13 @@ const LogBook = (props) => {
                             })
                         } else if (item.qualities) {
                             props.navigation.navigate('Detail', {
-                                data: item
+                                data: temArr
                             })
                         } else if (item.fcm) {
                             console.log("Users");
                         } else {
                             props.navigation.navigate("PeciosDetail", {
-                                data: item
+                                data: temArr
                             })
                         }
                     }}
@@ -936,11 +938,18 @@ const LogBook = (props) => {
                 )
                 if (granted === PermissionsAndroid.RESULTS.GRANTED) {
                     setIsLoading(true)
-                    await Geolocation.requestAuthorization();
-                    await Geolocation.getCurrentPosition(info => {
-                        console.log(info);
+                    //await Geolocation.requestAuthorization();
+                    Geolocation.getCurrentPosition(info => {
+                        console.log("=====>", info);
                         setLocation(info.coords);
                         setIsLoading(false);
+                    }, error => {
+                        Alert.alert("Permission Required", "Please enable your location, it's required for this section and reopen the application"),
+                        {
+                            enableHighAccuracy: true,
+                            timeout: 10000,
+                            maximumAge: 3000
+                        }
                     })
                 } else {
                     console.log("location permission denied")
@@ -1086,7 +1095,13 @@ const LogBook = (props) => {
                                 />
                             </TouchableOpacity>
                             <TouchableOpacity
-                                onPress={() => toggleMap()}
+                                onPress={() => {
+                                    if (!location) {
+                                        updateLocation()
+                                    } else {
+                                        toggleMap()
+                                    }
+                                }}
                                 style={[styles.sideButton, { top: "50%" }]}>
                                 <FastImage
                                     source={require('../../Images/44.png')}
@@ -1101,7 +1116,7 @@ const LogBook = (props) => {
                             </Text>
                         </View>
                         <View style={[styles.logView2, {
-                            height: heightPercentageToDP(42),
+                            height: heightPercentageToDP(46),
                             marginTop: heightPercentageToDP(2),
                             backgroundColor: blue
                         }]}>
@@ -1246,7 +1261,7 @@ const LogBook = (props) => {
                                     {Strings.meters}
                                 </Text>
                             </View>
-                            <View style={{ width: "100%", flexDirection: "row", alignItems: "center",marginTop: heightPercentageToDP(1.7) }}>
+                            <View style={{ width: "100%", flexDirection: "row", alignItems: "center", marginTop: heightPercentageToDP(1.7) }}>
                                 <Text onPress={() => {
                                     setSweetWater(true)
                                     setSaltWater(false)
@@ -1269,7 +1284,7 @@ const LogBook = (props) => {
                                 <Text style={[styles.smallTxt, { color: black }]}>
                                     {Strings.type}{" :"}
                                 </Text>
-                                <View style={{ width: language === 'es' ? "68%" : "87%", height: "100%", justifyContent: "center" }}>
+                                <View style={{ width: language === 'es' ? "67%" : "87%", height: "100%", justifyContent: "center" }}>
                                     <RNPickerSelect
                                         placeholder={{
                                             label: Strings.type,
@@ -1289,7 +1304,7 @@ const LogBook = (props) => {
                                 <Text style={[styles.smallTxt, { color: black }]}>
                                     {Strings.currents}{" :"}
                                 </Text>
-                                <View style={{ width: language === 'es' ? "84%" : "86%", height: "100%", justifyContent: "center" }}>
+                                <View style={{ width: language === 'es' ? "83%" : "86%", height: "100%", justifyContent: "center" }}>
                                     <RNPickerSelect
                                         placeholder={{
                                             label: Strings.currents,
@@ -1360,7 +1375,7 @@ const LogBook = (props) => {
                                         resizeMode={FastImage.resizeMode.stretch}
                                         style={{ width: "33%", height: "45%", marginLeft: 8 }}
                                     />
-                                    <View style={{ width: "50%", height: "90%", marginLeft: 5 }}>
+                                    <View style={{ width: "50%", height: "100%", justifyContent: "center" }}>
                                         <Text style={[styles.tinyText, { color: black }]}>
                                             {Strings.start_time}{":"}
                                         </Text>
@@ -1468,7 +1483,7 @@ const LogBook = (props) => {
                             </Text>
                         </View>
                         <View style={[styles.logView, {
-                            height:  heightPercentageToDP(74),
+                            height: heightPercentageToDP(74),
                             marginTop: heightPercentageToDP(2),
                             backgroundColor: blue
                         }]}>
@@ -1487,7 +1502,7 @@ const LogBook = (props) => {
                                         <FastImage
                                             source={suit1 ? require('../../Images/77.png') : require('../../Images/76.png')}
                                             resizeMode={FastImage.resizeMode.contain}
-                                            style={{ width: "100%", height: "100%" }}
+                                            style={{ width: "100%", height: "85%" }}
                                         />
                                     </TouchableOpacity>
                                     <Text style={[styles.tinyText, { color: suit1 ? black : white, textAlign: "center", marginTop: 5 }]}>
@@ -1598,7 +1613,7 @@ const LogBook = (props) => {
                                     setScuba(true)
                                     setRebreader(false)
                                 }}
-                                style={[styles.smallTxt, { color: isScuba ? white : black,  }]}>
+                                style={[styles.smallTxt, { color: isScuba ? white : black, }]}>
                                 {Strings.scuba}{" / "}
                                 <Text
                                     onPress={() => {
@@ -1609,29 +1624,29 @@ const LogBook = (props) => {
                                     {Strings.rebreader}
                                 </Text>
                             </Text>
-                            {isScuba &&
-                                <View style={{
-                                    flexDirection: "row",
-                                    alignItems: "center",
-                                    alignSelf: "center",
-                                    marginBottom: heightPercentageToDP(1)
-                                }}>
-                                    <Text style={[styles.smallTxt, { color: black, marginRight: 6 }]}>
-                                        {Strings.ballast}{" : "}
-                                    </Text>
-                                    <TextInput
-                                        style={styles.tinyInput2}
-                                        placeholder={"7"}
-                                        value={ballast}
-                                        placeholderTextColor={white}
-                                        keyboardType="number-pad"
-                                        onChangeText={text => setBallast(text)}
-                                    />
-                                    <Text style={[styles.smallTxt, { color: black, }]}>
-                                        {"kilos"}
-                                    </Text>
-                                </View>
-                            }
+                            {/* {isScuba && */}
+                            <View style={{
+                                flexDirection: "row",
+                                alignItems: "center",
+                                alignSelf: "center",
+                                marginBottom: heightPercentageToDP(1)
+                            }}>
+                                <Text style={[styles.smallTxt, { color: black, marginRight: 6 }]}>
+                                    {Strings.ballast}{" : "}
+                                </Text>
+                                <TextInput
+                                    style={styles.tinyInput2}
+                                    placeholder={"7"}
+                                    value={ballast}
+                                    placeholderTextColor={white}
+                                    keyboardType="number-pad"
+                                    onChangeText={text => setBallast(text)}
+                                />
+                                <Text style={[styles.smallTxt, { color: black, }]}>
+                                    {"kilos"}
+                                </Text>
+                            </View>
+                            {/* } */}
                             {/* {isScuba && */}
                             <View style={styles.innerLogView3}>
                                 <FastImage
@@ -1677,10 +1692,10 @@ const LogBook = (props) => {
                                         </View>
                                     </View>
                                     <View style={styles.sampleViews2}>
-                                        <Text style={[styles.smallTxt, { color: black }]}>
+                                        <Text style={[styles.smallTxt, { color: black, marginRight: language === 'es' ? 0 : widthPercentageToDP(8.5) }]}>
                                             {Strings.mix}{" :"}
                                         </Text>
-                                        <View style={{ width: language === 'es' ? "74%" : "85%", height: "100%", justifyContent: "center" }}>
+                                        <View style={{ width: language === 'es' ? "67%" : "70%", height: "100%", justifyContent: "center" }}>
                                             <RNPickerSelect
                                                 placeholder={{
                                                     label: Strings.mix,
@@ -1702,7 +1717,7 @@ const LogBook = (props) => {
                                                 {"% 02"}
                                             </Text>
                                             <TextInput
-                                                style={[styles.tinyInput2, { height: "100%", marginLeft: widthPercentageToDP(3), color: white, width: "30%" }]}
+                                                style={[styles.tinyInput2, { height: "100%", marginLeft: widthPercentageToDP(3), color: white, width: "15%" }]}
                                                 placeholder="xxx"
                                                 value={oxygen}
                                                 placeholderTextColor={white}
@@ -1717,7 +1732,7 @@ const LogBook = (props) => {
                                     {mix === "Trimix Mix" &&
                                         <View style={styles.sampleViews}>
                                             <TextInput
-                                                style={[styles.tinyInput2, { height: "100%", marginLeft: widthPercentageToDP(3), color: white, width: "15%" }]}
+                                                style={[styles.tinyInput2, { height: "100%", marginLeft: widthPercentageToDP(1), color: white, width: "15%" }]}
                                                 placeholder="xx"
                                                 placeholderTextColor={white}
                                                 value={trimMix1}
@@ -1728,7 +1743,7 @@ const LogBook = (props) => {
                                                 {"/"}
                                             </Text>
                                             <TextInput
-                                                style={[styles.tinyInput2, { height: "100%", marginLeft: widthPercentageToDP(3), color: white, width: "30%" }]}
+                                                style={[styles.tinyInput2, { height: "100%", marginLeft: widthPercentageToDP(1), color: white, width: "30%" }]}
                                                 placeholder="xx"
                                                 value={trimMix2}
                                                 placeholderTextColor={white}
@@ -1878,7 +1893,7 @@ const LogBook = (props) => {
                                     </Text>
                                 </TouchableOpacity>
                                 <TouchableOpacity
-                                    style={{ width: "19%", height: "90%" }}
+                                    style={{ width: "20%", height: "90%" }}
                                     onPress={() => {
                                         if (diveItem8) {
                                             setDiveItem8(false)

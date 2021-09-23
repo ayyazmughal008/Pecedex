@@ -51,6 +51,11 @@ const PeciosDetail = (props) => {
         getApis("yes", data[pageSelected].id)
         //convertImageToBase64()
     }, [])
+    useEffect(() => {
+        if (pageSelected) {
+            setActiveSlid(0)
+        }
+    }, [pageSelected])
     // useEffect(() => {
     //     convertImageToBase64(imageUrl)
     // }, [imageUrl])
@@ -263,84 +268,88 @@ const PeciosDetail = (props) => {
     }
     return (
         <SafeAreaView style={styles.container}>
+            <View
+                style={{
+                    width: "100%",
+                    height: heightPercentageToDP(40)
+                }}>
+                <Carousel
+                    layout={'default'}
+                    data={data[pageSelected].media}
+                    renderItem={_renderSlider}
+                    sliderWidth={(width)}
+                    itemWidth={(width)}
+                    onSnapToItem={(index) => setActiveSlid(index)}
+                    onBeforeSnapToItem={event => setActiveSlid(event)}
+                />
+                <TouchableOpacity
+                    onPress={() => {
+                        if (!login.data.paid) {
+                            props.navigation.navigate('Subscription')
+                        } else {
+                            setItemId(data[pageSelected].id)
+                            toggleOption()
+                        }
+                    }}
+                    style={{
+                        position: "absolute",
+                        bottom: "4%",
+                        right: "4%",
+                        zIndex: 3
+                    }}>
+                    <FastImage
+                        source={require('../../Images/84.png')}
+                        resizeMode={FastImage.resizeMode.contain}
+                        style={{ width: widthPercentageToDP(8), height: widthPercentageToDP(8) }}
+                    />
+                </TouchableOpacity>
+                <View style={styles.tabBar}>
+                    <Pagination
+                        containerStyle={[styles.tabsContainer, {
+                            width: data[pageSelected].media.length < 4 ?
+                                widthPercentageToDP(25)
+                                : data[pageSelected].media.length < 10 ?
+                                    widthPercentageToDP(30)
+                                    : widthPercentageToDP(60)
+                        }
+                        ]}
+                        renderDots={activeIndex => (
+                            data[pageSelected].media.map((screen, i) => (
+                                <View
+                                    style={{ flex: 1, alignItems: 'center' }}
+                                    key={i}>
+                                    <View
+                                        style={{
+                                            width: widthPercentageToDP(2),
+                                            height: widthPercentageToDP(2),
+                                            borderRadius: widthPercentageToDP(2) / 2,
+                                            backgroundColor: activeIndex === i ? blue : white,
+                                            marginHorizontal: widthPercentageToDP(-4)
+                                        }}
+                                    />
+                                </View>
+                            ))
+                        )}
+                        activeDotIndex={activeSlid}
+                        dotsLength={data[pageSelected].media.length}
+                    //dotsLength={0}
+                    />
+                </View>
+            </View>
             <PagerView
                 initialPage={0}
                 ref={viewPager}
                 onPageSelected={e => setPageSelected(e.nativeEvent.position)}
                 setPage={pageSelected}
                 transitionStyle="curl"
-                style={{ flex: 1 }}>
+                style={{
+                    width: "100%",
+                    height: "50%"
+                }}>
                 {data.map((item, index) => {
                     return (
                         <View key={"unique" + index}
                             style={{ flexGrow: 1 }}>
-                            <View
-                                style={{
-                                    width: "100%",
-                                    height: heightPercentageToDP(40)
-                                }}>
-                                <Carousel
-                                    layout={'default'}
-                                    data={item.media}
-                                    renderItem={_renderSlider}
-                                    sliderWidth={(width)}
-                                    itemWidth={(width)}
-                                    onSnapToItem={(index) => setActiveSlid(index)}
-                                />
-                                <TouchableOpacity
-                                    onPress={() => {
-                                        if (!login.data.paid) {
-                                            props.navigation.navigate('Subscription')
-                                        } else {
-                                            setItemId(item.id)
-                                            toggleOption()
-                                        }
-                                    }}
-                                    style={{
-                                        position: "absolute",
-                                        bottom: "4%",
-                                        right: "4%",
-                                        zIndex: 3
-                                    }}>
-                                    <FastImage
-                                        source={require('../../Images/84.png')}
-                                        resizeMode={FastImage.resizeMode.contain}
-                                        style={{ width: widthPercentageToDP(8), height: widthPercentageToDP(8) }}
-                                    />
-                                </TouchableOpacity>
-                                <View style={styles.tabBar}>
-                                    <Pagination
-                                        containerStyle={[styles.tabsContainer, {
-                                            width: item.media.length < 4 ?
-                                                widthPercentageToDP(25)
-                                                : item.media.length < 10 ?
-                                                    widthPercentageToDP(30)
-                                                    : widthPercentageToDP(60)
-                                        }
-                                        ]}
-                                        renderDots={activeIndex => (
-                                            item.media.map((screen, i) => (
-                                                <View
-                                                    style={{ flex: 1, alignItems: 'center' }}
-                                                    key={i}>
-                                                    <View
-                                                        style={{
-                                                            width: widthPercentageToDP(2),
-                                                            height: widthPercentageToDP(2),
-                                                            borderRadius: widthPercentageToDP(2) / 2,
-                                                            backgroundColor: activeIndex === i ? blue : white,
-                                                            marginHorizontal: widthPercentageToDP(-4)
-                                                        }}
-                                                    />
-                                                </View>
-                                            ))
-                                        )}
-                                        activeDotIndex={activeSlid}
-                                        dotsLength={item.media.length}
-                                        //dotsLength={0}
-                                    />  
-                                </View>
-                            </View>
                             <View style={styles.shareView}>
                                 <View style={{ width: "45%", height: "100%", flexDirection: "row", alignItems: "center" }}>
                                     {!Response ?

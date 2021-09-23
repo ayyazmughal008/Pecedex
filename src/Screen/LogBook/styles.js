@@ -96,7 +96,8 @@ export const styles = StyleSheet.create({
         backgroundColor: blue2,
         borderRadius: widthPercentageToDP(6),
         flexDirection: "row",
-        alignItems: "center"
+        alignItems: "center",
+        justifyContent:"space-between"
     },
     smallTxt: {
         fontSize: widthPercentageToDP(3.7),
@@ -345,7 +346,7 @@ export const styles = StyleSheet.create({
         alignItems: "center",
         height: "30%",
         width: "100%",
-        marginLeft: 15,
+        //marginLeft: 15,
     },
     sampleViews2: {
         flexDirection: "row",

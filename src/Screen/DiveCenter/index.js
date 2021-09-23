@@ -279,6 +279,7 @@ const DiveCenter = (props) => {
                             }
                         }}
                     />}
+                <View style={{ marginTop: heightPercentageToDP(1) }} />
                 {/* new liness  */}
                 <Text style={[styles.profileName, { alignSelf: "flex-start", color: blue, marginLeft: widthPercentageToDP(5) }]}>
                     {Strings.DIVING_COURSES}
@@ -299,6 +300,7 @@ const DiveCenter = (props) => {
                             }
                         }}
                     />}
+                <View style={{ marginTop: heightPercentageToDP(1) }} />
                 {/* new liness  */}
                 <Text style={[styles.profileName, { alignSelf: "flex-start", color: blue, marginLeft: widthPercentageToDP(5) }]}>
                     {Strings.OTHER_SERVICES}

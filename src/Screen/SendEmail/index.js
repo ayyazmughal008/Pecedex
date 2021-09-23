@@ -49,7 +49,7 @@ const FOrgotPassword = (param) => {
         setIsLoading(true)
         const result = await sendEmailToUser(email)
         await setResponse(result)
-        await setEmail("")
+        //await setEmail("")
         await setIsLoading(false)
     }
     const _onSubmit = () => {
@@ -62,8 +62,10 @@ const FOrgotPassword = (param) => {
     }
     const _onCodeVerify = () => {
         if (response.data == value) {
-            param.navigation.navigate('UpdatePassword')
-        }else {
+            param.navigation.navigate('UpdatePassword', {
+                email: email
+            })
+        } else {
             console.log('not Match')
         }
         // emailSendApi()
@@ -141,7 +143,7 @@ const FOrgotPassword = (param) => {
                                     backgroundColor: green,
                                     justifyContent: "center",
                                     alignItems: "center",
-                                    marginTop:heightPercentageToDP(2),
+                                    marginTop: heightPercentageToDP(2),
                                     width: widthPercentageToDP(70),
                                 }]}
                                 onPress={() => _onCodeVerify()}

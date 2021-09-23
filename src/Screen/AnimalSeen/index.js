@@ -90,7 +90,7 @@ const Map = (props) => {
                 : <FlatList
                     data={Response.data}
                     showsVerticalScrollIndicator={false}
-                    style={{ alignSelf: "center", marginTop: 15 }}
+                    style={{ alignSelf: "center", marginTop: 15,flexGrow:1 }}
                     keyExtractor={(item, index) => "unique" + index}
                     onScrollAnimationEnd={onScrollEnd}
                     onMomentumScrollEnd={onScrollEnd}
@@ -99,7 +99,7 @@ const Map = (props) => {
                     renderItem={renderItem}
                 />
             }
-            <View style={{ height: heightPercentageToDP(5) }} />
+            <View style={{ height: heightPercentageToDP(8) }} />
             <Tab
                 homeClick={() => props.navigation.dispatch(HomeAction)}
                 profileClick={() => props.navigation.dispatch(profileAction)}
