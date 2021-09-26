@@ -53,7 +53,7 @@ const PeciosDetail = (props) => {
     }, [])
     useEffect(() => {
         if (pageSelected) {
-            setActiveSlid(0)
+            console.log(activeSlid)
         }
     }, [pageSelected])
     // useEffect(() => {
@@ -279,7 +279,14 @@ const PeciosDetail = (props) => {
                     renderItem={_renderSlider}
                     sliderWidth={(width)}
                     itemWidth={(width)}
-                    onSnapToItem={(index) => setActiveSlid(index)}
+                    removeClippedSubviews={false}
+                    loopClonesPerSide={data[pageSelected].media.length}
+                    inactiveSlideOpacity={1}
+                    inactiveSlideScale={1}
+                    firstItem={activeSlid}
+                    //enableSnap = {false}
+                    //initialScrollIndex={activeSlid}
+                    onSnapToItem={num => setActiveSlid(num)}
                     onBeforeSnapToItem={event => setActiveSlid(event)}
                 />
                 <TouchableOpacity
@@ -339,7 +346,10 @@ const PeciosDetail = (props) => {
             <PagerView
                 initialPage={0}
                 ref={viewPager}
-                onPageSelected={e => setPageSelected(e.nativeEvent.position)}
+                onPageSelected={e => {
+                    setPageSelected(e.nativeEvent.position);
+                    setActiveSlid(0)
+                }}
                 setPage={pageSelected}
                 transitionStyle="curl"
                 style={{

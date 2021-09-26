@@ -1936,8 +1936,9 @@ const LogBook = (props) => {
                                 data={response.pecios}
                                 showsVerticalScrollIndicator={false}
                                 numColumns={4}
+                                contentContainerStyle = {{flexGrow:1, flexWrap:"wrap"}}
                                 listKey={(item, index) => `_key${index.toString()}`}
-                                style={{ width: widthPercentageToDP(90) }}
+                                style={{ width: widthPercentageToDP(95) }}
                                 keyExtractor={(item, index) => "unique" + index}
                                 renderItem={imageModel}
                             />}
@@ -1964,8 +1965,9 @@ const LogBook = (props) => {
                                 data={response.genres}
                                 showsVerticalScrollIndicator={false}
                                 numColumns={4}
+                                contentContainerStyle = {{flexGrow:1, flexWrap:"wrap"}}
                                 listKey={(item, index) => `_key${index.toString()}`}
-                                style={{ width: widthPercentageToDP(90) }}
+                                style={{ width: widthPercentageToDP(95) }}
                                 keyExtractor={(item, index) => "unique" + index}
                                 renderItem={imageModel}
                             />}
@@ -1992,8 +1994,9 @@ const LogBook = (props) => {
                                 data={response.users}
                                 showsVerticalScrollIndicator={false}
                                 numColumns={4}
+                                contentContainerStyle={{ flexGrow: 1, flexWrap: "wrap" }}
                                 listKey={(item, index) => `_key${index.toString()}`}
-                                style={{ width: widthPercentageToDP(90) }}
+                                style={{ width: widthPercentageToDP(95) }}
                                 keyExtractor={(item, index) => "unique" + index}
                                 renderItem={imageModel}
                             />

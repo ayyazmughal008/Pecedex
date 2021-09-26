@@ -109,14 +109,11 @@ const Order = (props) => {
                         data={Response.data}
                         showsVerticalScrollIndicator={false}
                         contentContainerStyle={{
-                            justifyContent: 'center',
-                            alignItems: 'center',
-                            flexGrow:1
+                            flexGrow: 1
                         }}
                         style={{
-                            height: '100%',
-                            width: '100%',
-                            marginTop: heightPercentageToDP(5)
+                            alignSelf: "center",
+                            marginTop: heightPercentageToDP(3)
                         }}
                         onScrollAnimationEnd={onScrollEnd}
                         onMomentumScrollEnd={onScrollEnd}

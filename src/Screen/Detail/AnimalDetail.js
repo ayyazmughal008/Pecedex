@@ -56,7 +56,7 @@ const GenreDetail = (props) => {
     }, [])
     useEffect(() => {
         if (pageSelected) {
-            setActiveSlid(0)
+            console.log(activeSlid)
         }
     }, [pageSelected])
     const convertImageToBase64 = async (url) => {
@@ -274,8 +274,15 @@ const GenreDetail = (props) => {
                     data={data[pageSelected].media}
                     renderItem={_renderSlider}
                     sliderWidth={(width)}
-                    itemWidth={(width)} s
-                    onSnapToItem={(num) => setActiveSlid(num)}
+                    itemWidth={(width)}
+                    removeClippedSubviews={false}
+                    loopClonesPerSide = {data[pageSelected].media.length}
+                    inactiveSlideOpacity={1} 
+                    inactiveSlideScale={1} 
+                    firstItem={activeSlid}
+                    //enableSnap = {false}
+                    //initialScrollIndex={activeSlid}
+                    onSnapToItem={num => setActiveSlid(num)}
                     onBeforeSnapToItem={event => setActiveSlid(event)}
                 //onScroll={event => console.log("onScroll", event)}
                 />
@@ -334,7 +341,10 @@ const GenreDetail = (props) => {
             <PagerView
                 initialPage={0}
                 ref={viewPager}
-                onPageSelected={e => setPageSelected(e.nativeEvent.position)}
+                onPageSelected={e => {
+                    setPageSelected(e.nativeEvent.position);
+                    setActiveSlid(0)
+                }}
                 setPage={pageSelected}
                 transitionStyle="curl"
                 //scrollEnabled = {false}
