@@ -8,44 +8,7 @@ export const data = {
             //date: "20/05/2021"
         },
     ],
-    animal: [
-        {
-            id: 1,
-            img: require('../../Images/fish2.jpg'),
-            title: "This is small Text",
-            date: "20/05/2021"
-        }, {
-            id: 1,
-            img: require('../../Images/fish2.jpg'),
-            title: "This is small Text",
-            date: "20/05/2021"
-        }, {
-            id: 1,
-            img: require('../../Images/fish2.jpg'),
-            title: "This is small Text",
-            date: "20/05/2021"
-        }, {
-            id: 1,
-            img: require('../../Images/fish2.jpg'),
-            title: "This is small Text",
-            date: "20/05/2021"
-        }, {
-            id: 1,
-            img: require('../../Images/fish2.jpg'),
-            title: "This is small Text",
-            date: "20/05/2021"
-        }, {
-            id: 1,
-            img: require('../../Images/fish2.jpg'),
-            title: "This is small Text",
-            date: "20/05/2021"
-        }, {
-            id: 1,
-            img: require('../../Images/fish2.jpg'),
-            title: "This is small Text",
-            date: "20/05/2021"
-        },
-    ],
+    animal: [{"date": "20/05/2021", "id": 1, "image": "http://199.247.13.90/genreImages/Tursiops aduncus 1.jpg", "isSelected": "yes", "title": "Delfín mular del Indo-Pacífico"}, {"date": "20/05/2021", "id": 1, "image": "http://199.247.13.90/genreImages/Hapalochlaena fasciata (1).jpg", "isSelected": "yes", "title": "Pulpo de líneas azules"}, {"date": "20/05/2021", "id": 1, "image": "http://199.247.13.90/genreImages/Hapalochlaena lunulata (1).jpg", "isSelected": "yes", "title": "Pulpo mayor de anillos azules"}, {"date": "20/05/2021", "id": 1, "image": "http://199.247.13.90/genreImages/Enteroctopus dofleini (1).jpg", "isSelected": "yes", "title": "Pulpo gigante del Pacífico"}, {"date": "20/05/2021", "id": 1, "image": "http://199.247.13.90/genreImages/Hapalochlaena maculosa (1).jpg", "isSelected": "yes", "title": "Pulpo sureño de anillos azules"}, {"date": "20/05/2021", "id": 1, "image": "http://199.247.13.90/genreImages/Cephalorhynchus heavisidii (1).jpg", "isSelected": "yes", "title": "Delfín de Heavisidii"}, {"date": "20/05/2021", "id": 1, "image": "http://199.247.13.90/genreImages/Cephalorhynchus hectori (1).jpg", "isSelected": "yes", "title": "Delfín de Héctor"}],
     team: [
         {
             id: 1,

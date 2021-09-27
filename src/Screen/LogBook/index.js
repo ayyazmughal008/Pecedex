@@ -14,7 +14,7 @@ import RNPickerSelect from 'react-native-picker-select';
 import EvilIcons from 'react-native-vector-icons/EvilIcons'
 import MapView, { PROVIDER_GOOGLE, Marker } from 'react-native-maps';
 import { SearchBar } from 'react-native-elements'
-import { getCountryName, getAllList, postPeciosList, postGenreList, postFriendList, postLogbookImg, submitLogbookData, getDiveCenterDetail } from '../../Redux/action'
+import { getCountryName, getAllList, postPeciosList, postGenreList, postFriendList, postLogbookImg, submitLogbookData, getDiveCenterDetail, getAllSelectedGenre, getAllSelectedPecios, getAllSelectedUsers } from '../../Redux/action'
 import { useDispatch, useSelector } from 'react-redux';
 import Strings from '../../Translation'
 import Fontisto from 'react-native-vector-icons/Fontisto'
@@ -79,6 +79,7 @@ const LogBook = (props) => {
     const [maxDeep, setMaxDeep] = useState("")
     const [startingBar, setStartingBar] = useState(0)
     const [endBar, setEndBar] = useState(0)
+    const [nOfColum, setColum] = useState(4)
     const [opinion, setOpinion] = useState("")
     const [oxygen, setOxygen] = useState("")
     const [center, setCenter] = useState("")
@@ -136,6 +137,10 @@ const LogBook = (props) => {
     const [tempCenter, setTempCenter] = useState([])
     const [countryList, setCountryList] = useState([])
     const [countryList2, setCountryList2] = useState([])
+    // new valiables
+    const [peciosResponse, setPeciosResponse] = useState([])
+    const [genreResponse, setGenreResponse] = useState([])
+    const [userResponse, setUserResponse] = useState([])
 
     useEffect(() => {
         dispatch(getCountryName())
@@ -287,6 +292,24 @@ const LogBook = (props) => {
                 setIsLoading(false)
                 console.log("response error ===>", error)
             })
+    }
+    const getPeciosData = async () => {
+        setIsLoading(true)
+        let menuData = await getAllSelectedPecios(login.data.id)
+        await setPeciosResponse(menuData)
+        await setIsLoading(false)
+    }
+    const getGenresData = async () => {
+        setIsLoading(true)
+        let menuData = await getAllSelectedGenre(login.data.id)
+        await setGenreResponse(menuData)
+        await setIsLoading(false)
+    }
+    const getUserData = async () => {
+        setIsLoading(true)
+        let menuData = await getAllSelectedUsers(login.data.id)
+        await setUserResponse(menuData)
+        await setIsLoading(false)
     }
     // date functions
     const handleConfirm = (date) => {
@@ -683,48 +706,45 @@ const LogBook = (props) => {
         );
     };
     const imageModel = (({ item, index }) => {
-        if (item.isSelected === 'yes') {
-            let temArr = [];
-            temArr.push(item)
-            return (
-                <TouchableOpacity
-                    onPress={() => {
-                        if (item.activities) {
-                            props.navigation.navigate("DiveCenter", {
-                                data: item
-                            })
-                        } else if (item.qualities) {
-                            props.navigation.navigate('Detail', {
-                                data: temArr
-                            })
-                        } else if (item.fcm) {
-                            console.log("Users");
-                        } else {
-                            props.navigation.navigate("PeciosDetail", {
-                                data: temArr
-                            })
-                        }
-                    }}
-                    style={styles.modelView}>
-                    {!item.image ?
-                        <FastImage
-                            source={require('../../Images/profile_img5.png')}
-                            style={styles.imgModel}
-                            resizeMode={FastImage.resizeMode.cover}
-                        />
-                        : <FastImage
-                            source={{ uri: item.image }}
-                            style={styles.imgModel}
-                            resizeMode={FastImage.resizeMode.cover}
-                        />
+        let temArr = [];
+        temArr.push(item)
+        return (
+            <TouchableOpacity
+                onPress={() => {
+                    if (item.activities) {
+                        props.navigation.navigate("DiveCenter", {
+                            data: item
+                        })
+                    } else if (item.qualities) {
+                        props.navigation.navigate('Detail', {
+                            data: temArr
+                        })
+                    } else if (item.fcm) {
+                        console.log("Users");
+                    } else {
+                        props.navigation.navigate("PeciosDetail", {
+                            data: temArr
+                        })
                     }
-                    <Text style={styles.title}>
-                        {!item.title ? item.name : item.title}
-                    </Text>
-                </TouchableOpacity>
-            )
-        }
-
+                }}
+                style={styles.modelView}>
+                {!item.image ?
+                    <FastImage
+                        source={require('../../Images/profile_img5.png')}
+                        style={styles.imgModel}
+                        resizeMode={FastImage.resizeMode.cover}
+                    />
+                    : <FastImage
+                        source={{ uri: item.image }}
+                        style={styles.imgModel}
+                        resizeMode={FastImage.resizeMode.cover}
+                    />
+                }
+                <Text style={styles.title}>
+                    {!item.title ? item.name : item.title}
+                </Text>
+            </TouchableOpacity>
+        )
     })
     // camera functions
     const requestCameraPermission = async () => {
@@ -971,7 +991,7 @@ const LogBook = (props) => {
                 source={require('../../Images/BG.png')}
                 resizeMode={FastImage.resizeMode.stretch}
                 style={styles.bgImg}>
-                <KeyboardAwareScrollView contentContainerStyle={{ flexGrow: 1, }}>
+                <KeyboardAwareScrollView contentContainerStyle={{ flexGrow: 1 }}>
                     <View style={{ flex: 1, alignItems: "center" }}>
                         <View style={styles.titleView}>
                             <Text style={styles.titleTxt}>
@@ -1920,15 +1940,15 @@ const LogBook = (props) => {
                                 </Text>
                             </TouchableOpacity>
                         </View>
-                        {!response || !response.pecios.length ?
+                        {!peciosResponse || !peciosResponse.length ?
                             <View />
                             : <FlatList
-                                data={response.pecios}
+                                data={peciosResponse}
                                 showsVerticalScrollIndicator={false}
                                 numColumns={4}
-                                contentContainerStyle = {{flexGrow:1, flexWrap:"wrap"}}
+                                contentContainerStyle={{ flexGrow: 1, }}
                                 listKey={(item, index) => `_key${index.toString()}`}
-                                style={{ width: widthPercentageToDP(95) }}
+                                style={{ width: widthPercentageToDP(90) }}
                                 keyExtractor={(item, index) => "unique" + index}
                                 renderItem={imageModel}
                             />}
@@ -1949,13 +1969,13 @@ const LogBook = (props) => {
                                 </Text>
                             </TouchableOpacity>
                         </View>
-                        {!response || !response.genres.length ?
+                        {!genreResponse || !genreResponse.length ?
                             <View />
                             : <FlatList
-                                data={response.genres}
+                                data={genreResponse}
                                 showsVerticalScrollIndicator={false}
                                 numColumns={4}
-                                contentContainerStyle = {{flexGrow:1, flexWrap:"wrap"}}
+                                contentContainerStyle={{ flexGrow: 1, }}
                                 listKey={(item, index) => `_key${index.toString()}`}
                                 style={{ width: widthPercentageToDP(90) }}
                                 keyExtractor={(item, index) => "unique" + index}
@@ -1978,13 +1998,13 @@ const LogBook = (props) => {
                                 </Text>
                             </TouchableOpacity>
                         </View>
-                        {!response || !response.users.length ?
+                        {!userResponse || !userResponse.length ?
                             <View />
                             : <FlatList
-                                data={response.users}
+                                data={userResponse}
                                 showsVerticalScrollIndicator={false}
                                 numColumns={4}
-                                contentContainerStyle = {{flexGrow:1, flexWrap:"wrap"}}
+                                contentContainerStyle={{ flexGrow: 1, }}
                                 listKey={(item, index) => `_key${index.toString()}`}
                                 style={{ width: widthPercentageToDP(90) }}
                                 keyExtractor={(item, index) => "unique" + index}
@@ -2224,7 +2244,10 @@ const LogBook = (props) => {
                                         containerStyle={{ width: widthPercentageToDP(80), backgroundColor: white }}
                                     />
                                     <TouchableOpacity
-                                        onPress={() => togglePecios()}
+                                        onPress={() => {
+                                            togglePecios(),
+                                                getPeciosData()
+                                        }}
                                     >
                                         <Text style={stylesProps.txt}>
                                             {"Close"}
@@ -2273,7 +2296,10 @@ const LogBook = (props) => {
                                         containerStyle={{ width: widthPercentageToDP(80), backgroundColor: white }}
                                     />
                                     <TouchableOpacity
-                                        onPress={() => toggleAnimal()}
+                                        onPress={() => {
+                                            toggleAnimal(),
+                                                getGenresData()
+                                        }}
                                     >
                                         <Text style={stylesProps.txt}>
                                             {"Close"}
@@ -2323,7 +2349,10 @@ const LogBook = (props) => {
                                         containerStyle={{ width: widthPercentageToDP(80), backgroundColor: white }}
                                     />
                                     <TouchableOpacity
-                                        onPress={() => toggleTeam()}
+                                        onPress={() => {
+                                            toggleTeam(),
+                                                getUserData()
+                                        }}
                                     >
                                         <Text style={stylesProps.txt}>
                                             {"Close"}

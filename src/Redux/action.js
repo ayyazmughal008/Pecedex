@@ -63,6 +63,9 @@ const baseUrl = "http://199.247.13.90/api/",
     deleteDive = 'delete-dive',
     sendMail = 'sendMail',
     changePasswordNew = 'change-password-new',
+    getSelectedGenres = 'get-selected-genres',
+    getSelectedPecios = 'get-selected-pecios',
+    getSelectedUsers = 'get-selected-users',
     register = 'register';
 
 const country_url = "https://countriesnow.space/api/v0.1/countries/positions"
@@ -2067,6 +2070,99 @@ export const updateNewPassword = async (email, password) => {
                     Alert.alert('', json.message)
                     NavigationService.navigate('Login')
                     return
+                } else {
+                    console.log(json)
+                }
+            })
+            .catch(error => {
+                console.log("response error ===>", error)
+            })
+    } catch (error) {
+        console.log('my error' + error.message);
+    }
+    return api
+}
+
+export const getAllSelectedGenre = async (userId) => {
+    let api
+    try {
+        api = await fetch(baseUrl + getSelectedGenres, {
+            method: 'POST',
+            headers: {
+                'Accept': 'application/json',
+                "Content-type": "application/json",
+            },
+            body: JSON.stringify({
+                userId: userId,
+            })
+        })
+            .then(res => res.json())
+            .then(json => {
+                if (json.status == 200) {
+                    //console.log(json.genres)
+                    return json.genres
+                } else {
+                    console.log(json)
+                }
+            })
+            .catch(error => {
+                console.log("response error ===>", error)
+            })
+    } catch (error) {
+        console.log('my error' + error.message);
+    }
+    return api
+}
+
+export const getAllSelectedPecios = async (userId) => {
+    let api
+    try {
+        api = await fetch(baseUrl + getSelectedPecios, {
+            method: 'POST',
+            headers: {
+                'Accept': 'application/json',
+                "Content-type": "application/json",
+            },
+            body: JSON.stringify({
+                userId: userId,
+            })
+        })
+            .then(res => res.json())
+            .then(json => {
+                if (json.status == 200) {
+                    //console.log(json.pecios)
+                    return json.pecios
+                } else {
+                    console.log(json)
+                }
+            })
+            .catch(error => {
+                console.log("response error ===>", error)
+            })
+    } catch (error) {
+        console.log('my error' + error.message);
+    }
+    return api
+}
+
+export const getAllSelectedUsers = async (userId) => {
+    let api
+    try {
+        api = await fetch(baseUrl + getSelectedUsers, {
+            method: 'POST',
+            headers: {
+                'Accept': 'application/json',
+                "Content-type": "application/json",
+            },
+            body: JSON.stringify({
+                userId: userId,
+            })
+        })
+            .then(res => res.json())
+            .then(json => {
+                if (json.status == 200) {
+                    //console.log(json.users)
+                    return json.users
                 } else {
                     console.log(json)
                 }
