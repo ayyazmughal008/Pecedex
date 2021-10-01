@@ -177,10 +177,12 @@ const Order = (props) => {
                         viewabilityConfig={viewConfigRef.current}
                         showsVerticalScrollIndicator={false}
                         contentContainerStyle={{
-                            flexGrow: 1
+                            flexGrow: 1,
+                            //justifyContent: 'center',
+                            alignItems: 'center',
                         }}
                         style={{
-                            alignSelf: "center",
+                            //alignSelf: "center",
                             marginTop: heightPercentageToDP(2)
                         }}
                         onScrollAnimationEnd={onScrollEnd}

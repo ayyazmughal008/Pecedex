@@ -33,7 +33,7 @@ const Card = (props) => {
                             </Text>
                         </Text>
                         <Text style={[styles.monthTxt, { color: black }]}>
-                            {"Corrientes: "}
+                            {"Corrientes: "}{'\n'}
                             <Text style={styles.monthTxt}>
                                 {props.orrientes}
                             </Text>
@@ -88,7 +88,7 @@ const styles = StyleSheet.create({
     },
     firstRow: {
         width: "100%",
-        height: heightPercentageToDP(11.5),
+        height: heightPercentageToDP(12.5),
         flexDirection: "row",
         alignItems: "center"
     },

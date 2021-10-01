@@ -101,10 +101,12 @@ const Map = (props) => {
                         data={Response.data}
                         showsVerticalScrollIndicator={false}
                         contentContainerStyle={{
+                            //justifyContent: 'center',
+                            alignItems: 'center',
                             flexGrow: 1
                         }}
                         style={{
-                            alignSelf: "center",
+                            //alignSelf: "center",
                             marginTop: heightPercentageToDP(3)
                         }}
                         onScrollAnimationEnd={onScrollEnd}

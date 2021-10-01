@@ -2045,7 +2045,7 @@ const LogBook = (props) => {
                                     />
                                 }
                                 <Text style={styles.title}>
-                                    {Strings.madrid_diving}
+                                    {!center ? Strings.madrid_diving : center.name}
                                 </Text>
                             </View>
                             {center ?

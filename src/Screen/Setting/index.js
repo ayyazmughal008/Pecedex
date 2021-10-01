@@ -125,7 +125,9 @@ const Setting = (props) => {
                 />
             </View>
             <TextInput
-                style={[styles.input3, { marginLeft: widthPercentageToDP(4), }]}
+                style={[styles.input3, {
+                    marginLeft: widthPercentageToDP(4),
+                }]}
                 placeholder="ayyazmughal007@gmail.com"
                 placeholderTextColor={black}
                 editable={false}

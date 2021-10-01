@@ -53,7 +53,10 @@ const NewScreen = (props) => {
                         }}
                     />
                 </View>
-                <Text style={styles.proInfoTile2}>
+                <Text style={[styles.proInfoTile2, {
+                    marginTop: heightPercentageToDP(2),
+                    fontSize: widthPercentageToDP(6),
+                }]}>
                     {data.title}
                 </Text>
                 <Text style={styles.smallText3}>
@@ -96,7 +99,9 @@ const NewScreen = (props) => {
                         width: "33.3%",
                         opacity: data.level === 'low' ? 1 : 0.3
                     }]}>
-                        <Text style={styles.smallText}>
+                        <Text style={[styles.smallText, {
+                            marginTop: 0
+                        }]}>
                             {Strings.short}
                         </Text>
                     </View>
@@ -105,7 +110,9 @@ const NewScreen = (props) => {
                         width: "33.3%",
                         opacity: data.level === 'medium' ? 1 : 0.3
                     }]}>
-                        <Text style={styles.smallText}>
+                        <Text style={[styles.smallText, {
+                            marginTop: 0
+                        }]}>
                             {Strings.half}
                         </Text>
                     </View>
@@ -114,7 +121,9 @@ const NewScreen = (props) => {
                         width: "33.3%",
                         opacity: data.level === 'high' ? 1 : 0.3
                     }]}>
-                        <Text style={styles.smallText}>
+                        <Text style={[styles.smallText, {
+                            marginTop: 0
+                        }]}>
                             {Strings.high}
                         </Text>
                     </View>

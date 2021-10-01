@@ -109,11 +109,11 @@ export const styles = StyleSheet.create({
         color: white
     },
     input3: {
-        width: widthPercentageToDP(60),
+        width: widthPercentageToDP(70),
         height: heightPercentageToDP(6.5),
         fontSize: widthPercentageToDP(3.5),
         fontFamily: "Montserrat-Regular",
-        paddingLeft: widthPercentageToDP(5),
+        paddingLeft: widthPercentageToDP(5.5),
         color: black,
         //backgroundColor:"red"
     },
@@ -266,7 +266,7 @@ export const styles = StyleSheet.create({
         fontSize: widthPercentageToDP(4),
         color: black,
         fontFamily: "Montserrat-SemiBold",
-        textAlign: "justify",
+        textAlign: "center",
         alignSelf: "center",
         padding: widthPercentageToDP(1),
         paddingLeft: widthPercentageToDP(4),

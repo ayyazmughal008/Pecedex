@@ -225,6 +225,7 @@ const Home = (props) => {
                     contentContainerStyle={{
                         justifyContent: 'center',
                         alignItems: 'center',
+                        flexGrow:1
                     }}
                     style={{
                         height: '100%',
@@ -237,7 +238,7 @@ const Home = (props) => {
                     keyExtractor={(item, index) => "unique" + index}
                     renderItem={renderItem}
                 />
-                <View style={{ height: heightPercentageToDP(7) }} />
+                <View style={{ height: heightPercentageToDP(8) }} />
                 <Tab
                     homeClick={() => props.navigation.dispatch(HomeAction)}
                     profileClick={() => props.navigation.dispatch(profileAction)}
