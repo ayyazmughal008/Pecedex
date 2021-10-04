@@ -21,9 +21,15 @@ export const styles = StyleSheet.create({
         position: "absolute",
         zIndex: 1000,
         width: "100%",
-        height: Platform.OS === "ios" ? "95%" : "92%",
+        height: Platform.OS === "ios" ? "92%" : "92%",
         bottom: "0%",
         //backgroundColor:"red"
+    },
+    top: {
+        width: widthPercentageToDP(100),
+        height: Platform.OS === "ios" ? heightPercentageToDP(15) : heightPercentageToDP(11),
+        //justifyContent: "center",
+        alignItems: "center"
     },
     topImg: {
         width: widthPercentageToDP(100),
@@ -132,12 +138,6 @@ export const styles = StyleSheet.create({
         color: white,
         fontFamily: "Montserrat-Regular"
         // fontWeight: "bold"
-    },
-    top: {
-        width: widthPercentageToDP(100),
-        height: Platform.OS === "ios" ? heightPercentageToDP(13) : heightPercentageToDP(11),
-        //justifyContent: "center",
-        alignItems: "center"
     },
     top2: {
         width: widthPercentageToDP(100),
@@ -396,8 +396,8 @@ export const styles = StyleSheet.create({
         justifyContent: "center"
     },
     smallIcon: {
-        width: widthPercentageToDP(13),
-        height: widthPercentageToDP(13)
+        width: Platform.OS === 'ios' ? widthPercentageToDP(8):widthPercentageToDP(13),
+        height: Platform.OS === 'ios' ? widthPercentageToDP(8):widthPercentageToDP(13),
     },
     difficultBarView: {
         //marginTop: heightPercentageToDP(1),

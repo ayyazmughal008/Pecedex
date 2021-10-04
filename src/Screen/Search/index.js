@@ -72,7 +72,8 @@ const Map = (props) => {
                     clickHandler={() => {
                         if (item.goto === "pecios-sheet") {
                             props.navigation.navigate("PeciosDetail", {
-                                data: item.sheet
+                                data: item.sheet,
+                                position: 0
                             })
                         } else if (item.goto === "families") {
                             props.navigation.navigate('Family', {
@@ -96,7 +97,8 @@ const Map = (props) => {
                             })
                         } else if (item.goto === "genres-sheet") {
                             props.navigation.navigate('Detail', {
-                                data: item.sheet
+                                data: item.sheet,
+                                position: 0
                             })
                         }
                         else {

@@ -14,6 +14,7 @@ import Strings from '../../Translation'
 import { AdView } from '../../AdsServices/AdView'
 import { Events } from '../../AdsServices/utils'
 import { NavigationEvents } from 'react-navigation';
+import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view'
 let viewableItemsChanged = null;
 
 const Map = (props) => {
@@ -81,20 +82,25 @@ const Map = (props) => {
                     shortText={item.short}
                     seen={item.seen}
                     clickHandler={() => {
-                        if (!login.data.paid) {
-                            updateRow()
-                        } else {
-                            props.navigation.navigate("PeciosDetail", {
-                                data: Response.data
-                            })
-                        }
+                        // if (!login.data.paid) {
+                        //     updateRow(index)
+                        // } else {
+                        //     props.navigation.navigate("PeciosDetail", {
+                        //         data: Response.data,
+                        //         position: index
+                        //     })
+                        // }
+                        props.navigation.navigate("PeciosDetail", {
+                            data: Response.data,
+                            position: index
+                        })
                     }}
                 />
             ),
         [Response],
     );
 
-    const updateRow = async () => {
+    const updateRow = async (index) => {
         setResponse(true)
         let temArr = [];
         await Response.data.forEach(item => {
@@ -106,7 +112,8 @@ const Map = (props) => {
         });
         await setResponse(false)
         props.navigation.navigate("PeciosDetail", {
-            data: temArr
+            data: temArr,
+            position: 0
         })
         //console.log("===>",temArr)
     }
@@ -126,43 +133,62 @@ const Map = (props) => {
                 resizeMode={FastImage.resizeMode.stretch}
                 style={styles.bgImg2}
             >
-                {!Response || !Response.data ?
-                    <View />
-                    : <FlatList
-                        data={Response.data}
-                        showsVerticalScrollIndicator={false}
-                        contentContainerStyle={{
-                            justifyContent: 'center',
-                            alignItems: 'center',
-                            flexGrow:1
-                        }}
-                        style={{
-                            height: '100%',
-                            width: '100%',
-                            marginTop: heightPercentageToDP(5)
-                        }}
-                        onScrollAnimationEnd={onScrollEnd}
-                        onMomentumScrollEnd={onScrollEnd}
-                        onScrollEndDrag={onScrollEnd}
-                        onViewableItemsChanged={onViewableItemsChanged}
-                        keyExtractor={(item, index) => "unique" + index}
-                        renderItem={renderItem}
-                    />}
-                <View style={{ height: heightPercentageToDP(8) }} />
-                <Tab
-                    homeClick={() => props.navigation.dispatch(HomeAction)}
-                    profileClick={() => props.navigation.dispatch(profileAction)}
-                    settingClick={() => props.navigation.dispatch(settingAction)}
-                    mapClick={() => props.navigation.dispatch(mapAction)}
-                    notiClick={() => props.navigation.dispatch(notificationAction)}
-                />
-                {isLoading &&
-                    <ActivityIndicator
-                        size="large"
-                        color={black}
-                        style={styles.loading}
+                <KeyboardAwareScrollView contentContainerStyle={{ flexGrow: 1 }}>
+                    <View style={{ marginTop: heightPercentageToDP(4) }} />
+                    {!login.data.paid &&
+                        <AdView
+                            loadOnMount={true}
+                            index={0}
+                            type="image"
+                            media={false} />
+                    }
+
+                    {!Response || !Response.data ?
+                        <View />
+                        : <FlatList
+                            data={Response.data}
+                            showsVerticalScrollIndicator={false}
+                            contentContainerStyle={{
+                                //justifyContent: 'center',
+                                alignItems: 'center',
+                                flexGrow: 1
+                            }}
+                            style={{
+                                height: '100%',
+                                width: '100%',
+                                marginTop: heightPercentageToDP(5)
+                            }}
+                            onScrollAnimationEnd={onScrollEnd}
+                            onMomentumScrollEnd={onScrollEnd}
+                            onScrollEndDrag={onScrollEnd}
+                            onViewableItemsChanged={onViewableItemsChanged}
+                            keyExtractor={(item, index) => "unique" + index}
+                            renderItem={renderItem}
+                        />}
+                    {/* <View style={{ marginTop: heightPercentageToDP(4) }} /> */}
+                    {!login.data.paid &&
+                        <AdView
+                            loadOnMount={true}
+                            index={1}
+                            type="image"
+                            media={false} />
+                    }
+                    <View style={{ height: heightPercentageToDP(8) }} />
+                    <Tab
+                        homeClick={() => props.navigation.dispatch(HomeAction)}
+                        profileClick={() => props.navigation.dispatch(profileAction)}
+                        settingClick={() => props.navigation.dispatch(settingAction)}
+                        mapClick={() => props.navigation.dispatch(mapAction)}
+                        notiClick={() => props.navigation.dispatch(notificationAction)}
                     />
-                }
+                    {isLoading &&
+                        <ActivityIndicator
+                            size="large"
+                            color={black}
+                            style={styles.loading}
+                        />
+                    }
+                </KeyboardAwareScrollView>
             </FastImage>
         </SafeAreaView>
     )

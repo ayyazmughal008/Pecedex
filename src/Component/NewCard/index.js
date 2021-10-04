@@ -1,5 +1,5 @@
 import React from 'react'
-import { View, TouchableOpacity, Text, StyleSheet, ScrollView } from 'react-native'
+import { View, TouchableOpacity, Text, StyleSheet, ScrollView, Platform } from 'react-native'
 import { black, blue, white } from '../../config/color'
 import { widthPercentageToDP, heightPercentageToDP } from '../MakeMeResponsive'
 import FastImage from 'react-native-fast-image'
@@ -73,7 +73,7 @@ const Card = (props) => {
 const styles = StyleSheet.create({
     container: {
         width: widthPercentageToDP(90),
-        height: heightPercentageToDP(25),
+        height: Platform.OS === 'android' ? heightPercentageToDP(25) : heightPercentageToDP(35),
         marginBottom: heightPercentageToDP(2),
         marginTop: heightPercentageToDP(2),
         borderWidth: widthPercentageToDP(0.8),
@@ -84,11 +84,13 @@ const styles = StyleSheet.create({
     },
     centerView: {
         width: widthPercentageToDP(80),
-        height: heightPercentageToDP(23)
+        height: Platform.OS === 'android' ? heightPercentageToDP(23) : heightPercentageToDP(33),
+        justifyContent: "center",
+        alignItems: "center",
     },
     firstRow: {
         width: "100%",
-        height: heightPercentageToDP(12.5),
+        height: Platform.OS === 'ios' ? heightPercentageToDP(19) : heightPercentageToDP(11.5),
         flexDirection: "row",
         alignItems: "center"
     },
@@ -114,14 +116,14 @@ const styles = StyleSheet.create({
         color: blue
     },
     roundImg: {
-        width: widthPercentageToDP(18),
-        height: widthPercentageToDP(18),
-        borderRadius: widthPercentageToDP(18) / 2,
-        marginLeft: widthPercentageToDP(5)
+        width: Platform.OS === 'ios' ? widthPercentageToDP(14) : widthPercentageToDP(18),
+        height: Platform.OS === 'ios' ? widthPercentageToDP(14) : widthPercentageToDP(18),
+        borderRadius: Platform.OS === 'ios' ? widthPercentageToDP(14) / 2 : widthPercentageToDP(18) / 2,
+        marginLeft: widthPercentageToDP(5) 
     },
     bottomRow: {
         width: "100%",
-        height: heightPercentageToDP(11.5),
+        height: Platform.OS === 'android' ? heightPercentageToDP(11.5) : heightPercentageToDP(12),
         flexDirection: "row",
         alignItems: "center",
         //justifyContent:"center",

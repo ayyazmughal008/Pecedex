@@ -173,7 +173,7 @@ export const styles = StyleSheet.create({
     },
     writeView: {
         width: widthPercentageToDP(90),
-        height: heightPercentageToDP(16),
+        height: heightPercentageToDP(20),
         flexDirection: "row",
         alignSelf: "center",
         alignItems: "center",

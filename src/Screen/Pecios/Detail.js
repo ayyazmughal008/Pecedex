@@ -4,7 +4,7 @@ import { styles } from '../../config/styles'
 import FastImage from 'react-native-fast-image'
 import { widthPercentageToDP, heightPercentageToDP } from '../../Component/MakeMeResponsive'
 import { SliderBox } from "react-native-image-slider-box";
-import { black, blue, white } from '../../config/color'
+import { black, blue, blue2, white } from '../../config/color'
 import { HomeAction, profileAction, settingAction, mapAction, notificationAction } from '../../Component/BottomTab/actions'
 import Tab from '../../Component/BottomTab'
 import Share from 'react-native-share';
@@ -19,11 +19,13 @@ const { width } = Dimensions.get('window');
 import Video from 'react-native-video'
 import RNFetchBlob from "rn-fetch-blob";
 import PagerView from 'react-native-pager-view';
+import AntDesign from 'react-native-vector-icons/AntDesign'
 
 
 const PeciosDetail = (props) => {
     const dispatch = useDispatch();
     const data = props.navigation.getParam('data', "12")
+    const position = props.navigation.getParam('position',0)
     const login = useSelector((state) => state.user.login);
     const AuthLoading = useSelector((state) => state.user.AuthLoading);
     const [pickerOption, setOption] = useState(false)
@@ -35,7 +37,7 @@ const PeciosDetail = (props) => {
     const [imageUrl, setImageUrl] = useState(null)
     const [activeSlid, setActiveSlid] = useState(0);
     const [itemId, setItemId] = useState('none')
-    const [pageSelected, setPageSelected] = useState(0)
+    const [pageSelected, setPageSelected] = useState(position)
     const viewPager = React.createRef();
     useEffect(() => {
         getCurrentImage()
@@ -310,6 +312,22 @@ const PeciosDetail = (props) => {
                         style={{ width: widthPercentageToDP(8), height: widthPercentageToDP(8) }}
                     />
                 </TouchableOpacity>
+                {Platform.OS === 'ios' &&
+                    <TouchableOpacity
+                        onPress={() => props.navigation.goBack()}
+                        style={{
+                            position: "absolute",
+                            left: "4%",
+                            top: "5%",
+                            zIndex: 3
+                        }}
+                    >
+                        <AntDesign
+                            name="arrowleft"
+                            color={blue2}
+                            size={40}
+                        />
+                    </TouchableOpacity>}
                 <View style={styles.tabBar}>
                     <Pagination
                         containerStyle={[styles.tabsContainer, {
@@ -344,7 +362,7 @@ const PeciosDetail = (props) => {
                 </View>
             </View>
             <PagerView
-                initialPage={0}
+                initialPage={pageSelected}
                 ref={viewPager}
                 onPageSelected={e => {
                     setPageSelected(e.nativeEvent.position);
@@ -367,8 +385,8 @@ const PeciosDetail = (props) => {
                                             source={require('../../Images/85.png')}
                                             resizeMode={FastImage.resizeMode.stretch}
                                             style={{
-                                                width: Platform.OS === 'android' ? widthPercentageToDP(14) : widthPercentageToDP(10),
-                                                height: heightPercentageToDP(5),
+                                                width: widthPercentageToDP(14),
+                                                height: widthPercentageToDP(10),
                                                 marginLeft: widthPercentageToDP(3)
                                             }}
                                         />
@@ -384,8 +402,8 @@ const PeciosDetail = (props) => {
                                                     : require('../../Images/camera.png')}
                                                 resizeMode={FastImage.resizeMode.stretch}
                                                 style={{
-                                                    width: Platform.OS === 'android' ? widthPercentageToDP(14) : widthPercentageToDP(10),
-                                                    height: heightPercentageToDP(5),
+                                                    width:  widthPercentageToDP(14),
+                                                    height: widthPercentageToDP(10),
                                                     marginLeft: widthPercentageToDP(3)
                                                 }}
                                             />
@@ -450,7 +468,9 @@ const PeciosDetail = (props) => {
                             </Text>
                             <Text style={[styles.smallText, {
                                 fontFamily: "MontserratAlternates-BoldItalic",
-                                marginTop: heightPercentageToDP(-0.2)
+                                marginTop: heightPercentageToDP(-0.2),
+                                fontSize: Platform.OS === 'ios' ? widthPercentageToDP(3.5) : widthPercentageToDP(4),
+                                padding: widthPercentageToDP(1)
                             }]}>
                                 {item.description}
                             </Text>
@@ -467,6 +487,7 @@ const PeciosDetail = (props) => {
                             <FlatList
                                 data={item.icons}
                                 numColumns={2}
+                                bounces = {false}
                                 style={{ width: widthPercentageToDP(100) }}
                                 showsVerticalScrollIndicator={false}
                                 keyExtractor={(item, index) => "unique" + index}

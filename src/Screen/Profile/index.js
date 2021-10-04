@@ -312,7 +312,8 @@ const Profile = (props) => {
                                         margin: 5,
                                     }}
                                     onPress={() => props.navigation.navigate('Detail', {
-                                        data: item.genre
+                                        data: item.genre,
+                                        position: 0
                                     })}
                                     delayLongPress={1000}
                                     onLongPress={() => {

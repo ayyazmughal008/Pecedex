@@ -115,7 +115,7 @@ const Order = (props) => {
                         }}
                         style={{
                             //alignSelf: "center",
-                            marginTop: heightPercentageToDP(3)
+                            marginTop: heightPercentageToDP(4)
                         }}
                         onScrollAnimationEnd={onScrollEnd}
                         onMomentumScrollEnd={onScrollEnd}

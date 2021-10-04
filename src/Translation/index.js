@@ -344,7 +344,7 @@ const Strings = new LocalizedStrings({
         You_can_see_all_the_wreck: 'Puedes ver todos los pecios',
         You_can_only_save_10_dives: 'Solo puedes guardar 10 inmersiones',
         infinite_in_premium: '(Infinito en Premium)',
-        you_can_mark_animals_and_wrecks_as_seen: "Puedes marcar animales y restos de naufragio como vistos",
+        you_can_mark_animals_and_wrecks_as_seen: "Puedes marcar animales y pecios como vistos",
         you_can_upload_photos: 'Puedes subir fotos',
         Premium: "Premium",
         Pay_Monthly: "Pago mensual",

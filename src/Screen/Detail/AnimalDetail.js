@@ -4,7 +4,7 @@ import { styles } from '../../config/styles'
 import FastImage from 'react-native-fast-image'
 import { widthPercentageToDP, heightPercentageToDP } from '../../Component/MakeMeResponsive'
 import { SliderBox } from "react-native-image-slider-box";
-import { black, blue, white } from '../../config/color'
+import { black, blue, blue2, white } from '../../config/color'
 import { postGenerSeen, postGenerImg } from '../../Redux/action'
 import Tab from '../../Component/BottomTab'
 import { HomeAction, profileAction, settingAction, mapAction, notificationAction } from '../../Component/BottomTab/actions'
@@ -15,6 +15,7 @@ import { useSelector, useDispatch } from 'react-redux';
 import Picker from '../Profile/Picker'
 import Strings from '../../Translation'
 import { media } from './data'
+import AntDesign from 'react-native-vector-icons/AntDesign'
 import Carousel, { Pagination } from 'react-native-snap-carousel';
 const SLIDER_WIDTH = Dimensions.get('window').width;
 const { width } = Dimensions.get('window');
@@ -27,6 +28,7 @@ import PagerView from 'react-native-pager-view';
 const GenreDetail = (props) => {
     const dispatch = useDispatch();
     const data = props.navigation.getParam('data', "12")
+    const position = props.navigation.getParam('position',0)
     const language = useSelector((state) => state.user.language);
     const login = useSelector((state) => state.user.login);
     const AuthLoading = useSelector((state) => state.user.AuthLoading);
@@ -38,7 +40,7 @@ const GenreDetail = (props) => {
     const [imageUrl, setImageUrl] = useState(null)
     const [activeSlid, setActiveSlid] = useState(0);
     const [itemId, setItemId] = useState('none')
-    const [pageSelected, setPageSelected] = useState(0)
+    const [pageSelected, setPageSelected] = useState(position)
     const viewPager = useRef();
 
     useEffect(() => {
@@ -95,9 +97,9 @@ const GenreDetail = (props) => {
         return (
             <View style={{
                 width: widthPercentageToDP(48),
-                height: heightPercentageToDP(5),
-                marginTop: heightPercentageToDP(1),
-                marginRight: widthPercentageToDP(2),
+                height: Platform.OS === 'ios' ? heightPercentageToDP(7) : heightPercentageToDP(5),
+                margin: widthPercentageToDP(0.5),
+                //marginRight: widthPercentageToDP(2),
                 //backgroundColor:"red"
             }}>
                 <View style={{ flexDirection: "row", alignItems: "center", justifyContent: "space-around" }}>
@@ -111,18 +113,21 @@ const GenreDetail = (props) => {
                             }}
                         />
                     </View>
-                    <View style={{ width: "70%", height: "100%", alignItems: "flex-start", justifyContent: "center", }}>
-                        <Text style={{
-                            fontSize: widthPercentageToDP(2.8),
-                            flex: 0,
-                            flexWrap: 'wrap',
-                            textAlign: "left",
-                            fontFamily: "Montserrat-SemiBold",
-                            padding: 3
-                        }}>
-                            {item.text}
-                        </Text>
-                    </View>
+                    {/* <View style={{ width: "70%", height: "100%", alignItems: "flex-start", justifyContent: "center", flexDirection: "row" }}> */}
+                    <Text style={{
+                        fontSize: widthPercentageToDP(2.5),
+                        flex: 1,
+                        flexWrap: 'wrap',
+                        flexShrink: 1,
+                        flexGrow: 1,
+                        fontFamily: "Montserrat-SemiBold",
+                        //padding: widthPercentageToDP(1),
+                        //backgroundColor:"red",
+                        flexShrink: 1,
+                    }}>
+                        {item.text}
+                    </Text>
+                    {/* </View> */}
                 </View>
             </View>
         )
@@ -276,9 +281,9 @@ const GenreDetail = (props) => {
                     sliderWidth={(width)}
                     itemWidth={(width)}
                     removeClippedSubviews={false}
-                    loopClonesPerSide = {data[pageSelected].media.length}
-                    inactiveSlideOpacity={1} 
-                    inactiveSlideScale={1} 
+                    loopClonesPerSide={data[pageSelected].media.length}
+                    inactiveSlideOpacity={1}
+                    inactiveSlideScale={1}
                     firstItem={activeSlid}
                     //enableSnap = {false}
                     //initialScrollIndex={activeSlid}
@@ -307,6 +312,22 @@ const GenreDetail = (props) => {
                         style={{ width: widthPercentageToDP(8), height: widthPercentageToDP(8) }}
                     />
                 </TouchableOpacity>
+                {Platform.OS === 'ios' &&
+                    <TouchableOpacity
+                        onPress={() => props.navigation.goBack()}
+                        style={{
+                            position: "absolute",
+                            left: "4%",
+                            top: "5%",
+                            zIndex: 3
+                        }}
+                    >
+                        <AntDesign
+                            name="arrowleft"
+                            color={blue2}
+                            size={40}
+                        />
+                    </TouchableOpacity>}
                 <View style={styles.tabBar}>
                     <Pagination
                         containerStyle={[styles.tabsContainer, {
@@ -339,7 +360,7 @@ const GenreDetail = (props) => {
                 </View>
             </View>
             <PagerView
-                initialPage={0}
+                initialPage={pageSelected}
                 ref={viewPager}
                 onPageSelected={e => {
                     setPageSelected(e.nativeEvent.position);
@@ -350,7 +371,7 @@ const GenreDetail = (props) => {
                 //scrollEnabled = {false}
                 style={{
                     width: "100%",
-                    height: "50%",
+                    height: "60%",
                     //backgroundColor:"red"
                 }}>
                 {data.map((item, index) => {
@@ -364,8 +385,8 @@ const GenreDetail = (props) => {
                                             source={require('../../Images/85.png')}
                                             resizeMode={FastImage.resizeMode.stretch}
                                             style={{
-                                                width: Platform.OS === 'android' ? widthPercentageToDP(14) : widthPercentageToDP(14),
-                                                height: heightPercentageToDP(5),
+                                                width: widthPercentageToDP(14),
+                                                height: widthPercentageToDP(10),
                                                 marginLeft: widthPercentageToDP(3)
                                             }}
                                         />
@@ -380,8 +401,8 @@ const GenreDetail = (props) => {
                                                     : require('../../Images/camera.png')}
                                                 resizeMode={FastImage.resizeMode.stretch}
                                                 style={{
-                                                    width: Platform.OS === 'android' ? widthPercentageToDP(14) : widthPercentageToDP(14),
-                                                    height: heightPercentageToDP(5),
+                                                    width: widthPercentageToDP(14),
+                                                    height: widthPercentageToDP(10),
                                                     marginLeft: widthPercentageToDP(3)
                                                 }}
                                             />
@@ -502,7 +523,8 @@ const GenreDetail = (props) => {
                                 key={'h'}
                                 data={item.icons}
                                 numColumns={2}
-                                style={{ width: widthPercentageToDP(100), }}
+                                bounces={false}
+                                style={{ alignSelf: "center" }}
                                 showsVerticalScrollIndicator={false}
                                 keyExtractor={(item, index) => "unique" + index}
                                 renderItem={_renderItem}

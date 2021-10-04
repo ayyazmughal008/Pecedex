@@ -14,6 +14,7 @@ import { useSelector, useDispatch } from 'react-redux';
 import { AdView } from '../../AdsServices/AdView'
 import { Events } from '../../AdsServices/utils'
 import { NavigationEvents } from 'react-navigation';
+import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view'
 let viewableItemsChanged = null;
 
 const Order = (props) => {
@@ -45,22 +46,12 @@ const Order = (props) => {
             viewableItemsChanged,
         );
     }, []);
-
-    /**
-     * [STEP I] When viewable items change in the list
-     * we want to know what items are visible and store them
-     * in a variable for later us.
-     */
     const onViewableItemsChanged = React.useCallback((e) => {
         viewableItemsChanged = e;
     }, []);
     const renderItem = React.useCallback(
         ({ item, index }) =>
             item.ad ? (
-                /**
-                 * loadOnMount -> We are telling the AdView to not load the ad when
-                 * it is mounted.
-                 */
                 <AdView loadOnMount={true} index={index} type="image" media={false} />
             ) : (
                 <Card
@@ -69,13 +60,18 @@ const Order = (props) => {
                     shortText={item.short}
                     seen={item.seen}
                     clickHandler={() => {
-                        if (!login.data.paid) {
-                            updateRow()
-                        } else {
-                            props.navigation.navigate("Detail", {
-                                data: Response.data
-                            })
-                        }
+                        // if (!login.data.paid) {
+                        //     updateRow()
+                        // } else {
+                        //     props.navigation.navigate("Detail", {
+                        //         data: Response.data,
+                        //         position: index
+                        //     })
+                        // }
+                        props.navigation.navigate("Detail", {
+                            data: Response.data,
+                            position: index
+                        })
                     }}
                 />
             ),
@@ -93,7 +89,8 @@ const Order = (props) => {
         });
         await setResponse(false)
         props.navigation.navigate("Detail", {
-            data: temArr
+            data: temArr,
+            position: 0
         })
         //console.log("===>",temArr)
     }
@@ -131,82 +128,100 @@ const Order = (props) => {
                 source={require('../../Images/BG.png')}
                 resizeMode={FastImage.resizeMode.stretch}
                 style={styles.bgImg2}>
-                <View style={styles.shortcutView}>
-                    {!Response || !Response.summary ?
-                        <View />
-                        : Response.summary.map((item, index) => {
-                            return (
-                                <TouchableOpacity
-                                    onPress={() => {
-                                        if (item.endPoint === 'get-files') {
-                                            props.navigation.navigate('Animal')
-                                        } else if (item.endPoint === 'get-classes') {
-                                            props.navigation.navigate('Classes', {
-                                                id: item.paramValue
-                                            })
-                                        } else if (item.endPoint === 'get-orders') {
-                                            props.navigation.navigate('Order', {
-                                                id: item.paramValue
-                                            })
-                                        } else if (item.endPoint === 'get-families') {
-                                            props.navigation.navigate('Family', {
-                                                id: item.paramValue
-                                            })
-                                        } else if (item.endPoint === 'get-categories') {
-                                            props.navigation.navigate('Category', {
-                                                id: item.paramValue
-                                            })
+                <KeyboardAwareScrollView contentContainerStyle={{ flexGrow: 1 }}>
+                    <View style={styles.shortcutView}>
+                        {!Response || !Response.summary ?
+                            <View />
+                            : Response.summary.map((item, index) => {
+                                return (
+                                    <TouchableOpacity
+                                        onPress={() => {
+                                            if (item.endPoint === 'get-files') {
+                                                props.navigation.navigate('Animal')
+                                            } else if (item.endPoint === 'get-classes') {
+                                                props.navigation.navigate('Classes', {
+                                                    id: item.paramValue
+                                                })
+                                            } else if (item.endPoint === 'get-orders') {
+                                                props.navigation.navigate('Order', {
+                                                    id: item.paramValue
+                                                })
+                                            } else if (item.endPoint === 'get-families') {
+                                                props.navigation.navigate('Family', {
+                                                    id: item.paramValue
+                                                })
+                                            } else if (item.endPoint === 'get-categories') {
+                                                props.navigation.navigate('Category', {
+                                                    id: item.paramValue
+                                                })
+                                            }
                                         }
-                                    }
-                                    }>
-                                    <Text
-                                        key={"unique" + index}
-                                        style={styles.shortCutTxt}>
-                                        {"- "}{item.title}
-                                    </Text>
-                                </TouchableOpacity>
-                            )
-                        })
+                                        }>
+                                        <Text
+                                            key={"unique" + index}
+                                            style={styles.shortCutTxt}>
+                                            {"- "}{item.title}
+                                        </Text>
+                                    </TouchableOpacity>
+                                )
+                            })
+                        }
+                    </View>
+                    {/* <View style={{ marginTop: heightPercentageToDP(4) }} /> */}
+                    {!login.data.paid &&
+                        <AdView
+                            loadOnMount={true}
+                            index={0}
+                            type="image"
+                            media={false} />
                     }
-                </View>
-                {!Response || !Response.data ?
-                    <View />
-                    : <FlatList
-                        data={Response.data}
-                        onViewableItemsChanged={onViewRef.current}
-                        viewabilityConfig={viewConfigRef.current}
-                        showsVerticalScrollIndicator={false}
-                        contentContainerStyle={{
-                            flexGrow: 1,
-                            //justifyContent: 'center',
-                            alignItems: 'center',
-                        }}
-                        style={{
-                            //alignSelf: "center",
-                            marginTop: heightPercentageToDP(2)
-                        }}
-                        onScrollAnimationEnd={onScrollEnd}
-                        onMomentumScrollEnd={onScrollEnd}
-                        onScrollEndDrag={onScrollEnd}
-                        onViewableItemsChanged={onViewableItemsChanged}
-                        keyExtractor={(item, index) => "unique" + index}
-                        renderItem={renderItem}
-                    />}
-                <View style={{ height: heightPercentageToDP(8) }} />
-                <Tab
-                    homeClick={() => props.navigation.dispatch(HomeAction)}
-                    profileClick={() => props.navigation.dispatch(profileAction)}
-                    settingClick={() => props.navigation.dispatch(settingAction)}
-                    mapClick={() => props.navigation.dispatch(mapAction)}
-                    notiClick={() => props.navigation.dispatch(notificationAction)}
-                />
-                {isLoading &&
-                    <ActivityIndicator
-                        size="large"
-                        color={black}
-                        style={styles.loading}
+                    {!Response || !Response.data ?
+                        <View />
+                        : <FlatList
+                            data={Response.data}
+                            onViewableItemsChanged={onViewRef.current}
+                            viewabilityConfig={viewConfigRef.current}
+                            showsVerticalScrollIndicator={false}
+                            contentContainerStyle={{
+                                flexGrow: 1,
+                                //justifyContent: 'center',
+                                alignItems: 'center',
+                            }}
+                            style={{
+                                //alignSelf: "center",
+                                marginTop: heightPercentageToDP(2)
+                            }}
+                            onScrollAnimationEnd={onScrollEnd}
+                            onMomentumScrollEnd={onScrollEnd}
+                            onScrollEndDrag={onScrollEnd}
+                            onViewableItemsChanged={onViewableItemsChanged}
+                            keyExtractor={(item, index) => "unique" + index}
+                            renderItem={renderItem}
+                        />}
+                    {/* <View style={{ marginTop: heightPercentageToDP(4) }} /> */}
+                    {!login.data.paid &&
+                        <AdView
+                            loadOnMount={true}
+                            index={1}
+                            type="image"
+                            media={false} />
+                    }
+                    <View style={{ height: heightPercentageToDP(8) }} />
+                    <Tab
+                        homeClick={() => props.navigation.dispatch(HomeAction)}
+                        profileClick={() => props.navigation.dispatch(profileAction)}
+                        settingClick={() => props.navigation.dispatch(settingAction)}
+                        mapClick={() => props.navigation.dispatch(mapAction)}
+                        notiClick={() => props.navigation.dispatch(notificationAction)}
                     />
-                }
+                    {isLoading &&
+                        <ActivityIndicator
+                            size="large"
+                            color={black}
+                            style={styles.loading}
+                        />
+                    }
+                </KeyboardAwareScrollView>
             </FastImage>
         </SafeAreaView>
     )

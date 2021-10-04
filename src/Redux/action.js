@@ -932,7 +932,8 @@ export const getGenreDetails = async (genreId, userId) => {
                 if (json.status == 200) {
                     console.log(json)
                     NavigationService.navigate('Detail', {
-                        data: json.data
+                        data: json.data,
+                        position: 0
                     })
                     return
                 } else {
@@ -966,7 +967,8 @@ export const getPecioDetails = async (pecioId, userId) => {
                 if (json.status == 200) {
                     console.log(json)
                     NavigationService.navigate("PeciosDetail", {
-                        data: json.data
+                        data: json.data,
+                        position: 0
                     })
                     return
                 } else {

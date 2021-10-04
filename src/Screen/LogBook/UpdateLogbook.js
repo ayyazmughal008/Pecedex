@@ -729,13 +729,15 @@ const LogBook = (props) => {
                         })
                     } else if (item.qualities) {
                         props.navigation.navigate('Detail', {
-                            data: temArr
+                            data: temArr,
+                            position: 0
                         })
                     } else if (item.fcm) {
                         console.log("Users");
                     } else {
                         props.navigation.navigate("PeciosDetail", {
-                            data: temArr
+                            data: temArr,
+                            position: 0
                         })
                     }
                 }}
@@ -939,10 +941,17 @@ const LogBook = (props) => {
         if (Platform.OS === 'ios') {
             setIsLoading(true)
             await Geolocation.requestAuthorization();
-            await Geolocation.getCurrentPosition(info => {
-                console.log(info);
+            Geolocation.getCurrentPosition(info => {
+                console.log("=====>", info);
                 setLocation(info.coords);
                 setIsLoading(false);
+            }, error => {
+                Alert.alert("Permission Required", "Please enable your location, it's required for this section and reopen the application"),
+                {
+                    enableHighAccuracy: true,
+                    timeout: 10000,
+                    maximumAge: 3000
+                }
             })
         } else {
             try {

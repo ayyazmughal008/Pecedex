@@ -149,7 +149,9 @@ const NewScreen = (props) => {
                         </Text>
                     </View>
                 </View>
-                <Text style={styles.description}>
+                <Text style={[styles.description,{
+                    marginBottom: heightPercentageToDP(2)
+                }]}>
                     {data.description2}
                 </Text>
                 <Card
