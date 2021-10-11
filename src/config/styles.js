@@ -518,7 +518,7 @@ export const styles = StyleSheet.create({
     cardBanner2: {
         borderRadius: widthPercentageToDP(3),
         width: widthPercentageToDP(90),
-        height: Platform.OS === 'android' ? heightPercentageToDP(30) :heightPercentageToDP(33),
+        height: Platform.OS === 'android' ? heightPercentageToDP(33) :heightPercentageToDP(33),
         alignSelf: "center",
         //backgroundColor:"red",
         padding: 0
