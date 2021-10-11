@@ -320,6 +320,13 @@ const Subscription = (props) => {
                     <Text style={styles.amountTxt}>
                         {"2€/mes"}
                     </Text>
+                    <Text style={[styles.subTypeText, {
+                        paddingRight:widthPercentageToDP(2),
+                        paddingLeft: widthPercentageToDP(5),
+                        fontSize: widthPercentageToDP(3.5)
+                    }]}>
+                        {"*"}{Strings.trail}
+                    </Text>
                     <TouchableOpacity
                         onPress={() => props.navigation.navigate('Payment', {
                             planId: "P-4PL019209Y354752XME3CSVA"

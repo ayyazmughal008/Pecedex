@@ -28,7 +28,7 @@ import PagerView from 'react-native-pager-view';
 const GenreDetail = (props) => {
     const dispatch = useDispatch();
     const data = props.navigation.getParam('data', "12")
-    const position = props.navigation.getParam('position',0)
+    const position = props.navigation.getParam('position', 0)
     const language = useSelector((state) => state.user.language);
     const login = useSelector((state) => state.user.login);
     const AuthLoading = useSelector((state) => state.user.AuthLoading);
@@ -58,7 +58,7 @@ const GenreDetail = (props) => {
     }, [])
     useEffect(() => {
         if (pageSelected) {
-            console.log(activeSlid)
+            //console.log(activeSlid)
         }
     }, [pageSelected])
     const convertImageToBase64 = async (url) => {
@@ -367,8 +367,10 @@ const GenreDetail = (props) => {
                     setActiveSlid(0)
                 }}
                 setPage={pageSelected}
-                transitionStyle="curl"
+                transitionStyle="scroll"
                 //scrollEnabled = {false}
+                //onPageScroll={event => console.log('===>', event.nativeEvent.offset)}
+                //onPageScrollStateChanged={(e) => console.log('==>', e)}
                 style={{
                     width: "100%",
                     height: "60%",

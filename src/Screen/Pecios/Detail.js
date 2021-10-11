@@ -369,7 +369,7 @@ const PeciosDetail = (props) => {
                     setActiveSlid(0)
                 }}
                 setPage={pageSelected}
-                transitionStyle="curl"
+                transitionStyle="scroll"
                 style={{
                     width: "100%",
                     height: "50%"

@@ -190,7 +190,8 @@ const Strings = new LocalizedStrings({
         forget_pass1:"Forgot password?",
         enter_code:"Enter code",
         verification_text:"Please enter the verification code that we have sent to your email",
-        liter:"Liter"
+        liter:"Liter",
+        trail:'14-day trial period for annual recruitment.'
     },
     es: {
         signin: "INICIAR SESIÓN",
@@ -381,7 +382,8 @@ const Strings = new LocalizedStrings({
         forget_pass1:"¿Se te olvidó tu contraseña?",
         enter_code:"Introduzca el código",
         verification_text:"Ingrese el código de verificación que le enviamos a su correo electrónico",
-        liter:"Litro"
+        liter:"Litro",
+        trail:'Periodo de prueba de 14 días para contratación anual.'
     },
 });
 

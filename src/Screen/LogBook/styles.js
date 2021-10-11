@@ -212,7 +212,8 @@ export const styles = StyleSheet.create({
         fontSize: widthPercentageToDP(4),
         color: black,
         fontFamily: "Montserrat-SemiBold",
-        padding: widthPercentageToDP(1)
+        paddingTop:heightPercentageToDP(1),
+        //padding: widthPercentageToDP(1)
     },
     btn: {
         width: widthPercentageToDP(90),

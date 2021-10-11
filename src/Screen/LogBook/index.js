@@ -1000,6 +1000,7 @@ const LogBook = (props) => {
                 source={require('../../Images/BG.png')}
                 resizeMode={FastImage.resizeMode.stretch}
                 style={styles.bgImg}>
+                <View style={{ marginTop: heightPercentageToDP(3) }} />
                 <KeyboardAwareScrollView contentContainerStyle={{ flexGrow: 1 }}>
                     <View style={{ flex: 1, alignItems: "center" }}>
                         <View style={styles.titleView}>
@@ -1015,20 +1016,22 @@ const LogBook = (props) => {
                         }]}>
                             <View style={[styles.innerLogView, { height: heightPercentageToDP(25) }]}>
                                 <View style={styles.left}>
-                                    <Text style={[styles.smallTxt, { color: black }]}>
+                                    <Text style={[styles.smallTxt, { color: black, marginLeft: widthPercentageToDP(1) }]}>
                                         {Strings.country}
                                     </Text>
                                     <TouchableOpacity
+                                        style={{ marginLeft: widthPercentageToDP(1) }}
                                         onPress={() => toggleSearch()}
                                     >
                                         <Text style={[styles.smallTxt, { color: white }]}>
                                             {!country ? Strings.Select_Country : country}
                                         </Text>
                                     </TouchableOpacity>
-                                    <Text style={[styles.smallTxt, { color: black, marginTop: 10, }]}>
+                                    <Text style={[styles.smallTxt, { color: black, marginTop: 10, marginLeft: widthPercentageToDP(1) }]}>
                                         {Strings.city}
                                     </Text>
                                     <TouchableOpacity
+                                        style={{ marginLeft: widthPercentageToDP(1) }}
                                         onPress={() => !country ? Alert.alert("", Strings.Please_select_the_Country_name_first)
                                             : toggleCity()
                                         }
@@ -1038,7 +1041,7 @@ const LogBook = (props) => {
                                         </Text>
                                     </TouchableOpacity>
                                     <View style={{ marginTop: heightPercentageToDP(0.5), }}>
-                                        <Text style={[styles.smallTxt, { color: black }]}>
+                                        <Text style={[styles.smallTxt, { color: black , marginLeft: widthPercentageToDP(1)}]}>
                                             {Strings.population}{" :"}
                                         </Text>
                                         <TextInput
@@ -1050,11 +1053,11 @@ const LogBook = (props) => {
                                         />
                                     </View>
                                     <View style={{ marginTop: heightPercentageToDP(-7), }}>
-                                        <Text style={[styles.smallTxt, { color: black }]}>
+                                        <Text style={[styles.smallTxt, { color: black, marginLeft: widthPercentageToDP(1) }]}>
                                             {Strings.immersion_site}{" :"}
                                         </Text>
                                         <TextInput
-                                            style={[styles.smallInput, { paddingTop: 0, paddingBottom: 0, marginTop: heightPercentageToDP(-1.5) }]}
+                                            style={[styles.smallInput, { paddingTop: 0, paddingBottom: 0, marginTop: heightPercentageToDP(-1.5),marginLeft: widthPercentageToDP(1) }]}
                                             placeholder={Strings.immersion_site}
                                             placeholderTextColor={white}
                                             value={immersionSite}
@@ -2086,10 +2089,14 @@ const LogBook = (props) => {
                                 {Strings.observations}
                             </Text>
                             <TextInput
-                                style={[styles.input2, { color: white }]}
+                                style={[styles.input2, { 
+                                    color: white,
+                                    //backgroundColor:"red", 
+                                }]}
                                 placeholder={Strings.write_anything}
                                 placeholderTextColor={"#cccc"}
                                 value={opinion}
+                                multiline={true}
                                 textAlign="center"
                                 onChangeText={text => setOpinion(text)}
                             />
