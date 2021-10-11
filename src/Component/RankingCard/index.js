@@ -91,14 +91,23 @@ const Card = (props) => {
                                                             height: heightPercentageToDP(6)
                                                         }}
                                                     />
-                                                    : <FastImage
-                                                        source={require('../../Images/medal2.png')}
-                                                        resizeMode={FastImage.resizeMode.contain}
-                                                        style={{
-                                                            width: widthPercentageToDP(12),
-                                                            height: heightPercentageToDP(6)
-                                                        }}
-                                                    />
+                                                    : props.rank == 9 ?
+                                                        <FastImage
+                                                            source={require('../../Images/medal10.png')}
+                                                            resizeMode={FastImage.resizeMode.contain}
+                                                            style={{
+                                                                width: widthPercentageToDP(12),
+                                                                height: heightPercentageToDP(6)
+                                                            }}
+                                                        />
+                                                        : <FastImage
+                                                            source={require('../../Images/medal2.png')}
+                                                            resizeMode={FastImage.resizeMode.contain}
+                                                            style={{
+                                                                width: widthPercentageToDP(12),
+                                                                height: heightPercentageToDP(6)
+                                                            }}
+                                                        />
                 }
                 <View style={{ width: "100%", marginLeft: widthPercentageToDP(2) }}>
                     <Text style={styles.title}>

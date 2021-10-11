@@ -73,7 +73,7 @@ const Card = (props) => {
 const styles = StyleSheet.create({
     container: {
         width: widthPercentageToDP(90),
-        height: Platform.OS === 'android' ? heightPercentageToDP(25) : heightPercentageToDP(35),
+        height: Platform.OS === 'android' ? heightPercentageToDP(27) : heightPercentageToDP(35),
         marginBottom: heightPercentageToDP(2),
         marginTop: heightPercentageToDP(2),
         borderWidth: widthPercentageToDP(0.8),
@@ -84,7 +84,7 @@ const styles = StyleSheet.create({
     },
     centerView: {
         width: widthPercentageToDP(80),
-        height: Platform.OS === 'android' ? heightPercentageToDP(23) : heightPercentageToDP(33),
+        height: Platform.OS === 'android' ? heightPercentageToDP(24) : heightPercentageToDP(33),
         justifyContent: "center",
         alignItems: "center",
     },
@@ -123,7 +123,7 @@ const styles = StyleSheet.create({
     },
     bottomRow: {
         width: "100%",
-        height: Platform.OS === 'android' ? heightPercentageToDP(11.5) : heightPercentageToDP(12),
+        height: Platform.OS === 'android' ? heightPercentageToDP(12) : heightPercentageToDP(12),
         flexDirection: "row",
         alignItems: "center",
         //justifyContent:"center",
