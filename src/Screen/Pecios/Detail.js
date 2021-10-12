@@ -25,7 +25,7 @@ import AntDesign from 'react-native-vector-icons/AntDesign'
 const PeciosDetail = (props) => {
     const dispatch = useDispatch();
     const data = props.navigation.getParam('data', "12")
-    const position = props.navigation.getParam('position',0)
+    const position = props.navigation.getParam('position', 0)
     const login = useSelector((state) => state.user.login);
     const AuthLoading = useSelector((state) => state.user.AuthLoading);
     const [pickerOption, setOption] = useState(false)
@@ -331,11 +331,39 @@ const PeciosDetail = (props) => {
                 <View style={styles.tabBar}>
                     <Pagination
                         containerStyle={[styles.tabsContainer, {
-                            width: data[pageSelected].media.length < 4 ?
-                                widthPercentageToDP(25)
-                                : data[pageSelected].media.length < 10 ?
-                                    widthPercentageToDP(30)
-                                    : widthPercentageToDP(60)
+                            width: data[pageSelected].media.length <= 1 ?
+                                widthPercentageToDP(15)
+                                : data[pageSelected].media.length <= 2 ?
+                                    widthPercentageToDP(17)
+                                    : data[pageSelected].media.length <= 3 ?
+                                        widthPercentageToDP(18)
+                                        : data[pageSelected].media.length <= 4 ?
+                                            widthPercentageToDP(23)
+                                            : data[pageSelected].media.length <= 5 ?
+                                                widthPercentageToDP(26)
+                                                : data[pageSelected].media.length <= 6 ?
+                                                    widthPercentageToDP(29)
+                                                    : data[pageSelected].media.length <= 7 ?
+                                                        widthPercentageToDP(32)
+                                                        : data[pageSelected].media.length <= 8 ?
+                                                            widthPercentageToDP(35)
+                                                            : data[pageSelected].media.length <= 9 ?
+                                                                widthPercentageToDP(37)
+                                                                : data[pageSelected].media.length <= 10 ?
+                                                                    widthPercentageToDP(40)
+                                                                    : data[pageSelected].media.length <= 11 ?
+                                                                        widthPercentageToDP(43)
+                                                                        : data[pageSelected].media.length <= 12 ?
+                                                                            widthPercentageToDP(45)
+                                                                            : data[pageSelected].media.length <= 13 ?
+                                                                                widthPercentageToDP(47)
+                                                                                : data[pageSelected].media.length <= 14 ?
+                                                                                    widthPercentageToDP(50)
+                                                                                    : data[pageSelected].media.length <= 15 ?
+                                                                                        widthPercentageToDP(53)
+                                                                                        : data[pageSelected].media.length <= 55 ?
+                                                                                            widthPercentageToDP(31)
+                                                                                            : widthPercentageToDP(60)
                         }
                         ]}
                         renderDots={activeIndex => (
@@ -402,7 +430,7 @@ const PeciosDetail = (props) => {
                                                     : require('../../Images/camera.png')}
                                                 resizeMode={FastImage.resizeMode.stretch}
                                                 style={{
-                                                    width:  widthPercentageToDP(14),
+                                                    width: widthPercentageToDP(14),
                                                     height: widthPercentageToDP(10),
                                                     marginLeft: widthPercentageToDP(3)
                                                 }}
@@ -487,7 +515,7 @@ const PeciosDetail = (props) => {
                             <FlatList
                                 data={item.icons}
                                 numColumns={2}
-                                bounces = {false}
+                                bounces={false}
                                 style={{ width: widthPercentageToDP(100) }}
                                 showsVerticalScrollIndicator={false}
                                 keyExtractor={(item, index) => "unique" + index}

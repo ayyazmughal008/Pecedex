@@ -463,6 +463,7 @@ export const styles = StyleSheet.create({
         paddingTop: 0,
         paddingBottom: 0,
         alignSelf: "center",
+        //flex:0,
         //backgroundColor:"red"
     },
     socialImages: {

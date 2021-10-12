@@ -330,13 +330,43 @@ const GenreDetail = (props) => {
                     </TouchableOpacity>}
                 <View style={styles.tabBar}>
                     <Pagination
-                        containerStyle={[styles.tabsContainer, {
-                            width: data[pageSelected].media.length < 4 ?
-                                widthPercentageToDP(25)
-                                : data[pageSelected].media.length < 10 ?
-                                    widthPercentageToDP(30)
-                                    : widthPercentageToDP(60)
-                        }]}
+                        containerStyle={[styles.tabsContainer,
+                        {
+                            width: data[pageSelected].media.length <= 1 ?
+                                widthPercentageToDP(15)
+                                : data[pageSelected].media.length <= 2 ?
+                                    widthPercentageToDP(17)
+                                    : data[pageSelected].media.length <= 3 ?
+                                        widthPercentageToDP(18)
+                                        : data[pageSelected].media.length <= 4 ?
+                                            widthPercentageToDP(23)
+                                            : data[pageSelected].media.length <= 5 ?
+                                                widthPercentageToDP(26)
+                                                : data[pageSelected].media.length <= 6 ?
+                                                    widthPercentageToDP(29)
+                                                    : data[pageSelected].media.length <= 7 ?
+                                                        widthPercentageToDP(32)
+                                                        : data[pageSelected].media.length <= 8 ?
+                                                            widthPercentageToDP(35)
+                                                            : data[pageSelected].media.length <= 9 ?
+                                                                widthPercentageToDP(37)
+                                                                : data[pageSelected].media.length <= 10 ?
+                                                                    widthPercentageToDP(40)
+                                                                    : data[pageSelected].media.length <= 11 ?
+                                                                        widthPercentageToDP(43)
+                                                                        : data[pageSelected].media.length <= 12 ?
+                                                                            widthPercentageToDP(45)
+                                                                            : data[pageSelected].media.length <= 13 ?
+                                                                                widthPercentageToDP(47)
+                                                                                : data[pageSelected].media.length <= 14 ?
+                                                                                    widthPercentageToDP(50)
+                                                                                    : data[pageSelected].media.length <= 15 ?
+                                                                                        widthPercentageToDP(53)
+                                                                                        : data[pageSelected].media.length <= 55 ?
+                                                                                            widthPercentageToDP(31)
+                                                                                            : widthPercentageToDP(60)
+                        }
+                        ]}
                         renderDots={activeIndex => (
                             data[pageSelected].media.map((screen, i) => (
                                 <View
@@ -348,7 +378,7 @@ const GenreDetail = (props) => {
                                             height: widthPercentageToDP(2),
                                             borderRadius: widthPercentageToDP(2) / 2,
                                             backgroundColor: activeIndex === i ? blue : white,
-                                            marginHorizontal: widthPercentageToDP(-4)
+                                            //marginHorizontal: widthPercentageToDP(-20)
                                         }}
                                     />
                                 </View>
