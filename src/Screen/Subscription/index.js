@@ -244,7 +244,7 @@ const Subscription = (props) => {
                     </Text>
                     <TouchableOpacity
                         onPress={() => props.navigation.navigate('Payment', {
-                            planId: "P-9CY345263A337944YME3CNGQ"
+                            planId: "P-3MY05731EE3202813MFULCEA"
                         })}
                         style={styles.payBtn}>
                         <Text style={[styles.subTypeText, {
@@ -283,7 +283,7 @@ const Subscription = (props) => {
                     </Text>
                     <TouchableOpacity
                         onPress={() => props.navigation.navigate('Payment', {
-                            planId: "P-3TM7008792060083YME3CWOQ"
+                            planId: "P-6M401578X09036921MFULD2Y"
                         })}
                         style={styles.payBtn}>
                         <Text style={[styles.subTypeText, {
@@ -329,7 +329,7 @@ const Subscription = (props) => {
                     </Text>
                     <TouchableOpacity
                         onPress={() => props.navigation.navigate('Payment', {
-                            planId: "P-4PL019209Y354752XME3CSVA"
+                            planId: "P-8A953487RU709335UMFULFXA"
                         })}
                         style={styles.payBtn}>
                         <Text style={[styles.subTypeText, {
