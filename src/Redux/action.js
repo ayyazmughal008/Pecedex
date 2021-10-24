@@ -293,9 +293,10 @@ export const getMainMenu = (userId) => {
                         }
                     })
                 } else if (json.status == 401) {
-                    Alert.alert("", json.message)
+                    console.log('=====> 3', json)
+                    //Alert.alert("", json.message)
                 } else {
-                    Alert.alert("", json.message)
+                    //Alert.alert("", json.message)
                 }
 
             })
@@ -1238,7 +1239,8 @@ export const submitFcmToken = async (fcm, userId) => {
                     //console.log(json)
                     return json
                 } else {
-                    Alert.alert("", json.message)
+                    console.log('===> 1',json)
+                    //Alert.alert("====> 1", json.message)
                 }
             })
             .catch(error => {
@@ -1746,12 +1748,12 @@ export const sendUserLanguage = async (userId, lang) => {
         })
             .then(res => res.json())
             .then(json => {
-                console.log(json)
                 if (json.status == 200) {
                     console.log(json)
                     //Alert.alert("", json.message)
                 } else {
-                    Alert.alert("", json.message)
+                    console.log('====> 2', json)
+                    //Alert.alert("", json.message)
                 }
             })
             .catch(error => {

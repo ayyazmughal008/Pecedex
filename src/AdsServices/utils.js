@@ -30,7 +30,7 @@
   export const adUnitIDs = {
     image:
       Platform.OS === 'ios'
-        ? 'ca-app-pub-3940256099942544/3986624511'
+        ? 'ca-app-pub-6803148861499148/6741135842'
         : 'ca-app-pub-6803148861499148/6432120442',
     video:
       Platform.OS === 'ios'

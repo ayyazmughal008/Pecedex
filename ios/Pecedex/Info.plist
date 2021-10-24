@@ -17,18 +17,45 @@
 	<key>CFBundlePackageType</key>
 	<string>APPL</string>
 	<key>CFBundleShortVersionString</key>
-	<string>1.0</string>
+	<string>$(MARKETING_VERSION)</string>
 	<key>CFBundleSignature</key>
 	<string>????</string>
 	<key>CFBundleVersion</key>
-	<string>1</string>
+	<string>$(CURRENT_PROJECT_VERSION)</string>
 	<key>GADApplicationIdentifier</key>
-	<string>ca-app-pub-3940256099942544~1458002511</string>
+	<string>ca-app-pub-6803148861499148 ~ 5940201824</string>
+	<key>GADIsAdManagerApp</key>
+	<true/>
 	<key>LSApplicationQueriesSchemes</key>
 	<array>
 		<string>tel</string>
 		<string>telprompt</string>
 	</array>
+	<key>LSRequiresIPhoneOS</key>
+	<true/>
+	<key>NSAppTransportSecurity</key>
+	<dict>
+		<key>NSAllowsArbitraryLoads</key>
+		<true/>
+		<key>NSExceptionDomains</key>
+		<dict>
+			<key>localhost</key>
+			<dict>
+				<key>NSExceptionAllowsInsecureHTTPLoads</key>
+				<true/>
+			</dict>
+		</dict>
+	</dict>
+	<key>NSCameraUsageDescription</key>
+	<string>camera permision for upload images for profiles</string>
+	<key>NSLocationAlwaysAndWhenInUseUsageDescription</key>
+	<string>This app need location always</string>
+	<key>NSLocationAlwaysUsageDescription</key>
+	<string>This app need location always background</string>
+	<key>NSLocationWhenInUseUsageDescription</key>
+	<string> Agefred app required this Permission because live location use for tracking employee and their work status.</string>
+	<key>NSPhotoLibraryUsageDescription</key>
+	<string>upload images for profiles</string>
 	<key>SKAdNetworkItems</key>
 	<array>
 		<dict>
@@ -180,35 +207,6 @@
 			<string>3qcr597p9d.skadnetwork</string>
 		</dict>
 	</array>
-	<key>GADIsAdManagerApp</key>
-	<true/>
-	<key>LSRequiresIPhoneOS</key>
-	<true/>
-	<key>NSAppTransportSecurity</key>
-	<dict>
-		<key>NSAllowsArbitraryLoads</key>
-		<true/>
-		<key>NSExceptionDomains</key>
-		<dict>
-			<key>localhost</key>
-			<dict>
-				<key>NSExceptionAllowsInsecureHTTPLoads</key>
-				<true/>
-			</dict>
-		</dict>
-	</dict>
-	<key>NSCameraUsageDescription</key>
-	<string>camera permision for upload images for profiles</string>
-	<key>NSLocationWhenInUseUsageDescription</key>
-	<string/>
-	<key>NSPhotoLibraryUsageDescription</key>
-	<string>upload images for profiles</string>
-	<key>NSLocationAlwaysAndWhenInUseUsageDescription</key>
-	<string>This app need location always</string>
-	<key>NSLocationAlwaysUsageDescription</key>
-	<string>This app need location always background</string>
-	<key>NSLocationWhenInUseUsageDescription</key>
-	<string> Agefred app required this Permission because live location use for tracking employee and their work status.</string>
 	<key>UIAppFonts</key>
 	<array>
 		<string>Montserrat-Regular.otf</string>
