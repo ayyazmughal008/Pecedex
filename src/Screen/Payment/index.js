@@ -51,7 +51,7 @@ const Payment = (props) => {
                 resizeMode={FastImage.resizeMode.stretch}
             />
             <WebView
-                source={{ uri: `http://199.247.13.90/paypal/${login.data.id}/${planId}` }}
+                source={{ uri: `https://199.247.13.90/paypal/${login.data.id}/${planId}` }}
                 renderLoading={_renderLoading}
                 //Enable Javascript support
                 javaScriptEnabled={true}

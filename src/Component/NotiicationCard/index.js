@@ -13,12 +13,6 @@ const Card = (props) => {
                 <Text style={styles.title}>
                     {props.title}
                 </Text>
-                <Icon
-                    name="delete"
-                    color={white}
-                    size={25}
-                    onPress={props.deleteNotifications}
-                />
             </View>
             <FastImage
                 style={styles.line}
@@ -33,6 +27,18 @@ const Card = (props) => {
             <Text style={styles.dateTxt}>
                 {props.date}
             </Text>
+            <Icon
+                name="delete"
+                color={white}
+                size={25}
+                onPress={props.deleteNotifications}
+                style={{
+                    position: "absolute",
+                    top: "4%",
+                    right: "2%",
+                    zIndex: 3
+                }}
+            />
         </View>
     )
 }
@@ -47,24 +53,26 @@ const styles = StyleSheet.create({
         backgroundColor: blue
     },
     topView: {
-        width: widthPercentageToDP(80),
-        height: heightPercentageToDP(5),
+        width: widthPercentageToDP(75),
+        flex: 0,
         flexDirection: "row",
         alignItems: "center",
         justifyContent: "space-between",
-        alignSelf: "center"
+        alignSelf: "center",
         //backgroundColor:"red"
     },
     line: {
         width: widthPercentageToDP(65),
         height: heightPercentageToDP(0.2),
-        alignSelf: "center"
+        alignSelf: "center",
+        marginTop: heightPercentageToDP(0.5)
         //backgroundColor:"red"
     },
     title: {
         fontSize: widthPercentageToDP(5),
         color: white,
-        fontFamily: "Montserrat-Regular"
+        fontFamily: "Montserrat-Regular",
+        paddingTop: heightPercentageToDP(1)
     },
     description: {
         fontSize: widthPercentageToDP(3.5),

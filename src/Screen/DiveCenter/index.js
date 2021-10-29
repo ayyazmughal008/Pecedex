@@ -210,16 +210,19 @@ const DiveCenter = (props) => {
                 />
                 <View style={{
                     width: info.data.certifiers.length < 2 ?
-                        "22%" : info.data.certifiers.length < 4 ?
+                        "22%" : info.data.certifiers.length < 3 ?
                             "45%" :
-                            info.data.certifiers.length < 6 ?
-                                "65%" : "100%",
+                            info.data.certifiers.length < 4 ?
+                                "65%" :
+                                info.data.certifiers.length < 5 ?
+                                    "85%" : "100%",
                     alignSelf: "center",
                     marginTop: heightPercentageToDP(1),
                     //backgroundColor:"red"
                 }}>
                     <ScrollView
                         horizontal
+                        showsHorizontalScrollIndicator={false}
                         contentContainerStyle={{ alignItems: "center", flexGrow: 1 }}>
                         {info.data.certifiers.map((item, index) => {
                             return (

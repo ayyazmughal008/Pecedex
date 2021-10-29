@@ -19,7 +19,8 @@
       android:icon="@mipmap/logo"
       android:roundIcon="@mipmap/logo"
       android:allowBackup="false"
-      android:theme="@style/AppTheme">
+      android:theme="@style/AppTheme"
+      android:usesCleartextTraffic="true">
       <!-- <provider
         android:name=".MyFileProvider"
         android:authorities="${applicationId}.provider"
