@@ -211,11 +211,11 @@ const DiveCenter = (props) => {
                 <View style={{
                     width: info.data.certifiers.length < 2 ?
                         "22%" : info.data.certifiers.length < 3 ?
-                            "45%" :
+                            "47%" :
                             info.data.certifiers.length < 4 ?
-                                "65%" :
+                                "67%" :
                                 info.data.certifiers.length < 5 ?
-                                    "85%" : "100%",
+                                    "87%" : "100%",
                     alignSelf: "center",
                     marginTop: heightPercentageToDP(1),
                     //backgroundColor:"red"
