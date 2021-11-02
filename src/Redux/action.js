@@ -12,7 +12,7 @@ export const CENTER_ID = "CENTER_ID";
 export const MAIN_MENU = "MAIN_MENU";
 
 
-const baseUrl = "http://199.247.13.90/api/",
+const baseUrl = "https://199.247.13.90/api/",
     login = 'login',
     user = 'user',
     cancelSubscription = 'cancel-subscription',
