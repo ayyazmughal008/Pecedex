@@ -163,7 +163,7 @@ const styles = StyleSheet.create({
     },
     modelView: {
         width: widthPercentageToDP(28),
-        height: heightPercentageToDP(20),
+        flex:0,
         borderRadius: widthPercentageToDP(4),
         alignItems: "center",
         backgroundColor: blue,
@@ -185,7 +185,8 @@ const styles = StyleSheet.create({
         fontSize: widthPercentageToDP(3),
         color: white,
         fontFamily: "Montserrat-Regular",
-        marginTop: heightPercentageToDP(0.5)
+        marginTop: heightPercentageToDP(0.5),
+        marginBottom: heightPercentageToDP(0.5),
     },
     yearText: {
         fontSize: widthPercentageToDP(6),

@@ -130,11 +130,11 @@ const NewScreen = (props) => {
                 </View>
                 <View style={styles.viewLine}>
                     <FastImage
-                        source={require('../../Images/wave1.png')}
+                        source={require('../../Images/rock.png')}
                         resizeMode={FastImage.resizeMode.contain}
                         style={styles.smallIcon}
                     />
-                    <View style={{ marginLeft: widthPercentageToDP(15) }}>
+                    <View style={{ marginLeft: widthPercentageToDP(8) }}>
                         <Text style={[styles.smallText3, { padding: 0 }]}>
                             {"Suelo: "}
                             <Text style={[styles.smallText3, { padding: 0, color: blue }]}>
