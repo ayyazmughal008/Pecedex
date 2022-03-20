@@ -4,7 +4,7 @@ import { styles } from '../../config/styles'
 import FastImage from 'react-native-fast-image'
 import Card from '../../Component/PeciosCard'
 import { data } from './data'
-import { getMenuGenro } from '../../Redux/action'
+import { getMenuGenro, getCategoryIndex } from '../../Redux/action'
 import Tab from '../../Component/BottomTab'
 import { heightPercentageToDP } from '../../Component/MakeMeResponsive'
 import { HomeAction, profileAction, settingAction, mapAction, notificationAction } from '../../Component/BottomTab/actions'
@@ -60,25 +60,26 @@ const Order = (props) => {
                     shortText={item.short}
                     seen={item.seen}
                     clickHandler={() => {
-                        // if (!login.data.paid) {
-                        //     updateRow()
-                        // } else {
-                        //     props.navigation.navigate("Detail", {
-                        //         data: Response.data,
-                        //         position: index
-                        //     })
-                        // }
-                        props.navigation.navigate("Detail", {
-                            data: Response.data,
-                            position: index
-                        })
+                        if (!login.data.paid) {
+                            updateRow(item.id)
+                        } else {
+                            props.navigation.navigate("Detail", {
+                                data: Response.data,
+                                position: index
+                            })
+                        }
+                        // props.navigation.navigate("Detail", {
+                        //     data: Response.data,
+                        //     position: index
+                        // })
                     }}
                 />
             ),
         [Response],
     );
-    const updateRow = async () => {
-        setResponse(true)
+    const updateRow = async (index) => {
+        setIsLoading(true)
+        let result = await getCategoryIndex(index, id)
         let temArr = [];
         await Response.data.forEach(item => {
             if (item.ad) {
@@ -87,10 +88,10 @@ const Order = (props) => {
                 temArr.push(item)
             }
         });
-        await setResponse(false)
+        await setIsLoading(false)
         props.navigation.navigate("Detail", {
             data: temArr,
-            position: 0
+            position: result.data
         })
         //console.log("===>",temArr)
     }
@@ -128,7 +129,7 @@ const Order = (props) => {
                 source={require('../../Images/BG.png')}
                 resizeMode={FastImage.resizeMode.stretch}
                 style={styles.bgImg2}>
-                <KeyboardAwareScrollView contentContainerStyle={{ flexGrow: 1 }}>
+
                     <View style={styles.shortcutView}>
                         {!Response || !Response.summary ?
                             <View />
@@ -168,13 +169,13 @@ const Order = (props) => {
                         }
                     </View>
                     {/* <View style={{ marginTop: heightPercentageToDP(4) }} /> */}
-                    {!login.data.paid &&
+                    {/* {!login.data.paid &&
                         <AdView
                             loadOnMount={true}
                             index={0}
                             type="image"
                             media={false} />
-                    }
+                    } */}
                     {!Response || !Response.data ?
                         <View />
                         : <FlatList
@@ -199,13 +200,13 @@ const Order = (props) => {
                             renderItem={renderItem}
                         />}
                     {/* <View style={{ marginTop: heightPercentageToDP(4) }} /> */}
-                    {!login.data.paid &&
+                    {/* {!login.data.paid &&
                         <AdView
                             loadOnMount={true}
                             index={1}
                             type="image"
                             media={false} />
-                    }
+                    } */}
                     <View style={{ height: heightPercentageToDP(8) }} />
                     <Tab
                         homeClick={() => props.navigation.dispatch(HomeAction)}
@@ -221,7 +222,6 @@ const Order = (props) => {
                             style={styles.loading}
                         />
                     }
-                </KeyboardAwareScrollView>
             </FastImage>
         </SafeAreaView>
     )

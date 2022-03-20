@@ -52,7 +52,7 @@ const PeciosDetail = (props) => {
     useEffect(() => {
         getApis("yes", data[pageSelected].id)
         //convertImageToBase64()
-    }, [])
+    }, [pageSelected])
     useEffect(() => {
         if (pageSelected) {
             console.log(activeSlid)

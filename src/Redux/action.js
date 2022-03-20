@@ -66,6 +66,8 @@ const baseUrl = "https://199.247.13.90/api/",
     getSelectedGenres = 'get-selected-genres',
     getSelectedPecios = 'get-selected-pecios',
     getSelectedUsers = 'get-selected-users',
+    getIndex = 'get-index',
+    getIndex2 = 'get-index2',
     register = 'register';
 
 const country_url = "https://countriesnow.space/api/v0.1/countries/positions"
@@ -1239,7 +1241,7 @@ export const submitFcmToken = async (fcm, userId) => {
                     //console.log(json)
                     return json
                 } else {
-                    console.log('===> 1',json)
+                    console.log('===> 1', json)
                     //Alert.alert("====> 1", json.message)
                 }
             })
@@ -2178,6 +2180,70 @@ export const getAllSelectedUsers = async (userId) => {
         console.log('my error' + error.message);
     }
     return api
+}
+
+export const getCategoryIndex = async (id, categoryId) => {
+    let api
+    try {
+        api = await fetch(baseUrl + getIndex, {
+            method: 'POST',
+            headers: {
+                'Accept': 'application/json',
+                "Content-type": "application/json",
+            },
+            body: JSON.stringify({
+                id: id,
+                categoryId: categoryId
+            })
+        })
+            .then(res => res.json())
+            .then(json => {
+                if (json.status == 200) {
+                    //console.log(json.users)
+                    return json
+                } else {
+                    console.log(json)
+                }
+            })
+            .catch(error => {
+                console.log("response error ===>", error)
+            })
+    } catch (error) {
+        console.log('my error' + error.message);
+    }
+    return api
+
+}
+export const getPeciosIndex = async (id) => {
+    let api
+    try {
+        api = await fetch(baseUrl + getIndex2, {
+            method: 'POST',
+            headers: {
+                'Accept': 'application/json',
+                "Content-type": "application/json",
+            },
+            body: JSON.stringify({
+                id: id,
+            })
+        })
+            .then(res => res.json())
+            .then(json => {
+                if (json.status == 200) {
+                    //console.log(json.users)
+                    return json
+                } else {
+                    console.log(json)
+                }
+            })
+            .catch(error => {
+                console.log("response error ===>", error)
+            })
+    } catch (error) {
+        console.log('my error' + error.message);
+    }
+    return api
+    
 }
 
 

@@ -5,7 +5,7 @@ import FastImage from 'react-native-fast-image'
 import Card from '../../Component/PeciosCard'
 import { data } from './data'
 import { useSelector, useDispatch } from 'react-redux';
-import { getPeciosData, getPeciosSeenList } from '../../Redux/action'
+import { getPeciosData, getPeciosSeenList, getPeciosIndex } from '../../Redux/action'
 import Tab from '../../Component/BottomTab'
 import { heightPercentageToDP } from '../../Component/MakeMeResponsive'
 import { HomeAction, profileAction, settingAction, mapAction, notificationAction } from '../../Component/BottomTab/actions'
@@ -82,18 +82,18 @@ const Map = (props) => {
                     shortText={item.short}
                     seen={item.seen}
                     clickHandler={() => {
-                        // if (!login.data.paid) {
-                        //     updateRow(index)
-                        // } else {
-                        //     props.navigation.navigate("PeciosDetail", {
-                        //         data: Response.data,
-                        //         position: index
-                        //     })
-                        // }
-                        props.navigation.navigate("PeciosDetail", {
-                            data: Response.data,
-                            position: index
-                        })
+                        if (!login.data.paid) {
+                            updateRow(item.id)
+                        } else {
+                            props.navigation.navigate("PeciosDetail", {
+                                data: Response.data,
+                                position: index
+                            })
+                        }
+                        // props.navigation.navigate("PeciosDetail", {
+                        //     data: Response.data,
+                        //     position: index
+                        // })
                     }}
                 />
             ),
@@ -101,7 +101,8 @@ const Map = (props) => {
     );
 
     const updateRow = async (index) => {
-        setResponse(true)
+        setIsLoading(true)
+        const result = await getPeciosIndex(index)
         let temArr = [];
         await Response.data.forEach(item => {
             if (item.ad) {
@@ -110,10 +111,10 @@ const Map = (props) => {
                 temArr.push(item)
             }
         });
-        await setResponse(false)
+        await setIsLoading(false)
         props.navigation.navigate("PeciosDetail", {
             data: temArr,
-            position: 0
+            position: result.data
         })
         //console.log("===>",temArr)
     }
@@ -135,13 +136,13 @@ const Map = (props) => {
             >
                 <KeyboardAwareScrollView contentContainerStyle={{ flexGrow: 1 }}>
                     <View style={{ marginTop: heightPercentageToDP(4) }} />
-                    {!login.data.paid &&
+                    {/* {!login.data.paid &&
                         <AdView
                             loadOnMount={true}
                             index={0}
                             type="image"
                             media={false} />
-                    }
+                    } */}
 
                     {!Response || !Response.data ?
                         <View />
@@ -166,13 +167,13 @@ const Map = (props) => {
                             renderItem={renderItem}
                         />}
                     {/* <View style={{ marginTop: heightPercentageToDP(4) }} /> */}
-                    {!login.data.paid &&
+                    {/* {!login.data.paid &&
                         <AdView
                             loadOnMount={true}
                             index={1}
                             type="image"
                             media={false} />
-                    }
+                    } */}
                     <View style={{ height: heightPercentageToDP(8) }} />
                     <Tab
                         homeClick={() => props.navigation.dispatch(HomeAction)}

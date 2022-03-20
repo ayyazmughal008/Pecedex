@@ -34,7 +34,7 @@ const GenreDetail = (props) => {
     const AuthLoading = useSelector((state) => state.user.AuthLoading);
     const [pickerOption, setOption] = useState(false)
     const [isLoading, setIsLoading] = useState(false)
-    const [Response, setResponse] = useState(false)
+    const [Response, setResponse] = useState("")
     const [isStart, setSTart] = useState(false)
     const [imagePath, setImagePath] = useState(null)
     const [imageUrl, setImageUrl] = useState(null)
@@ -55,7 +55,7 @@ const GenreDetail = (props) => {
     }, [language])
     useEffect(() => {
         getApis("yes", data[pageSelected].id)
-    }, [])
+    }, [pageSelected])
     useEffect(() => {
         if (pageSelected) {
             //console.log(activeSlid)
@@ -398,39 +398,22 @@ const GenreDetail = (props) => {
                 }}
                 setPage={pageSelected}
                 transitionStyle="scroll"
-                //scrollEnabled = {false}
-                //onPageScroll={event => console.log('===>', event.nativeEvent.offset)}
-                //onPageScrollStateChanged={(e) => console.log('==>', e)}
                 style={{
                     width: "100%",
                     height: "60%",
-                    //backgroundColor:"red"
                 }}>
                 {data.map((item, index) => {
-                    return (
-                        <View key={"unique" + index}
-                            style={{ flexGrow: 1 }}>
-                            <View style={styles.shareView}>
-                                <View style={{ width: "45%", height: "100%", flexDirection: "row", alignItems: "center" }}>
-                                    {!Response ?
-                                        <FastImage
-                                            source={require('../../Images/85.png')}
-                                            resizeMode={FastImage.resizeMode.stretch}
-                                            style={{
-                                                width: widthPercentageToDP(14),
-                                                height: widthPercentageToDP(10),
-                                                marginLeft: widthPercentageToDP(3)
-                                            }}
-                                        />
-                                        : <TouchableOpacity
-                                            onPress={() => {
-                                                getApis("no", item.id);
-                                            }}
-                                            style={styles.shareButton}>
+                    if (item.ad) {
+                        return
+                    } {
+                        return (
+                            <View key={"unique" + index}
+                                style={{ flexGrow: 1 }}>
+                                <View style={styles.shareView}>
+                                    <View style={{ width: "45%", height: "100%", flexDirection: "row", alignItems: "center" }}>
+                                        {!Response ?
                                             <FastImage
-                                                source={Response.seen === 'yes' ?
-                                                    require('../../Images/85.png')
-                                                    : require('../../Images/camera.png')}
+                                                source={require('../../Images/85.png')}
                                                 resizeMode={FastImage.resizeMode.stretch}
                                                 style={{
                                                     width: widthPercentageToDP(14),
@@ -438,131 +421,149 @@ const GenreDetail = (props) => {
                                                     marginLeft: widthPercentageToDP(3)
                                                 }}
                                             />
-                                        </TouchableOpacity>}
-                                </View>
-                                <View style={{ width: "45%", height: "100%", alignItems: "center", justifyContent: "space-between", flexDirection: "row" }}>
-                                    <TouchableOpacity
-                                        onPress={() => {
-                                            if (!item.videoLink) {
-                                                console.log(item.videoLink)
-                                            } else {
-                                                Linking.openURL(item.videoLink);
-                                            }
-                                        }}
-                                        style={styles.shareButton}>
-                                        <FastImage
-                                            source={require('../../Images/86.png')}
-                                            resizeMode={FastImage.resizeMode.contain}
-                                            style={{
-                                                width: widthPercentageToDP(8),
-                                                height: heightPercentageToDP(4),
-                                            }}
-                                        />
-                                    </TouchableOpacity>
-                                    <TouchableOpacity
-                                        onPress={() => {
-                                            if (!item.wlink) {
-                                                console.log(item.wlink)
-                                            } else {
-                                                Linking.openURL(item.wlink);
-                                            }
-                                        }}
-                                        style={styles.shareButton}>
-                                        <FastImage
-                                            source={require('../../Images/87.png')}
-                                            resizeMode={FastImage.resizeMode.contain}
-                                            style={{
-                                                width: widthPercentageToDP(8),
-                                                height: heightPercentageToDP(4),
-                                            }}
-                                        />
-                                    </TouchableOpacity>
-                                    <TouchableOpacity
-                                        onPress={() => {
-                                            convertImageToBase64(imageUrl)
-                                        }}
-                                        style={[styles.shareButton, { marginRight: 5 }]}>
-                                        <FastImage
-                                            source={require('../../Images/88.png')}
-                                            resizeMode={FastImage.resizeMode.contain}
-                                            style={{
-                                                width: widthPercentageToDP(8),
-                                                height: heightPercentageToDP(4),
-                                            }}
-                                        />
-                                    </TouchableOpacity>
-                                </View>
-                            </View>
-                            <Text style={styles.proInfoTile2}>
-                                {item.title}
-                            </Text>
-                            <Text style={[styles.smallText, {
-                                fontFamily: "MontserratAlternates-BoldItalic"
-                            }]}>
-                                {item.short}
-                            </Text>
-                            <View style={{
-                                width: item.qualities.length < 2
-                                    ? "15%"
-                                    : item.qualities.length < 4 ?
-                                        "40%"
-                                        : "80%",
-                                height: heightPercentageToDP(4),
-                                marginTop: heightPercentageToDP(1),
-                                alignItems: "center",
-                                alignSelf: "center"
-                                //backgroundColor: "red"
-                            }}>
-                                <ScrollView
-                                    horizontal
-                                    showsHorizontalScrollIndicator={false}
-                                    contentContainerStyle={{ flexGrow: 1, alignItems: "center" }}>
-                                    {item.qualities.map((item, index) => {
-                                        return (
-                                            <TouchableOpacity
-                                                key={"unique" + index}
+                                            : <TouchableOpacity
                                                 onPress={() => {
-                                                    Alert.alert("", item.title)
-                                                }}>
+                                                    getApis("no", item.id);
+                                                }}
+                                                style={styles.shareButton}>
                                                 <FastImage
-                                                    source={{ uri: item.image }}
-                                                    resizeMode={FastImage.resizeMode.contain}
+                                                    source={Response.seen === 'yes' ?
+                                                        require('../../Images/85.png')
+                                                        : require('../../Images/camera.png')}
+                                                    resizeMode={FastImage.resizeMode.stretch}
                                                     style={{
-                                                        width: widthPercentageToDP(8),
-                                                        height: heightPercentageToDP(4),
-                                                        marginLeft: widthPercentageToDP(3),
-                                                        marginRight: widthPercentageToDP(3),
+                                                        width: widthPercentageToDP(14),
+                                                        height: widthPercentageToDP(10),
+                                                        marginLeft: widthPercentageToDP(3)
                                                     }}
                                                 />
-                                            </TouchableOpacity>
-                                        )
-                                    })}
-                                </ScrollView>
-
-                            </View>
-                            <FastImage
-                                source={require('../../Images/line.png')}
-                                style={{
-                                    width: widthPercentageToDP(90),
-                                    height: widthPercentageToDP(0.5),
-                                    alignSelf: "center",
+                                            </TouchableOpacity>}
+                                    </View>
+                                    <View style={{ width: "45%", height: "100%", alignItems: "center", justifyContent: "space-between", flexDirection: "row" }}>
+                                        <TouchableOpacity
+                                            onPress={() => {
+                                                if (!item.videoLink) {
+                                                    console.log(item.videoLink)
+                                                } else {
+                                                    Linking.openURL(item.videoLink);
+                                                }
+                                            }}
+                                            style={styles.shareButton}>
+                                            <FastImage
+                                                source={require('../../Images/86.png')}
+                                                resizeMode={FastImage.resizeMode.contain}
+                                                style={{
+                                                    width: widthPercentageToDP(8),
+                                                    height: heightPercentageToDP(4),
+                                                }}
+                                            />
+                                        </TouchableOpacity>
+                                        <TouchableOpacity
+                                            onPress={() => {
+                                                if (!item.wlink) {
+                                                    console.log(item.wlink)
+                                                } else {
+                                                    Linking.openURL(item.wlink);
+                                                }
+                                            }}
+                                            style={styles.shareButton}>
+                                            <FastImage
+                                                source={require('../../Images/87.png')}
+                                                resizeMode={FastImage.resizeMode.contain}
+                                                style={{
+                                                    width: widthPercentageToDP(8),
+                                                    height: heightPercentageToDP(4),
+                                                }}
+                                            />
+                                        </TouchableOpacity>
+                                        <TouchableOpacity
+                                            onPress={() => {
+                                                convertImageToBase64(imageUrl)
+                                            }}
+                                            style={[styles.shareButton, { marginRight: 5 }]}>
+                                            <FastImage
+                                                source={require('../../Images/88.png')}
+                                                resizeMode={FastImage.resizeMode.contain}
+                                                style={{
+                                                    width: widthPercentageToDP(8),
+                                                    height: heightPercentageToDP(4),
+                                                }}
+                                            />
+                                        </TouchableOpacity>
+                                    </View>
+                                </View>
+                                <Text style={styles.proInfoTile2}>
+                                    {item.title}
+                                </Text>
+                                <Text style={[styles.smallText, {
+                                    fontFamily: "MontserratAlternates-BoldItalic"
+                                }]}>
+                                    {item.short}
+                                </Text>
+                                <View style={{
+                                    width: item.qualities.length < 2
+                                        ? "15%"
+                                        : item.qualities.length < 4 ?
+                                            "40%"
+                                            : "80%",
+                                    height: heightPercentageToDP(4),
                                     marginTop: heightPercentageToDP(1),
-                                    //marginBottom: heightPercentageToDP(1)
-                                }}
-                                resizeMode={FastImage.resizeMode.stretch}
-                            />
-                            <FlatList
-                                key={'h'}
-                                data={item.icons}
-                                numColumns={2}
-                                bounces={false}
-                                style={{ alignSelf: "center" }}
-                                showsVerticalScrollIndicator={false}
-                                keyExtractor={(item, index) => "unique" + index}
-                                renderItem={_renderItem}
-                            />
-                        </View>
-                    )
+                                    alignItems: "center",
+                                    alignSelf: "center"
+                                    //backgroundColor: "red"
+                                }}>
+                                    <ScrollView
+                                        horizontal
+                                        showsHorizontalScrollIndicator={false}
+                                        contentContainerStyle={{ flexGrow: 1, alignItems: "center" }}>
+                                        {item.qualities.map((item, index) => {
+                                            return (
+                                                <TouchableOpacity
+                                                    key={"unique" + index}
+                                                    onPress={() => {
+                                                        Alert.alert("", item.title)
+                                                    }}>
+                                                    <FastImage
+                                                        source={{ uri: item.image }}
+                                                        resizeMode={FastImage.resizeMode.contain}
+                                                        style={{
+                                                            width: widthPercentageToDP(8),
+                                                            height: heightPercentageToDP(4),
+                                                            marginLeft: widthPercentageToDP(3),
+                                                            marginRight: widthPercentageToDP(3),
+                                                        }}
+                                                    />
+                                                </TouchableOpacity>
+                                            )
+                                        })}
+                                    </ScrollView>
+
+                                </View>
+                                <FastImage
+                                    source={require('../../Images/line.png')}
+                                    style={{
+                                        width: widthPercentageToDP(90),
+                                        height: widthPercentageToDP(0.5),
+                                        alignSelf: "center",
+                                        marginTop: heightPercentageToDP(1),
+                                        //marginBottom: heightPercentageToDP(1)
+                                    }}
+                                    resizeMode={FastImage.resizeMode.stretch}
+                                />
+                                <FlatList
+                                    key={'h'}
+                                    data={item.icons}
+                                    numColumns={2}
+                                    bounces={false}
+                                    style={{ alignSelf: "center" }}
+                                    showsVerticalScrollIndicator={false}
+                                    keyExtractor={(item, index) => "unique" + index}
+                                    renderItem={_renderItem}
+                                />
+                            </View>
+                        )
+                    }
+
                 })
                 }
             </PagerView>
